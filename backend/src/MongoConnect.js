@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true,  useUnifiedTopology: true });
@@ -12,3 +13,12 @@ client.connect(err => {
 
   
 });
+=======
+const { MongoClient } = require('mongodb');
+
+const uri = 'mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/test?retryWrites=true&w=majority';
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect((err) => {
+  if (err) { console.log(err); } else { console.log('Connected to database'); }
+});
+>>>>>>> fbf073c80ef812537ae9222e6625d502a1442608
