@@ -8,5 +8,5 @@ client.connect(err => {
   // Retrieve collection Users
   var users = client.db("PUNCHI").collection("Users");
   // Inserción de usuarios
-  users.insertOne({"_id" : "123456789", "nombre" : "Arnau"}).then(() => console.log(users.findOne()));
+  //users.insertOne({"_id" : "123456789", "nombre" : "Arnau"}).then(() => console.log(users.findOne()));
 });
