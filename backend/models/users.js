@@ -4,40 +4,58 @@ const Schema = mongoose.Schema;
 
 let Users = new Schema({
     title: {
-        type: String
+        type: String,
+         required: true 
     },
     apellidos: {
-        type: String
+        type: String,
+        required: true 
     },
     fechaNacimiento: {
-        type: Date
+        type: Date,
+        required: true 
     },
     email: {
-        type: String
+        type: String,
+        required: true 
     },
     localidad: {
-        type: String
+        type: String,
+        required: true 
     },
     provincia: {
-        type: String
+        type: String,
+        required: true 
     },
     domicilio: {
-        type: String
+        type: String,
+        required: true 
     },
     telefono: {
-        type: Number
+        type: Number,
+        required: true 
     },
     gestor: {
-        type: Boolean
+        type: Boolean,
+        required: true 
     },
     admin: {
-        type: Boolean
+        type: Boolean,
+        required: true 
     },
     nuss: {
         type: Number
     },
     deleted: {
         type: Boolean
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 });
 export default mongoose.model('Users', Users);
