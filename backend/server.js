@@ -11,7 +11,7 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/test?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 connection.once('open', () => {
