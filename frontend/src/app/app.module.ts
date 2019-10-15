@@ -22,6 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
+import { DepartamentosComponent } from './components/departamentos/departamentos.component';
 
 
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
     InicioComponent,
     MainNavComponent,
     HistoryTableComponent,
-    FichaPersonalComponent
+    FichaPersonalComponent,
+    DepartamentosComponent
   ],
   imports: [
     BrowserModule,
