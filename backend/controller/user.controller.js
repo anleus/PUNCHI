@@ -56,7 +56,7 @@ userFunctions.updateUser = (req, res, next) => {
         password: req.params.password,
         becario: req.params.becario
     })
-    user.findByIdAndUpdate(req.params.id,{$set: user}, {new: true})
+    User.findByIdAndUpdate(req.params.id,{$set: user}, {new: true})
         .then(() => {
             res.status(200); 
             res.send("User updated")})
@@ -67,7 +67,7 @@ userFunctions.updateUser = (req, res, next) => {
 
 
 userFunctions.deleteUser = async (req, res, next) => {
-    await user.findByIdAndRemove(req.params.id)
+    await User.findByIdAndRemove(req.params.id)
     .then(() => {
         res.status(200);
         res.json({status: 'User deleted'})})
