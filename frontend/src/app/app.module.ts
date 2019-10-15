@@ -22,11 +22,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
+import { DepartamentosComponent } from './components/departamentos/departamentos.component';
 
 
 const routes: Routes = [
   { path: 'crearusuario', component: CrearUsuarioComponent},
   { path: 'inicio', component: InicioComponent},
+  { path: 'departamentos', component: DepartamentosComponent},
   { path: '', redirectTo: 'inicio', pathMatch: 'full'}
 ];
 
@@ -39,7 +41,8 @@ const routes: Routes = [
     InicioComponent,
     MainNavComponent,
     HistoryTableComponent,
-    FichaPersonalComponent
+    FichaPersonalComponent,
+    DepartamentosComponent
   ],
   imports: [
     BrowserModule,
