@@ -28,6 +28,7 @@ import { DepartamentosComponent } from './components/departamentos/departamentos
 const routes: Routes = [
   { path: 'crearusuario', component: CrearUsuarioComponent},
   { path: 'inicio', component: InicioComponent},
+  { path: 'departamentos', component: DepartamentosComponent},
   { path: '', redirectTo: 'inicio', pathMatch: 'full'}
 ];
 
