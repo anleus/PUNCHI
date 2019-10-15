@@ -24,12 +24,19 @@ import { LoginComponent } from './components/login/login.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input'; 
+import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
+import { DepartamentosComponent } from './components/departamentos/departamentos.component';
+import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';
+
 
 const routes: Routes = [
   { path: 'crearusuario', component: CrearUsuarioComponent},
   { path: 'inicio', component: InicioComponent},
   { path: '', redirectTo: 'inicio', pathMatch: 'full'},
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'departamentos', component: DepartamentosComponent},
+  { path: 'fichapersonal', component: FichaPersonalComponent},
+  { path: '', redirectTo: 'inicio', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -41,7 +48,10 @@ const routes: Routes = [
     InicioComponent,
     MainNavComponent,
     HistoryTableComponent,
-    LoginComponent
+    LoginComponent,
+    FichaPersonalComponent,
+    DepartamentosComponent,
+    AsignarDepComponent
   ],
   imports: [
     BrowserModule,

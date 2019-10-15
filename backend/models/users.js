@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let Users = new Schema({
@@ -56,6 +55,14 @@ let Users = new Schema({
     password: {
         type: String,
         required: true
+    },
+    becario: {
+        type: Boolean,
+        required: true
+    },
+    deleted: {
+        type: Boolean,
     }
 });
-export default mongoose.model('Users', Users);
+
+module.exports = mongoose.model('Users', Users, 'Users');
