@@ -1,12 +1,17 @@
-const user = require('../models/users');
+const User = require('../models/users');
 
 const userFunctions = {};
 
+userFunctions.getUsers = async (req, res, next) => {
+    User.find()
+};
+
 userFunctions.addUser = async (req,res,next) => {
+    console.log("INSIDE POST");
     const user = new User({
         nombre: 'Paco',
         apellidos: 'Paredes Borras',
-        fechaNacimiento: '25/06/1998',
+        fechaNacimiento: Date.now(),
         email: 'pacopb98@gmail.com',
         localidad:'Moncada',
         provincia:'Valencia',
@@ -20,7 +25,7 @@ userFunctions.addUser = async (req,res,next) => {
         password: 'PakitohWalls',
         becario: false
     })
-    await user.save();
+    await user.save().catch((err) => {console.log(err)});
     res.json({status: 'User saved'});
 };
 
