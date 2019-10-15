@@ -20,6 +20,7 @@ import { HistoryTableComponent } from './history-table/history-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,8 @@ const routes: Routes = [
     CrearUsuarioComponent,
     InicioComponent,
     MainNavComponent,
-    HistoryTableComponent
+    HistoryTableComponent,
+    FichaPersonalComponent
   ],
   imports: [
     BrowserModule,
