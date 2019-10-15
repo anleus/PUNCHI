@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MatToolbarModule } from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/form-field';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,12 +20,16 @@ import { HistoryTableComponent } from './history-table/history-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
+import { LoginComponent } from './components/login/login.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input'; 
 
 const routes: Routes = [
   { path: 'crearusuario', component: CrearUsuarioComponent},
   { path: 'inicio', component: InicioComponent},
-  { path: '', redirectTo: 'inicio', pathMatch: 'full'}
+  { path: '', redirectTo: 'inicio', pathMatch: 'full'},
+  { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
@@ -37,7 +40,8 @@ const routes: Routes = [
     CrearUsuarioComponent,
     InicioComponent,
     MainNavComponent,
-    HistoryTableComponent
+    HistoryTableComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,10 @@ const routes: Routes = [
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCardModule,
+    MatSelectModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

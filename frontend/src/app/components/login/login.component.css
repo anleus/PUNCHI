@@ -1,0 +1,21 @@
+.center{
+    width: 75%;
+    margin: 10px auto;
+  }
+  
+.main-div{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+  }
+
+.text-in{
+    /*height: 200px;*/
+    display: flex;
+    /*justify-content: left;*/
+    /*align-items: left;*/
+    flex-direction: column;
+    padding: 35px;
+}
