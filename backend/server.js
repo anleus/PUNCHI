@@ -17,9 +17,8 @@ mongoose.connect('mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/test
 connection.once('open', () => {
     console.log('MongoDB database connection established successfully!');
 });
-
-app.use('/', router);
-app.use('/user',userRoutes);
+app.use(require('./routes/user.routes'));
+//app.use('/user',userRoutes);
 
 app.get('/', (req, res) => res.send('Hello world'));
 app.listen(4000, () => console.log('Express server running on port 4000'));
