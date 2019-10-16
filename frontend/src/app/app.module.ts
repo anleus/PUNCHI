@@ -24,7 +24,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
 import { DepartamentosComponent } from './components/departamentos/departamentos.component';
 import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';
-
+import {MatNativeDateModule} from '@angular/material/core';
+import { NgbdDatepickerPopup } from './components/datepicker-popup/datepicker-popup.component';
 
 const routes: Routes = [
   { path: 'crearusuario', component: CrearUsuarioComponent},
@@ -45,7 +46,8 @@ const routes: Routes = [
     HistoryTableComponent,
     FichaPersonalComponent,
     DepartamentosComponent,
-    AsignarDepComponent
+    AsignarDepComponent,
+    DatepickerPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +63,7 @@ const routes: Routes = [
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
+    MatNativeDateModule,
     MatSortModule
   ],
   providers: [],
