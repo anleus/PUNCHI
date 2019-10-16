@@ -1,0 +1,42 @@
+<mat-sidenav-container>
+    <!-- Contenedor panel lateral -->
+    <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+        <div class="sidenav-header">
+                <mat-toolbar color="primary">Menu</mat-toolbar>
+                <mat-nav-list>
+                    <mat-list-item>
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+                        <h3>Inicio</h3>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">face</mat-icon>
+                        <h3>Perfil</h3>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">add_to_queue</mat-icon>
+                        <h3>Gestionar</h3>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">add_circle</mat-icon>
+                        <h3>Añadir</h3>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">lock</mat-icon>
+                        <h3>Cerrar sesion</h3>
+                        </mat-list-item>
+                </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    
+    <!-- Contenedor principal -->
+    <mat-sidenav-content>
+        <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
+            <mat-toolbar color="primary">
+                <button mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
+                <h3>PUNCHI</h3>
+            </mat-toolbar> 
+        </div>
+    </mat-sidenav-content>
+
+          
+</mat-sidenav-container>
