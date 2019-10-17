@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'main-nav',
@@ -6,15 +9,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent {
-  screenWidth: number;
 
-  constructor() {
-    // set screenWidth on page load
-    this.screenWidth = window.innerWidth;
-    window.onresize = () => {
-      // set screenWidth on screen size change
-      this.screenWidth = window.innerWidth;
-    };
-  }
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
 }
