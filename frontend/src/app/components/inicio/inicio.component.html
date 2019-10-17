@@ -1,5 +1,5 @@
 <div class="botones-inicio">
-    <button mat-raised-button color="primary">Fichar</button>
+    <mat-button-toggle #toggleButton (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+    <span>{{timeLabel}}</span>
 </div>
-
-<history-table></history-table>
+<history-table></history-table>  
