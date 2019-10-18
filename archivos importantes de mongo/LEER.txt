@@ -1,6 +1,6 @@
-lo de esta carpeta se meter�
-en la carpeta de backend cunado todo
-est� bien puesto
+lo de esta carpeta se meterá
+en la carpeta de backend cuando todo
+esté bien puesto
 
 MongoConnect hay que revisarlo, lo he sacado de un commit
 ya que se había perdido por un descuido
