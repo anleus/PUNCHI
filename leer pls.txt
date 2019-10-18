@@ -1,0 +1,5 @@
+Enlace de una pagina con como hacer el backend con express
+
+Duda de si usar lo de babel, ni idea dea lo que es
+
+https://medium.com/codingthesmartway-com-blog/angular-6-mean-stack-crash-course-part-2-implementing-the-back-end-642567e16bb9

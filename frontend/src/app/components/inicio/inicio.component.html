@@ -1,0 +1,12 @@
+
+<div class="botones-inicio">
+        <div id="warningHorasExtra" class="alert alert-warning" style="display: none" role="alert">
+            <i class="material-icons">warning</i>   Estas haciendo horas extra!
+        </div>
+    <mat-button-toggle #toggleButton class="botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+    <span>Llevas trabajando {{timeLabel}}, has iniciado la jornada a las {{startHour}}</span>
+    <span></span>
+   
+</div>
+
+<app-history-table></app-history-table>

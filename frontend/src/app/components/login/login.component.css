@@ -1,0 +1,12 @@
+.center{
+    width: 75%;
+    margin: 10px auto;
+  }
+
+.card{
+    height: 200px;
+    display: flex;
+    /*align-items: left;*/
+    flex-direction: column;
+    padding: 35px;
+}
