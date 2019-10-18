@@ -1,4 +1,4 @@
-export class Employee {
+export class User {
 
     constructor(_id = '', nombre = '', apellidos = '', fechaNacimiento = '', salary = 0) {
         this._id = _id;
