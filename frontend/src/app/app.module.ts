@@ -15,6 +15,8 @@ import { DepartamentosComponent } from './components/departamentos/departamentos
 import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';
 import { HistoryTableComponent } from './components/history-table/history-table.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserListComponent } from './components/asignar-dep/user-list/user-list.component';
+import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin/modificar-ficha-admin.component';
 
 
 const routes: Routes = [
@@ -22,6 +24,7 @@ const routes: Routes = [
   { path: 'inicio', component: InicioComponent},
   { path: 'departamentos', component: DepartamentosComponent},
   { path: 'fichapersonal', component: FichaPersonalComponent},
+  { path: 'fichapersonaladmin', component: ModificarFichaAdminComponent},
   { path: '', redirectTo: 'inicio', pathMatch: 'full'},
   { path: 'login', component: LoginComponent}
 ];
@@ -36,7 +39,9 @@ const routes: Routes = [
     DepartamentosComponent,
     AsignarDepComponent,
     HistoryTableComponent,
-    LoginComponent
+    LoginComponent,
+    UserListComponent,
+    ModificarFichaAdminComponent
   ],
   imports: [
     BrowserModule,
