@@ -17,6 +17,7 @@ jornadaFunctions.getJornadaById = async (req, res, next) => {
 }
 
 jornadaFunctions.addJornada = async (req, res, next) => {
+    console.log('aqui tamos');
     const jornada = new Jornada({
         user: req.params.userid,
         begin: req.params.begin,
