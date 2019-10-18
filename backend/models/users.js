@@ -46,7 +46,7 @@ let Users = new Schema({
         type: Number
     },
     deleted: {
-        type: Boolean
+        type: Boolean //*
     },
     username: {
         type: String,
@@ -61,7 +61,7 @@ let Users = new Schema({
         required: true
     },
     deleted: {
-        type: Boolean,
+        type: Boolean, //per què dos voltes*
     }
 });
 
