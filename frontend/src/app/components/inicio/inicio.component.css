@@ -20,7 +20,14 @@
 }
 
 #warningHorasExtra{
-    widht: 70%;
+    width: 90%;    
+    font-size: 2rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+.warningicon{
+    font-size: 2rem;
 }
 
 .campoTabla{

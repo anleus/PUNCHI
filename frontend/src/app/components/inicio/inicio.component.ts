@@ -42,7 +42,7 @@ export class InicioComponent implements OnInit {
   tiempoFichando = 0;
   timeLabel = '00:00:00';
   startHour; endHour;
-  startLabel;
+  startLabel = "00:00:00";
 
   constructor(private jornadaService : JornadaService) { }
 
@@ -74,7 +74,7 @@ export class InicioComponent implements OnInit {
   }
 
   updateTimeLabel(){
-    if(this.tiempoFichando > 10) //Lleva ya trabajando 8 horas (28800sec) //TODO: coger de cada usuario las horas que haga
+    if(this.tiempoFichando > 1) //Lleva ya trabajando 8 horas (28800sec) //TODO: coger de cada usuario las horas que haga
       document.getElementById('warningHorasExtra').removeAttribute('style');
     var seconds = this.pad2(this.tiempoFichando % 60);
     var minutes = this.pad2(Math.floor(this.tiempoFichando / 60));
