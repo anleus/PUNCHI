@@ -9,7 +9,7 @@ jornadaFunctions.getJornadas = async (req, res, next) => {
 }
 
 jornadaFunctions.getJornadaById = async (req, res, next) => {
-    const jornada = await Jornada.findById(req.params.id).catch(err => console.log(err));
+    const jornada = await Jornada.findById(req.body.id).catch(err => console.log(err));
     if(jornada)
         res.status(200).json(jornada);
     else
@@ -28,11 +28,11 @@ jornadaFunctions.addJornada = async (req, res, next) => {
 
 jornadaFunctions.updateJornada = async (req, res, next) => {
     const jornada = new Jornada({
-        user: req.params.userid,
-        begin: req.params.begin,
+        user: req.body.userid,
+        begin: req.body.begin,
         end: Date.now()
     })
-    Jornada.findByIdAndUpdate(req.params.id, {$set: jornada}, {new: true})
+    Jornada.findByIdAndUpdate(req.body.id, {$set: jornada}, {new: true})
         .then(() => {
             res.status(200); 
             res.send("Jornada updated")})
@@ -42,7 +42,7 @@ jornadaFunctions.updateJornada = async (req, res, next) => {
 };
 
 jornadaFunctions.deleteJornada = async (req, res, next) => {
-    await Jornada.findByIdAndRemove(req.params.id)
+    await Jornada.findByIdAndRemove(req.body.id)
     .then(() => {
         res.status(200);
         res.json({status: 'Jornada deleted'})})
