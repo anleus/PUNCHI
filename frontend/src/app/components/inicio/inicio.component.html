@@ -19,10 +19,10 @@
                 <td>
                     <mat-button-toggle #toggleButton class=".col-md-4 botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
                 </td>
-                <td>{{timeLabel}}</td>
-                <td>{{startLabel}}</td>
-                <td class="rowVacaciones nofichando">23</td>
-                <td class="rowVacaciones fichando">3</td>
+                <td class="campoTabla">{{timeLabel}}</td>
+                <td class="campoTabla" >{{startLabel}}</td>
+                <td class="campoTabla rowVacaciones nofichando">23</td>
+                <td class="campoTabla rowVacaciones fichando">3</td>
             </tr>
         </table>
     </div>
