@@ -3,10 +3,28 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
     <mat-toolbar color="primary">Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="/fichapersonal">Ficha personal</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="/departamentos">Departamentos</a>
+    <mat-nav-list class="lista-navegacion">
+        <mat-list-item>
+            <mat-icon>home</mat-icon>
+            <h3>Inicio</h3>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon>face</mat-icon>
+            <h3>Perfil</h3>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon>add_to_queue</mat-icon>
+            <h3>Gestionar</h3>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon>add_circle</mat-icon>
+            <h3>Añadir</h3>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item class="btn-logOut">
+            <mat-icon>lock</mat-icon>
+            <h3>Cerrar sesion</h3>
+            </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

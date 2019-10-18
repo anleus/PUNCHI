@@ -14,6 +14,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
 import { DepartamentosComponent } from './components/departamentos/departamentos.component';
 import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';
+import { HistoryTableComponent } from './components/history-table/history-table.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,8 @@ const routes: Routes = [
     MainNavComponent,
     FichaPersonalComponent,
     DepartamentosComponent,
-    AsignarDepComponent
+    AsignarDepComponent,
+    HistoryTableComponent
   ],
   imports: [
     BrowserModule,

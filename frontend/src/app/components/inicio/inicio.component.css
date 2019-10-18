@@ -2,6 +2,13 @@
     background-color: #e0584f;
 }
 
-.nofichando{
+.nofichando {
     background-color: #6fe39e;
+}
+
+.botones-inicio {         
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
