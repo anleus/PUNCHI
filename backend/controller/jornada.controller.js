@@ -17,11 +17,10 @@ jornadaFunctions.getJornadaById = async (req, res, next) => {
 }
 
 jornadaFunctions.addJornada = async (req, res, next) => {
-    console.log('aqui tamos');
     const jornada = new Jornada({
-        user: req.params.userid,
-        begin: req.params.begin,
-        end: Date.now()
+        user: req.body.user,
+        begin: req.body.begin,
+        end: req.body.end
     })
     jornada.save()
         .then(() => res.json({status: 'Jornada saved'}))

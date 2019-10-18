@@ -17,3 +17,18 @@
   margin-bottom: 20px;
   margin-top: 20px;
 }
+
+.rowVacaciones{
+    text-align: center;
+    width: 12.5%;
+}
+
+
+.tablaFichar{
+    margin: 2rem;
+    width:90%;
+}
+
+.tablaFichar > thead > td{
+    width:18%;
+}

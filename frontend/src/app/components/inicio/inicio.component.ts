@@ -1,7 +1,8 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import {HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, Injectable, NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { JornadaService } from 'src/app/services/jornada.service';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 /**
  *  Misteriosamente si pongo esto dentro de la clase no funciona,
  *  de momento se quedará aqui, si, se que es mas feo que pegarle a un padre pero es lo que hay ¯\_(ツ)_/¯  
@@ -14,19 +15,24 @@ const httpOptions = {
   })
 };
 
-@NgModule({
-  declarations: [InicioComponent],
-  imports: [
-    BrowserModule,
-    HttpClientModule, HttpClient],
-  providers: [],
-  bootstrap: [InicioComponent]
-})
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css']
+  styleUrls: ['./inicio.component.css'],
+  providers: [ JornadaService]
 })
+@NgModule({
+  declarations: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClient,
+    HttpClientModule,
+    HttpHeaders
+  ],
+  providers: [JornadaService]
+    })
+
 export class InicioComponent implements OnInit {
 
   fichando = false;
@@ -36,8 +42,9 @@ export class InicioComponent implements OnInit {
   tiempoFichando = 0;
   timeLabel = '00:00:00';
   startHour; endHour;
+  startLabel;
 
-  constructor(/*private http : HttpClient*/) { }
+  constructor(private jornadaService : JornadaService) { }
 
   ngOnInit() {
   }
@@ -49,17 +56,19 @@ export class InicioComponent implements OnInit {
     if(this.fichando){
       t = setInterval(() => {++this.tiempoFichando; this.updateTimeLabel()}, 1000);
       if(!this.startHour)
-        this.startHour = this.getCurrentHour();
+        this.startLabel = this.getCurrentHour(true);
     }
     else{
       clearInterval(t);
-      this.endHour = this.getCurrentHour();
+      this.endHour = new Date;
       this.completarJornada();
     }
   }
 
-  private getCurrentHour() {
+  private getCurrentHour(start = false) {
     var date = new Date();
+    if(start)
+      this.startHour = date;
     var hour = this.pad2(date.getHours()) + ':' + this.pad2(date.getMinutes()) + ':' + this.pad2(date.getSeconds());
     return hour;
   }
@@ -71,16 +80,15 @@ export class InicioComponent implements OnInit {
     var minutes = this.pad2(Math.floor(this.tiempoFichando / 60));
     var hour = this.pad2(Math.floor(this.tiempoFichando/ 3600));
     this.timeLabel = `${hour}:${minutes}:${seconds}`;
-
   }
 
   completarJornada(){
     var jornada = {
       begin: this.startHour,
       end: this.endHour,
-      user: 'IDKMAN'
+      user: 'IDKMAN'//TODO: sacar id del usuario conectado
     }
-    //this.http.post('http://localhost:4000/jornada',JSON.stringify(jornada), httpOptions);
+    this.jornadaService.postJornada(jornada);
   }
 
   pad2(number) {
