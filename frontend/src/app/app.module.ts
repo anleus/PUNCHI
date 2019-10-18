@@ -5,8 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
 import { CrearUsuarioComponent } from './components/crear-usuario/crear-usuario.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
@@ -15,6 +13,7 @@ import { FichaPersonalComponent } from './components/ficha-personal/ficha-person
 import { DepartamentosComponent } from './components/departamentos/departamentos.component';
 import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';
 import { HistoryTableComponent } from './components/history-table/history-table.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 const routes: Routes = [
@@ -22,7 +21,8 @@ const routes: Routes = [
   { path: 'inicio', component: InicioComponent},
   { path: 'departamentos', component: DepartamentosComponent},
   { path: 'fichapersonal', component: FichaPersonalComponent},
-  { path: '', redirectTo: 'inicio', pathMatch: 'full'}
+  { path: '', redirectTo: 'inicio', pathMatch: 'full'},
+  { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
@@ -34,7 +34,8 @@ const routes: Routes = [
     FichaPersonalComponent,
     DepartamentosComponent,
     AsignarDepComponent,
-    HistoryTableComponent
+    HistoryTableComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
