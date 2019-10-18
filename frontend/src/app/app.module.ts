@@ -14,6 +14,7 @@ import { DepartamentosComponent } from './components/departamentos/departamentos
 import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';
 import { HistoryTableComponent } from './components/history-table/history-table.component';
 import { LoginComponent } from './components/login/login.component';
+import { UserListComponent } from './components/asignar-dep/user-list/user-list.component';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
     DepartamentosComponent,
     AsignarDepComponent,
     HistoryTableComponent,
-    LoginComponent
+    LoginComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
