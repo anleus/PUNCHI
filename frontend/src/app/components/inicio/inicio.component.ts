@@ -86,7 +86,7 @@ export class InicioComponent implements OnInit {
     var jornada = {
       begin: this.startHour,
       end: this.endHour,
-      user: 'IDKMAN'//TODO: sacar id del usuario conectado
+      user: '5d94cb6dd634648da19d6a6c'//TODO: sacar id del usuario conectado
     }
     this.jornadaService.postJornada(jornada);
   }
