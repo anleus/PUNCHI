@@ -10,3 +10,7 @@
     flex-direction: column;
     padding: 35px;
 }
+
+.main-div .login-button{
+  margin: auto;
+}
