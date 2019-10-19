@@ -15,7 +15,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   }
 
 
-  /**
+ /**
  * Clase para obtener el departamento del usuario
  */
 obtenerDepartamento(){
@@ -24,17 +24,34 @@ obtenerDepartamento(){
 
 departamento = this.obtenerDepartamento(); 
 Modo = "Modo administrador";
-
+gestion = false;
 cambiarModo(){
-  if(this.Modo == "Modo administrador"){
-    this.Modo = "Modo normal";
+  if(this.departamento == "RRHH"){
+    this.departamento = "Gestor";
+  }else if(this.departamento == "Gestor"){
+    this.departamento = "Empleado";
   }else{
-    this.Modo = "Modo administrador";
+    this.departamento = "RRHH";
+  }
+}
+
+cambiarModoGestion(){
+  if(this.gestion){
+    this.gestion = false;
+  }else{
+    this.gestion = true;
   }
 }
 
 comprobarDepartamento(){
-  return this.departamento == "ee";
+  return this.departamento == "RRHH" || this.departamento == "Gestor";
 }
 
+comprobarDepartamentoAdmin(){
+  return this.departamento == "RRHH";
+}
+
+comprobarGestionAdministrativa(){
+  return this.gestion;
+}
 }
