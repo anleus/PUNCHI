@@ -63,6 +63,7 @@ export class InicioComponent implements OnInit {
       clearInterval(t);
       this.endHour = new Date;
       this.completarJornada();
+      delete(this.startHour);
     }
   }
 

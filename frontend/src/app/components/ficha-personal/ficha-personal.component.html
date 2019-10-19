@@ -1,14 +1,5 @@
 <body>
-  <div class="titulo">
-    <p>Modificar datos usuario: EN PROCESO</p>
-    <p>He cambiat unes cosetes adaptanvo a lo meu, tinc copia en atre modul, canvia el q vullgues. ATT Josevi :P</p>
-    <p>Boton para cambiar de tipo de usuario: </p>
-    <p>{{departamento}}</p>
-    <button (click)="cambiarModo()">Cambio</button>
-
-</div>
-
-<div class="container">
+  <div class="container">
     <form action="action_page.php">
 
       <div *ngIf="comprobarDepartamento()" class="row">
@@ -16,7 +7,7 @@
           <label for="fname">Nombre:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="fname" name="nombre" placeholder="Stella">
+          <input type="text" id="fname" name="nombre" placeholder="User1" disabled>
         </div>
       </div>
 
@@ -25,128 +16,101 @@
           <label for="lname">Apellidos:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="lname" name="apellidos" placeholder="Esparza Torregrosa">
+          <input type="text" id="lname" name="apellidos" placeholder="ApellidoUser1" disabled>
         </div>
-    </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamento()" class="row">
-                <div class="col-25">
-                  <label for="lname">Fecha nacimiento:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="fechaNacimiento" placeholder="EN PRUEBAS">
-                </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+        <div class="col-25">
+          <label for="lname">Fecha nacimiento:</label>
         </div>
+        <div class="col-75">
+            <input type="date" id="start" name="datepick" value="1998-08-05" min="2020-01-01" max="2021-01-01" disabled>
+          </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamento()" class="row">
-                <div class="col-25">
-                  <label for="lname">Email:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="email" placeholder="steestor@gmail.com">
-                </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+        <div class="col-25">
+          <label for="lname">Email:</label>
         </div>
-        
-        <div class="row">
-                <div class="col-25">
-                  <label for="lname">Localidad:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="localidad" placeholder="Ontinyent manda y no tu panda">
-                </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="email" placeholder="steestor@gmail.com" disabled>
         </div>
-        
-        <div class="row">
-                <div class="col-25">
-                  <label for="lname">Provincia:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="provincia" placeholder="Valencia">
-                </div>
-        </div>
+      </div>
 
-        <div class="row">
-                <div class="col-25">
-                  <label for="lname">Domicilio:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="domicilio" placeholder="Avenida inventada">
-                </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Localidad:</label>
         </div>
-        <div *ngIf="comprobarDepartamento()" class="row">
-                <div class="col-25">
-                  <label for="lname">Teléfono:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="telefono" placeholder="6658741226">
-                </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="localidad" placeholder="Ontinyent manda y no tu panda">
         </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamentoAdmin()" class="row">
-                <div class="col-25">
-                  <label for="lname">Gestor:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="gestor" placeholder="EN PRUEBAS">
-                </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Provincia:</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="provincia" placeholder="Valencia">
+        </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamentoAdmin()" class="row">
-                <div class="col-25">
-                  <label for="lname">Admin:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="admin" placeholder="EN PRUEBAS">
-                </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Domicilio:</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="domicilio" placeholder="Avenida inventada">
+        </div>
+      </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+        <div class="col-25">
+          <label for="lname">Teléfono:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="telefono" placeholder="6658741226">
+        </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamentoAdmin()" class="row">
-                <div class="col-25">
-                  <label for="lname">Gestor:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="gestor" placeholder="EN PRUEBAS">
-                </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+        <div class="col-25">
+          <label for="lname">NUSS:</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="nuss" placeholder="5465456465" disabled>
+        </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamento()" class="row">
-                <div class="col-25">
-                  <label for="lname">NUSS:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="nuss" placeholder="5465456465">
-                </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+        <div class="col-25">
+          <label for="lname">Login:</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="username" placeholder="steestor" disabled>
+        </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamento()" class="row">
-                <div class="col-25">
-                  <label for="lname">Login:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="username" placeholder="steestor">
-                </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="lname">Contraseña:</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="password" placeholder="4645465">
+        </div>
+      </div>
 
-        <div class="row">
-                <div class="col-25">
-                  <label for="lname">Contraseña:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="password" placeholder="4645465">
-                </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+        <div class="col-25">
+          <label for="lname">Becario:</label>
         </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="becario" placeholder="EN PRUEBAS" disabled>
+        </div>
+      </div>
 
-        <div *ngIf="comprobarDepartamento()" class="row">
-                <div class="col-25">
-                  <label for="lname">Becario:</label>
-                </div>
-                <div class="col-75">
-                  <input type="text" id="lname" name="becario" placeholder="EN PRUEBAS">
-                </div>
-        </div>
-        
-        
-        <!-- Selector de paises
+
+      <!-- Selector de paises
       </div>
       <div class="row">
         <div class="col-25">
@@ -161,16 +125,6 @@
         </div>
       </div>-->
 
-      <!-- Escribe comentarios
-      <div class="row">
-        <div class="col-25">
-          <label for="subject">Subject</label>
-        </div>
-        <div class="col-75">
-          <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-        </div>
-      </div>
-      -->
       <br>
       <br>
       <div class="row">
