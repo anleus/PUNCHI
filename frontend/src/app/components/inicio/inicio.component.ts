@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse } from '@a
 import { BrowserModule } from '@angular/platform-browser';
 import { JornadaService } from 'src/app/services/jornada.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+
 /**
  *  Misteriosamente si pongo esto dentro de la clase no funciona,
  *  de momento se quedará aqui, si, se que es mas feo que pegarle a un padre pero es lo que hay ¯\_(ツ)_/¯  
