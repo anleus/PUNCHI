@@ -17,5 +17,7 @@ export class JornadaService {
     });
 
   getJornadas = () => this.http.get(this.url);
+
+  getUserJornadas = (userid) => this.http.get(this.url + userid);
 }
 
