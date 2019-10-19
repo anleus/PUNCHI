@@ -19,5 +19,6 @@ connection.once('open', () => {
 });
 app.use(require('./routes/user.routes'));
 app.use(require('./routes/jornada.routes'));
+app.use(require('./routes/deparament.routes'));
 app.get('/', (req, res) => res.send('Hello world'));
 app.listen(4000, () => console.log('Express server running on port 4000'));
