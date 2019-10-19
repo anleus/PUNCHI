@@ -15,7 +15,7 @@ export class CrearUsuarioComponent implements OnInit {
   }
   
   onCrearUsuario(form)  {
-    
+    console.log(form.value);
     this.userService.crearUsuario(form.value).subscribe(res => {
     this.router.navigateByUrl('/inicio');
   })  }
