@@ -5,7 +5,7 @@ const User = require('../models/users');
 //routes
 router.get('/users', userFunctions.getUsers);
 router.get('/users/:id', userFunctions.getUserById);
-router.post('/crearusuario',userFunctions.addUser);
+router.post('/Users',userFunctions.addUser);
 router.put('/users/:id', userFunctions.updateUser);
 router.delete('/users/:id', userFunctions.deleteUser);
 router.get('/users/username/:username', userFunctions.getUserByUsername);

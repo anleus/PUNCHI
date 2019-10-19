@@ -1,70 +1,84 @@
 <div class="container">
-  <form #frmCrearUsuario="ngForm" class="crearusuario-container" (ngSubmit)="onCrearUsuario(frmCrearUsuario)">
-    <mat-form-field>
-      <textarea matInput name="nombre" placeholder="Nombre" ngModel required></textarea>
-    </mat-form-field>
+  <mat-card class="card" flex="30">
+    <form #frmCrearUsuario="ngForm" class="crearusuario-container" (ngSubmit)="onCrearUsuario(frmCrearUsuario)">
+      <h1>Crear usuario</h1>
+      
+      <div class="row">
+        <div class="col">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" name="nombre" placeholder="Nombre" ngModel required>
+        </div>
 
-    <mat-form-field>
-      <textarea matInput placeholder="apellidos" name="apellidos" ngModel required></textarea>
-    </mat-form-field>
+        <div class="col">
+          <label for="apellidos">Apellidos</label>
+          <input type="text" class="form-control" placeholder="apellidos" name="apellidos" ngModel required>
+        </div>
+      </div>
 
-    <mat-form-field> 
-      <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" name="fechaNacimiento" ngModel
-        required>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" name="fechaNacimiento" ngModel
+            required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
 
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Enter your email" name="email" ngModel required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Localidad" name="localidad" ngModel required>
+        </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Enter your email" name="email" ngModel required>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Provincia" name="provincia" ngModel required>
+        </mat-form-field>
 
-    <mat-form-field>
-      <textarea matInput placeholder="Localidad" name="localidad" ngModel required></textarea>
-    </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Dirección de residencia" name="domicilio" ngModel required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput name="telefono" placeholder="felefono" ngModel required>
+        </mat-form-field>
+      </div>
+      <!--<mat-form-field>
+        <mat-select placeholder="Tipo de usuario">
+          <mat-option value="option">Normal</mat-option>
+          <mat-option value="option">Becario</mat-option>
+          <mat-option value="option">Gestor</mat-option>
+          <mat-option value="option">Administrador</mat-option>
+        </mat-select>
+          </mat-form-field> 
+        
+        <mat-checkbox name="gestor" ngModel required>Check me!</mat-checkbox>
+  
+        <mat-checkbox name="admin" ngModel required>Check me!</mat-checkbox>-->
+      <div>
+        <mat-form-field>
+          <input matInput name="nuss" placeholder="nuss" ngModel required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput name="username" placeholder="usuario" ngModel required>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <input matInput name="password" placeholder="contraseña" ngModel required>
+      </mat-form-field>
+      <div>
+        <mat-checkbox name="becario" value="false" ngModel required>Check me!</mat-checkbox>
+      </div>
 
-    <mat-form-field>
-      <textarea matInput placeholder="Provincia" name="provincia" ngModel required></textarea>
-    </mat-form-field> -->
-
-    <mat-form-field>
-      <textarea matInput placeholder="Dirección de residencia" name="domicilio" ngModel required></textarea>
-    </mat-form-field>
-
-    <mat-form-field>
-      <textarea matInput name="telefono" placeholder="felefono" ngModel required></textarea>
-    </mat-form-field>     
-
-    <!--<mat-form-field>
-      <mat-select placeholder="Tipo de usuario">
-        <mat-option value="option">Normal</mat-option>
-        <mat-option value="option">Becario</mat-option>
-        <mat-option value="option">Gestor</mat-option>
-        <mat-option value="option">Administrador</mat-option>
-      </mat-select>
-    </mat-form-field> -->
-
-  <!--
-    <mat-checkbox name="gestor" ngModel required>Check me!</mat-checkbox>
-
-    <mat-checkbox name="admin" ngModel required>Check me!</mat-checkbox>
-  -->
-    <mat-form-field>
-      <textarea matInput name="nuss" placeholder="nuss" ngModel required></textarea>
-    </mat-form-field>
-
-    <mat-form-field>
-      <textarea matInput name="username" placeholder="usuario" ngModel required></textarea>
-    </mat-form-field>
-
-    <mat-form-field>
-      <textarea matInput name="password" placeholder="contraseña" ngModel required></textarea>
-    </mat-form-field>
-
-    <mat-checkbox name="becario"value = "false" ngModel required>Check me!</mat-checkbox>
-
-
-    <button type="submit">Registrar usuario</button>
-  </form>
+      <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+        Confirmar
+      </button>
+    </form>
+  </mat-card>
 </div>
