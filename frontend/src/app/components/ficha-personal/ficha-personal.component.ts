@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/users';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+
 
 @Component({
   selector: 'app-ficha-personal',
@@ -7,10 +11,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FichaPersonalComponent implements OnInit {
 
-  constructor() { }
+
+  //PASO3: crear un objeto user
+  userDto : User;
+
+  constructor(private userservice : UserService ) { 
+    //PASO 1: llamar al service que sea necesario
+  }
 
   ngOnInit() {
+    //PASO2: llamar a userservice y getuserbyid
+    var user = this.userservice.getUser();
   }
+
+
+
+
+
+
+
+
+
 
  /**
  * Clase para obtener el departamento del usuario
