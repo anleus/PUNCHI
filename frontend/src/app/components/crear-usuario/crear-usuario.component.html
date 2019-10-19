@@ -1,52 +1,50 @@
-<div class="container">
-  <mat-card class="card" flex="30">
+<div>
+  <p></p>
+</div>
+
+<div class="example-container">
+  <mat-card class="card" flex="20">
     <form #frmCrearUsuario="ngForm" class="crearusuario-container" (ngSubmit)="onCrearUsuario(frmCrearUsuario)">
-      <h1>Crear usuario</h1>
-      
-      <div class="row">
-        <div class="col">
+      <h1 class="text-center">Crear usuario</h1>
+
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
           <label for="nombre">Nombre</label>
           <input type="text" class="form-control" name="nombre" placeholder="Nombre" ngModel required>
         </div>
 
-        <div class="col">
+        <div class="col-md-4 offset-md-2">
           <label for="apellidos">Apellidos</label>
           <input type="text" class="form-control" placeholder="apellidos" name="apellidos" ngModel required>
         </div>
       </div>
 
-      <div>
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" name="fechaNacimiento" ngModel
-            required>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" name="fechaNacimiento" ngModel
+              required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 offset-md-2">
+          <label for="email">Email </label>
+          <input type="text" class="form-control" placeholder="Email" name="email" ngModel required>
+        </div>
       </div>
 
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="Enter your email" name="email" ngModel required>
-        </mat-form-field>
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
+          <label for="telefono">Teléfono </label>
+          <input type="text" class="form-control" name="telefono" placeholder="felefono" ngModel required>
+        </div>
+        <div class="col-md-4 offset-md-2">
+          <label for="nuss">Nuss </label>
+          <input type="text" class="form-control" name="nuss" placeholder="nuss" ngModel required>
+        </div>
       </div>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="Localidad" name="localidad" ngModel required>
-        </mat-form-field>
 
-        <mat-form-field>
-          <input matInput placeholder="Provincia" name="provincia" ngModel required>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput placeholder="Dirección de residencia" name="domicilio" ngModel required>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput name="telefono" placeholder="felefono" ngModel required>
-        </mat-form-field>
-      </div>
       <!--<mat-form-field>
         <mat-select placeholder="Tipo de usuario">
           <mat-option value="option">Normal</mat-option>
@@ -59,26 +57,43 @@
         <mat-checkbox name="gestor" ngModel required>Check me!</mat-checkbox>
   
         <mat-checkbox name="admin" ngModel required>Check me!</mat-checkbox>-->
-      <div>
-        <mat-form-field>
-          <input matInput name="nuss" placeholder="nuss" ngModel required>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput name="username" placeholder="usuario" ngModel required>
-        </mat-form-field>
-      </div>
-      <mat-form-field>
-        <input matInput name="password" placeholder="contraseña" ngModel required>
-      </mat-form-field>
-      <div>
-        <mat-checkbox name="becario" value="false" ngModel required>Check me!</mat-checkbox>
+
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
+          <label for="username">Nombre de usuario</label>
+          <input type="text" class="form-control" name="username" placeholder="usuario" ngModel required>
+        </div>
+        <div class="col-md-4 offset-md-2">
+          <label for="password">Contraseña</label>
+          <input type="text" class="form-control" name="password" placeholder="contraseña" ngModel required>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-        Confirmar
-      </button>
+      <div class="row p-3">
+        <div class="col">
+          <label for="localidad">Localidad</label>
+          <input type="text" class="form-control" placeholder="Localidad" name="localidad" ngModel required>
+        </div>
+        <div class="col">
+          <label for="provincia">Provincia</label>
+          <input type="text" class="form-control" n placeholder="Provincia" name="provincia" ngModel required>
+        </div>
+        <div class="col">
+          <label for="domicilio">Domicilio</label>
+          <input type="text" class="form-control" placeholder="Domicilio" name="domicilio" ngModel required>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+          autocomplete="off">
+          Confirmar
+        </button>
+      </div>
+
     </form>
   </mat-card>
+</div>
+<div>
+  <p></p>
 </div>
