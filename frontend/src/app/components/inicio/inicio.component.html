@@ -1,13 +1,34 @@
 
-<div class="botones-inicio">
-        <div id="warningHorasExtra" class="alert alert-warning" style="display: none" role="alert">
-            <i class="material-icons">warning</i>   Estas haciendo horas extra!
+<div class="botones-inicio" style="display: inline;">
+    <div id="warningHorasExtra" class="alert alert-warning" style="display: none" role="alert">
+        <div style="display: inline;">
+        <i class="material-icons warningicon">warning</i>
+            Estas haciendo horas extra!
         </div>
-    <mat-button-toggle #toggleButton class="botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
-    <span>Llevas trabajando {{timeLabel}}, has iniciado la jornada a las {{startHour}}</span>
-    <span></span>
+    </div>
+    <div class="row">
+        <table class="tablaFichar">
+            <thead>
+                <td>Fichar</td>
+                <td>Tiempo trabajado</td>
+                <td>Hora inicio</td>
+                <td colspan="2">Vacaciones</td>
+            </thead>
+            <tr>
+                <td>
+                    <mat-button-toggle #toggleButton class=".col-md-4 botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+                </td>
+                <td class="campoTabla">{{timeLabel}}</td>
+                <td class="campoTabla" >{{startLabel}}</td>
+                <td class="campoTabla rowVacaciones nofichando">23</td>
+                <td class="campoTabla rowVacaciones fichando">3</td>
+            </tr>
+        </table>
+    </div>
+    
+</div>
+<div>
    
 </div>
-
 <app-history-table></app-history-table>
 

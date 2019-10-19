@@ -1,7 +1,8 @@
 .botonfichar{
     margin: 3rem;
-    height: 5rem;
-    width: 11rem;
+    height: 7rem;
+    width: 20rem;
+    font-size: 2rem;
 }
 .fichando {
     background-color: #e0584f;
@@ -16,4 +17,36 @@
   margin-right: 25px;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+#warningHorasExtra{
+    width: 90%;    
+    font-size: 2rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+.warningicon{
+    font-size: 2rem;
+}
+
+.campoTabla{
+    font-size: 5rem;
+}
+
+.rowVacaciones{
+    text-align: center;
+    width: 12.5%;
+}
+
+
+.tablaFichar{
+    margin-left: 5rem;
+    width:90%;
+}
+
+
+.tablaFichar > thead > td{
+    width:18%;
+    font-size: 2rem;
 }
