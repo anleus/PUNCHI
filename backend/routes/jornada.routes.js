@@ -1,5 +1,5 @@
 const express = require('express');
-const userFunctions = require('../controller/Jornada.controller');
+const userFunctions = require('../controller/jornada.controller');
 const router = express.Router();
 const jornada = require('../controller/jornada.controller');
 
