@@ -1,14 +1,13 @@
-const express = require('express');
-const userFunctions = require('../controller/Jornada.controller');
+const express = require("express");
+const userFunctions = require("../controller/departamento.controller");
 const router = express.Router();
-const jornada = require('../controller/jornada.controller');
+const jornada = require("../controller/departamento.controller");
 
 //routes
-router.get('/departamentos',jornada.getJornadas);
-router.get('/departamentos/:id', jornada.getJornadaById);
-router.post('/departamentos', jornada.addJornada);
-router.put('/departamentos', jornada.updateJornada);
-router.delete('/departamentos/:id', jornada.deleteJornada);
-
+/* router.get("/departamentos", departamento.getJornadas);
+router.get("/departamentos/:id", departamento.getJornadaById); */
+router.post("/departamentos", departamento.createDepartamento);
+/* router.put("/departamentos", departamento.updateJornada);
+router.delete("/departamentos/:id", departamento.deleteJornada); */
 
 module.exports = router;
