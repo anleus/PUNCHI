@@ -4,7 +4,7 @@
   }
 
 .card{
-    height: 200px;
+    height: 210px;
     display: flex;
     /*align-items: left;*/
     flex-direction: column;

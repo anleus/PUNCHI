@@ -12,6 +12,11 @@ userFunctions.getUserById = async (req, res, next) => {
     res.json(user);
 };
 
+userFunctions.getUserByUsername = async (req, res, next) => {
+    const user = await User.find(req.params.username);
+    res.json(user);
+};
+
 userFunctions.addUser = async (req,res,next) => {
     console.log("printgreq.value");
     console.log(req.body);
