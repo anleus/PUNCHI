@@ -16,7 +16,7 @@ export class UserService {
   }
 
   crearUsuario(user: User){
-    return this.http.post(`${this.AUTH_SERVER}/usuario`,
+    return this.http.post(`${this.AUTH_SERVER}/Users`,
       user);
   }
 
