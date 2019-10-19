@@ -1,5 +1,4 @@
 .botonfichar{
-    margin: 3rem;
     height: 7rem;
     width: 20rem;
     font-size: 2rem;
@@ -31,22 +30,37 @@
 }
 
 .campoTabla{
-    font-size: 5rem;
+    font-size: 2rem;
+    vertical-align: center;
 }
 
-.rowVacaciones{
+.vacaciones{
     text-align: center;
     width: 12.5%;
+    height:100%
 }
 
 
 .tablaFichar{
-    margin-left: 5rem;
     width:90%;
+    font-size: 2rem;
+    margin: 0 auto;
 }
 
+.filaVacaciones{
+    display: inline;
+}
 
-.tablaFichar > thead > td{
-    width:18%;
-    font-size: 2rem;
+.vacaciones{
+    width: 3rem;
+    min-height:3rem;
+}
+
+.expand{
+    height:100%;
+    width: 100%;
+}
+
+.hh{
+    font-size: 3rem;
 }

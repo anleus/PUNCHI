@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgModule, Injectable, OnInit } from '@angular/core';
+import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { JornadaService } from 'src/app/services/jornada.service';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 export interface EmployeeHistorial {
   day: string;
@@ -20,11 +24,29 @@ const EMPLOYEE_DATA_EXAMPLE: EmployeeHistorial[] = [
 @Component({
   selector: 'app-history-table',
   templateUrl: './history-table.component.html',
-  styleUrls: ['./history-table.component.css']
+  styleUrls: ['./history-table.component.css'],
+  providers: [JornadaService]
 })
-export class HistoryTableComponent {
+@NgModule({
+  declarations: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClient,
+    HttpClientModule,
+    HttpHeaders
+  ],
+  providers: [JornadaService]
+    })
+
+export class HistoryTableComponent implements OnInit {
   displayColumns: string[] = ['day', 'entry', 'exit', 'hExtra'];
   dataSource = EMPLOYEE_DATA_EXAMPLE;
   
+  ngOnInit() {
+
+  }
+
+  constructor(private jornadaService : JornadaService) { }
 
 }
