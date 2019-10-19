@@ -25,7 +25,15 @@ export class UserService {
   }
 
   getUser() {
-    return this.http.get(this.URL_API);
+    return this.http.get(this.URL_API + '/users/');
+  }
+
+  getUserByUsername(username) {
+    return this.http.get(this.URL_API + `/users/${username}`);
+  }
+
+  getUserById(_id) {
+    return this.http.get(this.URL_API + `/users/${_id}`);
   }
 
   putUser(user: User) {
