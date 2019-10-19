@@ -13,11 +13,11 @@ userFunctions.getUserById = async (req, res, next) => {
 };
 
 userFunctions.getUserByUsername = async (req, res, next) => {
-    const user = await User.find({username: req.body.username}, function (err, docs) {
+    var params = req.body.username;
+    const user = await User.find({username: req.params.username}, function (err, docs) {
         if (err) console.error(err);
         if (docs) console.log(docs);
     });
-    console.log('user is ' + user);
     res.json(user);
 };
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Users = new Schema({
+let Users = Schema({
     nombre: {
         type: String,
          required: true 
@@ -64,5 +64,6 @@ let Users = new Schema({
         type: Boolean, //per què dos voltes*
     }
 });
+    //}, {collection: 'User'});
 
 module.exports = mongoose.model('Users', Users, 'Users');
