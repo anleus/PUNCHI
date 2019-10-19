@@ -22,6 +22,7 @@ obtenerDepartamento(){
   return "RRHH";  //Se debe sustituir por el acceso a la BD obteniendo el departamento del usuario loggeado
 }
 
+nombreBotonGestion = "Gestionar ficha personal";
 departamento = this.obtenerDepartamento(); 
 Modo = "Modo administrador";
 gestion = false;
@@ -38,8 +39,10 @@ cambiarModo(){
 cambiarModoGestion(){
   if(this.gestion){
     this.gestion = false;
+    this.nombreBotonGestion = "Gestionar ficha personal";
   }else{
     this.gestion = true;
+    this.nombreBotonGestion = "Gestionar empleados";
   }
 }
 
