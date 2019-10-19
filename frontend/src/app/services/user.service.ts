@@ -3,11 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { User } from '../models/users';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
-
+  AUTH_SERVER: string = 'http://localhost:4000';
   selectedUser: User;
   employees: User[];
   
@@ -17,6 +15,10 @@ export class UserService {
     this.selectedUser = new User();
   }
 
+  crearUsuario(user: User){
+    return this.http.post(`${this.AUTH_SERVER}/usuario`,
+      user);
+  }
   postUser(employee: User) {
     return this.http.post(this.URL_API, employee);
   }

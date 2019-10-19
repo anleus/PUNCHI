@@ -18,17 +18,17 @@ userFunctions.addUser = async (req,res,next) => {
         apellidos: req.params.apellido,
         fechaNacimiento: req.params.date,
         email: req.params.email,
+        domicilio: req.params.domicilio,
         localidad: req.params.localidad,
         provincia: req.params.provincia,
-        domicilio: req.params.domicilio,
         telefono: req.params.telefono,
         gestor: req.params.gestor,
         admin: req.params.admin,
+        becario: req.params.becario,
         nuss: req.params.nuss,
         deleted: false,
         username: req.params.username,
         password: req.params.password,
-        becario: req.params.becario
     })
     user.save()
         .then(() => res.json({status: 'User saved'}))

@@ -17,8 +17,8 @@ import { HistoryTableComponent } from './components/history-table/history-table.
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/asignar-dep/user-list/user-list.component';
 import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin/modificar-ficha-admin.component';
-
-
+import { UserService } from './services/user.service'
+import { FormsModule } from '@angular/forms'
 const routes: Routes = [
   { path: 'crearusuario', component: CrearUsuarioComponent},
   { path: 'inicio', component: InicioComponent},
@@ -50,9 +50,10 @@ const routes: Routes = [
     AppRoutingModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
+    FormsModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

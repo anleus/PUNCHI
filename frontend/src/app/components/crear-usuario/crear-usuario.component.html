@@ -1,0 +1,65 @@
+<div class="container">
+  <form #frmCrearUsuario="ngForm" class="crearusuario-container" (ngSubmit)="onCrearUsuario(frmCrearUsuario)">
+    <mat-form-field>
+      <textarea matInput name="nombre" placeholder="Nombre" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Apellidos" name="apellidos" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" name="fecha" ngModel required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Dirección de residencia" name="direccion" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Localidad" name="localidad" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Provincia" name="provincia" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput name="telefono" placeholder="felefono" ngModel required ></textarea>
+    </mat-form-field>
+
+    <!--<mat-form-field>
+      <mat-select placeholder="Tipo de usuario">
+        <mat-option value="option">Normal</mat-option>
+        <mat-option value="option">Becario</mat-option>
+        <mat-option value="option">Gestor</mat-option>
+        <mat-option value="option">Administrador</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <mat-form-field>
+      <textarea matInput name="becario" placeholder="becario"  ngModel required></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput name="admin" placeholder="admin" ngModel required></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput name="gestor" placeholder="gestor" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput name="nuss" placeholder="nuss" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput name="nombreusuario" placeholder="usuario" ngModel required></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput name="contraseña" placeholder="contraseña" ngModel required></textarea>
+    </mat-form-field>
+
+    <button type="submit">Registrar usuario</button>
+  </form>
+</div>
