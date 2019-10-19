@@ -9,7 +9,7 @@ import { User } from '../models/users';
 export class UserService {
 
   selectedUser: User;
-  employees: User[];
+  users: User[];
   
   readonly URL_API = '';
 
@@ -17,16 +17,16 @@ export class UserService {
     this.selectedUser = new User();
   }
 
-  postUser(employee: User) {
-    return this.http.post(this.URL_API, employee);
+  postUser(user: User) {
+    return this.http.post(this.URL_API, user);
   }
 
   getUser() {
     return this.http.get(this.URL_API);
   }
 
-  putUser(employee: User) {
-    return this.http.put(this.URL_API + `/${employee._id}`, employee);
+  putUser(user: User) {
+    return this.http.put(this.URL_API + `/${user._id}`, user);
   }
 
   deleteUser(_id: string) {
