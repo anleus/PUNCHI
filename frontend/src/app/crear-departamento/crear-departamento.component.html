@@ -1,9 +1,9 @@
 <div>
     <h2>Crear departamento</h2>
     <mat-form-field class="col-7">
-        <input matInput placeholder="Nombre del departamento">
+        <input matInput (keyup)="nombreDepartamento($event)" placeholder="Nombre del departamento">
 
     </mat-form-field>
-    <button class="border" mat-button> Crear</button>
+    <button class="border" (click)="crearDepartamento()" mat-button> Crear</button>
 
 </div>
