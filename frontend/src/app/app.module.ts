@@ -17,6 +17,7 @@ import { HistoryTableComponent } from './components/history-table/history-table.
 import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/asignar-dep/user-list/user-list.component';
 import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin/modificar-ficha-admin.component';
+import { CrearDepartamentoComponent } from './crear-departamento/crear-departamento.component';
 
 
 const routes: Routes = [
@@ -41,7 +42,8 @@ const routes: Routes = [
     HistoryTableComponent,
     LoginComponent,
     UserListComponent,
-    ModificarFichaAdminComponent
+    ModificarFichaAdminComponent,
+    CrearDepartamentoComponent
   ],
   imports: [
     BrowserModule,
