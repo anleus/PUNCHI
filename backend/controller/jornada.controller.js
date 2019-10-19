@@ -8,12 +8,13 @@ jornadaFunctions.getJornadas = async (req, res, next) => {
     res.json(jornadas);
 }
 
-jornadaFunctions.getJornadaById = async (req, res, next) => {
-    const jornada = await Jornada.findById(req.body.id).catch(err => console.log(err));
-    if(jornada)
-        res.status(200).json(jornada);
+jornadaFunctions.getJornadaByUserId = async (req, res, next) => {
+    const jornadas = await Jornada.find({user: req.params.id});
+    if(!jornadas) 
+        res.status(500).json("Not Found"); 
     else
-        res.status(404).json('Not Found');
+        res.status(200).json(jornadas)
+
 }
 
 jornadaFunctions.addJornada = async (req, res, next) => {
