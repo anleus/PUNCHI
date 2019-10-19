@@ -11,6 +11,15 @@ input[type=text], select, textarea{
     resize: vertical;
   }
 
+  input[type=date], select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
   
   /* Style the label to display next to the inputs */
   label {
@@ -41,6 +50,7 @@ input[type=text], select, textarea{
     float: left;
     width: 25%;
     margin-top: 6px;
+    text-align: center;
   }
   
   /* Floating column for inputs: 75% width */
