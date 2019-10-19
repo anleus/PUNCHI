@@ -8,12 +8,17 @@ userFunctions.getUsers = async (req, res, next) => {
 };
 
 userFunctions.getUserById = async (req, res, next) => {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.body.id);
     res.json(user);
 };
 
 userFunctions.getUserByUsername = async (req, res, next) => {
-    const user = await User.find(req.params.username);
+    console.log('req.body ' + req.body);
+    const user = await User.find({username: req.body.username}, function (err, docs) {
+        if (err)console.error(err);
+        if (docs)console.log(docs);
+    });
+    console.log('user ' + user);
     res.json(user);
 };
 

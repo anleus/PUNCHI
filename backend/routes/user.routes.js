@@ -8,6 +8,6 @@ router.get('/users/:id', userFunctions.getUserById);
 router.post('/crearusuario',userFunctions.addUser);
 router.put('/users/:id', userFunctions.updateUser);
 router.delete('/users/:id', userFunctions.deleteUser);
-router.get('/users/:username', userFunctions.getUserByUsername);
+router.get('/users/username/:username', userFunctions.getUserByUsername);
 
 module.exports = router;

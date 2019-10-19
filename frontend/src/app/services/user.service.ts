@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getUserByUsername(username) {
-    return this.http.get(this.URL_API + `/users/${username}`);
+    return this.http.get(`${this.AUTH_SERVER}/users/username/${username}`);
   }
 
   getUserById(_id) {
