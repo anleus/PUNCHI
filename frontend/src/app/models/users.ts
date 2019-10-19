@@ -21,7 +21,7 @@ export class User {
     _id: string;
     nombre: string;
     apellidos: string;
-    fechaNacimiento: string;
+    fechaNacimiento: Date;
     email: string;
     localidad : string;
     provincia : string;
