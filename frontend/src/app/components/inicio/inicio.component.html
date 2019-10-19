@@ -1,4 +1,3 @@
-
 <div class="botones-inicio" style="display: inline;">
     <div id="warningHorasExtra" class="alert alert-warning" style="display: none" role="alert">
         <div style="display: inline;">
@@ -6,24 +5,41 @@
             Estas haciendo horas extra!
         </div>
     </div>
-    <div class="row">
-        <table class="tablaFichar">
-            <thead>
-                <td>Fichar</td>
-                <td>Tiempo trabajado</td>
-                <td>Hora inicio</td>
-                <td colspan="2">Vacaciones</td>
-            </thead>
-            <tr>
-                <td>
-                    <mat-button-toggle #toggleButton class=".col-md-4 botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
-                </td>
-                <td class="campoTabla">{{timeLabel}}</td>
-                <td class="campoTabla" >{{startLabel}}</td>
-                <td class="campoTabla rowVacaciones nofichando">23</td>
-                <td class="campoTabla rowVacaciones fichando">3</td>
-            </tr>
-        </table>
+    <div class="principal container-fluid">
+        <div class="row">
+            <div class="row tablaFichar">
+                <div class="col">
+                    <div class="row">Fichar</div> 
+                </div>
+                <div class="col">
+                    <div class="row">Tiempo trabajado:</div>
+                </div>
+                <div class="col">
+                        <div class="row">Hora inicio</div>
+
+                </div>
+                <div class="col">Vacaciones
+                        <button class="border" style="display: inline-block" mat-button>Solicitar</button></div>  
+            </div>
+            <div class="row tablaFichar">
+                    <div class="col campoTabla">
+
+                            <mat-button-toggle #toggleButton class=".col-md-4 botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+                    </div>
+                    <div class="col text-center hh">
+                        {{timeLabel}}
+                    </div>
+                    <div class="col text-center hh">
+                        {{startLabel}}                    
+                    </div>
+                    <div class="col">
+                        <div class="row py-2" style="height: 100%">
+                            <div class="col nofichando text-center py-4">23</div>
+                            <div class="col fichando text-center py-4">3</div>
+                        </div>
+
+                </div>
+            
     </div>
     
 </div>
