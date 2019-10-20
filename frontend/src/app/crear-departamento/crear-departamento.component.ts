@@ -28,9 +28,8 @@ export class CrearDepartamentoComponent implements OnInit {
 
   crearDepartamento() {
     var departamento = {
-      name: this.nombre
+      nombre: this.nombre
     };
-    console.log(departamento);
     this.departamentosService.postDepartamentos(departamento);
   }
 }
