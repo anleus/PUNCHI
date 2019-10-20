@@ -42,17 +42,12 @@ export class UserService {
       .then(this.onGetUserById.bind(this));
   }
 
-<<<<<<< HEAD
-  getUserById(_id) {
-    return this.http.get(this.URL_API + `/users/${_id}`);
-=======
   onGetUserById(res: any) {
     return Promise.resolve(res);
   }
 
   onGetUserByName(res: any) {
     return Promise.resolve(res);
->>>>>>> c4b5f641a002d52c37eaaae10f2dc9cd660ac845
   }
 
   putUser(user: User) {
