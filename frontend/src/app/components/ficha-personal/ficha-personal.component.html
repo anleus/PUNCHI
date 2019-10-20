@@ -64,7 +64,7 @@
           <label>Provincia</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="provincia" [(value)]="user.provincia" class="form-control"
+          <input type="text" formControlName="provincia" [value]="user.provincia" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
           <div *ngIf="submitted && f.provincia.errors" class="invalid-feedback">
             <div *ngIf="f.provincia.errors.required">Provincia es obligatoria</div>
