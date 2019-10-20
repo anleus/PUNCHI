@@ -24,7 +24,10 @@ export class FichaPersonalComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      provincia: ["", Validators.required]
+      provincia: ["", Validators.required],
+      email: ["", Validators.required],
+      domicilio: ["", Validators.required],
+      password: ["", Validators.required],
     });
 
     //PASO2: llamar a userservice y getuserbyid
