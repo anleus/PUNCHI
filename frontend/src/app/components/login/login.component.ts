@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable, NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { AuthenticationService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -13,43 +14,31 @@ import { HttpClient } from '@angular/common/http';
   imports: [
     HttpClient
   ],
-  providers: [UserService]
+  providers: [AuthenticationService]
     })
 
 export class LoginComponent implements OnInit {
 
-  constructor(private UserService : UserService) { }
+  constructor(private authservice : AuthenticationService) { }
 
   ngOnInit() {
   }
 
   loginUser(username, pass) {
-    // this.UserService.getUserByUsername(username).subscribe(
-    //   res => {
-    //     console.log(res);
-    // },
-    //   err => {
-    //     console.error(err);
-    //   });
-  }
+    //this.authservice.login(username.pass);
+    //this.UserService.getUserByUsername(username)
+    
+    this.authservice.login(username,pass).subscribe(
+      res => {
+        //Si retorna un user la autenticación es correcta y puedes pasar
+        console.log("Puedes pasar");
+    },
+      err => {
+        //ERROR 
+        //NO PUEDES PASAAR
+        console.error(err);
+        console.log("NO puedes pasar");
+      });
 
-  prueba() {
-    // this.UserService.getUsers().subscribe(
-    //   res => {
-    //     console.log(res);
-    // },
-    // err => {
-    //   console.log(err);
-    // });
-  }
-
-  loginId(id, pass) {
-    // this.UserService.getUserById(id).subscribe(
-    //   res => {
-    //     console.log(res);
-    // },
-    //   err => {
-    //     console.log(err);
-    //   });
   }
 }
