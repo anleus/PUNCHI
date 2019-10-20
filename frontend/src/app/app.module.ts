@@ -18,8 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserListComponent } from './components/asignar-dep/user-list/user-list.component';
 import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin/modificar-ficha-admin.component';
 import { UserService } from './services/user.service'
-import { FormsModule } from '@angular/forms'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CrearDepartamentoComponent } from './crear-departamento/crear-departamento.component';
 
 
@@ -57,7 +56,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
     FormsModule,
-    LayoutModule
+    LayoutModule,
+    ReactiveFormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

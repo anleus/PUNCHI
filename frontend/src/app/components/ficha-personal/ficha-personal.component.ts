@@ -1,58 +1,88 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/models/users';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
-
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { User } from "src/app/models/users";
+import { UserService } from "src/app/services/user.service";
+import { DatePipe } from '@angular/common';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-ficha-personal',
-  templateUrl: './ficha-personal.component.html',
-  styleUrls: ['./ficha-personal.component.css']
+  selector: "app-ficha-personal",
+  templateUrl: "./ficha-personal.component.html",
+  styleUrls: ["./ficha-personal.component.css"],
+  providers: [DatePipe]
 })
 export class FichaPersonalComponent implements OnInit {
-
-
   //PASO3: crear un objeto user
-  userDto : User;
+  public user: User;
+  public userForm: FormGroup;
+  submitted = false;
+  
 
-  constructor(private userservice : UserService ) { 
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) {
     //PASO 1: llamar al service que sea necesario
+    this.user = new User();
   }
 
   ngOnInit() {
+    this.userForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      telefono: ['', Validators.required],
+      domicilio: ['', Validators.required],
+      password: ['', Validators.required],
+      provincia: ['', Validators.required]
+    });
+
     //PASO2: llamar a userservice y getuserbyid
-    //var userDto = userservice.getElementById('5d94cb6ed634648da19d6a6d');
+    this.userService
+      .getUserByUsername("root")
+      .then(this.onGetUserByName.bind(this));
   }
 
-
-
-
- /**
- * Clase para obtener el departamento del usuario
- */
-obtenerDepartamento(){
-  return "RRHH";  //Se debe sustituir por el acceso a la BD obteniendo el departamento del usuario loggeado
-}
-
-departamento = this.obtenerDepartamento(); 
-Modo = "Modo administrador";
-cambiarModo(){
-  if(this.departamento == "RRHH"){
-    this.departamento = "Gestor";
-  }else if(this.departamento == "Gestor"){
-    this.departamento = "Empleado";
-  }else{
-    this.departamento = "RRHH";
+  private onGetUserByName(res: any) {
+    this.user = res;
   }
-}
 
-comprobarDepartamento(){
-  return this.departamento == "RRHH" || this.departamento == "Gestor";
-}
+  onSubmit() {
+    this.submitted = true;
 
-comprobarDepartamentoAdmin(){
-  return this.departamento == "RRHH";
-}
+    // stop here if form is invalid
+    if (this.userForm.invalid) {
+      return;
+    }
+    
+    this.userService.putUser(this.user);
+  }
 
+  // convenience getter for easy access to form fields
+  get f() { return this.userForm.controls; }
 
+  /**
+   * Clase para obtener el departamento del usuario
+   */
+  obtenerDepartamento() {
+    return "RRHH"; //Se debe sustituir por el acceso a la BD obteniendo el departamento del usuario loggeado
+  }
+
+  departamento = this.obtenerDepartamento();
+  Modo = "Modo administrador";
+  cambiarModo() {
+    if (this.departamento == "RRHH") {
+      this.departamento = "Gestor";
+    } else if (this.departamento == "Gestor") {
+      this.departamento = "Empleado";
+    } else {
+      this.departamento = "RRHH";
+    }
+  }
+
+  comprobarDepartamento() {
+    return this.departamento == "RRHH" || this.departamento == "Gestor";
+  }
+
+  comprobarDepartamentoAdmin() {
+    return this.departamento == "RRHH";
+  }
 }
