@@ -15,10 +15,33 @@ export class CrearUsuarioComponent implements OnInit {
   }
   
   onCrearUsuario(form)  {
+    this.determinarusuario(form);
     console.log(form.value);
     this.userService.crearUsuario(form.value).subscribe(res => {
     this.router.navigateByUrl('/inicio');
   })  }
   
+  determinarusuario(form) {
+    if(form.value.tipousuario == "normal") {
+      form.value.becario = false;
+      form.value.gestor = false;
+      form.value.admin = false;
+    }
+    else if(form.value.tipousuario == "becario") {
+      form.value.becario = true;
+      form.value.gestor = false;
+      form.value.admin = false;
+    }
+    else if(form.value.tipousuario == "gestor") {
+      form.value.becario = false;
+      form.value.gestor = true;
+      form.value.admin = false;
+    }
+    else {
+      form.value.becario = false;
+      form.value.gestor = false;
+      form.value.admin = true;
+    }
+  }
 
 }
