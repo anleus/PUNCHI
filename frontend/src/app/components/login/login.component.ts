@@ -24,33 +24,33 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(username, pass) {
-    this.UserService.getUserByUsername(username).subscribe(
-      res => {
-        console.log(res);
-    },
-      err => {
-        console.error(err);
-      });
+    // this.UserService.getUserByUsername(username).subscribe(
+    //   res => {
+    //     console.log(res);
+    // },
+    //   err => {
+    //     console.error(err);
+    //   });
   }
 
   prueba() {
-    this.UserService.getUser().subscribe(
-      res => {
-        console.log(res);
-    },
-    err => {
-      console.log(err);
-    });
+    // this.UserService.getUsers().subscribe(
+    //   res => {
+    //     console.log(res);
+    // },
+    // err => {
+    //   console.log(err);
+    // });
   }
 
   loginId(id, pass) {
-    this.UserService.getUserById(id).subscribe(
-      res => {
-        console.log(res);
-    },
-      err => {
-        console.log(err);
-      });
+    // this.UserService.getUserById(id).subscribe(
+    //   res => {
+    //     console.log(res);
+    // },
+    //   err => {
+    //     console.log(err);
+    //   });
   }
 
   console(email, pass) {
