@@ -14,7 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
-    this.url = environment.url + "/users";
+    this.url = environment.urlb + "/users";
   }
 
   crearUsuario(user: User) {
@@ -52,7 +52,7 @@ export class UserService {
   }
 
   putUser(user: User) {
-    return this.http.put(this.url + "/" + user._id, user);
+    return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
   }
 
   deleteUser(id: string) {
