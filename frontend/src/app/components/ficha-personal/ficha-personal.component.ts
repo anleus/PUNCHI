@@ -2,17 +2,21 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "src/app/models/users";
 import { UserService } from "src/app/services/user.service";
+import { DatePipe } from '@angular/common';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 
 @Component({
   selector: "app-ficha-personal",
   templateUrl: "./ficha-personal.component.html",
-  styleUrls: ["./ficha-personal.component.css"]
+  styleUrls: ["./ficha-personal.component.css"],
+  providers: [DatePipe]
 })
 export class FichaPersonalComponent implements OnInit {
   //PASO3: crear un objeto user
   public user: User;
   public userForm: FormGroup;
   submitted = false;
+  
 
   constructor(
     private userService: UserService,
@@ -24,7 +28,11 @@ export class FichaPersonalComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      provincia: ["", Validators.required]
+      email: ['', Validators.required],
+      telefono: ['', Validators.required],
+      domicilio: ['', Validators.required],
+      password: ['', Validators.required],
+      provincia: ['', Validators.required]
     });
 
     //PASO2: llamar a userservice y getuserbyid
@@ -44,7 +52,7 @@ export class FichaPersonalComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    debugger
+
     this.userService.putUser(this.user);
   }
 

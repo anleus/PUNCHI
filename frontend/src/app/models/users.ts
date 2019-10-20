@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
+
 export class User {
   _id: string;
   nombre: string;
   apellidos: string;
-  fechaNacimiento: Date;
+  fechaNacimiento: string;
   email: string;
   localidad: string;
   provincia: string;
