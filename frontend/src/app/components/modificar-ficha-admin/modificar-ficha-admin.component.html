@@ -8,13 +8,7 @@
     
 </div>
 
-<tbody>
-  ddd
-  <tr *ngFor="let user of users"> 
-    <p>hola</p>
-    <p>{{user.nombre}}</p>
-  </tr>
-</tbody>
+
 
 <body>
     <p>&nbsp;</p><p>&nbsp;</p>
@@ -69,8 +63,6 @@
       <div *ngIf="comprobarDepartamentoAdmin()" class="example-container">
           <mat-form-field>
             <mat-select placeholder="Departamento">
-              <mat-option value="option">Opcion 1</mat-option>
-              <mat-option value="option">Opcion 2</mat-option>
               <mat-option value="option">Opcion 3</mat-option>
               <mat-option value="option">Opcion 4</mat-option>
             </mat-select>
@@ -79,10 +71,7 @@
         <div *ngIf="comprobarDepartamento()" class="example-container">
             <mat-form-field>
               <mat-select placeholder="Nombre">
-                <mat-option value="option">Opcion 1</mat-option>
-                <mat-option value="option">Opcion 2</mat-option>
-                <mat-option value="option">Opcion 3</mat-option>
-                <mat-option value="option">Opcion 4</mat-option>
+                <mat-option *ngFor="let user of users" value="option">{{user.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
