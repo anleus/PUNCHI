@@ -31,7 +31,6 @@ userFunctions.getUserByUsername = async (req, res, next) => {
     return;
   }
 
-<<<<<<< HEAD
     console.log('Usuario encontrado - Continuando con la función...')
     const userJ =  JSON.parse(JSON.stringify(user));
 
@@ -42,14 +41,6 @@ userFunctions.getUserByUsername = async (req, res, next) => {
     }
     
     res.json(user);
-=======
-  console.log('Continuando con la función...')
-  const userJ = JSON.parse(JSON.stringify(user));
-
-  //if (userJ.password != passfromreq) return error('Contraseña incorrecta');
-
-  res.json(user);
->>>>>>> cc31f8d3a9a76837f96063b59edc56f8ac33894f
 };
 
 userFunctions.addUser = async (req, res, next) => {
