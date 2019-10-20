@@ -24,7 +24,7 @@ export class FichaPersonalComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder
   ) {
-    //PASO 1: llamar al service que sea necesario
+
     this.user = new User();
   }
 
@@ -37,12 +37,11 @@ export class FichaPersonalComponent implements OnInit {
       provincia: ['', Validators.required]
     });
 
-    //PASO2: llamar a userservice y getuserbyid
-    console.log(this.user + "ficha personal component");
     this.userService
       .getUserByUsernameDOS("root")
       .subscribe(this.onGetUserByName.bind(this));
-    console.log(this.user + "dos");
+      console.log(this.user.becario);
+ 
   }
 
   private onGetUserByName(res: any) {
@@ -51,11 +50,12 @@ export class FichaPersonalComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+    console.log(this.userForm);
     // stop here if form is invalid
-    /*if (this.userForm.invalid) {
+    if (this.userForm.invalid) {
       return;
-    }*/
+    }
+    console.log(this.user);
     this.userService.putUser(this.user);
   }
 
