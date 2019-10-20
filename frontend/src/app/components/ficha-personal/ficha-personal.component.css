@@ -2,6 +2,7 @@
     text-align: center;
 }
 
+
 input[type=text], select, textarea{
     width: 100%;
     padding: 12px;
@@ -10,6 +11,17 @@ input[type=text], select, textarea{
     box-sizing: border-box;
     resize: vertical;
   }
+
+  input[name=localidad] select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+
+  
 
   input[type=date], select, textarea{
     width: 100%;
@@ -28,8 +40,18 @@ input[type=text], select, textarea{
   }
   
   /* Style the submit button */
-  input[type=submit] {
+  button{
     background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+
+  button:disabled {
+    background-color: #A9A7A6;
     color: white;
     padding: 12px 20px;
     border: none;

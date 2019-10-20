@@ -21,14 +21,8 @@ export class FichaPersonalComponent implements OnInit {
 
   ngOnInit() {
     //PASO2: llamar a userservice y getuserbyid
-    var user = this.userservice.getUser();
+    //var userDto = userservice.getElementById('5d94cb6ed634648da19d6a6d');
   }
-
-
-
-
-
-
 
 
 
