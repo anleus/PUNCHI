@@ -38,9 +38,11 @@ export class FichaPersonalComponent implements OnInit {
     });
 
     //PASO2: llamar a userservice y getuserbyid
+    console.log(this.user + "ficha personal component");
     this.userService
-      .getUserByUsername("root")
-      .then(this.onGetUserByName.bind(this));
+      .getUserByUsernameDOS("root")
+      .subscribe(this.onGetUserByName.bind(this));
+    console.log(this.user + "dos");
   }
 
   private onGetUserByName(res: any) {
