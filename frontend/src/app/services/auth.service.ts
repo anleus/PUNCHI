@@ -21,14 +21,14 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username, pass) {
-        return this.http.get(`${this.AUTH_SERVER}/users/username/${username}`)
+    login(username, password) {
+        return this.http.post(`${this.AUTH_SERVER}/users/username/${username}`, {username, password})
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 //this.currentUserSubject.next(user);
                 return user;
             }));
-      } //Esta es la mía
+    }
 
     /* login(username, password) {
         return this.http.post<any>(`${config.apiUrl}/users/authenticate`, { username, password })
