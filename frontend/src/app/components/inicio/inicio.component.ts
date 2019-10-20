@@ -55,11 +55,8 @@ export class InicioComponent implements OnInit {
     if(localStorage.getItem('jornada')){
       this.toggleFicharState(true);
       var timeStart = new Date(JSON.parse(localStorage.getItem('jornada')).begin);
-      console.log('timeStart: ' + timeStart + ' ' + timeStart.getTime());
       var now = new Date()
-      console.log('now ' + now + ' ' + now.getTime());
       this.tiempoFichando = Math.floor((now.getTime() - timeStart.getTime()) / 1000);
-      console.log('diff' + this.tiempoFichando);
       this.startLabel = this.getCurrentHour(timeStart, true);
     }
   }
