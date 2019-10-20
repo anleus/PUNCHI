@@ -22,24 +22,8 @@ userFunctions.getUserByUsername = async (req, res, next) => {
 };
 
 userFunctions.addUser = async (req,res,next) => {
-    console.log("printgreq.value");
-    console.log(req.body);
+    //console.log(req.body);
     const user = new User({
-        /*nombre: req.params.nombre,
-        apellidos: req.params.apellido,
-        fechaNacimiento: req.params.date,
-        email: req.params.email,
-        localidad: req.params.localidad,
-        provincia: req.params.provincia,
-        domicilio: req.params.domicilio,
-        telefono: req.params.telefono,
-        gestor: req.params.gestor,
-        admin: req.params.admin,
-        nuss: req.params.nuss,
-        deleted: false,
-        username: req.params.username,
-        password: req.params.password,
-        becario: req.params.becario*/
         nombre: req.body.nombre,
         apellidos: req.body.apellidos,
         fechaNacimiento: req.body.fechaNacimiento,
@@ -48,14 +32,15 @@ userFunctions.addUser = async (req,res,next) => {
         provincia: req.body.provincia,
         domicilio: req.body.domicilio,
         telefono: parseInt(req.body.telefono,10),
-        gestor: false,
-        admin: false,
+        gestor: req.body.gestor,
+        admin: req.body.admin,
         nuss: parseInt(req.body.telefono,10),
         deleted: false,
         username: req.body.username,
         password: req.body.password,
-        becario: false
+        becario: req.body.becario
     })
+    console.log(user);
     user.save()
         .then(() => res.json({status: 'User saved'}))
         .catch((err) => {
