@@ -54,6 +54,7 @@ userFunctions.addUser = async (req, res, next) => {
 };
 
 userFunctions.updateUser = (req, res, next) => {
+  console.log("stella");
   const user = new User({
     nombre: req.params.nombre,
     apellidos: req.params.apellido,
@@ -71,6 +72,7 @@ userFunctions.updateUser = (req, res, next) => {
     password: req.params.password,
     becario: req.params.becario
   });
+
   User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
       res.status(200);
