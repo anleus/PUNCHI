@@ -28,11 +28,11 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
-  AUTH_SERVER: string = 'http://localhost:4000';
+  
   getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
     //console.log(username)
     //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
-    return this.http.get(`${this.AUTH_SERVER}/users/username/${username}`);
+    return this.http.get(this.url + `/username/${username}`);
   }
 
   getUserByUsername(username: string): Promise<any> {

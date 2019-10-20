@@ -1,6 +1,6 @@
 <mat-sidenav-container class="nav-container">
     <!-- Contenedor panel lateral -->
-    <mat-sidenav #sidenav *ngIf="!flag" [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+    <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
         <div class="sidenav-header">
                 <mat-toolbar color="primary">Menu</mat-toolbar>
                 <mat-nav-list>
