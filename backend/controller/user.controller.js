@@ -8,33 +8,61 @@ userFunctions.getUsers = async (req, res, next) => {
 };
 
 userFunctions.getUserById = async (req, res, next) => {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.body.id);
+    res.json(user);
+};
+
+userFunctions.getUserByUsername = async (req, res, next) => {
+    var params = req.body.username;
+    const user = await User.find({username: req.params.username}, function (err, docs) {
+        if (err) console.error(err);
+        if (docs) console.log(docs);
+    });
     res.json(user);
 };
 
 userFunctions.addUser = async (req,res,next) => {
+    console.log("printgreq.value");
+    console.log(req.body);
     const user = new User({
-        nombre: req.params.nombre,
+        /*nombre: req.params.nombre,
         apellidos: req.params.apellido,
         fechaNacimiento: req.params.date,
         email: req.params.email,
-        domicilio: req.params.domicilio,
         localidad: req.params.localidad,
         provincia: req.params.provincia,
+        domicilio: req.params.domicilio,
         telefono: req.params.telefono,
         gestor: req.params.gestor,
         admin: req.params.admin,
-        becario: req.params.becario,
         nuss: req.params.nuss,
         deleted: false,
         username: req.params.username,
         password: req.params.password,
+        becario: req.params.becario*/
+        nombre: req.body.nombre,
+        apellidos: req.body.apellidos,
+        fechaNacimiento: req.body.fechaNacimiento,
+        email: req.body.email,
+        localidad: req.body.localidad,
+        provincia: req.body.provincia,
+        domicilio: req.body.domicilio,
+        telefono: parseInt(req.body.telefono,10),
+        gestor: false,
+        admin: false,
+        nuss: parseInt(req.body.telefono,10),
+        deleted: false,
+        username: req.body.username,
+        password: req.body.password,
+        becario: false
     })
     user.save()
         .then(() => res.json({status: 'User saved'}))
         .catch((err) => {
             res.status(400);
-            res.send('Bad request')}
+            console.error(err);
+        }
+
         );
 };
 
