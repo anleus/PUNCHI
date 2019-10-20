@@ -26,21 +26,20 @@ export class LoginComponent implements OnInit {
   loginUser(username, pass) {
     this.UserService.getUserByUsername(username).subscribe(
       res => {
-        console.log(res);
+        var obj = JSON.parse(JSON.stringify(res));
+        var usfrombd    = obj[0].username;
+        var passfrombd  = obj[0].password;
+        console.log("obj username is " + obj[0].username);
+        console.log("obj pass is " + obj[0].password);
+
+        if (passfrombd == pass) {
+          console.log("You are in!");
+        } else console.log("You are NOT!");
     },
       err => {
         console.error(err);
       });
-  }
 
-  prueba() {
-    this.UserService.getUser().subscribe(
-      res => {
-        console.log(res);
-    },
-    err => {
-      console.log(err);
-    });
   }
 
   loginId(id, pass) {
@@ -52,9 +51,4 @@ export class LoginComponent implements OnInit {
         console.log(err);
       });
   }
-
-  console(email, pass) {
-    console.log(email, pass);
-  }
-
 }
