@@ -12,15 +12,15 @@ userFunctions.getUserById = async (req, res, next) => {
   res.json(user);
 };
 
-userFunctions.getUserByUsername = async (req, res, next) => {
-  var params = req.body.username;
-  const user = await User.findOne({ username: req.params.username }, function(
-    err,
-    docs
-  ) {
+userFunctions.login = async (req, res, next) => {
+  var usernamefromreq = req.params.username;
+  var passfromreq     = req.params.password;
+  const user = await User.findOne({ username: usernamefromreq }, function(err, docs) {
     if (err) console.error(err);
     if (docs) console.log(docs);
   });
+  const userJ =  JSON.parse(JSON.stringify(user));
+  
   res.json(user);
 };
 
