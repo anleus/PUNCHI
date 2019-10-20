@@ -9,6 +9,7 @@ import {
   HttpErrorResponse
 } from "@angular/common/http";
 import { DepartamentosService } from "src/app/services/departamentos.service";
+import { Departamento } from "src/app/models/departamento";
 import { DatePipe } from '@angular/common';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 
@@ -28,7 +29,7 @@ import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dia
 export class ModificarFichaAdminComponent implements OnInit {
   public user: User;
   users : User[];
-  departamentos : Departamentos[];
+  departamentos : Departamento[];
   public userForm: FormGroup;
   submitted = false;
   
@@ -73,17 +74,17 @@ export class ModificarFichaAdminComponent implements OnInit {
 
   }
 
-  getDepartamentos(){
-    /*this.userService.getUsuarios()
+  /*getDepartamentos(){
+    this.userService.getUsuarios()
     .subscribe(res =>
       this.userService.getUsuarios = res as User[];
       console.log(res);
       )
-    */
+    
    var departamentoObs = this.departamentosService.getDepartamentos()
    departamentoObs.subscribe(this.departamentos => this.departamentos = departamentos)
 
-  }
+  }*/
 
 
 
