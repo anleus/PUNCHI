@@ -24,31 +24,32 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(username, pass) {
-    this.UserService.getUserByUsername(username).subscribe(
-      res => {
-        var obj = JSON.parse(JSON.stringify(res));
-        var usfrombd    = obj[0].username;
-        var passfrombd  = obj[0].password;
-        console.log("obj username is " + obj[0].username);
-        console.log("obj pass is " + obj[0].password);
+    // this.UserService.getUserByUsername(username).subscribe(
+    //   res => {
+    //     console.log(res);
+    // },
+    //   err => {
+    //     console.error(err);
+    //   });
+  }
 
-        if (passfrombd == pass) {
-          console.log("You are in!");
-        } else console.log("You are NOT!");
-    },
-      err => {
-        console.error(err);
-      });
-
+  prueba() {
+    // this.UserService.getUsers().subscribe(
+    //   res => {
+    //     console.log(res);
+    // },
+    // err => {
+    //   console.log(err);
+    // });
   }
 
   loginId(id, pass) {
-    this.UserService.getUserById(id).subscribe(
-      res => {
-        console.log(res);
-    },
-      err => {
-        console.log(err);
-      });
+    // this.UserService.getUserById(id).subscribe(
+    //   res => {
+    //     console.log(res);
+    // },
+    //   err => {
+    //     console.log(err);
+    //   });
   }
 }
