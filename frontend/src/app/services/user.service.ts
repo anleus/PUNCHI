@@ -27,6 +27,12 @@ export class UserService {
   getUsers() {
     return this.http.get(this.url);
   }
+  AUTH_SERVER: string = 'http://localhost:4000';
+  getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
+    //console.log(username)
+    //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
+    return this.http.get(`${this.AUTH_SERVER}/users/username/${username}`);
+  }
 
   getUserByUsername(username: string): Promise<any> {
     return this.http
@@ -47,6 +53,8 @@ export class UserService {
   }
 
   onGetUserByName(res: any) {
+   //console.log("USERSERIVE 2");
+    //console.log(res);
     return Promise.resolve(res);
   }
 

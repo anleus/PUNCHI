@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router'
-import {UserService} from '../../services/user.service'
-import {User} from '../../models/users';
+import { Router } from '@angular/router'
+import { UserService } from '../../services/user.service'
+import { User } from '../../models/users';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -11,14 +11,16 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class CrearUsuarioComponent implements OnInit {
   hide = true;
-  usuarioform = new FormGroup ({
+  public user: User;
+  
+  usuarioform = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     apellidos: new FormControl('', [Validators.required]),
     fechaNacimiento: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     tipousuario: new FormControl('', [Validators.required]),
     nuss: new FormControl(),
-    telefono: new FormControl('', [Validators.required ]),
+    telefono: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     localidad: new FormControl('', [Validators.required]),
@@ -26,31 +28,36 @@ export class CrearUsuarioComponent implements OnInit {
     domicilio: new FormControl('', [Validators.required])
 
   });
-  constructor(private userService:UserService, private router: Router ) { }
+  constructor(private userService: UserService, private router: Router) { 
+    this.user = new User();
+  }
 
   ngOnInit() {
   }
-  
-  onCrearUsuario(form)  {
-    this.determinarusuario(form);
-    if(form.value.nuss == "") form.value.nuss = 0;
-    console.log(form.value);
-    this.userService.crearUsuario(form.value).subscribe(res => {
-    this.router.navigateByUrl('/inicio');
-  })  }
-  
+
+  onCrearUsuario(form) {
+    console.log(this.usuarioExistente(form.value.username));
+
+    //this.determinarusuario(form);
+    //if (form.value.nuss == "") form.value.nuss = 0;
+    //console.log(form.value);
+    //this.userService.crearUsuario(form.value).subscribe(res => {
+    //  this.router.navigateByUrl('/inicio');
+    //})
+  }
+
   determinarusuario(form) {
-    if(form.value.tipousuario == "normal") {
+    if (form.value.tipousuario == "normal") {
       form.value.becario = false;
       form.value.gestor = false;
       form.value.admin = false;
     }
-    else if(form.value.tipousuario == "becario") {
+    else if (form.value.tipousuario == "becario") {
       form.value.becario = true;
       form.value.gestor = false;
       form.value.admin = false;
     }
-    else if(form.value.tipousuario == "gestor") {
+    else if (form.value.tipousuario == "gestor") {
       form.value.becario = false;
       form.value.gestor = true;
       form.value.admin = false;
@@ -62,4 +69,16 @@ export class CrearUsuarioComponent implements OnInit {
     }
   }
 
+  usuarioExistente(username) {
+    this.userService.getUserByUsernameDOS(username).subscribe(this.comprobarusarioExistente.bind(this));
+      console.log(this.user)
+      console.log("enmedio")
+      console.log(this.user.nombre)
+      if(this.user== length[0]) return false;
+      else return true;
+  }
+
+  comprobarusarioExistente(res: any) {
+    this.user = res;
+  }
 }

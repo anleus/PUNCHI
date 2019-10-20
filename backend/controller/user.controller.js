@@ -13,65 +13,35 @@ userFunctions.getUserById = async (req, res, next) => {
 };
 
 userFunctions.getUserByUsername = async (req, res, next) => {
-    //console.log(req);
-    var usernamefromreq = req.body.username;
-    var passfromreq     = req.body.password;
-    console.log('Username from req: ' + usernamefromreq);
-    console.log('Pass from req: '     + passfromreq);
-    const user = await User.findOne({ username: usernamefromreq }, function(err, docs) {
-        if (err) {
-            console.log(err)
-            console.log('Ha habido algun error');
-        }
-    });
-
-    if (user == null) {
-        console.log('No se ha encontrado ningún usuario');
-        res.json(null);
-        return;
+  //console.log(req);
+  var usernamefromreq = req.params.username;
+  var passfromreq = req.body.password;
+  console.log('Username from req: ' + usernamefromreq);
+  console.log('Pass from req: ' + passfromreq);
+  const user = await User.find({ username: usernamefromreq }, function (err, docs) {
+    if (err) {
+      console.error(err)
+      console.log('Ha habido algun error');
     }
+  });
 
-    console.log('Continuando con la función...')
-    const userJ =  JSON.parse(JSON.stringify(user));
+  if (user == null) {
+    console.log('No se ha encontrado ningún usuario');
+    res.json(null);
+    return;
+  }
 
-    if (userJ.password != passfromreq) return error('Contraseña incorrecta');
-    
-    res.json(user);
+  console.log('Continuando con la función...')
+  const userJ = JSON.parse(JSON.stringify(user));
+
+  if (userJ.password != passfromreq) return error('Contraseña incorrecta');
+
+  res.json(user);
 };
 
-<<<<<<< HEAD
-userFunctions.addUser = async (req,res,next) => {
-    //console.log(req.body);
-    const user = new User({
-        nombre: req.body.nombre,
-        apellidos: req.body.apellidos,
-        fechaNacimiento: req.body.fechaNacimiento,
-        email: req.body.email,
-        localidad: req.body.localidad,
-        provincia: req.body.provincia,
-        domicilio: req.body.domicilio,
-        telefono: req.body.telefono,
-        gestor: req.body.gestor,
-        admin: req.body.admin,
-        nuss: req.body.nuss,
-        deleted: false,
-        username: req.body.username,
-        password: req.body.password,
-        becario: req.body.becario
-    })
-    console.log(user);
-    user.save()
-        .then(() => res.json({status: 'User saved'}))
-        .catch((err) => {
-            res.status(400);
-            console.error(err);
-        }
 
-        );
-=======
 userFunctions.addUser = async (req, res, next) => {
-  console.log("printgreq.value");
-  console.log(req.body);
+  //console.log(req.body);
   const user = new User({
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
@@ -80,24 +50,25 @@ userFunctions.addUser = async (req, res, next) => {
     localidad: req.body.localidad,
     provincia: req.body.provincia,
     domicilio: req.body.domicilio,
-    telefono: parseInt(req.body.telefono, 10),
-    gestor: false,
-    admin: false,
-    nuss: parseInt(req.body.telefono, 10),
+    telefono: req.body.telefono,
+    gestor: req.body.gestor,
+    admin: req.body.admin,
+    nuss: req.body.nuss,
     deleted: false,
     username: req.body.username,
     password: req.body.password,
-    becario: false
-  });
-  user
-    .save()
-    .then(() => res.json({ status: "User saved" }))
-    .catch(err => {
+    becario: req.body.becario
+  })
+  console.log(user);
+  user.save()
+    .then(() => res.json({ status: 'User saved' }))
+    .catch((err) => {
       res.status(400);
       console.error(err);
-    });
->>>>>>> dc1196b3cd6d931f6b7986d339b79d616bdb3632
-};
+    }
+
+    );
+}
 
 userFunctions.updateUser = (req, res, next) => {
   console.log("stella");
