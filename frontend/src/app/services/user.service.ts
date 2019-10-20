@@ -14,7 +14,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
-    this.url = environment.urlb + "/users";
+    this.url = environment.url + "/users";
   }
 
   crearUsuario(user: User) {
