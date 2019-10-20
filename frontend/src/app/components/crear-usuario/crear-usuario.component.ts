@@ -40,6 +40,7 @@ export class CrearUsuarioComponent implements OnInit {
 
     this.determinarusuario(form);
     this.usuarioExistente(form.value.username);
+    this.usuarioExistente(form.value.username);
     if (this.existe == false) {
       if (form.value.nuss == "") form.value.nuss = 0;
       console.log(form.value);
