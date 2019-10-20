@@ -19,7 +19,7 @@ import { UserListComponent } from './components/asignar-dep/user-list/user-list.
 import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin/modificar-ficha-admin.component';
 import { UserService } from './services/user.service'
 import { FormsModule } from '@angular/forms'
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { CrearDepartamentoComponent } from './crear-departamento/crear-departamento.component';
 
 
@@ -55,6 +55,7 @@ const routes: Routes = [
     AppRoutingModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
+    ReactiveFormsModule,
     FormsModule,
     LayoutModule
   ],
