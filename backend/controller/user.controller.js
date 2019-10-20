@@ -34,11 +34,11 @@ userFunctions.getUserByUsername = async (req, res, next) => {
     console.log('Usuario encontrado - Continuando con la función...')
     const userJ =  JSON.parse(JSON.stringify(user));
 
-    if (userJ.password != passfromreq) {
+    /* if (userJ.password != passfromreq) {
         console.log('Contraseña incorrecta');
         res.json(null);
         return;
-    }
+    } */
     
     res.json(user);
 };
