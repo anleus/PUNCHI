@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
-    this.url = environment.url + "/users";
+    this.url = environment.urlb + "/users";
   }
 
   crearUsuario(user: User) {
