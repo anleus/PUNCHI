@@ -8,29 +8,30 @@ userFunctions.getUsers = async (req, res, next) => {
 };
 
 userFunctions.getUserById = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.body.id);
   res.json(user);
 };
 
 userFunctions.getUserByUsername = async (req, res, next) => {
-    //console.log(req);
-    var usernamefromreq = req.body.username;
-    var passfromreq     = req.body.password;
-    console.log('Username from req: ' + usernamefromreq);
-    console.log('Pass from req: '     + passfromreq);
-    const user = await User.findOne({ username: usernamefromreq }, function(err, docs) {
-        if (err) {
-            console.log(err)
-            console.log('Ha habido algun error');
-        }
-    });
-
-    if (user == null) {
-        console.log('No se ha encontrado ningún usuario');
-        res.json(null);
-        return;
+  //console.log(req);
+  var usernamefromreq = req.params.username;
+  //var passfromreq = req.params.password;
+  console.log('Username from req: ' + usernamefromreq);
+  //console.log('Pass from req: ' + passfromreq);
+  const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
+    if (err) {
+      console.error(err)
+      console.log('Ha habido algun error');
     }
+  });
 
+  if (user == null) {
+    console.log('No se ha encontrado ningún usuario');
+    res.json(null);
+    return;
+  }
+
+<<<<<<< HEAD
     console.log('Usuario encontrado - Continuando con la función...')
     const userJ =  JSON.parse(JSON.stringify(user));
 
@@ -41,11 +42,18 @@ userFunctions.getUserByUsername = async (req, res, next) => {
     }
     
     res.json(user);
+=======
+  console.log('Continuando con la función...')
+  const userJ = JSON.parse(JSON.stringify(user));
+
+  //if (userJ.password != passfromreq) return error('Contraseña incorrecta');
+
+  res.json(user);
+>>>>>>> cc31f8d3a9a76837f96063b59edc56f8ac33894f
 };
 
 userFunctions.addUser = async (req, res, next) => {
-  console.log("printgreq.value");
-  console.log(req.body);
+  //console.log(req.body);
   const user = new User({
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
@@ -54,52 +62,53 @@ userFunctions.addUser = async (req, res, next) => {
     localidad: req.body.localidad,
     provincia: req.body.provincia,
     domicilio: req.body.domicilio,
-    telefono: parseInt(req.body.telefono, 10),
-    gestor: false,
-    admin: false,
-    nuss: parseInt(req.body.telefono, 10),
+    telefono: req.body.telefono,
+    gestor: req.body.gestor,
+    admin: req.body.admin,
+    nuss: req.body.nuss,
     deleted: false,
     username: req.body.username,
     password: req.body.password,
-    becario: false
-  });
-  user
-    .save()
-    .then(() => res.json({ status: "User saved" }))
-    .catch(err => {
+    becario: req.body.becario
+  })
+  console.log(user);
+  user.save()
+    .then(() => res.json({ status: 'User saved' }))
+    .catch((err) => {
       res.status(400);
       console.error(err);
     });
 };
 
 userFunctions.updateUser = (req, res, next) => {
-  console.log("stella");
   const user = new User({
-    nombre: req.params.nombre,
-    apellidos: req.params.apellido,
-    fechaNacimiento: req.params.date,
-    email: req.params.email,
-    localidad: req.params.localidad,
-    provincia: req.params.provincia,
-    domicilio: req.params.domicilio,
-    telefono: req.params.telefono,
-    gestor: req.params.gestor,
-    admin: req.params.admin,
-    nuss: req.params.nuss,
+    _id: req.body._id,
+    nombre: req.body.nombre,
+    apellidos: req.body.apellido,
+    fechaNacimiento: req.body.date,
+    email: req.body.email,
+    localidad: req.body.localidad,
+    provincia: req.body.provincia,
+    domicilio: req.body.domicilio,
+    telefono: req.body.telefono,
+    gestor: req.body.gestor,
+    admin: req.body.admin,
+    nuss: req.body.nuss,
     deleted: false,
-    username: req.params.username,
-    password: req.params.password,
-    becario: req.params.becario
+    username: req.body.username,
+    password: req.body.password,
+    becario: req.body.becario
   });
 
   User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
-      res.status(200);
+      //res.status(200);
       res.send("User updated");
     })
     .catch(err => {
       res.status(400);
       res.send("Bad request");
+      console.log(err);
     });
 };
 

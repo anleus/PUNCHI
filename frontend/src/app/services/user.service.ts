@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { User } from "../models/users";
 import { environment } from "src/environments/environment";
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -24,8 +25,14 @@ export class UserService {
     return this.http.post(this.url, user);
   }
 
-  getUsers() {
-    return this.http.get(this.url);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
+  }
+  AUTH_SERVER: string = 'http://localhost:4000';
+  getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
+    //console.log(username)
+    //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
+    return this.http.get(`${this.AUTH_SERVER}/users/username/${username}`);
   }
 
   getUserByUsername(username: string): Promise<any> {
@@ -47,11 +54,13 @@ export class UserService {
   }
 
   onGetUserByName(res: any) {
+   //console.log("USERSERIVE 2");
+    //console.log(res);
     return Promise.resolve(res);
   }
 
   putUser(user: User) {
-    return this.http.put(this.url + "/" + user._id, user);
+    return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
   }
 
   deleteUser(id: string) {
