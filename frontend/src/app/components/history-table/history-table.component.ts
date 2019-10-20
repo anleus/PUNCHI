@@ -29,31 +29,38 @@ import { MatTableDataSource } from '@angular/material/table';
     })
 
 export class HistoryTableComponent implements OnInit {
-  displayedColumns = ['begin', 'end'];
+  displayedColumns = ['day', 'begin', 'end'];
 
-  jornadas: Jornada[];
   dataSource = new JornadaDataSource(this.jornadaService);
+
 
   constructor(private jornadaService : JornadaService) { }
   
-  ngOnInit() {
-    /*this.jornadaService.getJornadas().subscribe(
-      resp => {
-        this.dataSource = new MatTableDataSource(resp);
-      }, err => {
-        console.log(err);
-      })*/
+  ngOnInit() { }
+
+  changeToDate(data: string) {
+    var date = new Date(data);
+    return this.pad2(date.getDate()) + '/' + this.pad2(date.getMonth()) + '/' + date.getFullYear();
   }
+
+  changeToTime(data: string) { 
+    var date = new Date(data);
+    return this.pad2(date.getHours()) + ':' + this.pad2(date.getMinutes()) + ':' + this.pad2(date.getSeconds());
+  }
+
+  pad2(number) {
+    return (number < 10 ? '0' : '') + number
+   }
 }
 
 export class JornadaDataSource extends DataSource<any> {
-  user: '5d94cb6dd634648da19d6a6c';
+  user = '5d94cb6dd634648da19d6a6c';
   constructor(private jornadaService: JornadaService) {
     super();
   }
 
   connect(): Observable<Jornada[]> {
-    return this.jornadaService.getJornadas();
+    return this.jornadaService.getUserJornadas(this.user);
   }
   disconnect() {}
 }
