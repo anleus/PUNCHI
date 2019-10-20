@@ -29,18 +29,19 @@
         </div>
       </div>
 
-
-
-
       <div class="row form-group">
         <div class="col-25">
           <label>Email:</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="email" [(value)]="user.email" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">Email es obligatoria</div>
+          <input type="text" formControlName="email" [value]="user.email" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
+          <div
+            *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['email'].errors.required">
+              Email es un campo requerido.
+            </div>
           </div>
         </div>
       </div>
@@ -51,9 +52,13 @@
         </div>
         <div class="col-75">
           <input type="text" formControlName="provincia" [value]="user.provincia" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
-          <div *ngIf="submitted && f.provincia.errors" class="invalid-feedback">
-            <div *ngIf="f.provincia.errors.required">Provincia es obligatoria</div>
+          [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
+          <div
+            *ngIf="userForm.controls['provincia'].invalid && (userForm.controls['provincia'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['provincia'].errors.required">
+              Provincia es un campo requerido.
+            </div>
           </div>
         </div>
       </div>
@@ -63,10 +68,14 @@
           <label>Domicilio:</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="domicilio" [(value)]="user.domicilio" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
-          <div *ngIf="submitted && f.domicilio.errors" class="invalid-feedback">
-            <div *ngIf="f.domicilio.errors.required">Provincia es obligatoria</div>
+          <input type="text" formControlName="domicilio" [value]="user.domicilio" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
+          <div
+            *ngIf="userForm.controls['domicilio'].invalid && (userForm.controls['domicilio'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['domicilio'].errors.required">
+              Domicilio es un campo requerido.
+            </div>
           </div>
         </div>
       </div>
@@ -76,10 +85,14 @@
           <label>Teléfono:</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="telefono" [(value)]="user.telefono" class="form-control"
+          <input type="text" formControlName="telefono" [value]="user.telefono" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
-          <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
-            <div *ngIf="f.telefono.errors.required">Provincia es obligatoria</div>
+          <div
+            *ngIf="userForm.controls['telefono'].invalid && (userForm.controls['telefono'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['telefono'].errors.required">
+             Teléfono es un campo requerido.
+            </div>
           </div>
         </div>
       </div>
@@ -107,8 +120,8 @@
           <label>Contraseña:</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="password" [(value)]="user.password" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" disabled/>
+          <input type="text" formControlName="password" [value]="user.password" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
           <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required">Provincia es obligatoria</div>
           </div>
@@ -125,7 +138,7 @@
       </div>
 
       <br>
-      <br> 
+      <br>
 
       <div class="row">
         <input type="submit" value="Guardar cambios">

@@ -24,7 +24,11 @@ export class FichaPersonalComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      provincia: ["", Validators.required]
+      email: ['', Validators.required],
+      telefono: ['', Validators.required],
+      domicilio: ['', Validators.required],
+      password: ['', Validators.required],
+      provincia: ['', Validators.required]
     });
 
     //PASO2: llamar a userservice y getuserbyid
@@ -44,7 +48,7 @@ export class FichaPersonalComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    debugger
+
     this.userService.putUser(this.user);
   }
 

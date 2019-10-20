@@ -28,21 +28,6 @@ userFunctions.addUser = async (req, res, next) => {
   console.log("printgreq.value");
   console.log(req.body);
   const user = new User({
-    /*nombre: req.params.nombre,
-        apellidos: req.params.apellido,
-        fechaNacimiento: req.params.date,
-        email: req.params.email,
-        localidad: req.params.localidad,
-        provincia: req.params.provincia,
-        domicilio: req.params.domicilio,
-        telefono: req.params.telefono,
-        gestor: req.params.gestor,
-        admin: req.params.admin,
-        nuss: req.params.nuss,
-        deleted: false,
-        username: req.params.username,
-        password: req.params.password,
-        becario: req.params.becario*/
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
     fechaNacimiento: req.body.fechaNacimiento,
