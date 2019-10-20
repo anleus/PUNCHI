@@ -1,18 +1,23 @@
-
 <div class="titulo">
+    <p>&nbsp;</p>
     <p>Componente creado para hacer pruebas referente al como restringir datos.</p>
     <p>La información se introducirá en ficha-personal</p>
+    <p>{{departamento}}</p>
+    <mat-button-toggle class="boton" (click)="cambiarModo()"#toggleButton class="botoncambio">Cambio</mat-button-toggle>
     <mat-button-toggle *ngIf="comprobarDepartamento()" (click)="cambiarModoGestion()" #toggleButton class="botongestion">{{nombreBotonGestion}}</mat-button-toggle>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
     
 </div>
-<body>
-<div class="titulo">
-  <p>{{departamento}}</p>
-  <mat-button-toggle class="boton" (click)="cambiarModo()"#toggleButton class="botoncambio">Cambio</mat-button-toggle>
-</div>
 
+<tbody>
+  ddd
+  <tr *ngFor="let user of users"> 
+    <p>hola</p>
+    <p>{{user.nombre}}</p>
+  </tr>
+</tbody>
+
+<body>
+    <p>&nbsp;</p><p>&nbsp;</p>
 <div *ngIf="comprobarGestionAdministrativa()" class="container">
     <form action="action_page.php">
     <div class="row">
