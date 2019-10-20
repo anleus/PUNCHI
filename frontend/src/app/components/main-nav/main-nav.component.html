@@ -33,7 +33,7 @@
     <mat-sidenav-content>
         <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
             <mat-toolbar color="primary">
-                <button mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
+                <button *ngIf="flag" mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
                 <h3>PUNCHI</h3>
             </mat-toolbar> 
         </div>

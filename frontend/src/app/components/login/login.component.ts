@@ -20,16 +20,10 @@ import { environment } from "src/environments/environment";
 export class LoginComponent implements OnInit {
 
   durationSec = 5;
-  flag = false;
 
   constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.flag = true;
-  }
-
-  shouldIShowMyHamburguer(){
-    
   }
 
 

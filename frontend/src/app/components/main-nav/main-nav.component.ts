@@ -9,6 +9,20 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent {
+  flag = true;
+  urlrn;
+
+  ngOnInit() {
+    this.shouldIShowMyHamburguer();
+  }
+
+  shouldIShowMyHamburguer(){
+    this.urlrn = window.location.href;
+    
+    if (this.urlrn.substring(this.urlrn.length - 5, this.urlrn.length) == 'login') {
+      this.flag = false;
+    }
+  };
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
