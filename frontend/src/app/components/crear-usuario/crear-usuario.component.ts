@@ -12,7 +12,8 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class CrearUsuarioComponent implements OnInit {
   hide = true;
   public user: User;
-  
+  public existe: Boolean;
+
   usuarioform = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     apellidos: new FormControl('', [Validators.required]),
@@ -28,8 +29,7 @@ export class CrearUsuarioComponent implements OnInit {
     domicilio: new FormControl('', [Validators.required])
 
   });
-  constructor(private userService: UserService, private router: Router) { 
-    this.user = new User();
+  constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
@@ -38,12 +38,19 @@ export class CrearUsuarioComponent implements OnInit {
   onCrearUsuario(form) {
     console.log(this.usuarioExistente(form.value.username));
 
-    //this.determinarusuario(form);
-    //if (form.value.nuss == "") form.value.nuss = 0;
-    //console.log(form.value);
-    //this.userService.crearUsuario(form.value).subscribe(res => {
-    //  this.router.navigateByUrl('/inicio');
-    //})
+    this.determinarusuario(form);
+    this.usuarioExistente(form.value.username);
+    if (this.existe == false) {
+      if (form.value.nuss == "") form.value.nuss = 0;
+      console.log(form.value);
+      this.userService.crearUsuario(form.value).subscribe(res => {
+        this.router.navigateByUrl('/inicio');
+      })
+    }
+    else {
+      //solucionar que se actualiza TARDE
+      console.log("ESTE USERNAME YA ESTÁ EN USO") //sustituir por mensaje en react
+    }
   }
 
   determinarusuario(form) {
@@ -71,14 +78,10 @@ export class CrearUsuarioComponent implements OnInit {
 
   usuarioExistente(username) {
     this.userService.getUserByUsernameDOS(username).subscribe(this.comprobarusarioExistente.bind(this));
-      console.log(this.user)
-      console.log("enmedio")
-      console.log(this.user.nombre)
-      if(this.user== length[0]) return false;
-      else return true;
   }
 
   comprobarusarioExistente(res: any) {
-    this.user = res;
+    if (res == null) this.existe = false;
+    else this.existe = true;
   }
 }
