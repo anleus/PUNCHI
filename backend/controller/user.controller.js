@@ -8,7 +8,7 @@ userFunctions.getUsers = async (req, res, next) => {
 };
 
 userFunctions.getUserById = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.body.id);
   res.json(user);
 };
 
@@ -39,7 +39,6 @@ userFunctions.getUserByUsername = async (req, res, next) => {
   res.json(user);
 };
 
-
 userFunctions.addUser = async (req, res, next) => {
   //console.log(req.body);
   const user = new User({
@@ -65,39 +64,38 @@ userFunctions.addUser = async (req, res, next) => {
     .catch((err) => {
       res.status(400);
       console.error(err);
-    }
-
-    );
-}
+    });
+};
 
 userFunctions.updateUser = (req, res, next) => {
-  console.log("stella");
   const user = new User({
-    nombre: req.params.nombre,
-    apellidos: req.params.apellido,
-    fechaNacimiento: req.params.date,
-    email: req.params.email,
-    localidad: req.params.localidad,
-    provincia: req.params.provincia,
-    domicilio: req.params.domicilio,
-    telefono: req.params.telefono,
-    gestor: req.params.gestor,
-    admin: req.params.admin,
-    nuss: req.params.nuss,
+    _id: req.body._id,
+    nombre: req.body.nombre,
+    apellidos: req.body.apellido,
+    fechaNacimiento: req.body.date,
+    email: req.body.email,
+    localidad: req.body.localidad,
+    provincia: req.body.provincia,
+    domicilio: req.body.domicilio,
+    telefono: req.body.telefono,
+    gestor: req.body.gestor,
+    admin: req.body.admin,
+    nuss: req.body.nuss,
     deleted: false,
-    username: req.params.username,
-    password: req.params.password,
-    becario: req.params.becario
+    username: req.body.username,
+    password: req.body.password,
+    becario: req.body.becario
   });
 
   User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
-      res.status(200);
+      //res.status(200);
       res.send("User updated");
     })
     .catch(err => {
       res.status(400);
       res.send("Bad request");
+      console.log(err);
     });
 };
 

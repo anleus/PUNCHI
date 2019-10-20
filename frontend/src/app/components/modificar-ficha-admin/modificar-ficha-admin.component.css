@@ -1,5 +1,8 @@
 .titulo {
     text-align: center;
+    background-color: white;
+    ;
+    
 }
 
 input[type=text], select, textarea{
@@ -50,7 +53,8 @@ input[type=text], select, textarea{
   .botoncambio{
     background-color:red;
     color:black;
-
+    right: 47.5%;
+    position: absolute;
   }
 
   /* Floating column for labels: 25% width */

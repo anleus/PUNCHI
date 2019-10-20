@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, NgModule } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "src/app/models/users";
 import { UserService } from "src/app/services/user.service";
 import { DatePipe } from '@angular/common';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: "app-ficha-personal",
@@ -11,6 +12,7 @@ import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dia
   styleUrls: ["./ficha-personal.component.css"],
   providers: [DatePipe]
 })
+@NgModule({ imports: [ FormsModule]})
 export class FichaPersonalComponent implements OnInit {
   //PASO3: crear un objeto user
   public user: User;
@@ -49,10 +51,9 @@ export class FichaPersonalComponent implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.userForm.invalid) {
+    /*if (this.userForm.invalid) {
       return;
-    }
-    
+    }*/
     this.userService.putUser(this.user);
   }
 
