@@ -1,5 +1,16 @@
-import { Component, NgModule, Injectable, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {
+  Component,
+  NgModule,
+  Injectable,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 
@@ -14,7 +25,7 @@ import { MatPaginator } from '@angular/material/paginator';
   selector: 'app-history-table',
   templateUrl: './history-table.component.html',
   styleUrls: ['./history-table.component.css'],
-  providers: [JornadaService]
+  providers: [JornadaService],
 })
 @NgModule({
   declarations: [],
@@ -24,46 +35,58 @@ import { MatPaginator } from '@angular/material/paginator';
     HttpClient,
     HttpClientModule,
     HttpHeaders,
-    JornadaService
+    JornadaService,
   ],
-  providers: [JornadaService]
-    })
-
+  providers: [JornadaService],
+})
 export class HistoryTableComponent implements OnInit {
   displayedColumns = ['day', 'begin', 'end'];
+  user = '5d94cb6dd634648da19d6a6c';
 
   dataSource = new MatTableDataSource();
-  //jornadas = new JornadaDataSource(this.jornadaService);
+  // jornadas = new JornadaDataSource(this.jornadaService);
 
+  constructor(private jornadaService: JornadaService) {}
 
-  constructor(private jornadaService : JornadaService) { }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-
-     this.jornadaService.getJornadas().subscribe(
-      resp => {
+    this.jornadaService.getUserJornadas(this.user).subscribe(
+      (resp) => {
         this.dataSource = new MatTableDataSource<Jornada>(resp);
-      }, err => {
+        this.dataSource.paginator = this.paginator;
+      },
+      (err) => {
         console.log(err);
-      })
-   }
-
-  changeToDate(data: string) {
-    var date = new Date(data);
-    return this.pad2(date.getDate()) + '/' + this.pad2(date.getMonth()) + '/' + date.getFullYear();
+      }
+    );
   }
 
-  changeToTime(data: string) { 
-    var date = new Date(data);
-    return this.pad2(date.getHours()) + ':' + this.pad2(date.getMinutes()) + ':' + this.pad2(date.getSeconds());
+  changeToDate(data: string) {
+    const date = new Date(data);
+    return (
+      this.pad2(date.getDate()) +
+      '/' +
+      this.pad2(date.getMonth()) +
+      '/' +
+      date.getFullYear()
+    );
+  }
+
+  changeToTime(data: string) {
+    const date = new Date(data);
+    return (
+      this.pad2(date.getHours()) +
+      ':' +
+      this.pad2(date.getMinutes()) +
+      ':' +
+      this.pad2(date.getSeconds())
+    );
   }
 
   pad2(number) {
-    return (number < 10 ? '0' : '') + number
-   }
+    return (number < 10 ? '0' : '') + number;
+  }
 }
 
 /*export class JornadaDataSource extends DataSource<any> {
