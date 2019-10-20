@@ -52,7 +52,7 @@ export class FichaPersonalComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-
+    
     this.userService.putUser(this.user);
   }
 
