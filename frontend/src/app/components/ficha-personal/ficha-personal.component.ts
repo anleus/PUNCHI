@@ -28,12 +28,15 @@ export class FichaPersonalComponent implements OnInit {
       email: ["", Validators.required],
       domicilio: ["", Validators.required],
       password: ["", Validators.required],
+      telefono: ["", Validators.required]
     });
 
     //PASO2: llamar a userservice y getuserbyid
     this.userService
       .getUserByUsername("root")
       .then(this.onGetUserByName.bind(this));
+
+      console.log(this.userForm);
   }
 
   private onGetUserByName(res: any) {
