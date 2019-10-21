@@ -20,7 +20,7 @@ import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin
 import { UserService } from './services/user.service'
 import { FormsModule } from '@angular/forms'
 
-import { CrearDepartamentoComponent } from './crear-departamento/crear-departamento.component';
+import { CrearDepartamentoComponent } from './components/crear-departamento/crear-departamento.component';
 
 
 const routes: Routes = [
