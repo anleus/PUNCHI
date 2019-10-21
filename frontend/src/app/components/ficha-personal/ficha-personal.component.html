@@ -1,73 +1,92 @@
-
-<div *ngIf="comprobarDepartamento()" class="top">  
-    <button mat-stroked-button (click)="cambiarModoGestion()" color="primary"  class="botong">{{nombreBotonGestion}}</button>
-    <p>{{prueba}}</p>
-</div>
+<div *ngIf="comprobarDepartamento()" class="top">
+  <button mat-stroked-button (click)="cambiarModoGestion()" color="primary"
+    class="botong">{{nombreBotonGestion}}</button>
+  <div align='center'>
+    <h3>Modifica los datos:</h3>
+  </div>
 
 <body>
-    
-    <div *ngIf="gestion" class="container">
-        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="row form-group">
-                <div class="col-25">
-                  <label>Contraseña:</label>
-                </div>
-                <div class="col-75">
-                  <input type="password" formcontrolName="password" ngModel [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                  <div
-                    *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['telefono'].touched)"
-                    class="alert alert-danger">
-                    <div *ngIf="userForm.controls['password'].errors.required">
-                     Teléfono es un campo requerido.
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="row form-group">
-                  <div class="col-25">
-                    <label>Domicilio:</label>
-                  </div>
-                  <div class="col-75">
-                    <input type="text" formcontrolName="domicilio" ngModel [(ngModel)]="user.domicilio" [ngModelOptions]="{standalone: true}" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
-                    <div
-                      *ngIf="userForm.controls['domicilio'].invalid && (userForm.controls['domicilio'].dirty || userForm.controls['telefono'].touched)"
-                      class="alert alert-danger">
-                      <div *ngIf="userForm.controls['domicilio'].errors.required">
-                        Domicilio es un campo requerido.
-                      </div>
-                    </div>
-                  </div>
-                </div>      
+  <div *ngIf="gestion" class="container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="row form-group">
+        <div class="col-25">
+          <label>Contraseña:</label>
+        </div>
+        <div class="col-75">
+          <input type="password" formcontrolName="password" ngModel [(ngModel)]="password"
+            [ngModelOptions]="{standalone: true}" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div
+            *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['password'].errors.required">
+              Teléfono es un campo requerido.
+            </div>
+          </div>
+        </div>
+      </div>
 
-                <div class="row form-group">
-                    <div class="col-25">
-                      <label>Provincia:</label>
-                    </div>
-                    <div class="col-75">
-                      <input type="text" formControlformControlName="provincia" ngModel [(ngModel)]="user.provincia" [ngModelOptions]="{standalone: true}" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
-                      <div
-                        *ngIf="userForm.controls['provincia'].invalid && (userForm.controls['provincia'].dirty || userForm.controls['telefono'].touched)"
-                        class="alert alert-danger">
-                        <div *ngIf="userForm.controls['provincia'].errors.required">
-                          Provincia es un campo requerido.
-                        </div>
-                      </div>
-                    </div>
-                  </div>       
-                  <div class="row">
-                    <input type="submit" value="Guardar cambios" (click)="guardarCambios(password)" >
-                  </div>
-                  <div>{{notificacion}}</div>
-        </form>
-    </div>     
-<!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
+      <div class="row form-group">
+        <div class="col-25">
+          <label>Domicilio:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formcontrolName="domicilio" ngModel [(ngModel)]="domicilio"
+            [ngModelOptions]="{standalone: true}" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
+          <div
+            *ngIf="userForm.controls['domicilio'].invalid && (userForm.controls['domicilio'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['domicilio'].errors.required">
+              Domicilio es un campo requerido.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-25">
+          <label>Provincia:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlformControlName="provincia" ngModel [(ngModel)]="provincia"
+            [ngModelOptions]="{standalone: true}" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
+          <div
+            *ngIf="userForm.controls['provincia'].invalid && (userForm.controls['provincia'].dirty || userForm.controls['telefono'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="userForm.controls['provincia'].errors.required">
+              Provincia es un campo requerido.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+          <div class="col-25">
+            <label for="localidad">Localidad:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="localidad" formcontrolName="localidad" ngModel [(ngModel)]="localidad"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+
+      <div>
+        {{notificacion}}
+        <br>
+      </div>
+      <div class="row">
+        <input type="submit" value="Guardar cambios" (click)="guardarCambios1(password,domicilio,provincia,localidad)">
+      </div>
+
+    </form>
+  </div>
+  <!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
   <div *ngIf="comprobarDepartamento() && !gestion" class="container">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <!--<div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">
+      <!--<div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">
             <mat-form-field>
                 <mat-select placeholder="Departamento" name = "selectorDepartamento">
                     <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
@@ -82,14 +101,13 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <p>Usuario: {{unombre}}</p>
+            <p>Usuario: {{unombre}} &nbsp; {{error}} {{error2}}  {{error3}} {{error4}}</p>
       <div *ngIf="comprobarDepartamento()" class="row">
         <div class="col-25">
           <label for="nombre">Nombre:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="nombre" formcontrolName="nombre" ngModel 
-            [ngModelOptions]="{standalone: true}" >
+          <input type="text" id="nombre" formcontrolName="nombre" ngModel [ngModelOptions]="{standalone: true}">
         </div>
       </div>
 
@@ -99,7 +117,8 @@
           <label for="apellidos">Apellidos:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="user.apellidos" [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="apellidos"
+            [ngModelOptions]="{standalone: true}">
         </div>
       </div>
 
@@ -109,8 +128,8 @@
           <label for="fechaNacimiento">Fecha nacimiento:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="start" formcontrolName="fechaNacimiento" ngModel [(ngModel)]="user.fechaNacimiento"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="start" formcontrolName="fechaNacimiento" ngModel [(ngModel)]="fechaNacimiento"
+            [ngModelOptions]="{standalone: true}">
         </div>
       </div>
       <div class="row">
@@ -118,8 +137,8 @@
           <label for="nuss">NUSS:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="user.nuss"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="nuss"
+            [ngModelOptions]="{standalone: true}">
         </div>
       </div>
       <div class="row">
@@ -128,7 +147,7 @@
         </div>
         <div class="col-75">
           <input type="text" id="username" ngModel formcontrolName="username" [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="user.username" disabled>
+            [(ngModel)]="username">
         </div>
       </div>
 
@@ -170,6 +189,16 @@
         </div>
       </div>
 
+ 
+      <div *ngIf="comprobarDepartamento()" class="row">
+          <div class="col-25">
+            <label for="localidad">Localidad:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="localidad" formcontrolName="localidad" ngModel [(ngModel)]="localidad"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
 
 
       <div class="row form-group">
@@ -184,7 +213,6 @@
           </div>
         </div>
       </div>
- -->
 
       <div class="row form-group">
         <div class="col-25">
@@ -205,16 +233,42 @@
         </div>
         <div class="col-75">
           <input type="boolean" id="becario" ngModel formcontrolName="becario" [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="user.becario" disabled>
+            [(ngModel)]="becario">
         </div>
       </div>
+
+      <br>
+      <br>
+      {{notificacion}}
       <br>
       <br>
       <div class="row">
-        <input type="submit" value="Guardar cambios" >
+        <input type="submit" value="Guardar cambios" (click)="guardarCambios2(assword,domicilio,provincia,nombre,apellidos,fechaNacimiento,nuss,username,email,localidad)">
       </div>
 
+      
     </form>
+
+    
   </div>
+  <div class="separar">
+    <p>&nbsp;</p>
+  </div>
+  <div>
+    <mat-list role="list" class = "container">
+      <mat-list-item role="listitem">username: {{this.user.username}}</mat-list-item>
+      <mat-list-item role="listitem">Contraseña: {{this.user.password}}</mat-list-item>
+      <mat-list-item role="listitem">Nombre: {{this.user.nombre}}</mat-list-item>
+      <mat-list-item role="listitem">Apellidos: {{this.user.apellidos}}</mat-list-item>
+      <mat-list-item role="listitem">Fecha Nacimiento: : {{this.user.fechaNacimiento}}</mat-list-item>
+      <mat-list-item role="listitem">Email: : {{this.user.email}}</mat-list-item>
+      <mat-list-item role="listitem">Localidad: : {{this.user.localidad}}</mat-list-item>
+      <mat-list-item role="listitem">Provincia: : {{this.user.provincia}}</mat-list-item>
+      <mat-list-item role="listitem">Domicilio: : {{this.user.domicilio}}</mat-list-item>
+      <mat-list-item role="listitem">Telefono: : {{this.user.telefono}}</mat-list-item>
+      <mat-list-item role="listitem">NUSS: : {{this.user.nuss}}</mat-list-item>
+      </mat-list>
+  </div>
+
 
 </body>
