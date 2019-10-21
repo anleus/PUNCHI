@@ -56,7 +56,6 @@ export class FichaPersonalComponent implements OnInit {
       .getUserByUsernameDOS("root")
       .subscribe(this.onGetUserByName.bind(this));
       console.log(this.user.becario);
- 
   }
 
   private onGetUserByName(res: any) {
@@ -64,14 +63,29 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+   this.user.email=this.userForm.value.email;
+   this.user.domicilio=this.userForm.value.domicilio;
+   this.user.provincia=this.userForm.value.provincia;
+   this.user.telefono=this.userForm.value.telefono;
+   this.user.password=this.userForm.value.password;
+
+    //this.user.password=this.userForm.value.password;
     console.log(this.userForm);
+
     // stop here if form is invalid
-    if (this.userForm.invalid) {
+     if(this.userForm.value.email==""||
+     this.userForm.value.provincia==""||
+     this.userForm.value.domicilio==""||
+     this.userForm.value.telefono==""||
+     this.userForm.value.contraseña=="") {
       return;
+    }else{
+      console.log(this.userForm);
+      console.log(this.user);
+      this.userService.putUser(this.user);
     }
-    console.log(this.user);
-    this.userService.putUser(this.user);
+    
+   
   }
 
   // convenience getter for easy access to form fields

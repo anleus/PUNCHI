@@ -9,7 +9,7 @@ import {
   HttpClient,
   HttpClientModule,
   HttpHeaders,
-  HttpErrorResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
