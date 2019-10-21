@@ -1,4 +1,4 @@
-export interface Vacation {
+/*export interface Vacation {
     user: string,
     begin: 
-}
+}*/

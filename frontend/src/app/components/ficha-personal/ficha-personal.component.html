@@ -50,6 +50,7 @@
               [ngModelOptions]="{standalone: true}">
           </div>
         </div>
+      
 
       <div>
         {{notificacion}}
@@ -60,8 +61,12 @@
       </div>
 
     </form>
-  </div>
+  </div> 
+
+
   <!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
+
+
   <div *ngIf="comprobarDepartamento() && !gestion" class="container">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <!--<div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">

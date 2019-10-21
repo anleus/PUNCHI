@@ -36,7 +36,7 @@ export class FichaPersonalComponent implements OnInit {
   error = "";
   fecha="";
 
-  public userp : User;
+  public userV : User;
 
   constructor(
     private userService: UserService,
@@ -45,11 +45,10 @@ export class FichaPersonalComponent implements OnInit {
     private authService: AuthenticationService
   ) {
     this.user = new User();
+    this.userV = new User();
   }
 
   ngOnInit() {
-
-    console.log(this.user);
     this.userForm = this.formBuilder.group({
       email: ["", Validators.required],
       telefono: ["", Validators.required],
@@ -60,31 +59,21 @@ export class FichaPersonalComponent implements OnInit {
     this.getUsuarios();
     this.getDepartamentos();
     this.getUsuarioRegistrado();
-    /*this.userService
-      .getUserByUsernameDOS("root")
-      .subscribe(this.onGetUserByName.bind(this));
-      console.log(this.user.becario);*/
-  }
-
-  private onGetUserByName(res: any) {
-    this.user = res;
   }
 
   onSubmit() {
 
-    /*if (this.userForm.invalid) {
-      return;
-    }else{*/
+    
       var usuarioAct = this.authService.getCurrentUser();
       usuarioAct.subscribe(user => this.logUser = user);
       if(this.user.username == this.logUser.username && !this.logUser.admin){
         this.error = "No puedes modificarte a ti mismo.";
+       
         return;
       }
-    //}
+
   }
 
-  // convenience getter for easy access to form fields
   get f() {
     return this.userForm.controls;
   }
@@ -99,7 +88,6 @@ export class FichaPersonalComponent implements OnInit {
     usuarioAct.subscribe(user => (this.user = user));
     this.prueba = this.user.nombre;
   }
-
   getDepartamentos() {
     var departamentoObs = this.departamentosService.getDepartamentos();
     departamentoObs.subscribe(
@@ -130,7 +118,6 @@ export class FichaPersonalComponent implements OnInit {
   seleccionUsuario(us: User) {
     this.user = us;
     this.unombre = us.nombre;
-    console.log(this.user);
   }
 
   cambiarModoGestion() {
@@ -233,9 +220,7 @@ export class FichaPersonalComponent implements OnInit {
 
   guardarCambios1(password,domicilio,provincia,localidad) {
     
-    this.user.password=this.userForm.value;
-
-
+    
     if (
       typeof password == "undefined" ||
       typeof domicilio == "undefined" ||
@@ -261,8 +246,30 @@ export class FichaPersonalComponent implements OnInit {
       }
     }
     else {
+      
+
+        this.userV.password=password;
+        this.userV.domicilio=domicilio;
+        this.userV.provincia=provincia;
+        this.userV.localidad=localidad;
+        //this.userV.telefono=telefono;
+
+        this.userV.nombre=this.user.nombre;
+        this.userV.apellidos=this.user.apellidos;
+        this.userV.fechaNacimiento=this.user.fechaNacimiento;
+        this.userV._id=this.user._id;
+        this.userV.email=this.user.email;
+        this.userV.gestor=this.user.gestor;
+        this.userV.nuss=this.user.nuss;
+        this.userV.admin=this.user.admin;
+        this.userV.becario=this.user.becario;
+        this.userV.deleted=this.user.deleted;
+        this.userV.telefono=this.user.telefono;
+
+        console.log(password,domicilio,provincia,localidad)
+        console.log(this.userV);
      console.log("El campo es correcto.");
-     this.userService.putUser(this.user);
+     this.userService.putUser(this.userV);
    }
   }
 }

@@ -45,7 +45,7 @@ userFunctions.authentication = async (req, res, next) => {
 
 userFunctions.getUserByUsername = async (req, res, next) => {
   var usernamefromreq = req.params.username;
-  console.log('Username from req: ' + usernamefromreq);
+  //console.log('Username from req: ' + usernamefromreq);
   const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
     if (err) {
       console.error(err)
@@ -81,7 +81,7 @@ userFunctions.addUser = async (req, res, next) => {
     password: req.body.password,
     becario: req.body.becario
   })
-  console.log(user);
+  //console.log(user);
   user.save()
     .then(() => res.json({ status: 'User saved' }))
     .catch((err) => {
@@ -109,6 +109,7 @@ userFunctions.updateUser = (req, res, next) => {
     password: req.body.password,
     becario: req.body.becario
   });
+console.log(req);
 
   User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
@@ -123,7 +124,7 @@ userFunctions.updateUser = (req, res, next) => {
 };
 
 userFunctions.deleteUser = async (req, res, next) => {
-  console.log(req.params._id)
+  //console.log(req.params._id)
   await User.findByIdAndDelete(req.params._id,)
     .then(() => {
       res.status(200);
