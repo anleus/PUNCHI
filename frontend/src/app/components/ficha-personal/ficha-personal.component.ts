@@ -34,6 +34,9 @@ export class FichaPersonalComponent implements OnInit {
   selectedUsuario: User;
   logUser: User;
   error = "";
+  fecha="";
+
+  public userp : User;
 
   constructor(
     private userService: UserService,
@@ -45,6 +48,8 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    console.log(this.user);
     this.userForm = this.formBuilder.group({
       email: ["", Validators.required],
       telefono: ["", Validators.required],
@@ -66,32 +71,17 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.user.email = this.userForm.value.email;
-    this.user.domicilio = this.userForm.value.domicilio;
-    this.user.provincia = this.userForm.value.provincia;
-    this.user.telefono = this.userForm.value.telefono;
-    this.user.password = this.userForm.value.password;
 
-    //this.user.password=this.userForm.value.password;
-
-    // stop here if form is invalid
-    if (this.userForm.invalid) {
+    /*if (this.userForm.invalid) {
       return;
-    }else{
+    }else{*/
       var usuarioAct = this.authService.getCurrentUser();
       usuarioAct.subscribe(user => this.logUser = user);
-      console.log(this.user);
-      console.log("Logged")
-      console.log(this.logUser);
-     
       if(this.user.username == this.logUser.username && !this.logUser.admin){
         this.error = "No puedes modificarte a ti mismo.";
         return;
       }
-      console.log(this.userForm);
-      console.log(this.user);
-      this.userService.putUser(this.user);
-    }
+    //}
   }
 
   // convenience getter for easy access to form fields
@@ -174,6 +164,7 @@ export class FichaPersonalComponent implements OnInit {
     }
   }
 
+
   notificacion = "";
   guardarCambios2(password,domicilio,provincia,nombre,apellidos,fechaNacimiento,nuss,username,email,localidad) {
     if (
@@ -193,7 +184,7 @@ export class FichaPersonalComponent implements OnInit {
         console.log("El campo password no es correcto");
         this.notificacion = "El campo password no es correcto \\\n "+ this.notificacion;
       }
-      if (typeof domicilio == "undefined") {
+      if (typeof domicilio == "undefined" ) {
           console.log("El campo domicilio no es correcto");
           this.notificacion = "El campo domicilio no es correcto \\\n " + this.notificacion ;
       }
@@ -225,7 +216,11 @@ export class FichaPersonalComponent implements OnInit {
         console.log("El campo localidad no es correcto");
         this.notificacion ="El campo localidad no es correcto \\\n " + this.notificacion;
       }
-      
+      if (typeof nombre == "undefined") {
+        console.log("El campo nombre no es correcto");
+        this.notificacion ="El campo nombre no es correcto \\\n " + this.notificacion;
+      }
+     
     }
      else {
       console.log("El campo es correcto.");
@@ -237,6 +232,10 @@ export class FichaPersonalComponent implements OnInit {
 
 
   guardarCambios1(password,domicilio,provincia,localidad) {
+    
+    this.user.password=this.userForm.value;
+
+
     if (
       typeof password == "undefined" ||
       typeof domicilio == "undefined" ||

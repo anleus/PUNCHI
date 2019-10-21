@@ -12,6 +12,8 @@ export class JornadaService {
 
   constructor(private http: HttpClient) { }
 
+  getUserVacations = () => this.http.get('http://localhost:4000/vacation')
+
   postJornada = (jornada) => this.http.post(this.url, jornada).subscribe(res => { // * not callback
       console.log(`this.brandListService`, {res}); 
     }, error => {
@@ -27,5 +29,7 @@ export class JornadaService {
   getUserJornadas(userid): Observable<Jornada[]> {
     return this.http.get<Jornada[]>(this.url + userid);
   }
+
+
 }
 
