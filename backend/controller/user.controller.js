@@ -12,12 +12,12 @@ userFunctions.getUserById = async (req, res, next) => {
   res.json(user);
 };
 
-userFunctions.getUserByUsername = async (req, res, next) => {
-  //console.log(req);
-  var usernamefromreq = req.params.username;
-  //var passfromreq = req.params.password;
+userFunctions.authentication = async (req, res, next) => {
+  console.log(req);
+  var usernamefromreq = req.body.username;
+  var passfromreq     = req.body.password;
   console.log('Username from req: ' + usernamefromreq);
-  //console.log('Pass from req: ' + passfromreq);
+  console.log('Pass from req: ' + passfromreq);
   const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
     if (err) {
       console.error(err)
@@ -34,9 +34,32 @@ userFunctions.getUserByUsername = async (req, res, next) => {
     console.log('Usuario encontrado - Continuando con la función...')
     const userJ =  JSON.parse(JSON.stringify(user));
 
-  //if (userJ.password != passfromreq) return error('Contraseña incorrecta');
+    if (userJ.password != passfromreq) {
+      console.log('Contraseña incorrecta');
+      res.json(null);
+      return;
+    }
+    
+    res.json(user);
+};
 
-  res.json(user);
+userFunctions.getUserByUsername = async (req, res, next) => {
+  var usernamefromreq = req.params.username;
+  console.log('Username from req: ' + usernamefromreq);
+  const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
+    if (err) {
+      console.error(err)
+      console.log('Ha habido algun error');
+    }
+  });
+
+  if (user == null) {
+    console.log('No se ha encontrado ningún usuario');
+    res.json(null);
+    return;
+  }
+    console.log('Usuario encontrado')    
+    res.json(user);
 };
 
 userFunctions.addUser = async (req, res, next) => {

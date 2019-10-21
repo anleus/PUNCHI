@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+
   logoutUser() {                                                      //Este logout servirá donde haya que ponerlo
     this.authservice.logout();
     console.log("Loggin out");

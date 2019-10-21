@@ -8,13 +8,7 @@
     
 </div>
 
-<tbody>
-  ddd
-  <tr *ngFor="let user of users"> 
-    <p>hola</p>
-    <p>{{user.nombre}}</p>
-  </tr>
-</tbody>
+
 
 <body>
     <p>&nbsp;</p><p>&nbsp;</p>
@@ -65,24 +59,19 @@
 
 <div  *ngIf="!comprobarGestionAdministrativa()" class="container">
   <form action="action_page.php">
-
+      <p>{{depart}}{{conseguido}}</p>
       <div *ngIf="comprobarDepartamentoAdmin()" class="example-container">
           <mat-form-field>
-            <mat-select placeholder="Departamento">
-              <mat-option value="option">Opcion 1</mat-option>
-              <mat-option value="option">Opcion 2</mat-option>
-              <mat-option value="option">Opcion 3</mat-option>
-              <mat-option value="option">Opcion 4</mat-option>
-            </mat-select>
-          </mat-form-field>
+              <mat-select placeholder="Departamento" name = "selectorDepartamento">
+                  <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+    
         </div>  
-        <div *ngIf="comprobarDepartamento()" class="example-container">
+            <div *ngIf="comprobarDepartamento()" class="example-container">
             <mat-form-field>
-              <mat-select placeholder="Nombre">
-                <mat-option value="option">Opcion 1</mat-option>
-                <mat-option value="option">Opcion 2</mat-option>
-                <mat-option value="option">Opcion 3</mat-option>
-                <mat-option value="option">Opcion 4</mat-option>
+              <mat-select placeholder="Nombre" [(value)]=selected2> 
+                <mat-option (click)="seleccionUsuario(selected2)" *ngFor="let user of usuarios" value="{{user}}">{{user.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
