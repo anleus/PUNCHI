@@ -68,6 +68,6 @@ export class UserService {
   }
 
   getUsersNonDeleted(cond: boolean): Observable<User[]> {
-    return this.http.get<User[]>(this.url + "/" + cond);
+    return this.http.get<User[]>(this.url + "/deleted/" + cond);
   }
 }

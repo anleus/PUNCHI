@@ -89,15 +89,3 @@ export class HistoryTableComponent implements OnInit {
   }
 }
 
-/*export class JornadaDataSource extends DataSource<any> {
-  user = '5d94cb6dd634648da19d6a6c';
-  paginator: MatPaginator;
-  constructor(private jornadaService: JornadaService) {
-    super();
-  }
-
-  connect(): Observable<Jornada[]> {
-    return this.jornadaService.getUserJornadas(this.user);
-  }
-  disconnect() {}
-}*/
