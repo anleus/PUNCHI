@@ -7,25 +7,48 @@
           <label for="nombre">Nombre:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="nombre" formcontrolName="nombre" ngModel [(ngModel)]="user.nombre"  [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="nombre" formcontrolName="nombre" ngModel [(ngModel)]="user.nombre"
+            [ngModelOptions]="{standalone: true}" disabled>
         </div>
       </div>
+
 
       <div *ngIf="comprobarDepartamento()" class="row">
         <div class="col-25">
           <label for="apellidos">Apellidos:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="user.apellidos" [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="user.apellidos"
+            [ngModelOptions]="{standalone: true}" disabled>
         </div>
       </div>
+
 
       <div *ngIf="comprobarDepartamento()" class="row">
         <div class="col-25">
           <label for="fechaNacimiento">Fecha nacimiento:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="start" formcontrolName="datepick" ngModel [(ngModel)]="user.fechaNacimiento" [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="start" formcontrolName="fechaNacimiento" ngModel [(ngModel)]="user.fechaNacimiento"
+            [ngModelOptions]="{standalone: true}" disabled>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="nuss">NUSS:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="user.nuss"
+            [ngModelOptions]="{standalone: true}" disabled>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="userformControlName">Login:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="username" ngModel formcontrolName="username" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="user.username" disabled>
         </div>
       </div>
 
@@ -34,31 +57,10 @@
           <label>Email:</label>
         </div>
         <div class="col-75">
-          <input type="text" formcontrolName="email" ngModel [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
-          <div
-            *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['telefono'].touched)"
-            class="alert alert-danger">
-            <div *ngIf="userForm.controls['email'].errors.required">
-              Email es un campo requerido.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row form-group">
-        <div class="col-25">
-          <label>Provincia:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" formControlformControlName="provincia" ngModel [(ngModel)]="user.provincia" [ngModelOptions]="{standalone: true}" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
-          <div
-            *ngIf="userForm.controls['provincia'].invalid && (userForm.controls['provincia'].dirty || userForm.controls['telefono'].touched)"
-            class="alert alert-danger">
-            <div *ngIf="userForm.controls['provincia'].errors.required">
-              Provincia es un campo requerido.
-            </div>
+          <input type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Modifica el campo de email.</div>
           </div>
         </div>
       </div>
@@ -68,66 +70,51 @@
           <label>Domicilio:</label>
         </div>
         <div class="col-75">
-          <input type="text" formcontrolName="domicilio" ngModel [(ngModel)]="user.domicilio" [ngModelOptions]="{standalone: true}" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
-          <div
-            *ngIf="userForm.controls['domicilio'].invalid && (userForm.controls['domicilio'].dirty || userForm.controls['telefono'].touched)"
-            class="alert alert-danger">
-            <div *ngIf="userForm.controls['domicilio'].errors.required">
-              Domicilio es un campo requerido.
-            </div>
+          <input type="text" formControlName="domicilio" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
+          <div *ngIf="submitted && f.domicilio.errors" class="invalid-feedback">
+            <div *ngIf="f.domicilio.errors.required">Modifica el campo de domicilio.</div>
           </div>
         </div>
       </div>
+      <div class="row form-group">
+        <div class="col-25">
+          <label>Provincia:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" formControlName="provincia" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
+          <div *ngIf="submitted && f.provincia.errors" class="invalid-feedback">
+            <div *ngIf="f.provincia.errors.required">Modifica el campo de provincia.</div>
+          </div>
+        </div>
+      </div>
+
+
 
       <div class="row form-group">
         <div class="col-25">
           <label>Teléfono:</label>
         </div>
         <div class="col-75">
-          <input type="text" formcontrolName="telefono" ngModel [(ngModel)]="user.telefono" [ngModelOptions]="{standalone: true}" class="form-control"
+          <input type="text" formControlName="telefono" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
-          <div
-            *ngIf="userForm.controls['telefono'].invalid && (userForm.controls['telefono'].dirty || userForm.controls['telefono'].touched)"
-            class="alert alert-danger">
-            <div *ngIf="userForm.controls['telefono'].errors.required">
-             Teléfono es un campo requerido.
-            </div>
+          <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+            <div *ngIf="f.telefono.errors.required">Modifica el campo de teléfono.</div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-25">
-          <label for="nuss">NUSS:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="user.nuss" [ngModelOptions]="{standalone: true}" disabled>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-25">
-          <label for="userformControlName">Login:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="username" ngModel formcontrolName="username" [ngModelOptions]="{standalone: true}"  [(ngModel)]="user.username" disabled>
-        </div>
-      </div>
 
       <div class="row form-group">
         <div class="col-25">
           <label>Contraseña:</label>
         </div>
         <div class="col-75">
-          <input type="text" formcontrolName="password" ngModel [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-          <div
-            *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['telefono'].touched)"
-            class="alert alert-danger">
-            <div *ngIf="userForm.controls['password'].errors.required">
-             Teléfono es un campo requerido.
-            </div>
+          <input type="text" formControlName="password" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Modifica el campo de password.</div>
           </div>
         </div>
       </div>
@@ -137,13 +124,15 @@
           <label for="becario">Becario:</label>
         </div>
         <div class="col-75">
-          <input type="boolean" id="becario" ngModel formcontrolName="becario" [ngModelOptions]="{standalone: true}" [(ngModel)]="user.becario" disabled>
+          <input type="boolean" id="becario" ngModel formcontrolName="becario" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="user.becario" disabled>
         </div>
       </div>
       <br>
       <br>
       <div class="row">
-        <input type="submit" value="Guardar cambios">
+        <input type="submit" value="Guardar cambios" >
+
       </div>
 
     </form>

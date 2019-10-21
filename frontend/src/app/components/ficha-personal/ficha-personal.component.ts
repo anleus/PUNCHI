@@ -41,7 +41,6 @@ export class FichaPersonalComponent implements OnInit {
       .getUserByUsernameDOS("root")
       .subscribe(this.onGetUserByName.bind(this));
       console.log(this.user.becario);
- 
   }
 
   private onGetUserByName(res: any) {
@@ -49,18 +48,13 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-    this.userForm.value.nombre=this.user.nombre;
-    this.userForm.value.apellidos=this.user.apellidos;
-    this.userForm.value.fechaNacimiento=this.user.fechaNacimiento;
-    this.userForm.value.email=this.user.email;
-    this.userForm.value.provincia=this.user.provincia;
-    this.userForm.value.domicilio=this.user.domicilio;
-    this.userForm.value.telefono=this.user.telefono;
-    this.userForm.value.nuss=this.user.nuss;
-    this.userForm.value.username=this.user.username;
-    this.userForm.value.password=this.user.password;
-    this.userForm.value.becario=this.user.becario;
+   this.user.email=this.userForm.value.email;
+   this.user.domicilio=this.userForm.value.domicilio;
+   this.user.provincia=this.userForm.value.provincia;
+   this.user.telefono=this.userForm.value.telefono;
+   this.user.password=this.userForm.value.password;
+
+    //this.user.password=this.userForm.value.password;
     console.log(this.userForm);
 
     // stop here if form is invalid
@@ -71,6 +65,8 @@ export class FichaPersonalComponent implements OnInit {
      this.userForm.value.contraseña=="") {
       return;
     }else{
+      console.log(this.userForm);
+      console.log(this.user);
       this.userService.putUser(this.user);
     }
     
