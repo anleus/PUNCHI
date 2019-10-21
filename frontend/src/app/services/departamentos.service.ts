@@ -36,11 +36,13 @@ export class DepartamentosService {
       .then(this.onGetDepartamentoByName.bind(this));
   }
 
-  
   onGetDepartamentoByName(res: any) {
      return Promise.resolve(res);
    }
  
+  deleteDept(_id: string) {
+    return this.http.delete(this.url + _id);
+  }
 
   //getUserJornadas = userid => this.http.get(this.url + userid);
 }

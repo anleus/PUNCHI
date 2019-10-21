@@ -17,8 +17,9 @@ departamentFunctions.getDepartamentoById = async (req, res, next) => {
 };
 
 departamentFunctions.createDepartamento = async (req, res, next) => {
+	console.log(req.body)
 	const deparamento = new Departamento({
-		users: ["5d9f5c451c9d4400004cd9f7", "5da601efb3945f11518a6279"], // los usuarios se añaden posteriormente en otra peticion req.body.users,
+		usuarios:  req.body.usuarios, // los usuarios se añaden posteriormente en otra peticion req.body.usuarios,
 		gestor: null, //el gestor se añade posteriormente en otra peticion  req.body.gestor,
 		nombre: req.body.nombre
 	});
