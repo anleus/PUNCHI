@@ -117,7 +117,7 @@ export class FichaPersonalComponent implements OnInit {
     );
   }
 
-  nombreBotonGestion = "Gestionar ficha personal";
+  nombreBotonGestion = "Gestionar empleados";
   dep = "RRHH";
   comprobarDepartamento() {
     return (this.user.admin || this.user.gestor);
