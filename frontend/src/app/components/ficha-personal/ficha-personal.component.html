@@ -1,6 +1,7 @@
 
 <div *ngIf="comprobarDepartamento()" class="top">  
     <button mat-stroked-button (click)="cambiarModoGestion()" color="primary"  class="botong">{{nombreBotonGestion}}</button>
+    <p>{{prueba}}</p>
 </div>
 
 <body>
@@ -57,7 +58,9 @@
                       </div>
                     </div>
                   </div>       
-
+                  <div class="row">
+                    <input type="submit" value="Guardar cambios" >
+                  </div>
         </form>
     </div>     
 <!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
@@ -208,7 +211,6 @@
       <br>
       <div class="row">
         <input type="submit" value="Guardar cambios" >
-
       </div>
 
     </form>
