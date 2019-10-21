@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { UserService } from '../../services/user.service'
 import { User } from '../../models/users';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+//import { resolve } from 'dns';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -12,7 +13,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class CrearUsuarioComponent implements OnInit {
   hide = true;
   public user: User;
-  public existe: Boolean;
+  public existe: Boolean = false;
 
   usuarioform = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
@@ -35,24 +36,27 @@ export class CrearUsuarioComponent implements OnInit {
   ngOnInit() {
   }
 
-  onCrearUsuario(form) {
-    console.log(this.usuarioExistente(form.value.username));
+  usuarioExistente2(form) {
+    console.log("HOLA")
 
-    this.determinarusuario(form);
-    this.usuarioExistente(form.value.username);
-    this.usuarioExistente(form.value.username);
-    if (this.existe == false) {
-      if (form.value.nuss == "") form.value.nuss = 0;
-      console.log(form.value);
-      this.userService.crearUsuario(form.value).subscribe(res => {
-        this.router.navigateByUrl('/inicio');
-      })
-    }
-    else {
-      //solucionar que se actualiza TARDE
-      console.log("ESTE USERNAME YA ESTÁ EN USO") //sustituir por mensaje en react
-    }
+    this.userService.getUserByUsernameDOS(form.value.username).subscribe(
+      res => {
+        if (res == null) {
+          this.existe = false;
+          console.log(form.value);
+          this.determinarusuario(form);
+          this.userService.crearUsuario(form.value).subscribe(res => {
+            document.getElementById('aceptar').removeAttribute('style');
+          })
+        } else {
+          this.existe = true;
+          document.getElementById('userexistente').removeAttribute('style');
+
+        }
+      }
+    );
   }
+
 
   determinarusuario(form) {
     if (form.value.tipousuario == "normal") {
@@ -75,14 +79,5 @@ export class CrearUsuarioComponent implements OnInit {
       form.value.gestor = false;
       form.value.admin = true;
     }
-  }
-
-  usuarioExistente(username) {
-    this.userService.getUserByUsernameDOS(username).subscribe(this.comprobarusarioExistente.bind(this));
-  }
-
-  comprobarusarioExistente(res: any) {
-    if (res == null) this.existe = false;
-    else this.existe = true;
   }
 }

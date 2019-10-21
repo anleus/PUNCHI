@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { User } from "../models/users";
 import { environment } from "src/environments/environment";
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -32,7 +33,11 @@ export class UserService {
   getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
     //console.log(username)
     //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
-    return this.http.get(this.url + `/username/${username}`);
+    return this.http.get(this.url + `/username/${username}`)
+    .pipe(map(user => {
+        console.log('User from user.service: ' + user)
+        return user;
+      }));
   }
 
   getUserByUsername(username: string): Promise<any> {
