@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    localStorage.clear();
   }
 
 

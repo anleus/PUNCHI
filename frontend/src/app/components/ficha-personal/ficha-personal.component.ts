@@ -13,6 +13,7 @@ import {
 } from "@angular/common/http";
 import { DepartamentosService } from "src/app/services/departamentos.service";
 import { Departamento } from "src/app/models/departamento";
+import { AuthenticationService } from 'src/app/services/auth.service';
 
 @Component({
   selector: "app-ficha-personal",
@@ -36,7 +37,8 @@ export class FichaPersonalComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private departamentosService: DepartamentosService
+    private departamentosService: DepartamentosService,
+    private authService: AuthenticationService
   ) {
 
     this.user = new User();
@@ -52,10 +54,11 @@ export class FichaPersonalComponent implements OnInit {
     });
     this.getUsuarios();
     this.getDepartamentos();
-    this.userService
+    this.getUsuarioRegistrado();
+    /*this.userService
       .getUserByUsernameDOS("root")
       .subscribe(this.onGetUserByName.bind(this));
-      console.log(this.user.becario);
+      console.log(this.user.becario);*/
   }
 
   private onGetUserByName(res: any) {
@@ -70,14 +73,10 @@ export class FichaPersonalComponent implements OnInit {
    this.user.password=this.userForm.value.password;
 
     //this.user.password=this.userForm.value.password;
-    console.log(this.userForm);
+    
 
     // stop here if form is invalid
-     if(this.userForm.value.email==""||
-     this.userForm.value.provincia==""||
-     this.userForm.value.domicilio==""||
-     this.userForm.value.telefono==""||
-     this.userForm.value.contraseña=="") {
+     if(this.userForm.invalid) {
       return;
     }else{
       console.log(this.userForm);
@@ -95,10 +94,17 @@ export class FichaPersonalComponent implements OnInit {
     var usuarioObs = this.userService.getUsers();
     usuarioObs.subscribe(users => this.users = users);
   }
+  prueba="";
+  getUsuarioRegistrado(){
+    var usuarioAct = this.authService.getCurrentUser();
+    usuarioAct.subscribe(user => this.user = user);
+    this.prueba = this.user.nombre;
+  }
 
   getDepartamentos(){  
     var departamentoObs = this.departamentosService.getDepartamentos();
     departamentoObs.subscribe(departamentos => this.departamentos = departamentos);
+
   }
   
   nombreBotonGestion = "Gestionar ficha personal";
@@ -117,14 +123,16 @@ export class FichaPersonalComponent implements OnInit {
   dnombre = "";
   seleccionDepartamento(dep: Departamento){
     this.selectedDepartamento = dep;
-    this.users = dep.usuarios;
+    //this.users = dep.usuarios;
     this.dnombre = dep.nombre;
   }
 
   unombre = "";
+  usuarioN : User;
   seleccionUsuario(us: User){
-    this.selectedUsuario = us;
+    this.user = us;
     this.unombre = us.nombre;
+    console.log(this.user);
   }
 
 
@@ -135,6 +143,38 @@ export class FichaPersonalComponent implements OnInit {
     }else{
       this.gestion = true;
       this.nombreBotonGestion = "Gestionar empleados";
+    }
+  }
+
+
+  departamentosP : Departamento[];
+  usersP : User[];
+  departamentoSol : Departamento;
+  prueba2 = "";
+  getUsuarioByDepartamento(us:User){
+    var departamentoObs = this.departamentosService.getDepartamentos();
+    departamentoObs.subscribe(res => this.departamentosP = res);
+
+    for(let departamento of this.departamentosP){
+      this.usersP = departamento.usuarios;
+      for(let user of this.usersP){
+        if(us == user){
+          this.departamentoSol = departamento;
+          this.prueba2 = departamento.nombre;
+        }
+      }
+    }
+
+  }
+
+notificacion = "";
+  guardarCambios(password){
+    if(typeof password == 'undefined'){
+      console.log("El campo password no es correcto");
+      this.notificacion = "El campo password no es correcto";
+    }else{
+      console.log("El campo es correcto.")
+      this.userService.putUser(this.user);
     }
   }
 

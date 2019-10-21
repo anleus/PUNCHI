@@ -1,6 +1,7 @@
 
 <div *ngIf="comprobarDepartamento()" class="top">  
     <button mat-stroked-button (click)="cambiarModoGestion()" color="primary"  class="botong">{{nombreBotonGestion}}</button>
+    <p>{{prueba}}</p>
 </div>
 
 <body>
@@ -12,7 +13,7 @@
                   <label>Contraseña:</label>
                 </div>
                 <div class="col-75">
-                  <input type="text" formcontrolName="password" ngModel [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" class="form-control"
+                  <input type="password" formcontrolName="password" ngModel [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                   <div
                     *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['telefono'].touched)"
@@ -57,20 +58,23 @@
                       </div>
                     </div>
                   </div>       
-
+                  <div class="row">
+                    <input type="submit" value="Guardar cambios" (click)="guardarCambios(password)" >
+                  </div>
+                  <div>{{notificacion}}</div>
         </form>
     </div>     
-
+<!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
   <div *ngIf="comprobarDepartamento() && !gestion" class="container">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">
+        <!--<div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">
             <mat-form-field>
                 <mat-select placeholder="Departamento" name = "selectorDepartamento">
                     <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
                 </mat-select>
               </mat-form-field>
           <p>Departamento: {{dnombre}}</p>
-          </div>  
+          </div>  -->
               <div *ngIf="comprobarDepartamento()" class="selector-container">
               <mat-form-field>
                 <mat-select placeholder="Usuario"> 
@@ -84,8 +88,8 @@
           <label for="nombre">Nombre:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="nombre" formcontrolName="nombre" ngModel [(ngModel)]="user.nombre"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="nombre" formcontrolName="nombre" ngModel 
+            [ngModelOptions]="{standalone: true}" >
         </div>
       </div>
 
@@ -180,7 +184,7 @@
           </div>
         </div>
       </div>
-
+ -->
 
       <div class="row form-group">
         <div class="col-25">
@@ -208,7 +212,6 @@
       <br>
       <div class="row">
         <input type="submit" value="Guardar cambios" >
-
       </div>
 
     </form>

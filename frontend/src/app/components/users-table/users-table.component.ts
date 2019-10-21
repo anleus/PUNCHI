@@ -37,7 +37,8 @@ export class UsersTableComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
-    this.userService.getUsersNonDeleted(true).subscribe(
+    //var cond = false;
+    this.userService.getUsers().subscribe(
       (resp) => {
         this.dataSource = new MatTableDataSource<User>(resp);
         this.dataSource.paginator = this.paginator;
