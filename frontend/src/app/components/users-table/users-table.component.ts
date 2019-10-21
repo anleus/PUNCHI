@@ -28,7 +28,7 @@ import { User } from 'src/app/models/users';
   providers: [UserService],
 })
 export class UsersTableComponent implements OnInit {
-  displayedColumns = ['apellidos', 'nombre', 'select'];
+  displayedColumns = ['apellidos', 'nombre'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel<User>(true, []);
 
@@ -38,7 +38,7 @@ export class UsersTableComponent implements OnInit {
 
   ngOnInit() {
     //var cond = false;
-    this.userService.getUsers().subscribe(
+    this.userService.getUsersNonDeleted().subscribe(
       (resp) => {
         this.dataSource = new MatTableDataSource<User>(resp);
         this.dataSource.paginator = this.paginator;

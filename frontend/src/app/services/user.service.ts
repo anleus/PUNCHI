@@ -72,7 +72,7 @@ export class UserService {
     return this.http.delete(this.url + "/" + id);
   }
 
-  getUsersNonDeleted(cond: boolean): Observable<User[]> {
-    return this.http.get<User[]>(this.url + "/deleted/" + cond);
+  getUsersNonDeleted(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + "/deleted/");
   }
 }

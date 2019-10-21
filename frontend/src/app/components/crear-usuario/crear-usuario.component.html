@@ -3,6 +3,21 @@
 </div>
 
 <div class="example-container">
+  <div id="aceptar" class="alert alert-success" style="display: none" role="alert">
+    <div style="display: inline;">Usuario guardado correctamente</div>
+  </div>
+</div>
+
+<div class="example-container">
+  <div id="userexistente" class="alert alert-danger" style="display: none" role="alert">
+    <div style="display: inline;">Nombre de usuario existente</div>
+  </div>
+</div>
+<div>
+  <p></p>
+</div>
+
+<div class="example-container">
   <mat-card class="card" flex="20">
     <form [formGroup]="usuarioform" >
       <h1 class="text-center">Crear usuario</h1>
@@ -16,7 +31,7 @@
 
         <div class="col-md-4 offset-md-2">
           <mat-form-field>
-            <input matInput placeholder="apellidos" formControlName="apellidos"  required>
+            <input matInput placeholder="Apellidos" formControlName="apellidos"  required>
           </mat-form-field>
         </div>
       </div>
@@ -52,7 +67,7 @@
         </div>
         <div class="col-md-4 offset-md-2">
           <mat-form-field>
-            <input matInput type="number" formControlName="nuss" placeholder="nuss" >
+            <input matInput type="number" formControlName="nuss" placeholder="Nuss" >
           </mat-form-field>
         </div>
       </div>
@@ -61,7 +76,7 @@
       <div class="row p-3">
         <div class="col">
           <mat-form-field>
-            <input matInput type="number" formControlName="telefono" placeholder="felefono"  required>
+            <input matInput type="number" formControlName="telefono" placeholder="Teléfono"  required>
             <mat-error>Introduce un teléfono válido</mat-error>
 
           </mat-form-field>
@@ -73,7 +88,7 @@
         </div>
         <div class="col">
             <mat-form-field>
-                <input matInput formControlName="password" placeholder="contraseña"  [type]="hide ? 'password' : 'text'"  required>
+                <input matInput formControlName="password" placeholder="Contraseña"  [type]="hide ? 'password' : 'text'"  required>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
@@ -101,7 +116,7 @@
 
       <div class="text-center">
         <!--<button type="submit" (click)="onCrearUsuario(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"-->
-        <button type="submit" (click)="usuarioExistente2(usuarioform, crearUsuario)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+        <button type="submit" (click)="usuarioExistente2(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
           autocomplete="off">
           Confirmar
         </button>

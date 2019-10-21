@@ -136,9 +136,7 @@ userFunctions.deleteUser = async (req, res, next) => {
 };
 
 userFunctions.getUsersNonDeleted = async (req, res, next) => {
-  var cond = req.params.deleted;
-  console.log(typeof cond);
-  const users = await User.find({deleted: cond});
+  const users = await User.find({deleted: false});
   res.json(users);
 };
 

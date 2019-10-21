@@ -1,20 +1,38 @@
-<div class="main-div">
-    <mat-card class="card" flex="50" >
-      <mat-form-field>
-          <input matInput [(ngModel)]="username"  placeholder="Nombre de usuario">
-      </mat-form-field>
+<div>
+  <p></p>
+</div>
 
-      <mat-form-field>
-        <input matInput type="password" [(ngModel)]="pass"  placeholder="Contraseña">
-      </mat-form-field>
+<div class="containerlog">
+  <div id="incorrecto" class="alert alert-danger" style="display: none" role="alert">
+    <div style="display: inline;">Usuario o contraseña incorrectos</div>
+  </div>
 
-      <!--<div class="login-button" onclick='console.log("Clicked!")'>
+  <div>
+    <p></p>
+  </div>
+
+</div>
+<div class="containerlog">
+  <mat-card class="card" flex="50">
+    <h1 class="text-center">Iniciar sesión</h1>
+    <mat-form-field>
+      <input matInput [(ngModel)]="username" placeholder="Nombre de usuario">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="password" [(ngModel)]="pass" placeholder="Contraseña" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <!--<div class="login-button" onclick='console.log("Clicked!")'>
         <input type="submit" value="Login">
       </div>-->
-
-      <div layout="row" layout-align="center center">
-        <button mat-button (click)='loginUser(username, pass)'>Login</button>
-        <!--<button mat-button (click)='prueba()'>Login</button>-->
-      </div>
-    </mat-card>
-  </div>
+    <div layout="row" layout-align="center center" class="text-center">
+      <button mat-button (click)='loginUser(username, pass)' class="btn btn-primary text-center">Login</button>
+      <!--<button mat-button (click)='prueba()'>Login</button>-->
+    </div>
+  </mat-card>
+</div>
