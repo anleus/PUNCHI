@@ -13,7 +13,7 @@
                   <label>Contraseña:</label>
                 </div>
                 <div class="col-75">
-                  <input type="text" formcontrolName="password" ngModel [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" class="form-control"
+                  <input type="password" formcontrolName="password" ngModel [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                   <div
                     *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['telefono'].touched)"
@@ -59,8 +59,9 @@
                     </div>
                   </div>       
                   <div class="row">
-                    <input type="submit" value="Guardar cambios" >
+                    <input type="submit" value="Guardar cambios" (click)="guardarCambios(password)" >
                   </div>
+                  <div>{{notificacion}}</div>
         </form>
     </div>     
 <!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->

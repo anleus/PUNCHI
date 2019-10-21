@@ -167,5 +167,15 @@ export class FichaPersonalComponent implements OnInit {
 
   }
 
+notificacion = "";
+  guardarCambios(password){
+    if(typeof password == 'undefined'){
+      console.log("El campo password no es correcto");
+      this.notificacion = "El campo password no es correcto";
+    }else{
+      console.log("El campo es correcto.")
+      this.userService.putUser(this.user);
+    }
+  }
 
 }
