@@ -164,7 +164,7 @@ export class FichaPersonalComponent implements OnInit {
     departamentoObs.subscribe(res => this.departamentosP = res);
 
     for(let departamento of this.departamentosP){
-      this.usersP = departamento.users;
+      this.usersP = departamento.usuarios;
       for(let user of this.usersP){
         if(us == user){
           this.departamentoSol = departamento;
