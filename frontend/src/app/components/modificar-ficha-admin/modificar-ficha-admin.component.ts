@@ -51,7 +51,7 @@ export class ModificarFichaAdminComponent implements OnInit {
       provincia: ['', Validators.required]
     });
     this.getUsuarios();
-    this.getDepartamentos();
+    //this.getDepartamentos();
     //PASO2: llamar a userservice y getuserbyid
     //this.userService
       //.getUserByUsername("root")
