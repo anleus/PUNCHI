@@ -134,4 +134,10 @@ userFunctions.deleteUser = async (req, res, next) => {
     });
 };
 
+userFunctions.getUsersNonDeleted = async (req, res, next) => {
+  var cond = req.params;
+  const users = await User.find(deleted == cond);
+  res.json(users);
+};
+
 module.exports = userFunctions;

@@ -50,13 +50,31 @@ export class FichaPersonalComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.userForm.value.nombre=this.user.nombre;
+    this.userForm.value.apellidos=this.user.apellidos;
+    this.userForm.value.fechaNacimiento=this.user.fechaNacimiento;
+    this.userForm.value.email=this.user.email;
+    this.userForm.value.provincia=this.user.provincia;
+    this.userForm.value.domicilio=this.user.domicilio;
+    this.userForm.value.telefono=this.user.telefono;
+    this.userForm.value.nuss=this.user.nuss;
+    this.userForm.value.username=this.user.username;
+    this.userForm.value.password=this.user.password;
+    this.userForm.value.becario=this.user.becario;
     console.log(this.userForm);
+
     // stop here if form is invalid
-    if (this.userForm.invalid) {
+     if(this.userForm.value.email==""||
+     this.userForm.value.provincia==""||
+     this.userForm.value.domicilio==""||
+     this.userForm.value.telefono==""||
+     this.userForm.value.contraseña=="") {
       return;
+    }else{
+      this.userService.putUser(this.user);
     }
-    console.log(this.user);
-    this.userService.putUser(this.user);
+    
+   
   }
 
   // convenience getter for easy access to form fields

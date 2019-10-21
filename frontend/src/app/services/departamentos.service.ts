@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Departamento } from '../models/departamento';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +22,25 @@ export class DepartamentosService {
       }
     );
 
-  getDepartamentos = () => this.http.get(this.url);
+  //Cambiado para mejor funcionamiento att:josevi
+  //getDepartamentos = () => this.http.get(this.url);
+
+  getDepartamentos(): Observable<Departamento[]> {
+    return this.http.get<Departamento[]>(this.url);
+  }
+
+  getDepartamentoByUsername(username: string): Promise<any> {
+    return this.http
+      .get(this.url + "nombre/" + username)
+      .toPromise()
+      .then(this.onGetDepartamentoByName.bind(this));
+  }
+
+  
+  onGetDepartamentoByName(res: any) {
+     return Promise.resolve(res);
+   }
+ 
 
   //getUserJornadas = userid => this.http.get(this.url + userid);
 }
