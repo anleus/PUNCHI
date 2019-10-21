@@ -83,9 +83,8 @@ export class AsignarDepComponent implements OnInit {
       }else{
         this.selected2.usuarios.push(this.selected)
       }
-
-      this.departamentosService.deleteDept(this.selectedDepID);
-      this.departamentosService.postDepartamentos(this.selected2)
+      this.departamentosService.deleteDept(this.selectedDepID).subscribe() 
+      this.departamentosService.postDepartamentos(this.selected2)  
       
     }
     selectedDep = "";

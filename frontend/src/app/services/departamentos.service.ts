@@ -41,7 +41,7 @@ export class DepartamentosService {
    }
  
   deleteDept(_id: string) {
-    return this.http.delete(this.url + "/" + _id);
+    return this.http.delete(this.url + _id);
   }
 
   //getUserJornadas = userid => this.http.get(this.url + userid);
