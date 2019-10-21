@@ -32,6 +32,12 @@ export class FichaPersonalComponent implements OnInit {
   gestion = true;
   selectedDepartamento: Departamento;
   selectedUsuario: User;
+  logUser: User;
+  error = "";
+  error2 = "";
+  error3 = "";
+  error4 = "";
+
 
   constructor(
     private userService: UserService,
@@ -75,7 +81,21 @@ export class FichaPersonalComponent implements OnInit {
     // stop here if form is invalid
     if (this.userForm.invalid) {
       return;
-    } else {
+    }else{
+      var usuarioAct = this.authService.getCurrentUser();
+      usuarioAct.subscribe(user => this.logUser = user);
+      console.log(this.user);
+      console.log("Logged")
+      console.log(this.logUser);
+      this.error = "1" +this.user.nombre;
+      this.error2 = "2" + this.logUser.nombre;
+      this.error3 = "3" + this.logUser.admin;
+     
+      if(this.user.username == this.logUser.username && !this.logUser.admin){
+        this.error4 = "4No puedes modificarte a ti mismo.";
+        console.log("No puedes modificarte a ti mismo.");
+        return;
+      }
       console.log(this.userForm);
       console.log(this.user);
       this.userService.putUser(this.user);
@@ -108,13 +128,13 @@ export class FichaPersonalComponent implements OnInit {
   nombreBotonGestion = "Gestionar ficha personal";
   dep = "RRHH";
   comprobarDepartamento() {
-    return this.dep == "RRHH";
-    //return (this.user.departamento.nombre == "RRHH" || this.user.departamento.responsable == this.user); //Cuando funcione users
+    return (this.user.admin || this.user.gestor);
+    return this.user.admin;
   }
 
   comprobarDepartamentoAdmin() {
-    return this.dep == "RRHH";
-    //return (this.user.departamento.nombre == "RRHH"|| this.dep == "RRHH");
+    return this.user.admin;
+   
   }
   dnombre = "";
   seleccionDepartamento(dep: Departamento) {
