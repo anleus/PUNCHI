@@ -34,10 +34,6 @@ export class FichaPersonalComponent implements OnInit {
   selectedUsuario: User;
   logUser: User;
   error = "";
-  error2 = "";
-  error3 = "";
-  error4 = "";
-
 
   constructor(
     private userService: UserService,
@@ -87,13 +83,9 @@ export class FichaPersonalComponent implements OnInit {
       console.log(this.user);
       console.log("Logged")
       console.log(this.logUser);
-      this.error = "1" +this.user.nombre;
-      this.error2 = "2" + this.logUser.nombre;
-      this.error3 = "3" + this.logUser.admin;
      
       if(this.user.username == this.logUser.username && !this.logUser.admin){
-        this.error4 = "4No puedes modificarte a ti mismo.";
-        console.log("No puedes modificarte a ti mismo.");
+        this.error = "No puedes modificarte a ti mismo.";
         return;
       }
       console.log(this.userForm);

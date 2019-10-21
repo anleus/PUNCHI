@@ -11,8 +11,7 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/PUNCHI?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-
+mongoose.connect('mongodb+srv://admin:admin@clusterpunchi-sujlc.mongodb.net/PUNCHI?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true });
 
 connection.once('open', () => {
     console.log('MongoDB database connection established successfully!');
