@@ -70,8 +70,8 @@
         </div>  
             <div *ngIf="comprobarDepartamento()" class="example-container">
             <mat-form-field>
-              <mat-select placeholder="Nombre" [(value)]=selected2> 
-                <mat-option (click)="seleccionUsuario(selected2)" *ngFor="let user of usuarios" value="{{user}}">{{user.nombre}}</mat-option>
+              <mat-select placeholder="Nombre"> 
+                <mat-option (click)="seleccionUsuario(user)" *ngFor="let user of usuarios">{{user.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
