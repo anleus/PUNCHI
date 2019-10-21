@@ -123,7 +123,8 @@ userFunctions.updateUser = (req, res, next) => {
 };
 
 userFunctions.deleteUser = async (req, res, next) => {
-  await User.findByIdAndRemove(req.params.id)
+  console.log(req.params._id)
+  await User.findByIdAndDelete(req.params._id,)
     .then(() => {
       res.status(200);
       res.json({ status: "User deleted" });
