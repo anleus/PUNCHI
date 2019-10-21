@@ -54,7 +54,7 @@ userFunctions.getUserByUsername = async (req, res, next) => {
   });
 
   if (user == null) {
-    console.log('No se ha encontrado ningún usuario');
+    console.log('user.controller.js - No se ha encontrado ningún usuario');
     res.json(null);
     return;
   }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { UserService } from '../../services/user.service'
 import { User } from '../../models/users';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+//import { resolve } from 'dns';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -12,7 +13,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class CrearUsuarioComponent implements OnInit {
   hide = true;
   public user: User;
-  public existe: Boolean;
+  public existe: Boolean = false;
 
   usuarioform = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
@@ -35,13 +36,57 @@ export class CrearUsuarioComponent implements OnInit {
   ngOnInit() {
   }
 
-  onCrearUsuario(form) {
-    console.log(this.usuarioExistente(form.value.username));
+  usuarioExistente(username) {
+    this.userService.getUserByUsernameDOS(username).subscribe(
+      res => {
+        if (res == null) {
+          this.existe = false;
+          console.log('RES from crear-usuario.component.ts ha sido null, por tanto ths.existe = false')
+        } else {
+          this.existe = true;
+          console.log('RES from crear-usuario.component.ts NO ha sido null, por tanto ths.existe = true')
+        }
+      }
+    );
+    return new Promise(resolve => {
+      resolve(this.existe);
+    });
+  }
 
-    this.determinarusuario(form);
-    this.usuarioExistente(form.value.username);
-    this.usuarioExistente(form.value.username);
-    if (this.existe == false) {
+  usuarioExistente2(form, crearUsuario) {
+    this.userService.getUserByUsernameDOS(form.value.username).subscribe(
+      res => {
+        if (res == null) {
+          this.existe = false;
+          console.log('RES from crear-usuario SÍ ha sido null, por tanto existe = false, no existe el username')
+          crearUsuario(this.existe);
+        } else {
+          this.existe = true;
+          console.log('RES from crear-usuario NO ha sido null, por tanto existe = true, SÍ existe el username')
+          crearUsuario(this.existe);
+        }
+      }
+    );
+  }
+
+  crearUsuario(cond) {
+    if (cond) { //Existe el username
+      console.log("Callback ejecutado: Existe el username");
+    } else { //No existe el username
+      console.log("Callback ejecutado: No existe el username");
+    }
+  }
+
+  async onCrearUsuario(form) {
+    console.log('form.value.username from crear-usuario.component.ts: ' + form.value.username);
+
+    this.determinarusuario(form); //no es importante
+
+    const b = await this.usuarioExistente(form.value.username);
+    console.log("b from crear-usuario.component.ts is: " + b)
+
+    if (!b) {
+      console.log("Este username NO está en uso")
       if (form.value.nuss == "") form.value.nuss = 0;
       console.log(form.value);
       this.userService.crearUsuario(form.value).subscribe(res => {
@@ -50,8 +95,13 @@ export class CrearUsuarioComponent implements OnInit {
     }
     else {
       //solucionar que se actualiza TARDE
-      console.log("ESTE USERNAME YA ESTÁ EN USO") //sustituir por mensaje en react
+      console.log("Este username SÍ está en uso") //sustituir por mensaje en react
     }
+  }
+
+  comprobarusarioExistente(res: any) {
+    if (res == null) this.existe = false;
+    else this.existe = true;
   }
 
   determinarusuario(form) {
@@ -75,14 +125,5 @@ export class CrearUsuarioComponent implements OnInit {
       form.value.gestor = false;
       form.value.admin = true;
     }
-  }
-
-  usuarioExistente(username) {
-    this.userService.getUserByUsernameDOS(username).subscribe(this.comprobarusarioExistente.bind(this));
-  }
-
-  comprobarusarioExistente(res: any) {
-    if (res == null) this.existe = false;
-    else this.existe = true;
   }
 }
