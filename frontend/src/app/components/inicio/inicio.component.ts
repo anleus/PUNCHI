@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse } from '@a
 import { BrowserModule } from '@angular/platform-browser';
 import { JornadaService } from 'src/app/services/jornada.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { AuthenticationService } from 'src/app/services/auth.service';
 
 /**
  *  Misteriosamente si pongo esto dentro de la clase no funciona,
@@ -20,7 +21,9 @@ const httpOptions = {
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css'],
-  providers: [ JornadaService]
+  providers: [ JornadaService,
+    AuthenticationService
+  ]
 })
 @NgModule({
   declarations: [],
@@ -31,8 +34,9 @@ const httpOptions = {
     HttpClientModule,
     HttpHeaders
   ],
-  providers: [JornadaService]
-    })
+  providers: [JornadaService,
+    AuthenticationService
+  ]})
 
 export class InicioComponent implements OnInit {
 
@@ -45,19 +49,26 @@ export class InicioComponent implements OnInit {
   startHour; endHour;
   startLabel = "00:00:00";
 
-  constructor(private jornadaService : JornadaService) { }
+  constructor(private jornadaService : JornadaService, private authService : AuthenticationService) { }
 
   ngOnInit() {
+    if(localStorage.getItem('jornada')){
+      this.toggleFicharState(true);
+      var timeStart = new Date(JSON.parse(localStorage.getItem('jornada')).begin);
+      var now = new Date()
+      this.tiempoFichando = Math.floor((now.getTime() - timeStart.getTime()) / 1000);
+      this.startLabel = this.getCurrentHour(timeStart, true);
+    }
   }
 
-  toggleFicharState(){
+  toggleFicharState(onInit = false){
     this.fichando = !this.fichando;
     this.icon =  !this.fichando ? 'play_arrow' : 'stop';
     this.text = !this.fichando ? 'Empezar jornada' : 'Terminar jornada';
     if(this.fichando){
       t = setInterval(() => {++this.tiempoFichando; this.updateTimeLabel()}, 1000);
-      if(!this.startHour)
-        this.startLabel = this.getCurrentHour(true);
+      if(!onInit)
+        this.startJornada();
     }
     else{
       clearInterval(t);
@@ -67,8 +78,16 @@ export class InicioComponent implements OnInit {
     }
   }
 
-  private getCurrentHour(start = false) {
-    var date = new Date();
+  private startJornada() {
+    var hour = new Date;
+    if (!this.startHour)
+      this.startLabel = this.getCurrentHour(hour, true);
+    var currJornada = {begin: hour};
+    localStorage.setItem('jornada', JSON.stringify(currJornada));
+  }
+
+  private getCurrentHour(date ,start = false) {
+    console.log(date);
     if(start)
       this.startHour = date;
     var hour = this.pad2(date.getHours()) + ':' + this.pad2(date.getMinutes()) + ':' + this.pad2(date.getSeconds());
@@ -85,11 +104,13 @@ export class InicioComponent implements OnInit {
   }
 
   completarJornada(){
+    var user = JSON.parse(localStorage.getItem('currentUser'));
     var jornada = {
       begin: this.startHour,
       end: this.endHour,
-      user: '5d94cb6dd634648da19d6a6c'//TODO: sacar id del usuario conectado
+      user: (user ? user._id : '5d94cb6dd634648da19d6a6c')
     }
+    localStorage.removeItem('jornada');
     this.jornadaService.postJornada(jornada);
   }
 

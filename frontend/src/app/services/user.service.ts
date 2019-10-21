@@ -1,46 +1,73 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
-import { User } from '../models/users';
+import { User } from "../models/users";
+import { environment } from "src/environments/environment";
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
-  AUTH_SERVER: string = 'http://localhost:4000';
   selectedUser: User;
   users: User[];
-  
-  readonly URL_API = '';
+
+  url: string = "";
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
+    this.url = environment.urlb + "/users";
   }
 
-  crearUsuario(user: User){
-    return this.http.post(`${this.AUTH_SERVER}/Users`,
-      user);
+  crearUsuario(user: User) {
+    return this.http.post(this.url, user);
   }
 
   postUser(user: User) {
-    return this.http.post(this.URL_API, user);
+    return this.http.post(this.url, user);
   }
 
-  getUser() {
-    return this.http.get(this.URL_API + '/users/');
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
+  }
+  
+  getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
+    //console.log(username)
+    //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
+    return this.http.get(this.url + `/username/${username}`);
   }
 
-  getUserByUsername(username) {
-    return this.http.get(`${this.AUTH_SERVER}/users/username/${username}`);
+  getUserByUsername(username: string): Promise<any> {
+    return this.http
+      .get(this.url + "/username/" + username)
+      .toPromise()
+      .then(this.onGetUserByName.bind(this));
   }
 
-  getUserById(_id) {
-    return this.http.get(this.URL_API + `/users/${_id}`);
+  getUserById(id: string): Promise<User> {
+    return this.http
+      .get(this.url + "/" + id)
+      .toPromise()
+      .then(this.onGetUserById.bind(this));
+  }
+
+  onGetUserById(res: any) {
+    return Promise.resolve(res);
+  }
+
+  onGetUserByName(res: any) {
+   //console.log("USERSERIVE 2");
+    //console.log(res);
+    return Promise.resolve(res);
   }
 
   putUser(user: User) {
-    return this.http.put(this.URL_API + `/${user._id}`, user);
+    return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
   }
 
-  deleteUser(_id: string) {
-    return this.http.delete(this.URL_API + `/${_id}`);
+  deleteUser(id: string) {
+    return this.http.delete(this.url + "/" + id);
+  }
+
+  getUsersNonDeleted(cond: boolean): Observable<User[]> {
+    return this.http.get<User[]>(this.url + "/" + cond);
   }
 }
