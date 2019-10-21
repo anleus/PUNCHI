@@ -29,7 +29,8 @@ const routes: Routes = [
   { path: "fichapersonal", component: FichaPersonalComponent },
   { path: "fichapersonaladmin", component: ModificarFichaAdminComponent },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
-  { path: "login", component: LoginComponent }
+  { path: "login", component: LoginComponent },
+  {path: '**', redirectTo: "inicio"}
 ];
 
 @NgModule({
