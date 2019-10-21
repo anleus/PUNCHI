@@ -66,6 +66,7 @@ export class AsignarDepComponent implements OnInit {
 
     getDepartamentos(){  
       var departamentoObs = this.departamentosService.getDepartamentos();
+      console.log(departamentoObs)
       departamentoObs.subscribe(departamentos => this.departamentos = departamentos);
   
     }
@@ -76,17 +77,30 @@ export class AsignarDepComponent implements OnInit {
 
   //Click on asignar method
     asignarDepartamento() {
-      this.departamentosService.onGetDepartamentoByName
+      if(this.selected2.usuarios===null || this.selected2.usuarios === undefined || this.selected2.usuarios === []){
+        this.selected2.usuarios=[this.selected]
+        console.log(this.selected2.usuarios)
+      }else{
+        this.selected2.usuarios.push(this.selected)
+      }
+
+      this.departamentosService.deleteDept(this.selectedDepID);
+      this.departamentosService.postDepartamentos(this.selected2)
+      
     }
     selectedDep = "";
+    selectedDepID = "";
     selectedUs = "";
     seleccionDepartamento(dep: Departamento){ 
       this.selected2 = dep;
       this.selectedDep = dep.nombre;
+      this.selectedDepID = dep._id;
     }
     
     seleccionUsuario(us: User){
       this.selected = us;
       this.selectedUs = us.nombre;
     }
-}
+
+    }
+
