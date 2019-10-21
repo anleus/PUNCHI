@@ -36,6 +36,7 @@ input[type=tel]{
   resize: vertical;
 }
 
+
 .botong{
   background-color: #369;
   color: white;
@@ -46,7 +47,11 @@ input[type=tel]{
   margin-bottom: 25px;
 }
 .top{
-  background-color: white;
+  background-color: #f2f2f2;
+}
+
+body{
+  background-color: #f2f2f2;
 }
 
 input[type=date], select, textarea{
@@ -89,8 +94,10 @@ input[type=submit]:disabled{
 /* Style the container */
 .container {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: white;
   padding: 20px;
+  border: #cfcfcf 2px;
+
 }
 
 /* Floating column for labels: 25% width */
@@ -122,11 +129,6 @@ input[type=submit]:disabled{
 .selector-container > * {
   width: 100%;
   padding: 5px;
-}
-
-.separar{
-  background-color: white;
-  color: white;
 }
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
