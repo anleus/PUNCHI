@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { User } from './users';
 
 export class Departamento {
-  nombreDepartamento: string;
+  nombre: string;
   responsable: User;
   usuarios: User[];
 }
