@@ -87,7 +87,6 @@ export class InicioComponent implements OnInit {
   }
 
   private getCurrentHour(date ,start = false) {
-    console.log(date);
     if(start)
       this.startHour = date;
     var hour = this.pad2(date.getHours()) + ':' + this.pad2(date.getMinutes()) + ':' + this.pad2(date.getSeconds());

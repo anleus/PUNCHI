@@ -67,7 +67,7 @@ export class HistoryTableComponent implements OnInit {
     return (
       this.pad2(date.getDate()) +
       '/' +
-      this.pad2(date.getMonth()) +
+      this.pad2(date.getMonth() + 1) +
       '/' +
       date.getFullYear()
     );
