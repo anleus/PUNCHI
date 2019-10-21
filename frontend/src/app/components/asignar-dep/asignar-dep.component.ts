@@ -53,12 +53,6 @@ export class AsignarDepComponent implements OnInit {
 
 
     getUsuarios(){
-      /*this.userService.getUsuarios()
-      .subscribe(res =>
-        this.userService.getUsuarios = res as User[];
-        console.log(res);
-        )
-      */
      var usuarioObs = this.userService.getUsers();
      usuarioObs.subscribe(users => this.users = users)
   

@@ -48,7 +48,9 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 };
 
 departamentFunctions.deleteDepartamento = async (req, res, next) => {
-	await Departamento.findByIdAndRemove(req.body.id)
+	console.log(req)
+	await Departamento.findByIdAndRemove(req.params.id)
+
 		.then(() => {
 			res.status(200);
 			res.json({ status: "Deparamento deleted" });
