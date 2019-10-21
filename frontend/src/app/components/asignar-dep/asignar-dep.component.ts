@@ -5,6 +5,8 @@ import { UserService } from "src/app/services/user.service";
 import { DatePipe } from '@angular/common';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { Departamento } from 'src/app/models/departamento';
+import { DepartamentosService } from 'src/app/services/departamentos.service';
 
 
 @Component({
@@ -20,9 +22,15 @@ export class AsignarDepComponent implements OnInit {
   public userForm: FormGroup;
   submitted = false;
   selectUser: Number;
+  departamentos : Departamento[];
+  Departamento : Departamento;
+  selected: User;
+  selected2: Departamento;
+
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private departamentosService: DepartamentosService
   ) { 
     this.user= new User();
   }
@@ -36,6 +44,7 @@ export class AsignarDepComponent implements OnInit {
       provincia: ['', Validators.required]
     });
     this.getUsuarios();
+    this.getDepartamentos()
 
   }
   private onGetUserByName(res: any) {
@@ -54,11 +63,30 @@ export class AsignarDepComponent implements OnInit {
      usuarioObs.subscribe(users => this.users = users)
   
     }
+
+    getDepartamentos(){  
+      var departamentoObs = this.departamentosService.getDepartamentos();
+      departamentoObs.subscribe(departamentos => this.departamentos = departamentos);
+  
+    }
     selectionChange(event: any) {
       this.selectUser = event.value;
       console.log(this.selectUser)
 }
+
+  //Click on asignar method
     asignarDepartamento() {
-      console.log(this.selectUser)
+      this.departamentosService.onGetDepartamentoByName
+    }
+    selectedDep = "";
+    selectedUs = "";
+    seleccionDepartamento(dep: Departamento){ 
+      this.selected2 = dep;
+      this.selectedDep = dep.nombre;
+    }
+    
+    seleccionUsuario(us: User){
+      this.selected = us;
+      this.selectedUs = us.nombre;
     }
 }
