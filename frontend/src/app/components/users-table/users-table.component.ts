@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/users';
+import { htmlAstToRender3Ast } from '@angular/compiler/src/render3/r3_template_transform';
 
 @Component({
   selector: 'app-users-table',
@@ -28,7 +29,7 @@ import { User } from 'src/app/models/users';
   providers: [UserService],
 })
 export class UsersTableComponent implements OnInit {
-  displayedColumns = ['apellidos', 'nombre'];
+  displayedColumns = ['apellidos', 'nombre', 'select'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel<User>(true, []);
 
@@ -36,8 +37,13 @@ export class UsersTableComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  deleteUserSelected(element: User) {
+    this.userService.deleteUser(element._id).subscribe(
+      () => {window.location.reload()}
+    )
+  }
+
   ngOnInit() {
-    //var cond = false;
     this.userService.getUsers().subscribe(
       (resp) => {
         this.dataSource = new MatTableDataSource<User>(resp);
