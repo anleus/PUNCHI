@@ -161,14 +161,18 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   notificacion = "";
-  guardarCambios(password, domicilio, provincia) {
-    console.log(password);
-    console.log(domicilio);
-    console.log(provincia);
+  guardarCambios2(password,domicilio,provincia,nombre,apellidos,fechaNacimiento,nuss,username,email,localidad) {
     if (
       typeof password == "undefined" ||
       typeof domicilio == "undefined" ||
-      typeof provincia == "undefined"
+      typeof provincia == "undefined" ||
+      typeof nombre == "undefined" ||
+      typeof apellidos == "undefined" ||
+      typeof fechaNacimiento == "undefined" ||
+      typeof nuss == "undefined" ||
+      typeof username == "undefined" ||
+      typeof email == "undefined" ||
+      typeof localidad == "undefined"
     ) {
       this.notificacion = "";
       if (typeof password == "undefined") {
@@ -183,10 +187,69 @@ export class FichaPersonalComponent implements OnInit {
           console.log("El campo provincia no es correcto");
           this.notificacion ="El campo provincia no es correcto \\\n " + this.notificacion;
       }
+      if (typeof apellidos == "undefined") {
+        console.log("El campo apellido no es correcto");
+        this.notificacion ="El campo apellido no es correcto \\\n " + this.notificacion;
       }
+      if (typeof fechaNacimiento == "undefined") {
+        console.log("La fecha de nacimiento no es correcta");
+        this.notificacion ="El campo fecha de nacimiento no es correcto \\\n " + this.notificacion;
+      }
+      if (typeof nuss == "undefined") {
+        console.log("El campo nuss no es correcto");
+        this.notificacion ="El campo nuss no es correcto \\\n " + this.notificacion;
+      }
+      if (typeof username == "undefined") {
+        console.log("El campo username no es correcto");
+        this.notificacion ="El campo username no es correcto \\\n " + this.notificacion;
+      }
+      if (typeof email == "undefined") {
+        console.log("El campo email no es correcto");
+        this.notificacion ="El campo email no es correcto \\\n " + this.notificacion;
+      }
+      if (typeof localidad == "undefined") {
+        console.log("El campo localidad no es correcto");
+        this.notificacion ="El campo localidad no es correcto \\\n " + this.notificacion;
+      }
+      
+    }
      else {
       console.log("El campo es correcto.");
       this.userService.putUser(this.user);
     }
+  }
+
+
+
+
+  guardarCambios1(password,domicilio,provincia,localidad) {
+    if (
+      typeof password == "undefined" ||
+      typeof domicilio == "undefined" ||
+      typeof provincia == "undefined" ||
+      typeof localidad == "undefined"
+    ) {
+      this.notificacion = "";
+      if (typeof password == "undefined") {
+        console.log("El campo password no es correcto");
+        this.notificacion = "El campo password no es correcto \\\n "+ this.notificacion;
+      }
+      if (typeof domicilio == "undefined") {
+          console.log("El campo domicilio no es correcto");
+          this.notificacion = "El campo domicilio no es correcto \\\n " + this.notificacion ;
+      }
+      if (typeof provincia == "undefined") {
+          console.log("El campo provincia no es correcto");
+          this.notificacion ="El campo provincia no es correcto \\\n " + this.notificacion;
+      }
+      if (typeof localidad == "undefined") {
+        console.log("El campo localidad no es correcto");
+        this.notificacion ="El campo localidad no es correcto \\\n " + this.notificacion;
+      }
+    }
+    else {
+     console.log("El campo es correcto.");
+     this.userService.putUser(this.user);
+   }
   }
 }

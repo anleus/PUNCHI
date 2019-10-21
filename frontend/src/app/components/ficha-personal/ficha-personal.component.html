@@ -63,12 +63,23 @@
           </div>
         </div>
       </div>
-      <div align='center'>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+          <div class="col-25">
+            <label for="localidad">Localidad:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="localidad" formcontrolName="localidad" ngModel [(ngModel)]="localidad"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+
+      <div>
         {{notificacion}}
         <br>
       </div>
       <div class="row">
-        <input type="submit" value="Guardar cambios" (click)="guardarCambios(password,domicilio,provincia)">
+        <input type="submit" value="Guardar cambios" (click)="guardarCambios1(password,domicilio,provincia,localidad)">
       </div>
 
     </form>
@@ -92,6 +103,8 @@
         </mat-form-field>
       </div>
       <p>Usuario: {{unombre}}</p>
+
+      
       <div *ngIf="comprobarDepartamento()" class="row">
         <div class="col-25">
           <label for="nombre">Nombre:</label>
@@ -107,8 +120,8 @@
           <label for="apellidos">Apellidos:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="user.apellidos"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="apellidos"
+            [ngModelOptions]="{standalone: true}">
         </div>
       </div>
 
@@ -118,8 +131,8 @@
           <label for="fechaNacimiento">Fecha nacimiento:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="start" formcontrolName="fechaNacimiento" ngModel [(ngModel)]="user.fechaNacimiento"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="start" formcontrolName="fechaNacimiento" ngModel [(ngModel)]="fechaNacimiento"
+            [ngModelOptions]="{standalone: true}">
         </div>
       </div>
       <div class="row">
@@ -127,8 +140,8 @@
           <label for="nuss">NUSS:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="user.nuss"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="nuss"
+            [ngModelOptions]="{standalone: true}">
         </div>
       </div>
       <div class="row">
@@ -137,7 +150,7 @@
         </div>
         <div class="col-75">
           <input type="text" id="username" ngModel formcontrolName="username" [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="user.username" disabled>
+            [(ngModel)]="username">
         </div>
       </div>
 
@@ -179,6 +192,16 @@
         </div>
       </div>
 
+ 
+      <div *ngIf="comprobarDepartamento()" class="row">
+          <div class="col-25">
+            <label for="localidad">Localidad:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="localidad" formcontrolName="localidad" ngModel [(ngModel)]="localidad"
+              [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
 
 
       <div class="row form-group">
@@ -193,7 +216,6 @@
           </div>
         </div>
       </div>
-      -->
 
       <div class="row form-group">
         <div class="col-25">
@@ -214,13 +236,17 @@
         </div>
         <div class="col-75">
           <input type="boolean" id="becario" ngModel formcontrolName="becario" [ngModelOptions]="{standalone: true}"
-            [(ngModel)]="user.becario" disabled>
+            [(ngModel)]="becario">
         </div>
       </div>
+
+      <br>
+      <br>
+      {{notificacion}}
       <br>
       <br>
       <div class="row">
-        <input type="submit" value="Guardar cambios">
+        <input type="submit" value="Guardar cambios" (click)="guardarCambios2(assword,domicilio,provincia,nombre,apellidos,fechaNacimiento,nuss,username,email,localidad)">
       </div>
 
     </form>
