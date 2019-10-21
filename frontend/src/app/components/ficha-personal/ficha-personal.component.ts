@@ -55,14 +55,10 @@ export class FichaPersonalComponent implements OnInit {
    this.user.password=this.userForm.value.password;
 
     //this.user.password=this.userForm.value.password;
-    console.log(this.userForm);
+    
 
     // stop here if form is invalid
-     if(this.userForm.value.email==""||
-     this.userForm.value.provincia==""||
-     this.userForm.value.domicilio==""||
-     this.userForm.value.telefono==""||
-     this.userForm.value.contraseña=="") {
+     if(this.userForm.invalid) {
       return;
     }else{
       console.log(this.userForm);
