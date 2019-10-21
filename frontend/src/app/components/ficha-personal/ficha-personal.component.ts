@@ -147,9 +147,11 @@ export class FichaPersonalComponent implements OnInit {
     if (this.gestion) {
       this.gestion = false;
       this.nombreBotonGestion = "Gestionar ficha personal";
+      this.notificacion="";
     } else {
       this.gestion = true;
       this.nombreBotonGestion = "Gestionar empleados";
+      this.notificacion="";
     }
   }
 
