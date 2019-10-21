@@ -2,6 +2,9 @@ import { Component, OnInit, NgModule } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "src/app/models/users";
 import { UserService } from "src/app/services/user.service";
+import { DatePipe } from '@angular/common';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 import {
   HttpClient,
   HttpClientModule,
@@ -10,13 +13,6 @@ import {
 } from "@angular/common/http";
 import { DepartamentosService } from "src/app/services/departamentos.service";
 import { Departamento } from "src/app/models/departamento";
-import { DatePipe } from '@angular/common';
-import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
-
-export interface selector {
-  value: string;
-  display: string;
-}
 
 
 @Component({
@@ -27,11 +23,6 @@ export interface selector {
   
 })
 
-@NgModule({
-  imports: [HttpClient, HttpClientModule, HttpHeaders],
-  providers: [DepartamentosService]
-})
-
 export class ModificarFichaAdminComponent implements OnInit {
   public user: User;
   users : User[];
@@ -39,7 +30,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   departamentos : Departamento[];
   public userForm: FormGroup;
   submitted = false;
-  Departamento : Departamento;
+  departamento : Departamento;
   
   constructor(
     private userService: UserService,
@@ -95,27 +86,21 @@ export class ModificarFichaAdminComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.userForm.controls; }
 
- /**
- * Clase para obtener el departamento del usuario
- */
-obtenerDepartamento(){
-  return "RRHH";  //Se debe sustituir por el acceso a la BD obteniendo el departamento del usuario loggeado
-}
+
 
 nombreBotonGestion = "Gestionar ficha personal";
-departamento = this.obtenerDepartamento(); 
+Departamento = "RRHH"; 
 Modo = "Modo administrador";
 gestion = false;
 cambiarModo(){
-  if(this.departamento == "RRHH"){
-    this.departamento = "Gestor";
-  }else if(this.departamento == "Gestor"){
-    this.departamento = "Empleado";
+  if(this.Departamento == "RRHH"){
+    this.Departamento = "Gestor";
+  }else if(this.Departamento == "Gestor"){
+    this.Departamento = "Empleado";
   }else{
-    this.departamento = "RRHH";
+    this.Departamento = "RRHH";
   }
 }
-
 
 cambiarModoGestion(){
   if(this.gestion){
@@ -128,11 +113,11 @@ cambiarModoGestion(){
 }
 
 comprobarDepartamento(){
-  return this.departamento == "RRHH" || this.departamento == "Gestor";
+  return this.Departamento == "RRHH" || this.Departamento == "Gestor";
 }
 
 comprobarDepartamentoAdmin(){
-  return this.departamento == "RRHH";
+  return this.Departamento == "RRHH";
 }
 
 comprobarGestionAdministrativa(){
@@ -147,9 +132,11 @@ conseguido = "";
 seleccionDepartamento(dep: Departamento){
   this.depart = dep.nombre;
   this.selected = dep;
+  this.usuarios = dep.usuarios;
 }
 
 seleccionUsuario(us: User){
+  this.depart = us.nombre;
   this.selected2 = us;
 }
 
