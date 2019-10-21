@@ -37,7 +37,6 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   usuarioExistente2(form) {
-    console.log("HOLA")
 
     this.userService.getUserByUsernameDOS(form.value.username).subscribe(
       res => {

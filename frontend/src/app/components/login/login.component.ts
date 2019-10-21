@@ -18,12 +18,13 @@ import { environment } from "src/environments/environment";
     })
 
 export class LoginComponent implements OnInit {
-
+  hide = true;
   durationSec = 5;
 
   constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    
     localStorage.clear();
   }
 
@@ -49,6 +50,7 @@ export class LoginComponent implements OnInit {
       res => {
                                                                       //Si retorna un user la autenticación es correcta y puedes pasar
         if (res == null) {
+          document.getElementById('incorrecto').removeAttribute('style');
           this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
