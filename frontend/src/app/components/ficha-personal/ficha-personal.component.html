@@ -1,14 +1,95 @@
-<body>
-  <div class="container">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
+<div *ngIf="comprobarDepartamento()" class="top">  
+    <button mat-stroked-button (click)="cambiarModoGestion()" color="primary"  class="botong">{{nombreBotonGestion}}</button>
+    <p>{{prueba}}</p>
+</div>
+
+<body>
+    
+    <div *ngIf="gestion" class="container">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="row form-group">
+                <div class="col-25">
+                  <label>Contraseña:</label>
+                </div>
+                <div class="col-75">
+                  <input type="password" formcontrolName="password" ngModel [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                  <div
+                    *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['telefono'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="userForm.controls['password'].errors.required">
+                     Teléfono es un campo requerido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                  <div class="col-25">
+                    <label>Domicilio:</label>
+                  </div>
+                  <div class="col-75">
+                    <input type="text" formcontrolName="domicilio" ngModel [(ngModel)]="user.domicilio" [ngModelOptions]="{standalone: true}" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
+                    <div
+                      *ngIf="userForm.controls['domicilio'].invalid && (userForm.controls['domicilio'].dirty || userForm.controls['telefono'].touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="userForm.controls['domicilio'].errors.required">
+                        Domicilio es un campo requerido.
+                      </div>
+                    </div>
+                  </div>
+                </div>      
+
+                <div class="row form-group">
+                    <div class="col-25">
+                      <label>Provincia:</label>
+                    </div>
+                    <div class="col-75">
+                      <input type="text" formControlformControlName="provincia" ngModel [(ngModel)]="user.provincia" [ngModelOptions]="{standalone: true}" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
+                      <div
+                        *ngIf="userForm.controls['provincia'].invalid && (userForm.controls['provincia'].dirty || userForm.controls['telefono'].touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="userForm.controls['provincia'].errors.required">
+                          Provincia es un campo requerido.
+                        </div>
+                      </div>
+                    </div>
+                  </div>       
+                  <div class="row">
+                    <input type="submit" value="Guardar cambios" (click)="guardarCambios(password)" >
+                  </div>
+                  <div>{{notificacion}}</div>
+        </form>
+    </div>     
+<!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
+  <div *ngIf="comprobarDepartamento() && !gestion" class="container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <!--<div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">
+            <mat-form-field>
+                <mat-select placeholder="Departamento" name = "selectorDepartamento">
+                    <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+          <p>Departamento: {{dnombre}}</p>
+          </div>  -->
+              <div *ngIf="comprobarDepartamento()" class="selector-container">
+              <mat-form-field>
+                <mat-select placeholder="Usuario"> 
+                  <mat-option (click)="seleccionUsuario(user)" *ngFor="let user of users">{{user.nombre}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <p>Usuario: {{unombre}}</p>
       <div *ngIf="comprobarDepartamento()" class="row">
         <div class="col-25">
           <label for="nombre">Nombre:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="nombre" formcontrolName="nombre" ngModel [(ngModel)]="user.nombre"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="nombre" formcontrolName="nombre" ngModel 
+            [ngModelOptions]="{standalone: true}" >
         </div>
       </div>
 
@@ -18,8 +99,7 @@
           <label for="apellidos">Apellidos:</label>
         </div>
         <div class="col-75">
-          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="user.apellidos"
-            [ngModelOptions]="{standalone: true}" disabled>
+          <input type="text" id="apellidos" formcontrolName="apellidos" ngModel [(ngModel)]="user.apellidos" [ngModelOptions]="{standalone: true}" disabled>
         </div>
       </div>
 
@@ -104,7 +184,7 @@
           </div>
         </div>
       </div>
-
+ -->
 
       <div class="row form-group">
         <div class="col-25">
@@ -132,7 +212,6 @@
       <br>
       <div class="row">
         <input type="submit" value="Guardar cambios" >
-
       </div>
 
     </form>

@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { Departamento } from './departamento';
 
 export class User {
   _id: string;

@@ -36,7 +36,18 @@ input[type=tel]{
   resize: vertical;
 }
 
-
+.botong{
+  background-color: #4CAF50;
+  color: white;
+  width: 250px;
+  height: 70px;
+  left: 40%;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.top{
+  background-color: white;
+}
 
 input[type=date], select, textarea{
   width: 100%;
@@ -102,6 +113,15 @@ input[type=submit]:disabled{
   content: "";
   display: table;
   clear: both;
+}
+.selector-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.selector-container > * {
+  width: 100%;
+  padding: 5px;
 }
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
