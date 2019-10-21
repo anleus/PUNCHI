@@ -4,6 +4,7 @@ import { User } from "src/app/models/users";
 import { UserService } from "src/app/services/user.service";
 import { DatePipe } from '@angular/common';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class AsignarDepComponent implements OnInit {
   users : User[];
   public userForm: FormGroup;
   submitted = false;
+  selectUser: Number;
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder
@@ -51,5 +53,12 @@ export class AsignarDepComponent implements OnInit {
      var usuarioObs = this.userService.getUsers();
      usuarioObs.subscribe(users => this.users = users)
   
+    }
+    selectionChange(event: any) {
+      this.selectUser = event.value;
+      console.log(this.selectUser)
+}
+    asignarDepartamento() {
+      console.log(this.selectUser)
     }
 }
