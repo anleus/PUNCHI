@@ -20,6 +20,7 @@ import { ModificarFichaAdminComponent } from './components/modificar-ficha-admin
 import { UserService } from './services/user.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CrearDepartamentoComponent } from './crear-departamento/crear-departamento.component';
+import { UsersTableComponent } from './components/users-table/users-table.component';
 
 
 const routes: Routes = [
@@ -45,7 +46,8 @@ const routes: Routes = [
     LoginComponent,
     UserListComponent,
     ModificarFichaAdminComponent,
-    CrearDepartamentoComponent
+    CrearDepartamentoComponent,
+    UsersTableComponent,
   ],
   imports: [
     BrowserModule,
