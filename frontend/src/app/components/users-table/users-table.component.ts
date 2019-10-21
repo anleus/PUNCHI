@@ -28,7 +28,7 @@ import { User } from 'src/app/models/users';
   providers: [UserService],
 })
 export class UsersTableComponent implements OnInit {
-  displayedColumns = ['apellidos', 'nombre', 'select'];
+  displayedColumns = ['apellidos', 'nombre'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel<User>(true, []);
 
