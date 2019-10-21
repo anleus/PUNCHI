@@ -113,14 +113,15 @@ export class FichaPersonalComponent implements OnInit {
   dnombre = "";
   seleccionDepartamento(dep: Departamento){
     this.selectedDepartamento = dep;
-    this.users = dep.usuarios;
+    //this.users = dep.usuarios;
     this.dnombre = dep.nombre;
   }
 
   unombre = "";
   seleccionUsuario(us: User){
-    this.selectedUsuario = us;
+    this.user = us;
     this.unombre = us.nombre;
+    console.log(this.user);
   }
 
 
