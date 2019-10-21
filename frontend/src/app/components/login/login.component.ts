@@ -1,6 +1,7 @@
 import { Component, OnInit, Injectable, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 
 import { environment } from "src/environments/environment";
 @Component({
@@ -18,10 +19,19 @@ import { environment } from "src/environments/environment";
 
 export class LoginComponent implements OnInit {
 
-  constructor(private authservice : AuthenticationService) { }
+  durationSec = 5;
+
+  constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     localStorage.clear();
+  }
+
+
+  logoutUser() {                                                      //Este logout servirá donde haya que ponerlo
+    this.authservice.logout();
+    console.log("Loggin out");
+    window.location.href = environment.urlf + '/login';
   }
 
   loginUser(username, password) {
@@ -39,18 +49,26 @@ export class LoginComponent implements OnInit {
       res => {
                                                                       //Si retorna un user la autenticación es correcta y puedes pasar
         if (res == null) {
-          console.log("RES ha sido null - Usuario no encontrado");
+          this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
-        console.log("Puedes pasar");
+        console.log("Login correcto");
+        this.openSnack('Login correcto');
         window.location.href = environment.urlf + '/inicio';
     },
       err => {
-        //ERROR 
-        //NO PUEDES PASAAR
+        console.log("login.component.ts - Ha habido un error -->");
         console.error(err);
-        console.log("NO puedes pasar");
       });
+  }
 
+  openSnack(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
+      duration: this.durationSec * 1000,
+      panelClass: 'center',                                             //No funciona, no sé por qué
+      horizontalPosition: "left",
+      verticalPosition: "bottom"
+    });
   }
 }

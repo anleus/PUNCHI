@@ -1,18 +1,17 @@
-
 <div class="titulo">
+    <p>&nbsp;</p>
     <p>Componente creado para hacer pruebas referente al como restringir datos.</p>
     <p>La información se introducirá en ficha-personal</p>
+    <p>{{departamento}}</p>
+    <mat-button-toggle class="boton" (click)="cambiarModo()"#toggleButton class="botoncambio">Cambio</mat-button-toggle>
     <mat-button-toggle *ngIf="comprobarDepartamento()" (click)="cambiarModoGestion()" #toggleButton class="botongestion">{{nombreBotonGestion}}</mat-button-toggle>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
     
 </div>
-<body>
-<div class="titulo">
-  <p>{{departamento}}</p>
-  <mat-button-toggle class="boton" (click)="cambiarModo()"#toggleButton class="botoncambio">Cambio</mat-button-toggle>
-</div>
 
+
+
+<body>
+    <p>&nbsp;</p><p>&nbsp;</p>
 <div *ngIf="comprobarGestionAdministrativa()" class="container">
     <form action="action_page.php">
     <div class="row">
@@ -60,24 +59,19 @@
 
 <div  *ngIf="!comprobarGestionAdministrativa()" class="container">
   <form action="action_page.php">
-
+      <p>{{depart}}{{conseguido}}</p>
       <div *ngIf="comprobarDepartamentoAdmin()" class="example-container">
           <mat-form-field>
-            <mat-select placeholder="Departamento">
-              <mat-option value="option">Opcion 1</mat-option>
-              <mat-option value="option">Opcion 2</mat-option>
-              <mat-option value="option">Opcion 3</mat-option>
-              <mat-option value="option">Opcion 4</mat-option>
-            </mat-select>
-          </mat-form-field>
+              <mat-select placeholder="Departamento" name = "selectorDepartamento">
+                  <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+    
         </div>  
-        <div *ngIf="comprobarDepartamento()" class="example-container">
+            <div *ngIf="comprobarDepartamento()" class="example-container">
             <mat-form-field>
-              <mat-select placeholder="Nombre">
-                <mat-option value="option">Opcion 1</mat-option>
-                <mat-option value="option">Opcion 2</mat-option>
-                <mat-option value="option">Opcion 3</mat-option>
-                <mat-option value="option">Opcion 4</mat-option>
+              <mat-select placeholder="Nombre"> 
+                <mat-option (click)="seleccionUsuario(user)" *ngFor="let user of usuarios">{{user.nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

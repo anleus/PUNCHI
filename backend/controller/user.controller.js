@@ -12,34 +12,58 @@ userFunctions.getUserById = async (req, res, next) => {
   res.json(user);
 };
 
-userFunctions.getUserByUsername = async (req, res, next) => {
-    //console.log(req);
-    var usernamefromreq = req.body.username;
-    var passfromreq     = req.body.password;
-    console.log('Username from req: ' + usernamefromreq);
-    console.log('Pass from req: '     + passfromreq);
-    const user = await User.findOne({ username: usernamefromreq }, function(err, docs) {
-        if (err) {
-            console.log(err)
-            console.log('Ha habido algun error');
-        }
-    });
-
-    if (user == null) {
-        console.log('No se ha encontrado ningún usuario');
-        res.json(null);
-        return;
+userFunctions.authentication = async (req, res, next) => {
+  console.log(req);
+  var usernamefromreq = req.body.username;
+  var passfromreq     = req.body.password;
+  console.log('Username from req: ' + usernamefromreq);
+  console.log('Pass from req: ' + passfromreq);
+  const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
+    if (err) {
+      console.error(err)
+      console.log('Ha habido algun error');
     }
+  });
 
-    console.log('Continuando con la función...')
+  if (user == null) {
+    console.log('No se ha encontrado ningún usuario');
+    res.json(null);
+    return;
+  }
+
+    console.log('Usuario encontrado - Continuando con la función...')
     const userJ =  JSON.parse(JSON.stringify(user));
 
-    if (userJ.password != passfromreq) return error('Contraseña incorrecta');
+    if (userJ.password != passfromreq) {
+      console.log('Contraseña incorrecta');
+      res.json(null);
+      return;
+    }
     
     res.json(user);
 };
 
+userFunctions.getUserByUsername = async (req, res, next) => {
+  var usernamefromreq = req.params.username;
+  console.log('Username from req: ' + usernamefromreq);
+  const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
+    if (err) {
+      console.error(err)
+      console.log('Ha habido algun error');
+    }
+  });
+
+  if (user == null) {
+    console.log('No se ha encontrado ningún usuario');
+    res.json(null);
+    return;
+  }
+    console.log('Usuario encontrado')    
+    res.json(user);
+};
+
 userFunctions.addUser = async (req, res, next) => {
+  //console.log(req.body);
   const user = new User({
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
@@ -48,19 +72,19 @@ userFunctions.addUser = async (req, res, next) => {
     localidad: req.body.localidad,
     provincia: req.body.provincia,
     domicilio: req.body.domicilio,
-    telefono: parseInt(req.body.telefono, 10),
-    gestor: false,
-    admin: false,
-    nuss: parseInt(req.body.telefono, 10),
+    telefono: req.body.telefono,
+    gestor: req.body.gestor,
+    admin: req.body.admin,
+    nuss: req.body.nuss,
     deleted: false,
     username: req.body.username,
     password: req.body.password,
-    becario: false
-  });
-  user
-    .save()
-    .then(() => res.json({ status: "User saved" }))
-    .catch(err => {
+    becario: req.body.becario
+  })
+  console.log(user);
+  user.save()
+    .then(() => res.json({ status: 'User saved' }))
+    .catch((err) => {
       res.status(400);
       console.error(err);
     });
@@ -108,6 +132,13 @@ userFunctions.deleteUser = async (req, res, next) => {
       res.status(500);
       res.send("Request cannot be fullfilled");
     });
+};
+
+userFunctions.getUsersNonDeleted = async (req, res, next) => {
+  var cond = req.params.deleted;
+  console.log(typeof cond);
+  const users = await User.find({deleted: cond});
+  res.json(users);
 };
 
 module.exports = userFunctions;

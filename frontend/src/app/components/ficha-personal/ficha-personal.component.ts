@@ -5,26 +5,42 @@ import { UserService } from "src/app/services/user.service";
 import { DatePipe } from '@angular/common';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+  HttpErrorResponse
+} from "@angular/common/http";
+import { DepartamentosService } from "src/app/services/departamentos.service";
+import { Departamento } from "src/app/models/departamento";
+import { AuthenticationService } from 'src/app/services/auth.service';
 
 @Component({
   selector: "app-ficha-personal",
   templateUrl: "./ficha-personal.component.html",
   styleUrls: ["./ficha-personal.component.css"],
-  providers: [DatePipe]
+  providers: [DatePipe,DepartamentosService]
 })
+
 @NgModule({ imports: [ FormsModule]})
 export class FichaPersonalComponent implements OnInit {
   //PASO3: crear un objeto user
   public user: User;
+  users : User[];
+  departamentos : Departamento[];
   public userForm: FormGroup;
   submitted = false;
-  
+  gestion = true;
+  selectedDepartamento: Departamento; 
+  selectedUsuario: User; 
 
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private departamentosService: DepartamentosService,
+    private authService: AuthenticationService
   ) {
-    //PASO 1: llamar al service que sea necesario
+
     this.user = new User();
   }
 
@@ -36,11 +52,13 @@ export class FichaPersonalComponent implements OnInit {
       password: ['', Validators.required],
       provincia: ['', Validators.required]
     });
-
-    //PASO2: llamar a userservice y getuserbyid
-    this.userService
-      .getUserByUsername("root")
-      .then(this.onGetUserByName.bind(this));
+    this.getUsuarios();
+    this.getDepartamentos();
+    this.getUsuarioRegistrado();
+    /*this.userService
+      .getUserByUsernameDOS("root")
+      .subscribe(this.onGetUserByName.bind(this));
+      console.log(this.user.becario);*/
   }
 
   private onGetUserByName(res: any) {
@@ -48,42 +66,116 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+   this.user.email=this.userForm.value.email;
+   this.user.domicilio=this.userForm.value.domicilio;
+   this.user.provincia=this.userForm.value.provincia;
+   this.user.telefono=this.userForm.value.telefono;
+   this.user.password=this.userForm.value.password;
+
+    //this.user.password=this.userForm.value.password;
+    
 
     // stop here if form is invalid
-    /*if (this.userForm.invalid) {
+     if(this.userForm.invalid) {
       return;
-    }*/
-    this.userService.putUser(this.user);
+    }else{
+      console.log(this.userForm);
+      console.log(this.user);
+      this.userService.putUser(this.user);
+    }
+    
+   
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.userForm.controls; }
 
-  /**
-   * Clase para obtener el departamento del usuario
-   */
-  obtenerDepartamento() {
-    return "RRHH"; //Se debe sustituir por el acceso a la BD obteniendo el departamento del usuario loggeado
+  getUsuarios(){
+    var usuarioObs = this.userService.getUsers();
+    usuarioObs.subscribe(users => this.users = users);
+  }
+  prueba="";
+  getUsuarioRegistrado(){
+    var usuarioAct = this.authService.getCurrentUser();
+    usuarioAct.subscribe(user => this.user = user);
+    this.prueba = this.user.nombre;
   }
 
-  departamento = this.obtenerDepartamento();
-  Modo = "Modo administrador";
-  cambiarModo() {
-    if (this.departamento == "RRHH") {
-      this.departamento = "Gestor";
-    } else if (this.departamento == "Gestor") {
-      this.departamento = "Empleado";
-    } else {
-      this.departamento = "RRHH";
+  getDepartamentos(){  
+    var departamentoObs = this.departamentosService.getDepartamentos();
+    departamentoObs.subscribe(departamentos => this.departamentos = departamentos);
+
+  }
+  
+  nombreBotonGestion = "Gestionar ficha personal";
+  dep = "RRHH";
+  comprobarDepartamento() {
+    return this.dep == "RRHH";
+    //return (this.user.departamento.nombre == "RRHH" || this.user.departamento.responsable == this.user); //Cuando funcione users
+  }
+
+ 
+  comprobarDepartamentoAdmin() {
+    return this.dep == "RRHH";
+    //return (this.user.departamento.nombre == "RRHH"|| this.dep == "RRHH");
+   
+  }
+  dnombre = "";
+  seleccionDepartamento(dep: Departamento){
+    this.selectedDepartamento = dep;
+    //this.users = dep.usuarios;
+    this.dnombre = dep.nombre;
+  }
+
+  unombre = "";
+  usuarioN : User;
+  seleccionUsuario(us: User){
+    this.user = us;
+    this.unombre = us.nombre;
+    console.log(this.user);
+  }
+
+
+  cambiarModoGestion(){
+    if(this.gestion){
+      this.gestion = false;
+      this.nombreBotonGestion = "Gestionar ficha personal";
+    }else{
+      this.gestion = true;
+      this.nombreBotonGestion = "Gestionar empleados";
     }
   }
 
-  comprobarDepartamento() {
-    return this.departamento == "RRHH" || this.departamento == "Gestor";
+
+  departamentosP : Departamento[];
+  usersP : User[];
+  departamentoSol : Departamento;
+  prueba2 = "";
+  getUsuarioByDepartamento(us:User){
+    var departamentoObs = this.departamentosService.getDepartamentos();
+    departamentoObs.subscribe(res => this.departamentosP = res);
+
+    for(let departamento of this.departamentosP){
+      this.usersP = departamento.usuarios;
+      for(let user of this.usersP){
+        if(us == user){
+          this.departamentoSol = departamento;
+          this.prueba2 = departamento.nombre;
+        }
+      }
+    }
+
   }
 
-  comprobarDepartamentoAdmin() {
-    return this.departamento == "RRHH";
+notificacion = "";
+  guardarCambios(password){
+    if(typeof password == 'undefined'){
+      console.log("El campo password no es correcto");
+      this.notificacion = "El campo password no es correcto";
+    }else{
+      console.log("El campo es correcto.")
+      this.userService.putUser(this.user);
+    }
   }
+
 }
