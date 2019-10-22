@@ -51,11 +51,11 @@ export class LoginComponent implements OnInit {
                                                                       //Si retorna un user la autenticación es correcta y puedes pasar
         if (res == null) {
           document.getElementById('incorrecto').removeAttribute('style');
-          this.openSnack('Usuario o contraseña incorrectos');
+          //this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
         console.log("Login correcto");
-        this.openSnack('Login correcto');
+        //this.openSnack('Login correcto');
         window.location.href = environment.urlf + '/inicio';
     },
       err => {

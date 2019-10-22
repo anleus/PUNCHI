@@ -48,6 +48,8 @@ export class InicioComponent implements OnInit {
   timeLabel = '00:00:00';
   startHour; endHour;
   startLabel = "00:00:00";
+  vacations;
+  left; pending;
 
   constructor(private jornadaService : JornadaService, private authService : AuthenticationService) { }
 
@@ -59,6 +61,7 @@ export class InicioComponent implements OnInit {
       this.tiempoFichando = Math.floor((now.getTime() - timeStart.getTime()) / 1000);
       this.startLabel = this.getCurrentHour(timeStart, true);
     }
+    this.jornadaService.getUserVacations().subscribe(docs => {this.left = docs[0].left; this.pending = docs[0].pending.length;});
   }
 
   toggleFicharState(onInit = false){
