@@ -1,9 +1,13 @@
 <div>
     <h2>Crear departamento</h2>
-    <mat-form-field class="col-7">
-        <input matInput (keyup)="nombreDepartamento($event)" placeholder="Nombre del departamento">
+    <form class="example-form" #form="ngForm">
 
-    </mat-form-field>
-    <button class="border" (click)="crearDepartamento()" mat-button> Crear</button>
+        <mat-form-field name="formCrearDep" class="col-7">
+            <input #crearDepartamento [(ngModel)]="crearDepartamento" name="crearDepartamento" matInput
+                (keyup)="nombreDepartamento($event)" placeholder="Nombre del departamento">
+
+        </mat-form-field>
+        <button class="border" (click)="crearDepartamento()" mat-button> Crear</button>
+    </form>
 
 </div>
