@@ -1,14 +1,14 @@
 <div *ngIf="comprobarDepartamento()" class="top">
   <button mat-stroked-button (click)="cambiarModoGestion()" color="primary"
     class="botong">{{nombreBotonGestion}}</button>
-  <div align='center'>
-    <h3>Modifica los datos:</h3>
-  </div>
 
 <body>
 
   <div *ngIf="gestion" class="container">
-    
+    <div align='center'>
+      <h3 class="text-center">Modifica los datos:</h3>
+    </div>
+  
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
         <div *ngIf="comprobarDepartamento()" class="row">
@@ -57,8 +57,8 @@
         {{notificacion}}
         <br>
       </div>
-      <div class="row">
-        <input type="submit" value="Guardar cambios" (click)="guardarCambios1(password,domicilio,provincia,localidad)">
+      <div class="row" >
+        <input type="submit" value="Guardar cambios" (click)="guardarCambios1(password,domicilio,provincia,localidad)" >
       </div>
 
     </form>
@@ -222,11 +222,11 @@
         </div>
       </div>
 
-      <br>
+
       <br>
       {{notificacion}}
       <p>{{error}}</p>
-      <br>
+
       <br>
       <div class="row">
         <input type="submit" value="Guardar cambios" (click)="guardarCambios2(assword,domicilio,provincia,nombre,apellidos,fechaNacimiento,nuss,username,email,localidad)">
@@ -241,20 +241,22 @@
     <p>&nbsp;</p>
   </div>
   <div>
-    <mat-list role="list" class = "container">
-      <mat-list-item role="listitem">Usuario: {{this.user.username}}</mat-list-item>
-      <mat-list-item role="listitem">Contraseña: {{this.user.password}}</mat-list-item>
-      <mat-list-item role="listitem">Nombre: {{this.user.nombre}}</mat-list-item>
-      <mat-list-item role="listitem">Apellidos: {{this.user.apellidos}}</mat-list-item>
-      <mat-list-item role="listitem">Fecha Nacimiento: {{this.user.fechaNacimiento}}</mat-list-item>
-      <mat-list-item role="listitem">Email: {{this.user.email}}</mat-list-item>
-      <mat-list-item role="listitem">Localidad: {{this.user.localidad}}</mat-list-item>
-      <mat-list-item role="listitem">Provincia: {{this.user.provincia}}</mat-list-item>
-      <mat-list-item role="listitem">Domicilio: {{this.user.domicilio}}</mat-list-item>
-      <mat-list-item role="listitem">Telefono: {{this.user.telefono}}</mat-list-item>
-      <mat-list-item role="listitem">NUSS: {{this.user.nuss}}</mat-list-item>
+    <mat-list role="list" class = "container2">
+      <mat-list-item role="listitem" class="it">Usuario: {{this.user.username}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Contraseña: {{this.user.password}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Nombre: {{this.user.nombre}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Apellidos: {{this.user.apellidos}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Fecha Nacimiento: {{this.user.fechaNacimiento}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Email: {{this.user.email}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Localidad: {{this.user.localidad}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Provincia: {{this.user.provincia}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Domicilio: {{this.user.domicilio}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">Telefono: {{this.user.telefono}}</mat-list-item>
+      <mat-list-item role="listitem" class="it">NUSS: {{this.user.nuss}}</mat-list-item>
       </mat-list>
   </div>
-
+  <div class="separar">
+    <p>&nbsp;</p>
+  </div>
 
 </body>

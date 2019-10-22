@@ -42,7 +42,7 @@ input[type=tel]{
   color: white;
   width: 250px;
   height: 70px;
-  left: 40%;
+  left: 41.5%;
   margin-top: 25px;
   margin-bottom: 25px;
 }
@@ -78,7 +78,7 @@ input[type=submit]:enabled{
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  float: right;
+  margin-left: 41.5%;
 }
 
 input[type=submit]:disabled{
@@ -97,7 +97,44 @@ input[type=submit]:disabled{
   background-color: white;
   padding: 20px;
   border: #cfcfcf 2px;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+.container2 {
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+  border: #cfcfcf 2px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 400px;
+  margin-right: 400px;
+  position: relative;
+}
+
+h3 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+
+.it{
+	position: relative;
+	top: 0;
+	bottom: 0;
+	left: 0;
+  right: 0;
+	width: 55%;
+  height: 40px;
+	margin: auto;
+}
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 55%;
+  left:25%;
 }
 
 /* Floating column for labels: 25% width */
