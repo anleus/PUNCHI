@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Departamento } from '../models/departamento';
-import { Observable } from 'rxjs';
+import { Departamento } from "../models/departamento";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -12,15 +12,18 @@ export class DepartamentosService {
   constructor(private http: HttpClient) {}
 
   postDepartamentos = departamentoData =>
-    this.http.post(this.url, departamentoData).subscribe(
-      res => {
-        // * not callback
-        console.log(`this.brandListService`, { res });
-      },
-      error => {
-        console.log("Error", error);
-      }
-    );
+    new Promise((resolve, reject) => {
+      this.http.post(this.url, departamentoData).subscribe(
+        res => {
+          // * not callback
+          console.log(`this.brandListService`, { res });
+          resolve(res);
+        },
+        error => {
+          console.log("Error", error);
+        }
+      );
+    });
 
   //Cambiado para mejor funcionamiento att:josevi
   //getDepartamentos = () => this.http.get(this.url);
@@ -37,9 +40,9 @@ export class DepartamentosService {
   }
 
   onGetDepartamentoByName(res: any) {
-     return Promise.resolve(res);
-   }
- 
+    return Promise.resolve(res);
+  }
+
   deleteDept(_id: string) {
     return this.http.delete(this.url + _id);
   }
