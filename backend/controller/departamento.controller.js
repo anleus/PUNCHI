@@ -48,7 +48,6 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 };
 
 departamentFunctions.deleteDepartamento = async (req, res, next) => {
-	console.log(req)
 	await Departamento.findByIdAndRemove(req.params.id)
 
 		.then(() => {
