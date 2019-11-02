@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; 
 
 import { environment } from "src/environments/environment";
+import { reduce } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -50,8 +51,7 @@ export class LoginComponent implements OnInit {
       res => {
                                                                       //Si retorna un user la autenticación es correcta y puedes pasar
         if (res == null) {
-          document.getElementById('incorrecto').removeAttribute('style');
-          //this.openSnack('Usuario o contraseña incorrectos');
+          this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
         console.log("Login correcto");
@@ -64,13 +64,16 @@ export class LoginComponent implements OnInit {
       });
   }
 
+
+  
+
   openSnack(message) {
     this.snackBar.open(message, '', {
       announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
       duration: this.durationSec * 1000,
-      panelClass: 'center',                                             //No funciona, no sé por qué
-      horizontalPosition: "left",
-      verticalPosition: "bottom"
+      panelClass: ['alert-red'],                                             //No funciona, no sé por qué
+      horizontalPosition: "right",
+      verticalPosition: "top",
     });
   }
 }
