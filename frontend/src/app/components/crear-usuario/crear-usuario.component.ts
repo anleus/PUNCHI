@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 import { UserService } from '../../services/user.service'
 import { User } from '../../models/users';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-//import { resolve } from 'dns';
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 
 @Component({
   selector: 'app-crear-usuario',
@@ -30,7 +30,7 @@ export class CrearUsuarioComponent implements OnInit {
     domicilio: new FormControl('', [Validators.required])
 
   });
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -45,11 +45,11 @@ export class CrearUsuarioComponent implements OnInit {
           console.log(form.value);
           this.determinarusuario(form);
           this.userService.crearUsuario(form.value).subscribe(res => {
-            document.getElementById('aceptar').removeAttribute('style');
+            this.snackSuccess('Usuario guardado correctamente');
           })
         } else {
           this.existe = true;
-          document.getElementById('userexistente').removeAttribute('style');
+          this.snackError('Nombre de usuario existente');
 
         }
       }
@@ -78,5 +78,25 @@ export class CrearUsuarioComponent implements OnInit {
       form.value.gestor = false;
       form.value.admin = true;
     }
+  }
+
+  snackError(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
+      duration: 3 * 1000,
+      panelClass: ['alert-red'],                                            
+      horizontalPosition: "right",
+      verticalPosition: "top",
+    });
+  }
+
+  snackSuccess(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Usuario guardado correctamente',
+      duration: 3 * 1000,
+      panelClass: ['success-red'],                                            
+      horizontalPosition: "right",
+      verticalPosition: "top",
+    });
   }
 }

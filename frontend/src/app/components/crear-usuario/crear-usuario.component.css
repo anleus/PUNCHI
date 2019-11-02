@@ -21,3 +21,17 @@
   .p-3 {
     padding: 10px !important;
   }
+
+  ::ng-deep snack-bar-container.alert-red{
+    margin: 80px auto;
+    padding: 20px;
+    background-color: #e38787;
+    color: #7f3333;
+  }
+
+  ::ng-deep snack-bar-container.success-red{
+    margin: 80px auto;
+    padding: 20px;
+    background-color: #a5daa7;
+    color: #4c6c4e;
+  }
