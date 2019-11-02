@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; 
 
 import { environment } from "src/environments/environment";
-import { reduce } from 'rxjs/operators';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 @NgModule({
   declarations: [],
   imports: [
@@ -20,12 +21,11 @@ import { reduce } from 'rxjs/operators';
 
 export class LoginComponent implements OnInit {
   hide = true;
-  durationSec = 5;
+  durationSec = 3;
 
   constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    
     localStorage.clear();
   }
 
@@ -48,30 +48,24 @@ export class LoginComponent implements OnInit {
     }
 
     this.authservice.login(username,password).subscribe(              //El subscribe está deprecated, habrá que mirar de cambiarlo
-      res => {
-                                                                      //Si retorna un user la autenticación es correcta y puedes pasar
-        if (res == null) {
+      res => {                                                                    
+        if (res == null) {                                            
           this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
         console.log("Login correcto");
-        //this.openSnack('Login correcto');
         window.location.href = environment.urlf + '/inicio';
     },
       err => {
-        console.log("login.component.ts - Ha habido un error -->");
         console.error(err);
       });
   }
-
-
-  
 
   openSnack(message) {
     this.snackBar.open(message, '', {
       announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
       duration: this.durationSec * 1000,
-      panelClass: ['alert-red'],                                             //No funciona, no sé por qué
+      panelClass: ['alert-red'],                                            
       horizontalPosition: "right",
       verticalPosition: "top",
     });

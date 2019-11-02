@@ -78,6 +78,7 @@
         <div class="col">
             <mat-form-field>
                 <input matInput formControlName="password" placeholder="Contraseña"  [type]="hide ? 'password' : 'text'"  required>
+                <mat-error>Introduce una contraseña más larga</mat-error>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>

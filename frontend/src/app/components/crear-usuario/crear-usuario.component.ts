@@ -24,7 +24,7 @@ export class CrearUsuarioComponent implements OnInit {
     nuss: new FormControl(),
     telefono: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
     localidad: new FormControl('', [Validators.required]),
     provincia: new FormControl('', [Validators.required]),
     domicilio: new FormControl('', [Validators.required])
