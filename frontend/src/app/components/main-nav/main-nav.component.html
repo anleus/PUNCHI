@@ -21,12 +21,12 @@
                         </a>
                     </mat-list-item>
                     <mat-list-item class="logOut">
-                        <a mat-list-item href="/departamentos">
+                        <a *ngIf="permisos" mat-list-item href="/departamentos">
                             <mat-icon>add_to_queue</mat-icon>Gestionar
                         </a>
                     </mat-list-item>
                     <mat-list-item>
-                        <a mat-list-item href="/crearusuario">
+                        <a *ngIf="permisos" mat-list-item href="/crearusuario">
                             <mat-icon>add_circle</mat-icon>Añadir
                         </a>
                     </mat-list-item>
