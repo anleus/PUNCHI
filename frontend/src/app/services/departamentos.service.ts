@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Departamento } from '../models/departamento';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: "root"
@@ -43,6 +44,12 @@ export class DepartamentosService {
   deleteDept(_id: string) {
     return this.http.delete(this.url + _id);
   }
-
+  getDepartamentoByUser(user: string){
+    return this.http.get(this.url + `usuarios/${user}`)
+    .pipe(map(departamento => {
+        console.log(departamento);
+        return departamento;
+      }));
+  }
   //getUserJornadas = userid => this.http.get(this.url + userid);
 }

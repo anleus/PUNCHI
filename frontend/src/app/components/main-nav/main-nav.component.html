@@ -30,6 +30,11 @@
                             <mat-icon>add_circle</mat-icon>Añadir
                         </a>
                     </mat-list-item>
+                    <mat-list-item>
+                        <a *ngIf="permisos" mat-list-item href="/usuarios">
+                            <mat-icon>group</mat-icon>Usuarios
+                        </a>
+                    </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>    
                         <a mat-list-item href="/login">
