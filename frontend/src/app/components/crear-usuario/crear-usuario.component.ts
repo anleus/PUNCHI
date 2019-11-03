@@ -42,10 +42,10 @@ export class CrearUsuarioComponent implements OnInit {
       res => {
         if (res == null) {
           this.existe = false;
-          console.log(form.value);
           this.determinarusuario(form);
           this.userService.crearUsuario(form.value).subscribe(res => {
             this.snackSuccess('Usuario guardado correctamente');
+            this.usuarioform.reset();
           })
         } else {
           this.existe = true;
