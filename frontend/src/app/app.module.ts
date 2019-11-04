@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: "fichapersonaladmin", component: ModificarFichaAdminComponent },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  {path: '**', redirectTo: "inicio"}
+  { path: '**', redirectTo: "inicio"}
 ];
 
 @NgModule({
