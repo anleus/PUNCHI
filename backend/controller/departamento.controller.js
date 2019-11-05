@@ -62,9 +62,7 @@ departamentFunctions.deleteDepartamento = async (req, res, next) => {
 };
 
 departamentFunctions.getDepartamentoByUser = async (req, res, next) => {
-	console.log("actual");
-	console.log(req.params.usuarios);
-	var departamentoget = await Departamento.find({usuarios:mongoose.Types.ObjectId("5dae0cc075c3fa2c90124a55")}).catch(err =>
+	var departamentoget = await Departamento.find({usuarios:mongoose.Types.ObjectId(req.params.usuarios)}).catch(err =>
 		console.log(err)
 	);;
 	res.status(200);
