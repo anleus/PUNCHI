@@ -6,6 +6,7 @@ import {
   HttpErrorResponse
 } from "@angular/common/http";
 import { DepartamentosService } from "src/app/services/departamentos.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-crear-departamento",
@@ -20,7 +21,10 @@ import { DepartamentosService } from "src/app/services/departamentos.service";
 export class CrearDepartamentoComponent implements OnInit {
   nombre = "";
   ngOnInit() {}
-  constructor(private departamentosService: DepartamentosService) {}
+  constructor(
+    private departamentosService: DepartamentosService,
+    private snackBar: MatSnackBar
+  ) {}
 
   nombreDepartamento(event: any) {
     this.nombre = event.target.value;
@@ -30,6 +34,17 @@ export class CrearDepartamentoComponent implements OnInit {
     var departamento = {
       nombre: this.nombre
     };
-    this.departamentosService.postDepartamentos(departamento);
+    this.departamentosService.postDepartamentos(departamento).then(res => {
+      this.openSnack("Se ha creado el departamento correctamente");
+    });
+  }
+  openSnack(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Ha ocurrido un error. Inténtalo de nuevo",
+      duration: 6 * 1000,
+      panelClass: "center", //No funciona, no sé por qué
+      horizontalPosition: "left",
+      verticalPosition: "bottom"
+    });
   }
 }
