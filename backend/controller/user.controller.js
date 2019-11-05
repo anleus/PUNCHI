@@ -25,7 +25,7 @@ userFunctions.authentication = async (req, res, next) => {
     }
   });
 
-  if (user == null) {
+  if (user == null || user.deleted===true) {
     console.log('No se ha encontrado ningún usuario');
     res.json(null);
     return;
