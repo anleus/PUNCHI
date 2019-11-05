@@ -15,20 +15,24 @@ export class MainNavComponent {
   permisos = false; //si eres admin o gestor puedes ver todo el menú
   urlrn;
   logUser = this.authService.getCurrentUser();
-  admin = this.logUser.source["_value"].admin;
-  gestor = this.logUser.source["_value"].gestor;
-  constructor(private breakpointObserver: BreakpointObserver ,
-    private authService: AuthenticationService) {}
-
+  constructor(private breakpointObserver: BreakpointObserver,
+    private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.shouldIShowMyHamburguer();
-    if(this.gestor || this.admin ) {this.permisos = true};
+    if (this.logUser.source["_value"]!= null) {
+      var admin = this.logUser.source["_value"].admin;
+      var gestor = this.logUser.source["_value"].gestor;
+      if (gestor || admin) { this.permisos = true; }
+      else { this.permisos = false; }
+    } else {
+      this.permisos = false;
+    }
   }
 
-  shouldIShowMyHamburguer(){
+  shouldIShowMyHamburguer() {
     this.urlrn = window.location.href;
-    
+
     if (this.urlrn.substring(this.urlrn.length - 5, this.urlrn.length) == 'login') {
       this.flag = false;
     }
@@ -40,6 +44,6 @@ export class MainNavComponent {
       shareReplay()
     );
 
- 
+
 
 }
