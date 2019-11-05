@@ -21,6 +21,9 @@ import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
+import { AuthenticationService } from 'src/app/services/auth.service';
+
+
 @Component({
   selector: 'app-history-table',
   templateUrl: './history-table.component.html',
@@ -41,12 +44,14 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class HistoryTableComponent implements OnInit {
   displayedColumns = ['day', 'begin', 'end'];
-  user = '5d94cb6dd634648da19d6a6c';
+  
 
   dataSource = new MatTableDataSource();
   // jornadas = new JornadaDataSource(this.jornadaService);
 
-  constructor(private jornadaService: JornadaService) {}
+  constructor(private authservice : AuthenticationService, private jornadaService: JornadaService) {}
+
+  user = this.authservice.currentUser;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
