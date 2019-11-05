@@ -4,11 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; 
 
 import { environment } from "src/environments/environment";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 @NgModule({
   declarations: [],
   imports: [
@@ -19,12 +21,11 @@ import { environment } from "src/environments/environment";
 
 export class LoginComponent implements OnInit {
   hide = true;
-  durationSec = 5;
+  durationSec = 3;
 
   constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    
     localStorage.clear();
   }
 
@@ -47,19 +48,15 @@ export class LoginComponent implements OnInit {
     }
 
     this.authservice.login(username,password).subscribe(              //El subscribe está deprecated, habrá que mirar de cambiarlo
-      res => {
-                                                                      //Si retorna un user la autenticación es correcta y puedes pasar
-        if (res == null) {
-          document.getElementById('incorrecto').removeAttribute('style');
-          //this.openSnack('Usuario o contraseña incorrectos');
+      res => {                                                                    
+        if (res == null) {                                            
+          this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
         console.log("Login correcto");
-        //this.openSnack('Login correcto');
         window.location.href = environment.urlf + '/inicio';
     },
       err => {
-        console.log("login.component.ts - Ha habido un error -->");
         console.error(err);
       });
   }
@@ -68,9 +65,9 @@ export class LoginComponent implements OnInit {
     this.snackBar.open(message, '', {
       announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
       duration: this.durationSec * 1000,
-      panelClass: 'center',                                             //No funciona, no sé por qué
-      horizontalPosition: "left",
-      verticalPosition: "bottom"
+      panelClass: ['alert-red'],                                            
+      horizontalPosition: "right",
+      verticalPosition: "top",
     });
   }
 }

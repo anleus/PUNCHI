@@ -21,8 +21,10 @@ import { UserService } from "./services/user.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CrearDepartamentoComponent } from "./components/crear-departamento/crear-departamento.component";
 import { UsersTableComponent } from "./components/users-table/users-table.component";
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 
 const routes: Routes = [
+  { path: "usuarios", component: UsuariosComponent },
   { path: "crearusuario", component: CrearUsuarioComponent },
   { path: "inicio", component: InicioComponent },
   { path: "departamentos", component: DepartamentosComponent },
@@ -30,7 +32,7 @@ const routes: Routes = [
   { path: "fichapersonaladmin", component: ModificarFichaAdminComponent },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  {path: '**', redirectTo: "inicio"}
+  { path: '**', redirectTo: "inicio"}
 ];
 
 @NgModule({
@@ -47,7 +49,8 @@ const routes: Routes = [
     UserListComponent,
     ModificarFichaAdminComponent,
     CrearDepartamentoComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

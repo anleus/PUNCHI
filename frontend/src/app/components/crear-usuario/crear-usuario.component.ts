@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 import { UserService } from '../../services/user.service'
 import { User } from '../../models/users';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-//import { resolve } from 'dns';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -14,6 +14,7 @@ export class CrearUsuarioComponent implements OnInit {
   hide = true;
   public user: User;
   public existe: Boolean = false;
+  datos: Boolean;
 
   usuarioform = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
@@ -24,38 +25,38 @@ export class CrearUsuarioComponent implements OnInit {
     nuss: new FormControl(),
     telefono: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
     localidad: new FormControl('', [Validators.required]),
     provincia: new FormControl('', [Validators.required]),
     domicilio: new FormControl('', [Validators.required])
 
   });
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
   }
 
   usuarioExistente2(form) {
-
-    this.userService.getUserByUsernameDOS(form.value.username).subscribe(
-      res => {
-        if (res == null) {
-          this.existe = false;
-          console.log(form.value);
-          this.determinarusuario(form);
-          this.userService.crearUsuario(form.value).subscribe(res => {
-            document.getElementById('aceptar').removeAttribute('style');
-          })
-        } else {
-          this.existe = true;
-          document.getElementById('userexistente').removeAttribute('style');
-
+    if (form.status == "VALID") {
+      this.userService.getUserByUsernameDOS(form.value.username).subscribe(
+        res => {
+          if (res == null) {
+            this.existe = false;
+            this.determinarusuario(form);
+            this.datos = false;
+            this.userService.crearUsuario(form.value).subscribe(res => {
+            this.snackSuccess('Usuario guardado correctamente');
+            this.usuarioform.reset();
+            })
+          } else {
+            this.existe = true;
+            this.snackError('Nombre de usuario existente');
+          }
         }
-      }
-    );
+      );
+    }
   }
-
 
   determinarusuario(form) {
     if (form.value.tipousuario == "normal") {
@@ -78,5 +79,25 @@ export class CrearUsuarioComponent implements OnInit {
       form.value.gestor = false;
       form.value.admin = true;
     }
+  }
+
+  snackError(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
+      duration: 3 * 1000,
+      panelClass: ['alert-red'],
+      horizontalPosition: "right",
+      verticalPosition: "top",
+    });
+  }
+
+  snackSuccess(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Usuario guardado correctamente',
+      duration: 3 * 1000,
+      panelClass: ['success-red'],
+      horizontalPosition: "right",
+      verticalPosition: "top",
+    });
   }
 }

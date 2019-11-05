@@ -99,7 +99,7 @@ export class FichaPersonalComponent implements OnInit {
   dep = "RRHH";
   comprobarDepartamento() {
     return (this.user.admin || this.user.gestor);
-    return this.user.admin;
+    //return this.user.admin; // A esta línea no s'arriba mai
   }
 
   comprobarDepartamentoAdmin() {

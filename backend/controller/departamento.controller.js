@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Departamento = require("../models/Department");
+const User = require("../models/users");
 
 const departamentFunctions = {};
 
@@ -48,7 +49,6 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 };
 
 departamentFunctions.deleteDepartamento = async (req, res, next) => {
-	console.log(req)
 	await Departamento.findByIdAndRemove(req.params.id)
 
 		.then(() => {
@@ -60,5 +60,13 @@ departamentFunctions.deleteDepartamento = async (req, res, next) => {
 			res.send("Request cannot be fullfilled");
 		});
 };
+
+departamentFunctions.getDepartamentoByUser = async (req, res, next) => {
+	var departamentoget = await Departamento.find({usuarios:mongoose.Types.ObjectId(req.params.usuarios)}).catch(err =>
+		console.log(err)
+	);;
+	res.status(200);
+	res.json(departamentoget);
+}
 
 module.exports = departamentFunctions;

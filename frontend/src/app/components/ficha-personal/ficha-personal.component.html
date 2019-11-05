@@ -64,20 +64,10 @@
     </form>
   </div> 
 
-
-  <!--ksbdsjhdfgdskjgfshadgfjlsadgfasdhfghdsgfsdjasndgfkjasdgfksadjgfjskdgfksajgfksdjgfkjsdng-->
-
+  <!--------------------------------------------------------------------------------------------------------->
 
   <div *ngIf="comprobarDepartamento() && !gestion" class="container">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <!--<div *ngIf="comprobarDepartamentoAdmin()" class="selector-container">
-            <mat-form-field>
-                <mat-select placeholder="Departamento" name = "selectorDepartamento">
-                    <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-          <p>Departamento: {{dnombre}}</p>
-          </div>  -->
               <div *ngIf="comprobarDepartamento()" class="selector-container">
               <mat-form-field>
                 <mat-select placeholder="Usuario"> 
@@ -120,7 +110,7 @@
         </div>
       </div>-->
 
-      <div class="row">
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
         <div class="col-25">
           <label for="nuss">NUSS:</label>
         </div>
@@ -128,7 +118,8 @@
           <input type="text" id="nuss" ngModel formcontrolName="nuss" [(ngModel)]="nuss"
             [ngModelOptions]="{standalone: true}">
         </div>
-      </div >
+      </div>
+
       <div *ngIf="comprobarDepartamentoAdmin()" class="row">
         <div class="col-25">
           <label for="userformControlName">Login:</label>
@@ -139,45 +130,37 @@
         </div>
       </div>
 
-      <div class="row form-group">
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
         <div class="col-25">
-          <label>Email:</label>
+          <label for="userformControlName">Email:</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="email" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">Modifica el campo de email.</div>
-          </div>
+          <input type="text" id="email" ngModel formcontrolName="email" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="email">
         </div>
       </div>
 
-      <div class="row form-group">
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
         <div class="col-25">
-          <label>Domicilio:</label>
+          <label for="userformControlName">Email:</label>
         </div>
         <div class="col-75">
-          <input type="text" formControlName="domicilio" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.domicilio.errors }" />
-          <div *ngIf="submitted && f.domicilio.errors" class="invalid-feedback">
-            <div *ngIf="f.domicilio.errors.required">Modifica el campo de domicilio.</div>
-          </div>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-25">
-          <label>Provincia:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" formControlName="provincia" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.provincia.errors }" />
-          <div *ngIf="submitted && f.provincia.errors" class="invalid-feedback">
-            <div *ngIf="f.provincia.errors.required">Modifica el campo de provincia.</div>
-          </div>
+          <input type="text" id="domicilio" ngModel formcontrolName="domicilio" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="domicilio">
         </div>
       </div>
 
- 
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
+        <div class="col-25">
+          <label for="userformControlName">Provincia:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="provincia" ngModel formcontrolName="provincia" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="provincia">
+        </div>
+      </div>
+
+
       <div *ngIf="comprobarDepartamento()" class="row">
           <div class="col-25">
             <label for="localidad">Localidad:</label>
@@ -188,32 +171,26 @@
           </div>
         </div>
 
-
-      <div class="row form-group">
-        <div class="col-25">
-          <label>Teléfono:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" formControlName="telefono" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
-          <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
-            <div *ngIf="f.telefono.errors.required">Modifica el campo de teléfono.</div>
+        <div *ngIf="comprobarDepartamento()" class="row">
+          <div class="col-25">
+            <label for="localidad">Teléfono:</label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="telefono" formcontrolName="telefono" ngModel [(ngModel)]="telefono"
+              [ngModelOptions]="{standalone: true}">
           </div>
         </div>
-      </div>
 
-      <div class="row form-group">
-        <div class="col-25">
-          <label>Contraseña:</label>
-        </div>
-        <div class="col-75">
-          <input type="text" formControlName="password" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Modifica el campo de password.</div>
+        <div *ngIf="comprobarDepartamento()" class="row">
+          <div class="col-25">
+            <label for="localidad">Contraseña:</label>
+          </div>
+          <div class="col-75">
+            <input type="password" id="password" formcontrolName="password" ngModel [(ngModel)]="password"
+              [ngModelOptions]="{standalone: true}">
           </div>
         </div>
-      </div>
+        
 
       <div class="row">
         <div class="col-25">
@@ -225,7 +202,6 @@
         </div>
       </div>
 
-
       {{notificacion}}
       <p>{{error}}</p>
 
@@ -233,8 +209,6 @@
       <div class="row">
         <input type="submit" value="Guardar cambios" (click)="guardarCambios2(assword,domicilio,provincia,nombre,apellidos,fechaNacimiento,nuss,username,email,localidad)">
       </div>
-
-      
     </form>
 
     

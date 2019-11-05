@@ -2,17 +2,6 @@
   <p></p>
 </div>
 
-<div class="example-container">
-  <div id="aceptar" class="alert alert-success" style="display: none" role="alert">
-    <div style="display: inline;">Usuario guardado correctamente</div>
-  </div>
-</div>
-
-<div class="example-container">
-  <div id="userexistente" class="alert alert-danger" style="display: none" role="alert">
-    <div style="display: inline;">Nombre de usuario existente</div>
-  </div>
-</div>
 <div>
   <p></p>
 </div>
@@ -89,6 +78,7 @@
         <div class="col">
             <mat-form-field>
                 <input matInput formControlName="password" placeholder="Contraseña"  [type]="hide ? 'password' : 'text'"  required>
+                <mat-error>Introduce una contraseña más larga</mat-error>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>

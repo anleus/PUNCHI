@@ -7,6 +7,7 @@ import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dia
 import { MatSelectChange } from '@angular/material/select';
 import { Departamento } from 'src/app/models/departamento';
 import { DepartamentosService } from 'src/app/services/departamentos.service';
+//import { userInfo } from 'os';
 
 
 @Component({
@@ -71,16 +72,19 @@ export class AsignarDepComponent implements OnInit {
 
   //Click on asignar method
     asignarDepartamento() {
-      if(this.selected2.usuarios===null || this.selected2.usuarios === undefined || this.selected2.usuarios === []){
+      if(!this.comprobarUserRepe(this.selected,this.selected2.usuarios)){
+        if(this.selected2.usuarios===null || this.selected2.usuarios === undefined || this.selected2.usuarios === []){
         this.selected2.usuarios=[this.selected]
-        console.log(this.selected2.usuarios)
-      }else{
+        }else{
         this.selected2.usuarios.push(this.selected)
-      }
-      this.departamentosService.deleteDept(this.selectedDepID).subscribe() 
-      this.departamentosService.postDepartamentos(this.selected2)  
+        }
+        this.departamentosService.deleteDept(this.selectedDepID).subscribe() 
+        this.departamentosService.postDepartamentos(this.selected2)  
       
+    }else{
+      window.alert("El usuario ya está asignado al departamento")
     }
+  }
     selectedDep = "";
     selectedDepID = "";
     selectedUs = "";
@@ -95,5 +99,9 @@ export class AsignarDepComponent implements OnInit {
       this.selectedUs = us.nombre;
     }
 
+
+    comprobarUserRepe(usr: User,userCol: User[]){
+     return userCol.includes(usr);
     }
+  }
 

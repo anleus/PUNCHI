@@ -2,7 +2,13 @@
     <!-- Contenedor panel lateral -->
     <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
         <div class="sidenav-header">
-                <mat-toolbar color="primary">Menu</mat-toolbar>
+                <!--<mat-toolbar color="primary">Menu</mat-toolbar>-->
+                <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
+                        <mat-toolbar color="primary">
+                            <button *ngIf="flag" mat-icon-button (click)="sidenav.close()"><mat-icon>menu</mat-icon></button>
+                            <h3> Menú</h3>
+                        </mat-toolbar> 
+                </div>
                 <mat-nav-list>
                     <mat-list-item>  
                         <a mat-list-item href="/inicio">
@@ -15,13 +21,18 @@
                         </a>
                     </mat-list-item>
                     <mat-list-item class="logOut">
-                        <a mat-list-item href="/departamentos">
+                        <a *ngIf="permisos" mat-list-item href="/departamentos">
                             <mat-icon>add_to_queue</mat-icon>Gestionar
                         </a>
                     </mat-list-item>
                     <mat-list-item>
-                        <a mat-list-item href="/crearusuario">
+                        <a *ngIf="permisos" mat-list-item href="/crearusuario">
                             <mat-icon>add_circle</mat-icon>Añadir
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a *ngIf="permisos" mat-list-item href="/usuarios">
+                            <mat-icon>group</mat-icon>Usuarios
                         </a>
                     </mat-list-item>
                     <mat-divider></mat-divider>

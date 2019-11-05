@@ -11,7 +11,7 @@ let Departamento = new Schema({
 		ref: "Users"
 	},
 	usuarios: {
-		type: [Schema.Types.ObjectId],
+		type: [Schema.Types.ObjectId], 
 		ref: "Users"
 	}
 });

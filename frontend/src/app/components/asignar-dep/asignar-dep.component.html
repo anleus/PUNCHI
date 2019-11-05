@@ -1,17 +1,17 @@
 <h3>Asignar persona a departamento</h3>
 <div class="example-container">
-    <p>{{selectedUs}}</p>
+    <p></p>
   <mat-form-field>
-    <mat-select placeholder="Nombre" name = "selectorPersona" [(value)] = selected>
+    <mat-select placeholder="Nombre" name = "selectorPersona">
       <mat-option *ngFor="let user of users" value="{{user}}" (click)="seleccionUsuario(user)">{{user.nombre}}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
 <div class="example-container">
-  <p>{{selectedDep}}</p>
+  <p></p>
   <mat-form-field>
-    <mat-select placeholder="Departamento" name = "selectorDepartamento" [(value)]=selected2>
+    <mat-select placeholder="Departamento" name = "selectorDepartamento">
         <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos" value="{{departamento.nombre}}">{{departamento.nombre}}</mat-option>
     </mat-select>
   </mat-form-field>
