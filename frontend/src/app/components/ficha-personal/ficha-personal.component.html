@@ -68,7 +68,7 @@
       <div class="row p-3">
           <div class="col-md-4 offset-md-1">
             <mat-form-field>
-              <input matInput formControlName="usuario" placeholder="Usuario"  required>
+              <input matInput formControlName="username" placeholder="Usuario"  required>
             </mat-form-field>
           </div>
   
@@ -97,14 +97,14 @@
       <br>
       <div class="row p-3">
           <div class="col-md-4 offset-md-1">
-              <button type="submit" (click)="usuarioExistente2(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+              <button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
               autocomplete="off">
               Guardar cambios
             </button>
           </div>
   
           <div class="col-md-4 offset-md-2">
-              <button type="submit" (click)="usuarioExistente2(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+              <button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
               autocomplete="off">
               Eliminar cambios
             </button>
