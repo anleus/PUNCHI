@@ -44,17 +44,6 @@ export class UserService {
       }));
   }
 
-  getUserByUsername(username: string): Promise<any> {
-    return this.http
-      .get(this.url + "/username/" + username)
-      .toPromise()
-      .then(this.onGetUserByName.bind(this));
-  }
-
-  onGetUserByName(res: any) {
-    return Promise.resolve(res);
-  }
-
   putUser(user: User) {
     console.log(user);
     return this.http.put(this.url + "/" + user._id, user).subscribe(response => { });
