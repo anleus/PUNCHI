@@ -4,11 +4,11 @@
     font-size: 2rem;
 }
 .fichando {
-    background-color: #e0584f;
+    background-color: var(--red-color);
 }
 
 .nofichando {
-    background-color: #6fe39e;
+    background-color:  var(--green-color);
 }
 
 .botones-inicio {         

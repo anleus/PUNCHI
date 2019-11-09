@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+/*https://stackoverflow.com/questions/1875852/how-can-i-define-colors-as-variables-in-css*/
+/* Para usarlo background-color: var(--main-color)*/
+
+:root{
+    --main-color: #88CBE8;
+    --green-color: #91E98A;
+    --red-color: #E28787;
+}
+
+
 html,
 body {
     height: 100%;
@@ -11,3 +21,5 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
