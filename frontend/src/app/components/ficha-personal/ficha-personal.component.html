@@ -14,22 +14,21 @@
       <div class="row p-3">
         <div class="col-md-4 offset-md-1">
           <mat-form-field>
-            <input matInput formControlName="nombre" placeholder="Nombre"  required>
+            <input matInput formControlName="nombre" placeholder="Nombre">
           </mat-form-field>
         </div>
 
         <div class="col-md-4 offset-md-2">
-          <mat-form-field>
-            <input matInput  formControlName="apellidos" placeholder="Apellidos" required>
-          </mat-form-field>
-        </div>
+            <mat-form-field>
+              <input matInput  formControlName="apellidos" placeholder="Apellidos" >
+            </mat-form-field>
+          </div>
       </div>
 
       <div class="row p-3">
         <div class="col-md-4 offset-md-1">
           <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" 
-              required>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" >
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -98,13 +97,13 @@
       <div class="row p-3">
           <div class="col-md-4 offset-md-1">
               <button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
-              autocomplete="off">
+              autocomplete="off" formControlName= "boton1">
               Guardar cambios
             </button>
           </div>
   
           <div class="col-md-4 offset-md-2">
-              <button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+              <button type="submit" (click)="eliminarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
               autocomplete="off">
               Eliminar cambios
             </button>
