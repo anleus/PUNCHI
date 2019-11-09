@@ -30,76 +30,70 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 @NgModule({ imports: [FormsModule] })
 export class FichaPersonalComponent implements OnInit {
   //utilizado
-  UsuarioLogueado: User;
-
-  public user: User;
-  users: User[];
-  departamentos: Departamento[];
+  usuarioLogueado: User;
   public userForm: FormGroup;
-  submitted = false;
-  gestion = true;
-  selectedDepartamento: Departamento;
-  selectedUsuario: User;
-
   public userV: User;
+  usuarioform: FormGroup;
 
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder,
-    private departamentosService: DepartamentosService,
     private authService: AuthenticationService,
     private snackBar: MatSnackBar
   ) {
-    this.user = new User();
     this.userV = new User();
+    
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    var usuarioAct = this.authService.getCurrentUser();
+    usuarioAct.subscribe(user => this.usuarioLogueado = user);
 
+    this.usuarioform = new FormGroup({
+      nombre: new FormControl(this.usuarioLogueado.nombre),
+      apellidos: new FormControl(this.usuarioLogueado.apellidos),
+      fechaNacimiento: new FormControl(this.usuarioLogueado.fechaNacimiento, [Validators.required]),
+      email: new FormControl(this.usuarioLogueado.email, [Validators.required, Validators.email]),
+      nuss: new FormControl(this.usuarioLogueado.nuss, [Validators.required]),
+      telefono: new FormControl(this.usuarioLogueado.telefono, [Validators.required]),
+      username: new FormControl(this.usuarioLogueado.username, [Validators.required]),
+      password: new FormControl(this.usuarioLogueado.password, [
+        Validators.required,
+        Validators.minLength(4)
+      ]),
+      localidad: new FormControl(this.usuarioLogueado.localidad, [Validators.required]),
+      provincia: new FormControl(this.usuarioLogueado.provincia, [Validators.required]),
+      domicilio: new FormControl(this.usuarioLogueado.domicilio, [Validators.required])
+    });
+
+
+  }
+
+  
   //inicialización formulario
-  usuarioform = new FormGroup({
-    nombre: new FormControl("", [Validators.required]),
-    apellidos: new FormControl("", [Validators.required]),
-    fechaNacimiento: new FormControl("", [Validators.required]),
-    email: new FormControl("", [Validators.required, Validators.email]),
-    nuss: new FormControl(),
-    telefono: new FormControl("", [Validators.required]),
-    username: new FormControl("", [Validators.required]),
-    password: new FormControl("", [
-      Validators.required,
-      Validators.minLength(4)
-    ]),
-    localidad: new FormControl("", [Validators.required]),
-    provincia: new FormControl("", [Validators.required]),
-    domicilio: new FormControl("", [Validators.required])
-  });
+  
 
   guardarcambios(form) {
-    var usuarioActual = this.authService.getCurrentUser();
-    this.userV.password = this.user.password;
-    this.userV.domicilio = this.user.domicilio;
-    this.userV.provincia = this.user.provincia;
-    this.userV.localidad = this.user.localidad;
-    this.userV.nombre = this.user.nombre;
-    this.userV.apellidos = this.user.apellidos;
-    this.userV.fechaNacimiento = this.user.fechaNacimiento;
-    this.userV._id = this.user._id;
-    this.userV.email = this.user.email;
-    this.userV.gestor = this.user.gestor;
-    this.userV.nuss = this.user.nuss;
-    this.userV.admin = this.user.admin;
-    this.userV.becario = this.user.becario;
-    this.userV.deleted = this.user.deleted;
-    this.userV.telefono = this.user.telefono;
+    //coger usuario logueado
+    var usuarioAct = this.authService.getCurrentUser();
+    usuarioAct.subscribe(user => this.usuarioLogueado = user);
+    //valores pasados por formulario
+    this.usuarioLogueado.password = form.value.password;
+    this.usuarioLogueado.domicilio = form.value.domicilio;
+    this.usuarioLogueado.provincia = form.value.provincia;
+    this.usuarioLogueado.localidad = form.value.localidad
+    this.usuarioLogueado.nombre = form.value.nombre;
+    this.usuarioLogueado.apellidos = form.value.apellidos;
+    this.usuarioLogueado.fechaNacimiento = form.value.fechaNacimiento;
+    this.usuarioLogueado.email = form.value.email;
+    this.usuarioLogueado.nuss = form.value.nuss;
+    this.usuarioLogueado.telefono = form.value.telefono;
+
     if (form.status == "VALID") {
-      usuarioActual.subscribe(user => {
-        this.userService.putUser(this.user);
-        this.snackSuccess("Usuario modificado correctamente");
-      });
-    } else {
-      this.snackError(
-        "No puedes modificar datos que no son del usuario logueado"
-      );
+      this.userService.putUser(this.usuarioLogueado);
+      this.snackSuccess("Usuario modificado correctamente");
+    }
+    else {
+      this.snackError("No puedes modificar datos que no son del usuario logueado");
     }
   }
 
