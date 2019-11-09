@@ -137,8 +137,13 @@ userFunctions.deleteUser = async (req, res, next) => {
     });
 };
 
-userFunctions.getUsersNonDeleted = async (req, res, next) => {
-  const users = await User.find({deleted: false});
+userFunctions.getUsersNoDeleted = async (req, res, next) => {
+  const users = await User.find({deleted: {$ne: true}}, function (err, docs) {
+    if (err) {
+      console,error(err)
+      console.log('Algún error aconteció'); 
+    }
+  });
   res.json(users);
 };
 

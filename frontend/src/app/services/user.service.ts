@@ -70,17 +70,11 @@ export class UserService {
     //return this.http.put(this.url + "/" + user._id, user).subscribe((res: Response) => res.json());
   }
 
-
-
-
-
-
-
   deleteUser(id: string) {
     return this.http.delete(this.url + "/" + id);
   }
 
-  getUsersNonDeleted(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + "/deleted/");
+  getUsersNoDeleted(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + "/noDeleted/");
   }
 }
