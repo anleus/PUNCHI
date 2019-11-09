@@ -13,29 +13,22 @@ userFunctions.getUserById = async (req, res, next) => {
 };
 
 userFunctions.authentication = async (req, res, next) => {
-  console.log(req);
   var usernamefromreq = req.body.username;
   var passfromreq     = req.body.password;
-  console.log('Username from req: ' + usernamefromreq);
-  console.log('Pass from req: ' + passfromreq);
   const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
     if (err) {
       console.error(err)
-      console.log('Ha habido algun error');
     }
   });
 
   if (user == null || user.deleted===true) {
-    console.log('No se ha encontrado ningún usuario');
     res.json(null);
     return;
   }
 
-    console.log('Usuario encontrado - Continuando con la función...')
     const userJ =  JSON.parse(JSON.stringify(user));
 
     if (userJ.password != passfromreq) {
-      console.log('Contraseña incorrecta');
       res.json(null);
       return;
     }
@@ -45,7 +38,6 @@ userFunctions.authentication = async (req, res, next) => {
 
 userFunctions.getUserByUsername = async (req, res, next) => {
   var usernamefromreq = req.params.username;
-  //console.log('Username from req: ' + usernamefromreq);
   const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
     if (err) {
       console.error(err)
@@ -54,16 +46,13 @@ userFunctions.getUserByUsername = async (req, res, next) => {
   });
 
   if (user == null) {
-    console.log('user.controller.js - No se ha encontrado ningún usuario');
     res.json(null);
     return;
   }
-    console.log('Usuario encontrado')    
     res.json(user);
 };
 
 userFunctions.addUser = async (req, res, next) => {
-  //console.log(req.body);
   const user = new User({
     nombre: req.body.nombre,
     apellidos: req.body.apellidos,
@@ -81,7 +70,6 @@ userFunctions.addUser = async (req, res, next) => {
     password: req.body.password,
     becario: req.body.becario
   })
-  //console.log(user);
   user.save()
     .then(() => res.json({ status: 'User saved' }))
     .catch((err) => {
@@ -109,7 +97,6 @@ userFunctions.updateUser = (req, res, next) => {
     password: req.body.password,
     becario: req.body.becario
   });
-console.log(req);
 
   User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
@@ -119,12 +106,11 @@ console.log(req);
     .catch(err => {
       res.status(400);
       res.send("Bad request");
-      console.log(err);
+      console.error(err);
     });
 };
 
 userFunctions.deleteUser = async (req, res, next) => {
-  console.log(req)
   await User.findByIdAndDelete(req.params.id)
     .then(() => {
       res.status(200);
@@ -137,8 +123,13 @@ userFunctions.deleteUser = async (req, res, next) => {
     });
 };
 
-userFunctions.getUsersNonDeleted = async (req, res, next) => {
-  const users = await User.find({deleted: false});
+userFunctions.getUsersNoDeleted = async (req, res, next) => {
+  const users = await User.find({deleted: {$ne: true}}, function (err, docs) {
+    if (err) {
+      console,error(err)
+      console.log('Algún error aconteció'); 
+    }
+  });
   res.json(users);
 };
 

@@ -9,7 +9,7 @@ router.post("/users", userFunctions.addUser);
 router.put("/users/:id", userFunctions.updateUser);
 router.delete("/users/:id", userFunctions.deleteUser);
 router.get("/users/username/:username", userFunctions.getUserByUsername);
-router.get("/users/deleted/", userFunctions.getUsersNonDeleted);
+router.get("/users/noDeleted/", userFunctions.getUsersNoDeleted);
 router.post("/users/username/:username", userFunctions.authentication);
 
 module.exports = router;
