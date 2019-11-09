@@ -11,7 +11,7 @@ departamentFunctions.getDeparamentos = async (req, res, next) => {
 
 departamentFunctions.getDepartamentoById = async (req, res, next) => {
 	const deparamentos = await Departamento.findById(req.params.id).catch(err =>
-		console.log(err)
+		console.error(err)
 	);
 	if (deparamentos) res.status(200).json(deparamentos);
 	else res.status(404).json("Not Found");
@@ -62,7 +62,7 @@ departamentFunctions.deleteDepartamento = async (req, res, next) => {
 
 departamentFunctions.getDepartamentoByUser = async (req, res, next) => {
 	var departamentoget = await Departamento.find({usuarios:mongoose.Types.ObjectId(req.params.usuarios)}).catch(err =>
-		console.log(err)
+		console.error(err)
 	);;
 	res.status(200);
 	res.json(departamentoget);

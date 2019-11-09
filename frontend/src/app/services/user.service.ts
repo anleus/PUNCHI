@@ -30,12 +30,9 @@ export class UserService {
     return this.http.get<User[]>(this.url);
   }
   
-  getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
-    //console.log(username)
-    //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
+  getUserByUsernameDOS(username) { 
     return this.http.get(this.url + `/username/${username}`)
     .pipe(map(user => {
-        console.log('User from user.service: ' + user)
         return user;
       }));
   }
@@ -70,17 +67,15 @@ export class UserService {
     //return this.http.put(this.url + "/" + user._id, user).subscribe((res: Response) => res.json());
   }
 
-
-
-
-
-
-
   deleteUser(id: string) {
     return this.http.delete(this.url + "/" + id);
   }
 
   getUsersNonDeleted(): Observable<User[]> {
     return this.http.get<User[]>(this.url + "/deleted/");
+  }
+
+  getAllUsers() : Observable<User[]>{
+    return this.http.get<User[]>(this.url);
   }
 }
