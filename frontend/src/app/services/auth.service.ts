@@ -42,4 +42,8 @@ export class AuthenticationService {
         console.log("Loggin out");
         window.location.href = environment.urlf + '/login';
     }
+
+    checkToken() {  // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve
+        if (localStorage.getItem("currentUser") === null) window.location.href = environment.urlf + '/login';
+    }
 }

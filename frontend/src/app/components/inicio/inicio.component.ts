@@ -5,6 +5,9 @@ import { JornadaService } from 'src/app/services/jornada.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AuthenticationService } from 'src/app/services/auth.service';
 
+import { environment } from "src/environments/environment";
+
+
 /**
  *  Misteriosamente si pongo esto dentro de la clase no funciona,
  *  de momento se quedará aqui, si, se que es mas feo que pegarle a un padre pero es lo que hay ¯\_(ツ)_/¯  
@@ -54,6 +57,9 @@ export class InicioComponent implements OnInit {
   constructor(private jornadaService : JornadaService, private authService : AuthenticationService) { }
 
   ngOnInit() {
+
+    this.authService.checkToken();    // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve
+
     if(localStorage.getItem('jornada')){
       this.toggleFicharState(true);
       var timeStart = new Date(JSON.parse(localStorage.getItem('jornada')).begin);
@@ -106,11 +112,12 @@ export class InicioComponent implements OnInit {
   }
 
   completarJornada(){
-    var user = JSON.parse(localStorage.getItem('currentUser'));
+    // var user = JSON.parse(localStorage.getItem('currentUser'));
+    var user = this.authService.getCurrentUser();
     var jornada = {
       begin: this.startHour,
       end: this.endHour,
-      user: (user ? user._id : '5d94cb6dd634648da19d6a6c')
+      user: (user ? user.source["_value"]._id : '5d94cb6dd634648da19d6a6c')
     }
     localStorage.removeItem('jornada');
     this.jornadaService.postJornada(jornada);

@@ -59,9 +59,6 @@ let Users = Schema({
     becario: {
         type: Boolean,
         required: true
-    },
-    deleted: {
-        type: Boolean, //per què dos voltes*
     }
 });
     //}, {collection: 'User'});

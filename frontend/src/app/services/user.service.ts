@@ -29,58 +29,36 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
-  
-  getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
-    //console.log(username)
-    //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
+
+  getUserByUsernameDOS(username) {
     return this.http.get(this.url + `/username/${username}`)
-    .pipe(map(user => {
-        console.log('User from user.service: ' + user)
+      .pipe(map(user => {
         return user;
       }));
   }
 
-  getUserByUsername(username: string): Promise<any> {
-    return this.http
-      .get(this.url + "/username/" + username)
-      .toPromise()
-      .then(this.onGetUserByName.bind(this));
-  }
-
-  getUserById(id: string): Promise<User> {
-    return this.http
-      .get(this.url + "/" + id)
-      .toPromise()
-      .then(this.onGetUserById.bind(this));
-  }
-
-  onGetUserById(res: any) {
-    return Promise.resolve(res);
-  }
-
-  onGetUserByName(res: any) {
-   //console.log("USERSERIVE 2");
-    //console.log(res);
-    return Promise.resolve(res);
+  getUserById(id: string) {
+    return this.http.get(this.url + "/" + id)
+      .pipe(map(user => {
+        return user;
+      }));
   }
 
   putUser(user: User) {
     console.log(user);
-   return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
+    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { });
     //return this.http.put(this.url + "/" + user._id, user).subscribe((res: Response) => res.json());
   }
-
-
-
-
-
-
 
   deleteUser(id: string) {
     return this.http.delete(this.url + "/" + id);
   }
 
-  getUsersNonDeleted(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + "/deleted/");
+  getUsersNoDeleted(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + "/noDeleted/");
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
   }
 }

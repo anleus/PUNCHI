@@ -44,7 +44,7 @@ export class UsersTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
+    this.userService.getUsersNoDeleted().subscribe(
       (resp) => {
         this.dataSource = new MatTableDataSource<User>(resp);
         this.dataSource.paginator = this.paginator;
