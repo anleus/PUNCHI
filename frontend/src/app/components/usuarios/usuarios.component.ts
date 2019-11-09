@@ -33,7 +33,7 @@ export class UsuariosComponent implements OnInit {
   //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   //dataSource = ELEMENT_DATA;
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['nombre', 'apellidos','departamento', 'select'];
+  displayedColumns: string[] = ['nombre', 'apellidos', 'departamento', 'select'];
 
   constructor(private departamentosService: DepartamentosService, private router: Router,
     private authService: AuthenticationService, private userService: UserService) { }
@@ -42,9 +42,8 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.determinarUsuario();
-    this.getUsersAdmin();
-    //var dataSource = this.users;
-    //console.log(this.users);
+    if(this.admin)this.getUsersAdmin();
+    else this.getUsersGestor();
   }
 
 
@@ -55,21 +54,28 @@ export class UsuariosComponent implements OnInit {
     };
   }
 
-  tablaGestor() {
-
-  }
-
-  tablaAdmin() {
-
-  }
-  /*usuarioExistente2() {
-      this.departamentosService.getDepartamentoByUser('5dae0cc075c3fa2c90124a55').subscribe(
-        res => {
-          console.log(res);
+  getUsersGestor() { //no sale en la tabla - falta evitar errores
+    this.departamentosService.getDepartamentoByGestor(this.logUser.source["_value"]._id).subscribe(
+      res => {
+        var nombre = res["nombre"];
+        var idsUsuarios = res["usuarios"];
+        var users = [];
+        idsUsuarios.forEach(element => {
+          if (this.logUser.source["_value"]._id == element) {
+            this.userService.getUserById(element).subscribe(
+              res => {
+                var aux;
+                aux = res;
+                aux.departamento = nombre;
+                users.push(aux);
+              }
+            );
           }
-      );
-    }*/
-
+        });
+        this.dataSource = new MatTableDataSource<User>(users);
+        this.dataSource.paginator = this.paginator;
+      });
+  }
   getUsersAdmin() {
     this.userService.getAllUsers().subscribe(
       (res) => {
@@ -84,24 +90,25 @@ export class UsuariosComponent implements OnInit {
 
   addDepartment(users) {
     users.forEach(element => {
-      //console.log(element._id);
-      //console.log("despues de 1 id");
-
       this.departamentosService.getDepartamentoByUser(element._id).subscribe(
         res => {
           if (res[0] != null) {
-            console.log(res[0].nombre);
             element.departamento = res[0].nombre;
           }
           else {
             element.departamento = "No pertenece a ningún departamento"
-            console.log("NULL!!!!");
           }
         }
       );
     });
-    //console.log(users);
     this.dataSource = new MatTableDataSource<User>(users);
     this.dataSource.paginator = this.paginator;
+  }
+
+  deleteUserSelected(element: User) {
+    //Falta mensaje de confirmación.
+    this.userService.deleteUser(element._id).subscribe(
+      () => { window.location.reload() } //esto cambiar
+    )
   }
 }

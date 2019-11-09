@@ -29,10 +29,17 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
-  
-  getUserByUsernameDOS(username) { 
+
+  getUserByUsernameDOS(username) {
     return this.http.get(this.url + `/username/${username}`)
-    .pipe(map(user => {
+      .pipe(map(user => {
+        return user;
+      }));
+  }
+
+  getUserById(id: string) {
+    return this.http.get(this.url + "/" + id)
+      .pipe(map(user => {
         return user;
       }));
   }
@@ -44,26 +51,13 @@ export class UserService {
       .then(this.onGetUserByName.bind(this));
   }
 
-  getUserById(id: string): Promise<User> {
-    return this.http
-      .get(this.url + "/" + id)
-      .toPromise()
-      .then(this.onGetUserById.bind(this));
-  }
-
-  onGetUserById(res: any) {
-    return Promise.resolve(res);
-  }
-
   onGetUserByName(res: any) {
-   //console.log("USERSERIVE 2");
-    //console.log(res);
     return Promise.resolve(res);
   }
 
   putUser(user: User) {
     console.log(user);
-   return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
+    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { });
     //return this.http.put(this.url + "/" + user._id, user).subscribe((res: Response) => res.json());
   }
 
@@ -75,7 +69,7 @@ export class UserService {
     return this.http.get<User[]>(this.url + "/noDeleted/");
   }
 
-  getAllUsers() : Observable<User[]>{
+  getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
 }

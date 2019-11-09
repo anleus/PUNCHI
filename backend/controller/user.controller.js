@@ -8,7 +8,7 @@ userFunctions.getUsers = async (req, res, next) => {
 };
 
 userFunctions.getUserById = async (req, res, next) => {
-  const user = await User.findById(req.body.id);
+  const user = await User.findById(req.params.id);
   res.json(user);
 };
 
@@ -110,7 +110,7 @@ userFunctions.updateUser = (req, res, next) => {
     });
 };
 
-userFunctions.deleteUser = async (req, res, next) => {
+userFunctions.deleteUser = async (req, res, next) => { //ESTO ESTA MAL
   await User.findByIdAndDelete(req.params.id)
     .then(() => {
       res.status(200);

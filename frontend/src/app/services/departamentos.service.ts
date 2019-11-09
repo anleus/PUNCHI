@@ -53,5 +53,8 @@ export class DepartamentosService {
       })
     );
   }
-  //getUserJornadas = userid => this.http.get(this.url + userid);
+
+  getDepartamentoByGestor(user: string) : Observable<Departamento[]> {
+    return this.http.get<Departamento[]>(this.url + `responsable/${user}`);
+  }
 }
