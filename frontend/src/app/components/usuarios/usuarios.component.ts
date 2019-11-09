@@ -26,19 +26,19 @@ export interface PeriodicElement {
 
 export class UsuariosComponent implements OnInit {
   departamento: Departamento;
-  admin = false; 
+  admin = false;
   gestor = false;
   logUser = this.authService.getCurrentUser();
-  
+
   //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   //dataSource = ELEMENT_DATA;
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['nombre', 'apellidos', 'select'];
+  displayedColumns: string[] = ['nombre', 'apellidos','departamento', 'select'];
 
   constructor(private departamentosService: DepartamentosService, private router: Router,
-              private authService: AuthenticationService , private userService: UserService) { }
-  
- @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    private authService: AuthenticationService, private userService: UserService) { }
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     this.determinarUsuario();
@@ -48,8 +48,8 @@ export class UsuariosComponent implements OnInit {
   }
 
 
-  determinarUsuario() {  
-    if (this.logUser.source["_value"]!= null) {
+  determinarUsuario() {
+    if (this.logUser.source["_value"] != null) {
       this.admin = this.logUser.source["_value"].admin;
       this.gestor = this.logUser.source["_value"].gestor;
     };
@@ -70,34 +70,38 @@ export class UsuariosComponent implements OnInit {
       );
     }*/
 
-    getUsersAdmin() {
-      this.userService.getAllUsers().subscribe(
-        (res) => {
-          this.addDepartment(res);
-          //console.log(res);
-          },
-        (err) => {
-            console.log(err);
-         }
+  getUsersAdmin() {
+    this.userService.getAllUsers().subscribe(
+      (res) => {
+        this.addDepartment(res);
+        //console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  addDepartment(users) {
+    users.forEach(element => {
+      //console.log(element._id);
+      //console.log("despues de 1 id");
+
+      this.departamentosService.getDepartamentoByUser(element._id).subscribe(
+        res => {
+          if (res[0] != null) {
+            console.log(res[0].nombre);
+            element.departamento = res[0].nombre;
+          }
+          else {
+            element.departamento = "No pertenece a ningún departamento"
+            console.log("NULL!!!!");
+          }
+        }
       );
-    }
-
-    addDepartment(users){
-      users.forEach(element => {
-        //console.log(element._id);
-        //console.log("despues de 1 id");
-
-        this.departamentosService.getDepartamentoByUser(element._id).subscribe(
-          res => {
-            console.log('Hola');
-            console.log(res['nombre']);
-            element.departamento = res;
-            console.log(res);
-            }
-        );
-      });
-      //console.log(users);
-      this.dataSource = new MatTableDataSource<User>(users);
-          this.dataSource.paginator = this.paginator;
-    }
+    });
+    //console.log(users);
+    this.dataSource = new MatTableDataSource<User>(users);
+    this.dataSource.paginator = this.paginator;
+  }
 }
