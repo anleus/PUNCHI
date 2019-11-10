@@ -5,8 +5,8 @@
                 <!--<mat-toolbar color="primary">Menu</mat-toolbar>-->
                 <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
                         <mat-toolbar color="primary">
-                            <button *ngIf="flag" mat-icon-button (click)="sidenav.close()"><mat-icon>menu</mat-icon></button>
-                            <h3> Menú</h3>
+                                <h3>Menú</h3>
+                            <button *ngIf="flag" mat-icon-button (click)="sidenav.close()"><mat-icon>arrow_back</mat-icon></button> 
                         </mat-toolbar> 
                 </div>
                 <mat-nav-list>
