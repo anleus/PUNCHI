@@ -46,7 +46,7 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {
     this.determinarUsuario();
     if (this.admin) this.getUsersAdmin();
-    else this.getUsersGestor(this.tabla);
+    else this.getUsersGestor();
   }
 
 
@@ -57,48 +57,38 @@ export class UsuariosComponent implements OnInit {
     };
   }
 
-  getUsersGestor(callback) { //no sale en la tabla - falta evitar errores
-
-    /*this.departamentosService.getDepartamentoByGestor(this.logUser.source["_value"]._id).subscribe( //prueba 
-      res => {
-        var idsUsuarios = res["_id"];
-        this.userService.getUsersByDepartment(idsUsuarios).subscribe(
-          resp => {console.log(resp);}
-        );
-      });*/
-
-    this.getUsersAdmin(); //esto no funciona tampoco
+  //Mostrar usuarios para gestor
+  getUsersGestor() {
     this.departamentosService.getDepartamentoByGestor(this.logUser.source["_value"]._id).subscribe(
       res => {
+        var nombreDepartamento = res["nombre"];
         var idsUsuarios = res["usuarios"];
+        var numberUsers = idsUsuarios.length;
+        var auxnumber = 1;
+        var users;
         idsUsuarios.forEach(element => {
           this.userService.getUserById(element).subscribe(
             resp => {
               var aux;
               aux = resp;
               this.usersret.push(aux);
-              //console.log("en el bucle", JSON.stringify(this.usersret))
-
+              if(auxnumber == numberUsers ) {
+                this.addDepartmentGestor(this.usersret, nombreDepartamento);
+              }
+              auxnumber++;
             });
         });
-        callback();
-        //console.log("USUARIOS:COMPONENT", JSON.stringify(this.usersret)) //se lee antes
       });
   }
-
-  tabla(){
-    console.log("Hola");
-    console.log("USUARIOS:COMPONENT", JSON.stringify(this.usersret)) //se lee antes
-    this.dataSource = new MatTableDataSource<User>(this.usersret);
-    this.dataSource.paginator = this.paginator;
-}
-  
   addDepartmentGestor(users, nomDep) {
     users.forEach(element => {
       element.departamento = nomDep;
     });
-
+    this.dataSource = new MatTableDataSource<User>(users); 
+    this.dataSource.paginator = this.paginator;
   }
+
+  //Mostrar personas para admin
 
   getUsersAdmin() {
     this.userService.getAllUsers().subscribe(
@@ -113,6 +103,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   addDepartment(users) {
+    console.log("add departemnt users null?", users);
     users.forEach(element => {
       this.departamentosService.getDepartamentoByUser(element._id).subscribe(
         res => {
@@ -127,8 +118,8 @@ export class UsuariosComponent implements OnInit {
     });
     //console.log("tots", JSON.stringify(users));
     console.log("tots", users);
-    //this.dataSource = new MatTableDataSource<User>(users);
-    //this.dataSource.paginator = this.paginator;
+    this.dataSource = new MatTableDataSource<User>(users);
+    this.dataSource.paginator = this.paginator;
   }
 
   deleteUserSelected(element: User) {
