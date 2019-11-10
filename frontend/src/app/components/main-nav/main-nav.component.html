@@ -4,7 +4,7 @@
         <div class="sidenav-header">
                 <!--<mat-toolbar color="primary">Menu</mat-toolbar>-->
                 <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
-                        <mat-toolbar color="primary">
+                        <mat-toolbar class="topbar">
                                 <h3>Menú</h3>
                             <button *ngIf="flag" mat-icon-button (click)="sidenav.close()"><mat-icon>arrow_back</mat-icon></button> 
                         </mat-toolbar> 
@@ -25,7 +25,7 @@
                             <mat-icon>group</mat-icon>Usuarios
                         </a>
                     </mat-list-item>
-                    <mat-list-item class="logOut" *ngIf="permisos">
+                    <mat-list-item *ngIf="permisos">
                         <a  mat-list-item href="/departamentos">
                             <mat-icon>business_center</mat-icon>Departamentos
                         </a>
@@ -51,11 +51,13 @@
                         </a>
                     </mat-list-item>
                     <mat-divider></mat-divider>
-                    <mat-list-item>    
-                        <a (click)='logoutUser()'>
-                        <!-- </a>mat-list-item href="/login"> -->
-                            <mat-icon>lock</mat-icon>Cerrar sesión
-                        </a>
+                    <mat-list-item>
+                        <div class="exit">
+                            <a (click)='logoutUser()'>
+                            <!-- </a>mat-list-item href="/login"> -->
+                                <mat-icon>input</mat-icon>Cerrar sesión
+                            </a>
+                            </div>
                         </mat-list-item>
                 </mat-nav-list>
         </div>
@@ -64,9 +66,10 @@
     <!-- Contenedor principal -->
     <mat-sidenav-content>
         <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
-            <mat-toolbar color="primary">
+            <mat-toolbar class="topbar">
                 <button *ngIf="flag" mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
                 <h3>PUNCHI</h3>
+                <button class="notif-btn" mat-icon-button><mat-icon>info</mat-icon></button>
             </mat-toolbar> 
         </div>
         <ng-content></ng-content>
