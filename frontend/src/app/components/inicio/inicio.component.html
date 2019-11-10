@@ -24,7 +24,7 @@
             <div class="row tablaFichar">
                     <div class="col campoTabla">
 
-                            <mat-button-toggle #toggleButton class=".col-md-4 botonfichar" [ngClass]="{fichando: this.fichando, nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+                            <mat-button-toggle #toggleButton [disabled]="true || this.authService.currentUserValue.becario" class=".col-md-4 botonfichar" [ngClass]="{fichando: (this.fichando || this.authService.currentUserValue.becario), nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
                     </div>
                     <div class="col text-center hh">
                         {{timeLabel}}
@@ -47,4 +47,3 @@
 <div>
         <app-history-table></app-history-table>
 </div>
-

@@ -58,7 +58,11 @@ export class InicioComponent implements OnInit {
 
   ngOnInit() {
 
-    this.authService.checkToken();    // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve
+    this.authService.checkToken(); // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve
+
+    if(this.authService.currentUserValue.becario)
+      this.setBecarioButton();
+
 
     if(localStorage.getItem('jornada')){
       this.toggleFicharState(true);
@@ -71,6 +75,7 @@ export class InicioComponent implements OnInit {
   }
 
   toggleFicharState(onInit = false){
+    if(this.authService.currentUserValue.becario) return;
     this.fichando = !this.fichando;
     this.icon =  !this.fichando ? 'play_arrow' : 'stop';
     this.text = !this.fichando ? 'Empezar jornada' : 'Terminar jornada';
@@ -111,8 +116,12 @@ export class InicioComponent implements OnInit {
     this.timeLabel = `${hour}:${minutes}:${seconds}`;
   }
 
+  setBecarioButton(){
+    this.text = "No puedes fichar";
+    this.icon = '';
+  }
+
   completarJornada(){
-    // var user = JSON.parse(localStorage.getItem('currentUser'));
     var user = this.authService.getCurrentUser();
     var jornada = {
       begin: this.startHour,
