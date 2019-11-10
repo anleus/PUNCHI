@@ -30,6 +30,9 @@ const routes: Routes = [
   { path: "departamentos", component: DepartamentosComponent },
   { path: "fichapersonal", component: FichaPersonalComponent },
   { path: "fichapersonaladmin", component: ModificarFichaAdminComponent },
+  //{ path: "informes" },
+  //{ path: "vacaciones" },
+  //{ path: "incidencias" },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   { path: '**', redirectTo: "inicio"}

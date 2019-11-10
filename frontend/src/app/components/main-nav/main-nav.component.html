@@ -17,22 +17,37 @@
                     </mat-list-item>
                     <mat-list-item>
                         <a mat-list-item href="/fichapersonal">
-                            <mat-icon>face</mat-icon>Perfil
+                            <mat-icon>account_circle</mat-icon>Perfil
                         </a>
                     </mat-list-item>
-                    <mat-list-item class="logOut">
-                        <a *ngIf="permisos" mat-list-item href="/departamentos">
-                            <mat-icon>add_to_queue</mat-icon>Gestionar
-                        </a>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <a *ngIf="permisos" mat-list-item href="/crearusuario">
-                            <mat-icon>add_circle</mat-icon>Añadir
-                        </a>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <a *ngIf="permisos" mat-list-item href="/usuarios">
+                    <mat-list-item *ngIf="permisos">
+                        <a  mat-list-item href="/usuarios">
                             <mat-icon>group</mat-icon>Usuarios
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item class="logOut" *ngIf="permisos">
+                        <a  mat-list-item href="/departamentos">
+                            <mat-icon>business_center</mat-icon>Departamentos
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item>
+                            <mat-icon>insert_drive_file</mat-icon>Informes
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item>
+                            <mat-icon>airplanemode_active</mat-icon>Vacaciones
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item>
+                            <mat-icon>error_outline</mat-icon>Incidencias
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="permisos">
+                        <a  mat-list-item href="/crearusuario">
+                            <mat-icon>supervisor_account</mat-icon>Crear usuarios-prueba
                         </a>
                     </mat-list-item>
                     <mat-divider></mat-divider>
