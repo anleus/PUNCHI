@@ -61,30 +61,36 @@ export class UsuariosComponent implements OnInit {
   getUsersGestor() {
     this.departamentosService.getDepartamentoByGestor(this.logUser.source["_value"]._id).subscribe(
       res => {
-        var nombreDepartamento = res["nombre"];
-        var idsUsuarios = res["usuarios"];
-        var numberUsers = idsUsuarios.length;
-        var auxnumber = 1;
-        var users;
-        idsUsuarios.forEach(element => {
-          this.userService.getUserById(element).subscribe(
-            resp => {
-              var aux;
-              aux = resp;
-              this.usersret.push(aux);
-              if(auxnumber == numberUsers ) {
-                this.addDepartmentGestor(this.usersret, nombreDepartamento);
-              }
-              auxnumber++;
-            });
-        });
+        if (res != null) {
+          var nombreDepartamento = res["nombre"];
+          var idsUsuarios = res["usuarios"];
+          var numberUsers = idsUsuarios.length;
+          var auxnumber = 1;
+          var users;
+          idsUsuarios.forEach(element => {
+            this.userService.getUserById(element).subscribe(
+              resp => {
+                if (resp != null) {
+                  var aux;
+                  aux = resp;
+                  this.usersret.push(aux);
+                  if (auxnumber == numberUsers) {
+                    this.addDepartmentGestor(this.usersret, nombreDepartamento);
+                  }
+                }
+                else { console.log("usuario no existente, ALERTA");}
+                auxnumber++;
+
+              });
+          });
+        } else { console.log("no es responsable de ningún deparatmento"); } //cambiar por alerta
       });
   }
   addDepartmentGestor(users, nomDep) {
     users.forEach(element => {
       element.departamento = nomDep;
     });
-    this.dataSource = new MatTableDataSource<User>(users); 
+    this.dataSource = new MatTableDataSource<User>(users);
     this.dataSource.paginator = this.paginator;
   }
 
@@ -116,7 +122,6 @@ export class UsuariosComponent implements OnInit {
         }
       );
     });
-    //console.log("tots", JSON.stringify(users));
     console.log("tots", users);
     this.dataSource = new MatTableDataSource<User>(users);
     this.dataSource.paginator = this.paginator;
