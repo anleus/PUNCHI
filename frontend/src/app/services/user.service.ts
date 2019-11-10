@@ -31,8 +31,6 @@ export class UserService {
   }
   
   getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
-    //console.log(username)
-    //console.log(`${this.AUTH_SERVER}/users/username/${username}`)
     return this.http.get(this.url + `/username/${username}`)
     .pipe(map(user => {
         console.log('User from user.service: ' + user)
@@ -67,14 +65,7 @@ export class UserService {
   putUser(user: User) {
     console.log(user);
    return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
-    //return this.http.put(this.url + "/" + user._id, user).subscribe((res: Response) => res.json());
   }
-
-
-
-
-
-
 
   deleteUser(id: string) {
     return this.http.delete(this.url + "/" + id);
