@@ -57,4 +57,8 @@ export class DepartamentosService {
   getDepartamentoByGestor(user: string) : Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.url + `responsable/${user}`);
   }
+
+  getDepartamentoByID(id: string) : Observable<Departamento[]> {
+    return this.http.get<Departamento[]>(this.url + id);
+  }
 }

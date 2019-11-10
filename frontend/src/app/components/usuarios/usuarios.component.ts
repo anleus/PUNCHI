@@ -8,6 +8,7 @@ import { Departamento } from 'src/app/models/departamento';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -26,6 +27,7 @@ export interface PeriodicElement {
 
 export class UsuariosComponent implements OnInit {
   departamento: Departamento;
+  usersret = [];
   admin = false;
   gestor = false;
   logUser = this.authService.getCurrentUser();
@@ -40,9 +42,10 @@ export class UsuariosComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+
   ngOnInit() {
     this.determinarUsuario();
-    if(this.admin)this.getUsersAdmin();
+    if (this.admin) this.getUsersAdmin();
     else this.getUsersGestor();
   }
 
@@ -54,28 +57,45 @@ export class UsuariosComponent implements OnInit {
     };
   }
 
-  getUsersGestor() { //no sale en la tabla - falta evitar errores
+  //Mostrar usuarios para gestor
+  getUsersGestor() {
     this.departamentosService.getDepartamentoByGestor(this.logUser.source["_value"]._id).subscribe(
       res => {
-        var nombre = res["nombre"];
-        var idsUsuarios = res["usuarios"];
-        var users = [];
-        idsUsuarios.forEach(element => {
-          if (this.logUser.source["_value"]._id == element) {
+        if (res != null) {
+          var nombreDepartamento = res["nombre"];
+          var idsUsuarios = res["usuarios"];
+          var numberUsers = idsUsuarios.length;
+          var auxnumber = 1;
+          var users;
+          idsUsuarios.forEach(element => {
             this.userService.getUserById(element).subscribe(
-              res => {
-                var aux;
-                aux = res;
-                aux.departamento = nombre;
-                users.push(aux);
-              }
-            );
-          }
-        });
-        this.dataSource = new MatTableDataSource<User>(users);
-        this.dataSource.paginator = this.paginator;
+              resp => {
+                if (resp != null) {
+                  var aux;
+                  aux = resp;
+                  this.usersret.push(aux);
+                  if (auxnumber == numberUsers) {
+                    this.addDepartmentGestor(this.usersret, nombreDepartamento);
+                  }
+                }
+                else { console.log("usuario no existente, ALERTA");}
+                auxnumber++;
+
+              });
+          });
+        } else { console.log("no es responsable de ningún deparatmento"); } //cambiar por alerta
       });
   }
+  addDepartmentGestor(users, nomDep) {
+    users.forEach(element => {
+      element.departamento = nomDep;
+    });
+    this.dataSource = new MatTableDataSource<User>(users);
+    this.dataSource.paginator = this.paginator;
+  }
+
+  //Mostrar personas para admin
+
   getUsersAdmin() {
     this.userService.getAllUsers().subscribe(
       (res) => {
@@ -89,6 +109,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   addDepartment(users) {
+    console.log("add departemnt users null?", users);
     users.forEach(element => {
       this.departamentosService.getDepartamentoByUser(element._id).subscribe(
         res => {
@@ -101,14 +122,15 @@ export class UsuariosComponent implements OnInit {
         }
       );
     });
+    console.log("tots", users);
     this.dataSource = new MatTableDataSource<User>(users);
     this.dataSource.paginator = this.paginator;
   }
 
   deleteUserSelected(element: User) {
     //Falta mensaje de confirmación.
-    this.userService.deleteUser(element._id).subscribe(
-      () => { window.location.reload() } //esto cambiar
-    )
+    //this.userService.deleteUser(element._id).subscribe(
+    //  () => { window.location.reload() } //esto cambiar
+    //)
   }
 }

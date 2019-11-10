@@ -5,6 +5,7 @@ import { User } from "../models/users";
 import { environment } from "src/environments/environment";
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DepartamentosService } from './departamentos.service';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
 
   url: string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private departamentosService: DepartamentosService) {
     this.selectedUser = new User();
     this.url = environment.urlb + "/users";
   }
@@ -46,8 +47,7 @@ export class UserService {
 
   putUser(user: User) {
     console.log(user);
-    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { });
-    //return this.http.put(this.url + "/" + user._id, user).subscribe((res: Response) => res.json());
+   return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
   }
 
   deleteUser(id: string) {
@@ -61,4 +61,42 @@ export class UserService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
+
+  getUsersByDepartment(departamentoId: string) { //mal
+    return this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
+      res => {
+        var users=[];
+        var idsUsuarios = res["usuarios"];
+        //var users = [];
+        idsUsuarios.forEach(element => {
+          this.getUserById(element).subscribe(
+            resp => {
+              var aux;
+              aux = resp;
+              users.push(aux);
+              console.log("usersret",users)
+            });
+            return users;
+        });
+      });      
+  }
 }
+  /*this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
+    res => {
+      var idsUsuarios = res["usuarios"];
+      var users = [];
+      idsUsuarios.forEach(element => {
+        this.getUserById(element).subscribe(
+          resp => {
+            console.log("USERSERVICE USER ENCONTRADO", resp);
+            var aux;
+            aux = resp;
+            users.push(aux);
+          }
+        );
+      });
+      return users;
+    });
+    console.log("PROBLEMA", users)
+    return users;*/
+

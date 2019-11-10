@@ -43,7 +43,6 @@ export class FichaPersonalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.usuarioform.controls["boton1"].disable();
 
     //guardar copia usuario sin modificar
     this.usuarioSinModificar=this.usuarioLogueado;
@@ -128,8 +127,6 @@ export class FichaPersonalComponent implements OnInit {
       this.usuarioLogueado.username = form.value.username;
       this.usuarioLogueado.nuss = form.value.nuss;
     }
-
-    //valores pasados por formulario si eres admin o gestor
 
     if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números

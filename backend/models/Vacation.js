@@ -12,6 +12,9 @@ let Vacation = Schema({
     left: {
         type: Number,
         required: true
+    },
+    past: {
+        type: [Date]
     }
 });
 

@@ -4,9 +4,9 @@
         <div class="sidenav-header">
                 <!--<mat-toolbar color="primary">Menu</mat-toolbar>-->
                 <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
-                        <mat-toolbar color="primary">
+                        <mat-toolbar class="topbar">
                             <button *ngIf="flag" mat-icon-button (click)="sidenav.close()"><mat-icon>menu</mat-icon></button>
-                            <h3> Menú</h3>
+                            <h3>Menú</h3>
                         </mat-toolbar> 
                 </div>
                 <mat-nav-list>
@@ -17,7 +17,7 @@
                     </mat-list-item>
                     <mat-list-item>
                         <a mat-list-item href="/fichapersonal">
-                            <mat-icon>face</mat-icon>Perfil
+                            <mat-icon>account_circle</mat-icon>Perfil
                         </a>
                     </mat-list-item>
                     <mat-list-item class="logOut">
@@ -26,21 +26,33 @@
                         </a>
                     </mat-list-item>
                     <mat-list-item>
-                        <a *ngIf="permisos" mat-list-item href="/crearusuario">
-                            <mat-icon>add_circle</mat-icon>Añadir
+                        <a mat-list-item>
+                            <mat-icon>insert_drive_file</mat-icon>Informes
                         </a>
                     </mat-list-item>
                     <mat-list-item>
-                        <a *ngIf="permisos" mat-list-item href="/usuarios">
-                            <mat-icon>group</mat-icon>Usuarios
+                        <a mat-list-item>
+                            <mat-icon>airplanemode_active</mat-icon>Vacaciones
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item>
+                            <mat-icon>error_outline</mat-icon>Incidencias
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="permisos">
+                        <a  mat-list-item href="/crearusuario">
+                            <mat-icon>supervisor_account</mat-icon>Crear usuarios-prueba
                         </a>
                     </mat-list-item>
                     <mat-divider></mat-divider>
-                    <mat-list-item>    
-                        <a (click)='logoutUser()'>
-                        <!-- </a>mat-list-item href="/login"> -->
-                            <mat-icon>lock</mat-icon>Cerrar sesión
-                        </a>
+                    <mat-list-item>
+                        <div class="exit">
+                            <a (click)='logoutUser()'>
+                            <!-- </a>mat-list-item href="/login"> -->
+                                <mat-icon>input</mat-icon>Cerrar sesión
+                            </a>
+                            </div>
                         </mat-list-item>
                 </mat-nav-list>
         </div>
@@ -49,9 +61,10 @@
     <!-- Contenedor principal -->
     <mat-sidenav-content>
         <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
-            <mat-toolbar color="primary">
+            <mat-toolbar class="topbar">
                 <button *ngIf="flag" mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
                 <h3>PUNCHI</h3>
+                <button class="notif-btn" mat-icon-button><mat-icon>info</mat-icon></button>
             </mat-toolbar> 
         </div>
         <ng-content></ng-content>

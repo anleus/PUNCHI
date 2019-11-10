@@ -15,7 +15,8 @@ vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo d
     const vacation = new Vacation({
         user: req.body.id,
         pending: [],
-        left: req.body.left
+        left: req.body.left,
+        past: req.body.past
     });
     vacation.save().then(res.status('200').json('Vacation saved')).catch(err => {console.log(err); res.status('400').json('An error ocurred')});
 }
@@ -24,12 +25,13 @@ vacationFunctions.updateVacations = async (req, res, next) => {
     const vacation = new Vacation({
         user: req.body.id,
         pending: [],
-        left: req.body.left
+        left: req.body.left,
+        past: req.body.past
     });
     Vacation.findByIdAndUpdate(req.body.id,{$set: vacation}).then(res.status(200).json('Vacation updated')).catch(err => {console.log(err);res.status(400).send('An error ocurred')});
 }
 
-vacationFunctions.deleteVacations = async(req, res, next) => {//Esto solo deberia ejecutarse si estas eliminando un usuairo
+vacationFunctions.deleteVacations = async(req, res, next) => {//Esto no deberia ejecutarse pero esta por si acaso
     Vacation.findByIdAndDelete(req.body.id).then(() => {
         res.status(200);
         res.json({ status: "Vacation deleted" });
