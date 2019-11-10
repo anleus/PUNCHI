@@ -62,9 +62,7 @@ export class InicioComponent implements OnInit {
 
     if(this.authService.currentUserValue.becario)
       this.setBecarioButton();
-
-
-    if(localStorage.getItem('jornada')){
+    else if(localStorage.getItem('jornada')){
       this.toggleFicharState(true);
       var timeStart = new Date(JSON.parse(localStorage.getItem('jornada')).begin);
       var now = new Date()
