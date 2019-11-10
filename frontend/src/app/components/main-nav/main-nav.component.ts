@@ -5,6 +5,9 @@ import { map, shareReplay } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/auth.service';
 import { User } from "src/app/models/users";
 
+import { environment } from "src/environments/environment";
+
+
 @Component({
   selector: 'main-nav',
   templateUrl: './main-nav.component.html',
@@ -44,6 +47,9 @@ export class MainNavComponent {
       shareReplay()
     );
 
-
-
+    logoutUser() {                                                      //Este logout servirá donde haya que ponerlo
+      this.authService.logout();
+      console.log("Loggin out");
+      window.location.href = environment.urlf + '/login';
+    }
 }

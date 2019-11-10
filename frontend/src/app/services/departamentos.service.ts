@@ -17,7 +17,6 @@ export class DepartamentosService {
       this.http.post(this.url, departamentoData).subscribe(
         res => {
           // * not callback
-          console.log(`this.brandListService`, { res });
           resolve(res);
         },
         error => {
@@ -50,10 +49,16 @@ export class DepartamentosService {
   getDepartamentoByUser(user: string) {
     return this.http.get(this.url + `usuarios/${user}`).pipe(
       map(departamento => {
-        console.log(departamento);
         return departamento;
       })
     );
   }
-  //getUserJornadas = userid => this.http.get(this.url + userid);
+
+  getDepartamentoByGestor(user: string) : Observable<Departamento[]> {
+    return this.http.get<Departamento[]>(this.url + `responsable/${user}`);
+  }
+
+  getDepartamentoByID(id: string) : Observable<Departamento[]> {
+    return this.http.get<Departamento[]>(this.url + id);
+  }
 }

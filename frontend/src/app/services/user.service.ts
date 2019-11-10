@@ -5,6 +5,7 @@ import { User } from "../models/users";
 import { environment } from "src/environments/environment";
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DepartamentosService } from './departamentos.service';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
 
   url: string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private departamentosService: DepartamentosService) {
     this.selectedUser = new User();
     this.url = environment.urlb + "/users";
   }
@@ -29,37 +30,19 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
-  
-  getUserByUsernameDOS(username) { //metodo diferente porque a Laura no  le funciona el otro
+
+  getUserByUsernameDOS(username) {
     return this.http.get(this.url + `/username/${username}`)
-    .pipe(map(user => {
-        console.log('User from user.service: ' + user)
+      .pipe(map(user => {
         return user;
       }));
   }
 
-  getUserByUsername(username: string): Promise<any> {
-    return this.http
-      .get(this.url + "/username/" + username)
-      .toPromise()
-      .then(this.onGetUserByName.bind(this));
-  }
-
-  getUserById(id: string): Promise<User> {
-    return this.http
-      .get(this.url + "/" + id)
-      .toPromise()
-      .then(this.onGetUserById.bind(this));
-  }
-
-  onGetUserById(res: any) {
-    return Promise.resolve(res);
-  }
-
-  onGetUserByName(res: any) {
-   //console.log("USERSERIVE 2");
-    //console.log(res);
-    return Promise.resolve(res);
+  getUserById(id: string) {
+    return this.http.get(this.url + "/" + id)
+      .pipe(map(user => {
+        return user;
+      }));
   }
 
   putUser(user: User) {
@@ -71,7 +54,49 @@ export class UserService {
     return this.http.delete(this.url + "/" + id);
   }
 
-  getUsersNonDeleted(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + "/deleted/");
+  getUsersNoDeleted(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + "/noDeleted/");
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
+  }
+
+  getUsersByDepartment(departamentoId: string) { //mal
+    return this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
+      res => {
+        var users=[];
+        var idsUsuarios = res["usuarios"];
+        //var users = [];
+        idsUsuarios.forEach(element => {
+          this.getUserById(element).subscribe(
+            resp => {
+              var aux;
+              aux = resp;
+              users.push(aux);
+              console.log("usersret",users)
+            });
+            return users;
+        });
+      });      
   }
 }
+  /*this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
+    res => {
+      var idsUsuarios = res["usuarios"];
+      var users = [];
+      idsUsuarios.forEach(element => {
+        this.getUserById(element).subscribe(
+          resp => {
+            console.log("USERSERVICE USER ENCONTRADO", resp);
+            var aux;
+            aux = resp;
+            users.push(aux);
+          }
+        );
+      });
+      return users;
+    });
+    console.log("PROBLEMA", users)
+    return users;*/
+

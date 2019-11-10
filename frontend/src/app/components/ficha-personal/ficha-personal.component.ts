@@ -29,78 +29,133 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 @NgModule({ imports: [FormsModule] })
 export class FichaPersonalComponent implements OnInit {
-  //utilizado
-  UsuarioLogueado: User;
 
-  public user: User;
-  users: User[];
-  departamentos: Departamento[];
+  usuarioLogueado: User;
+  usuarioSinModificar :User;
   public userForm: FormGroup;
-  submitted = false;
-  gestion = true;
-  selectedDepartamento: Departamento;
-  selectedUsuario: User;
-
   public userV: User;
+  usuarioform: FormGroup;
 
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder,
-    private departamentosService: DepartamentosService,
     private authService: AuthenticationService,
     private snackBar: MatSnackBar
-  ) {
-    this.user = new User();
-    this.userV = new User();
+  ) {}
+
+  ngOnInit() {
+
+    //guardar copia usuario sin modificar
+    this.usuarioSinModificar=this.usuarioLogueado;
+
+    //usuario logueado
+    var usuarioAct = this.authService.getCurrentUser();
+    usuarioAct.subscribe(user => (this.usuarioLogueado = user));
+
+    //patrón email
+    var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+
+    this.usuarioform = new FormGroup({
+      nombre: new FormControl(this.usuarioLogueado.nombre, [Validators.required]),
+      apellidos: new FormControl(this.usuarioLogueado.apellidos,  [Validators.required]),
+      fechaNacimiento: new FormControl(this.usuarioLogueado.fechaNacimiento, [Validators.required]),
+      email: new FormControl(this.usuarioLogueado.email, [
+        Validators.required,
+        Validators.pattern(emailPattern)
+      ]),
+      nuss: new FormControl(this.usuarioLogueado.nuss, [Validators.required]),
+      telefono: new FormControl(this.usuarioLogueado.telefono, [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
+      username: new FormControl(this.usuarioLogueado.username,  [Validators.required]),
+      password: new FormControl(this.usuarioLogueado.password, [
+        Validators.required,
+        Validators.minLength(5)
+      ]),
+      localidad: new FormControl(this.usuarioLogueado.localidad, [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z -']+")
+      ]),
+      provincia: new FormControl(this.usuarioLogueado.provincia, [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z -']+")
+      ]),
+      domicilio: new FormControl(this.usuarioLogueado.domicilio, [
+        Validators.required
+      ])
+    });
+
+    //si eres usuario NORMAL deshabilitamos la modificación de algunos campos
+    if (
+      this.usuarioLogueado.gestor == false &&
+      this.usuarioLogueado.admin == false
+    ) {
+      this.usuarioform.controls["nombre"].disable();
+      this.usuarioform.controls["apellidos"].disable();
+      this.usuarioform.controls["fechaNacimiento"].disable();
+      this.usuarioform.controls["username"].disable();
+      this.usuarioform.controls["nuss"].disable();
+    }
   }
 
-  ngOnInit() {}
-
-  //inicialización formulario
-  usuarioform = new FormGroup({
-    nombre: new FormControl("", [Validators.required]),
-    apellidos: new FormControl("", [Validators.required]),
-    fechaNacimiento: new FormControl("", [Validators.required]),
-    email: new FormControl("", [Validators.required, Validators.email]),
-    nuss: new FormControl(),
-    telefono: new FormControl("", [Validators.required]),
-    username: new FormControl("", [Validators.required]),
-    password: new FormControl("", [
-      Validators.required,
-      Validators.minLength(4)
-    ]),
-    localidad: new FormControl("", [Validators.required]),
-    provincia: new FormControl("", [Validators.required]),
-    domicilio: new FormControl("", [Validators.required])
-  });
-
   guardarcambios(form) {
-    var usuarioActual = this.authService.getCurrentUser();
-    this.userV.password = this.user.password;
-    this.userV.domicilio = this.user.domicilio;
-    this.userV.provincia = this.user.provincia;
-    this.userV.localidad = this.user.localidad;
-    this.userV.nombre = this.user.nombre;
-    this.userV.apellidos = this.user.apellidos;
-    this.userV.fechaNacimiento = this.user.fechaNacimiento;
-    this.userV._id = this.user._id;
-    this.userV.email = this.user.email;
-    this.userV.gestor = this.user.gestor;
-    this.userV.nuss = this.user.nuss;
-    this.userV.admin = this.user.admin;
-    this.userV.becario = this.user.becario;
-    this.userV.deleted = this.user.deleted;
-    this.userV.telefono = this.user.telefono;
-    if (form.status == "VALID") {
-      usuarioActual.subscribe(user => {
-        this.userService.putUser(this.user);
-        this.snackSuccess("Usuario modificado correctamente");
-      });
+    //coger usuario logueado
+    var usuarioAct = this.authService.getCurrentUser();
+    usuarioAct.subscribe(user => (this.usuarioLogueado = user));
+    //valores pasados por formulario si eres usuario
+    if (
+      this.usuarioLogueado.admin == false ||
+      this.usuarioLogueado.gestor == false
+    ) {
+      this.usuarioLogueado.password = form.value.password;
+      this.usuarioLogueado.domicilio = form.value.domicilio;
+      this.usuarioLogueado.provincia = form.value.provincia;
+      this.usuarioLogueado.localidad = form.value.localidad;
+      this.usuarioLogueado.email = form.value.email;
+      this.usuarioLogueado.telefono = form.value.telefono;
     } else {
-      this.snackError(
-        "No puedes modificar datos que no son del usuario logueado"
-      );
+      //valores pasados por formulario si eres admin
+      this.usuarioLogueado.password = form.value.password;
+      this.usuarioLogueado.domicilio = form.value.domicilio;
+      this.usuarioLogueado.provincia = form.value.provincia;
+      this.usuarioLogueado.localidad = form.value.localidad;
+      this.usuarioLogueado.email = form.value.email;
+      this.usuarioLogueado.telefono = form.value.telefono;
+      this.usuarioLogueado.nombre = form.value.nombre;
+      this.usuarioLogueado.apellidos = form.value.apellidos;
+      this.usuarioLogueado.fechaNacimiento = form.value.fechaNacimiento;
+      this.usuarioLogueado.username = form.value.username;
+      this.usuarioLogueado.nuss = form.value.nuss;
     }
+
+    if (form.status == "VALID") {
+      //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
+      if (this.comprobarNumeroAlInicioDomicilio() == false ) {
+        this.snackError("Domicilio con números al inicio.");
+      } 
+      else {
+        this.userService.putUser(this.usuarioLogueado);
+        this.snackSuccess("Usuario modificado correctamente");
+      }
+    }
+  }
+
+   comprobarNumeroAlInicioDomicilio(){
+     if(this.usuarioLogueado.domicilio.indexOf("1") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("2") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("3") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("4") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("5") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("6") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("7") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("8") > -1 ||
+     this.usuarioLogueado.domicilio.indexOf("9") > -1){
+       return false;
+     }else{
+       return true;
+     }
+     
+
   }
 
   snackError(message) {
@@ -121,5 +176,24 @@ export class FichaPersonalComponent implements OnInit {
       horizontalPosition: "right",
       verticalPosition: "top"
     });
+  }
+
+  eliminarcambios(form) {
+    this.usuarioform.controls["domicilio"].setValue(
+      this.usuarioLogueado.domicilio
+    );
+    this.usuarioform.controls["localidad"].setValue(
+      this.usuarioLogueado.localidad
+    );
+    this.usuarioform.controls["telefono"].setValue(
+      this.usuarioLogueado.telefono
+    );
+    this.usuarioform.controls["provincia"].setValue(
+      this.usuarioLogueado.provincia
+    );
+    this.usuarioform.controls["password"].setValue(
+      this.usuarioLogueado.password
+    );
+    this.usuarioform.controls["email"].setValue(this.usuarioLogueado.email);
   }
 }

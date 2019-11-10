@@ -29,13 +29,6 @@ export class LoginComponent implements OnInit {
     localStorage.clear();
   }
 
-
-  logoutUser() {                                                      //Este logout servirá donde haya que ponerlo
-    this.authservice.logout();
-    console.log("Loggin out");
-    window.location.href = environment.urlf + '/login';
-  }
-
   loginUser(username, password) {
     if (typeof username == 'undefined' || typeof password == 'undefined') {
       console.log("Username o contraseña undefined");                 //Toast notification de que no puedes avanzar sin alguno de los dos campos
