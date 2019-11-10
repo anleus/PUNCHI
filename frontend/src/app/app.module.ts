@@ -23,6 +23,7 @@ import { CrearDepartamentoComponent } from "./components/crear-departamento/crea
 import { UsersTableComponent } from "./components/users-table/users-table.component";
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
+import { DepListComponent } from './components/dep-list/dep-list.component';
 
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent },
@@ -52,7 +53,8 @@ const routes: Routes = [
     CrearDepartamentoComponent,
     UsersTableComponent,
     UsuariosComponent,
-    AsignarDepDragComponent
+    AsignarDepDragComponent,
+    DepListComponent
   ],
   imports: [
     BrowserModule,
