@@ -36,8 +36,9 @@
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-button data='element.id' (click)='deleteUserSelected(element)'>
+            <button mat-button data='element.id' (click)='editUserSelected(element)'>
               <mat-icon>edit</mat-icon>
+              
             </button>
             <button mat-button data='element.id' (click)='deleteUserSelected(element)'>
               <mat-icon>delete</mat-icon>
