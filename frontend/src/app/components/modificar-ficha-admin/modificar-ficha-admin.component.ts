@@ -55,10 +55,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   ngOnInit() {
     //guardar copia usuario sin modificar
     //this.usuarioSinModificar = this.route.elemento;
-    console.log("ss" + this.userService.selectedUser.nombre)
     this.usuarioAModificar = this.userService.selectedUser;
-    console.log(this.userService.selectedUser)
-    console.log(this.usuarioAModificar)
 
     //patrón email
     var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
