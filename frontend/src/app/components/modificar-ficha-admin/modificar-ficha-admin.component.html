@@ -1,125 +1,249 @@
-<style>
-    body { background-color:  white; }
-  </style>
-  <body>
+<div class="titulo">
+    <p>&nbsp;</p>
+    <p>Componente creado para hacer pruebas referente al como restringir datos.</p>
+    <p>La información se introducirá en ficha-personal</p>
+    <p>{{departamento}}</p>
+    <mat-button-toggle class="boton" (click)="cambiarModo()"#toggleButton class="botoncambio">Cambio</mat-button-toggle>
+    <mat-button-toggle *ngIf="comprobarDepartamento()" (click)="cambiarModoGestion()" #toggleButton class="botongestion">{{nombreBotonGestion}}</mat-button-toggle>
+    
+</div>
 
-<div class="container2">
-  <div class="row">
-    <div class="col">
-      <div>
-        
-          <form [formGroup]="usuarioform" >
-            <br>
-            <h3>Perfil de usuario: {{usuarioAModificar.nombre}} {{usuarioAModificar.apellidos}}</h3>
-            
 
-            <div class="row p-3">
-              <div class="col-md-4 offset-md-1">
-                <mat-form-field>
-                  <input matInput formControlName="nombre" placeholder="Nombre">
-                </mat-form-field>
+
+<body>
+    <p>&nbsp;</p><p>&nbsp;</p>
+<div *ngIf="comprobarGestionAdministrativa()" class="container">
+    <form action="action_page.php">
+    <div class="row">
+        <div class="col-25">
+          <label for="lname">Contraseña:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="password" placeholder="4645465">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-25">
+          <label for="lname">Domicilio:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="domicilio" placeholder="Avenida inventada">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-25">
+          <label for="lname">Localidad:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="localidad" placeholder="Ontinyent manda y no tu panda">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-25">
+          <label for="lname">Provincia:</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lname" name="provincia" placeholder="Valencia">
+        </div>
+    </div>
+
+    </form>
+  
+</div>
+
+
+
+
+<div  *ngIf="!comprobarGestionAdministrativa()" class="container">
+  <form action="action_page.php">
+      <p>{{depart}}{{conseguido}}</p>
+      <div *ngIf="comprobarDepartamentoAdmin()" class="example-container">
+          <mat-form-field>
+              <mat-select placeholder="Departamento" name = "selectorDepartamento">
+                  <mat-option (click)="seleccionDepartamento(departamento)" *ngFor="let departamento of departamentos">{{departamento.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+    
+        </div>  
+            <div *ngIf="comprobarDepartamento()" class="example-container">
+            <mat-form-field>
+              <mat-select placeholder="Nombre"> 
+                <mat-option (click)="seleccionUsuario(user)" *ngFor="let user of usuarios">{{user.nombre}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+    <div *ngIf="comprobarDepartamento()" class="row">
+      <div class="col-25">
+        <label for="fname">Nombre:</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="fname" name="nombre" placeholder="Stella">
+      </div>
+      
+    </div>
+
+    <div *ngIf="comprobarDepartamento()" class="row">
+      <div class="col-25">
+        <label for="lname">Apellidos:</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="lname" name="apellidos" placeholder="Esparza Torregrosa">
+      </div>
+  </div>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+              <div class="col-25">
+                <label for="lname">Fecha nacimiento:</label>
               </div>
-      
-              <div class="col-md-4 offset-md-2">
-                  <mat-form-field>
-                    <input matInput  formControlName="apellidos" placeholder="Apellidos" >
-                  </mat-form-field>
-                </div>
-            </div>
-      
-            <div class="row p-3">
-              <div class="col-md-4 offset-md-1">
-                <mat-form-field>
-                  <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" >
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+              <div class="col-75">
+                <input type="text" id="lname" name="fechaNacimiento" placeholder="EN PRUEBAS">
               </div>
-              <div class="col-md-4 offset-md-2">
-                <mat-form-field>
-                  <input matInput type="number" formControlName="telefono" placeholder="Teléfono"  required>
-                  <mat-error>Introduce un teléfono válido</mat-error>
-                </mat-form-field>
+      </div>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+              <div class="col-25">
+                <label for="lname">Email:</label>
               </div>
-            </div>
-      
-            <div class="row p-3">
-              <div class="col-md-4 offset-md-1">
-                <mat-form-field class="campolineamasgrande">
-                  <input matInput placeholder="Docimicilio" formControlName="domicilio" placeholder="Domicilio"  required>
-                  <mat-error>Introduce un domicilio válido</mat-error>
-                </mat-form-field>
+              <div class="col-75">
+                <input type="text" id="lname" name="email" placeholder="steestor@gmail.com">
               </div>
-            </div>
+      </div>
       
-            <div class="row p-3">
-                <div class="col-md-4 offset-md-1">
-                  <mat-form-field>
-                    <input matInput formControlName="localidad" placeholder="Localidad"  required>
-                  </mat-form-field>
-                </div>
-        
-                <div class="col-md-4 offset-md-2">
-                  <mat-form-field>
-                    <input matInput  formControlName="provincia" placeholder="Provincia" required>
-                  </mat-form-field>
-                </div>
-            </div>
+      <div class="row">
+              <div class="col-25">
+                <label for="lname">Localidad:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="localidad" placeholder="Ontinyent manda y no tu panda">
+              </div>
+      </div>
       
-            <div class="row p-3">
-                <div class="col-md-4 offset-md-1">
-                  <mat-form-field>
-                    <input matInput formControlName="username" placeholder="Usuario"  required>
-                  </mat-form-field>
-                </div>
-        
-                <div class="col-md-4 offset-md-2">
-                  <mat-form-field>
-                    <input matInput  formControlName="password" placeholder="Contraseña" type="password" required>
-                  </mat-form-field>
-                </div>
-            </div>
-      
-            <div class="row p-3">
-                <div class="col-md-4 offset-md-1">
-                  <mat-form-field>
-                    <input matInput formControlName="nuss" placeholder="NUSS"  required>
-                  </mat-form-field>
-                </div>
-        
-                <div class="col-md-4 offset-md-2">
-                  <mat-form-field>
-                    <input matInput  formControlName="email" placeholder="Email" required>
-                  </mat-form-field>
-                </div>
-            </div>
-            <div class="row p-3">
-                <div class="col-md-4 offset-md-1">
-                    <button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
-                    autocomplete="off">
-                    Guardar cambios
-                  </button>
-                </div>
-        
-                <div class="col-md-4 offset-md-2">
-                    <button type="submit" (click)="eliminarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
-                    autocomplete="off">
-                    Eliminar cambios
-                  </button>
-                </div>
-            </div>
-      
-          </form>
+      <div class="row">
+              <div class="col-25">
+                <label for="lname">Provincia:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="provincia" placeholder="Valencia">
+              </div>
+      </div>
+
+      <div class="row">
+              <div class="col-25">
+                <label for="lname">Domicilio:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="domicilio" placeholder="Avenida inventada">
+              </div>
+      </div>
+      <div *ngIf="comprobarDepartamento()" class="row">
+              <div class="col-25">
+                <label for="lname">Teléfono:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="telefono" placeholder="6658741226">
+              </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
+              <div class="col-25">
+                <label for="lname">Gestor:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="gestor" placeholder="EN PRUEBAS">
+              </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
+              <div class="col-25">
+                <label for="lname">Admin:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="admin" placeholder="EN PRUEBAS">
+              </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamentoAdmin()" class="row">
+              <div class="col-25">
+                <label for="lname">Gestor:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="gestor" placeholder="EN PRUEBAS">
+              </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+              <div class="col-25">
+                <label for="lname">NUSS:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="nuss" placeholder="5465456465">
+              </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+              <div class="col-25">
+                <label for="lname">Login:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="username" placeholder="steestor">
+              </div>
+      </div>
+
+      <div class="row">
+              <div class="col-25">
+                <label for="lname">Contraseña:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="password" placeholder="4645465">
+              </div>
+      </div>
+
+      <div *ngIf="comprobarDepartamento()" class="row">
+              <div class="col-25">
+                <label for="lname">Becario:</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="lname" name="becario" placeholder="EN PRUEBAS">
+              </div>
       </div>
       
       
+      <!-- Selector de paises
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="country">Country</label>
+      </div>
+      <div class="col-75">
+        <select id="country" name="country">
+          <option value="australia">Australia</option>
+          <option value="canada">Canada</option>
+          <option value="usa">USA</option>
+        </select>
+      </div>
+    </div>-->
 
-</div>
-<div class="col">
-  One of three columns
+    <!-- Escribe comentarios
+    <div class="row">
+      <div class="col-25">
+        <label for="subject">Subject</label>
+      </div>
+      <div class="col-75">
+        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+      </div>
+    </div>
+    -->
+    <br>
+    <br>
+    <div class="row">
+      <input type="submit" value="Guardar cambios">
+    </div>
+
+  </form>
 </div>
 
-</div>
-</div>
-    
 </body>
