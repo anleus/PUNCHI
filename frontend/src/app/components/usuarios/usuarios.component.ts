@@ -133,4 +133,8 @@ export class UsuariosComponent implements OnInit {
     //  () => { window.location.reload() } //esto cambiar
     //)
   }
+
+  editUserSelected(element: User){
+    this.router.navigate(['/fichapersonaladmin',element]);
+  }
 }
