@@ -7,6 +7,7 @@ import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dia
 import { MatSelectChange } from '@angular/material/select';
 import { Departamento } from 'src/app/models/departamento';
 import { DepartamentosService } from 'src/app/services/departamentos.service';
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 //import { userInfo } from 'os';
 
 
@@ -31,7 +32,8 @@ export class AsignarDepComponent implements OnInit {
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private departamentosService: DepartamentosService
+    private departamentosService: DepartamentosService,
+    private snackBar: MatSnackBar
   ) { 
     this.user= new User();
   }
@@ -61,7 +63,6 @@ export class AsignarDepComponent implements OnInit {
 
     getDepartamentos(){  
       var departamentoObs = this.departamentosService.getDepartamentos();
-      console.log(departamentoObs)
       departamentoObs.subscribe(departamentos => this.departamentos = departamentos);
   
     }
@@ -82,7 +83,7 @@ export class AsignarDepComponent implements OnInit {
         this.departamentosService.postDepartamentos(this.selected2)  
       
     }else{
-      window.alert("El usuario ya está asignado al departamento")
+      this.openSnack('Este usuario ya se encuentra en el departamento')
     }
   }
     selectedDep = "";
@@ -101,7 +102,20 @@ export class AsignarDepComponent implements OnInit {
 
 
     comprobarUserRepe(usr: User,userCol: User[]){
-     return userCol.includes(usr);
+      for(let i in userCol) {
+        if(userCol[i].toString().includes(usr._id)) return true
+      }
+     return false
+    }
+
+    openSnack(message) {
+      this.snackBar.open(message, '', {
+        announcementMessage: 'Error',
+        duration: 2000,
+        panelClass: ['alert-red'],                                            
+        horizontalPosition: "center",
+        verticalPosition: "top",
+      });
     }
   }
 
