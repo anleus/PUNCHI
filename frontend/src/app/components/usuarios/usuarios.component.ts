@@ -135,6 +135,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   editUserSelected(element: User){
-    this.router.navigate(['/fichapersonaladmin',element]);
+    this.router.navigate(['/fichapersonaladmin'],{queryParams: {nombre: element.nombre}});
   }
 }

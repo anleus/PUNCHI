@@ -40,6 +40,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   public userForm: FormGroup;
   public userV: User;
   usuarioform: FormGroup;
+  nombreUsuario: string;
 
   constructor(
     private userService: UserService,
@@ -55,8 +56,24 @@ export class ModificarFichaAdminComponent implements OnInit {
   ngOnInit() {
     //guardar copia usuario sin modificar
     //this.usuarioSinModificar = this.route.elemento;
-    this.usuarioAModificar = this.userService.selectedUser;
+    this.route
+        .queryParams
+        .subscribe(params => {
+            this.nombreUsuario = params['nombre'] || 0;
+        });
+        console.log(this.nombreUsuario);
 
+
+        /*this.userService.getUserById(this.nombreUsuario).subscribe(
+          resp => {
+            if (resp != null) {
+              this.usuarioAModificar._id = resp;
+            }
+
+          });  */ 
+    
+    this.usuarioAModificar = this.userService.selectedUser;
+    
     //patrón email
     var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
 
