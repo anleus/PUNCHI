@@ -30,7 +30,7 @@ export class DepListComponent implements OnInit {
   logUser = this.authService.getCurrentUser();
  
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['nombre', 'gestor', 'select'];
+  displayedColumns: string[] = ['nombre', 'responsable', 'select'];
   
  
   constructor(private departamentosService: DepartamentosService, private router: Router,
