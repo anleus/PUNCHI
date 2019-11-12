@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; 
 import { RouterModule, Routes, Router } from "@angular/router";
+import { MainNavComponent } from "../main-nav/main-nav.component";
 
 import { environment } from "src/environments/environment";
 
@@ -26,10 +27,12 @@ export class LoginComponent implements OnInit {
 
   constructor(private authservice : AuthenticationService,
               private snackBar    : MatSnackBar,
-              private router      : Router) { }
+              private router      : Router,
+              private mainnav     : MainNavComponent) { }
 
   ngOnInit() {
-    localStorage.clear();
+    //localStorage.clear();
+    this.mainnav.shouldIShowMyHamburguer();
   }
 
   loginUser(username, password) {
@@ -49,8 +52,11 @@ export class LoginComponent implements OnInit {
           this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
+        let redirect = this.authservice.redirectUrl ? this.router.parseUrl(this.authservice.redirectUrl) : '/inicio';
+        //this.router.navigateByUrl(redirect);
         console.log("Login correcto");
-        this.router.navigate(['/inicio']);
+        window.location.href = environment.urlf + '/inicio';
+        //this.router.navigate(['/inicio']);
     },
       err => {
         console.error(err);

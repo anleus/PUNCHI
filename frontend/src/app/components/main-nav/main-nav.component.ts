@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../services/auth.service';
 import { User } from "src/app/models/users";
 
 import { environment } from "src/environments/environment";
+import { MatSidenav } from '@angular/material/sidenav';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class MainNavComponent {
 
   shouldIShowMyHamburguer() {
     this.urlrn = window.location.href;
-
+    console.log(this.urlrn);
     if (this.urlrn.substring(this.urlrn.length - 5, this.urlrn.length) == 'login') {
       this.flag = false;
     }
@@ -47,9 +48,7 @@ export class MainNavComponent {
       shareReplay()
     );
 
-    logoutUser() {                                                      //Este logout servirá donde haya que ponerlo
+    logoutUser() {
       this.authService.logout();
-      console.log("Loggin out");
-      window.location.href = environment.urlf + '/login';
     }
 }

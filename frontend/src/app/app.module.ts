@@ -38,7 +38,7 @@ const routes: Routes = [
   //{ path: "incidencias" },
   { path: "", redirectTo: "inicio", pathMatch: "full", canActivate: [AuthGuard]},
   { path: "login", component: LoginComponent },
-  { path: '**', redirectTo: "inicio", canActivate: [AuthGuard]}
+  { path: '**', redirectTo: "inicio"/*, canActivate: [AuthGuard]*/}
 ];
 
 @NgModule({
