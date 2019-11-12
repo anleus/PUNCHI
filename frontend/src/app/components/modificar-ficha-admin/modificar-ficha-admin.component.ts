@@ -13,10 +13,6 @@ import {
 } from "@angular/common/http";
 import { DepartamentosService } from "src/app/services/departamentos.service";
 import { Departamento } from "src/app/models/departamento";
-import { AuthenticationService } from "src/app/services/auth.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router'
 
 
 @Component({
@@ -38,11 +34,12 @@ export class ModificarFichaAdminComponent implements OnInit {
   
   constructor(
     private userService: UserService,
-    private authService: AuthenticationService,
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private formBuilder: FormBuilder,
+    private departamentosService: DepartamentosService
+  ) {
+    //PASO 1: llamar al service que sea necesario
+    this.user = new User();
+  }
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
@@ -72,39 +69,6 @@ export class ModificarFichaAdminComponent implements OnInit {
 
   }
 
-  volver(){
-    this.router.navigate(['/usuarios']);
-  }
-
-  guardarcambios(form) {
-    //coger usuario logueado
-    var usuarioMod = this.authService.getCurrentUser();
-    usuarioMod.subscribe(user => (this.usuarioAModificar = user));
-    //valores pasados por formulario si eres usuario
-    if (
-      this.usuarioAModificar.admin == false ||
-      this.usuarioAModificar.gestor == false
-    ) {
-      this.usuarioAModificar.password = form.value.password;
-      this.usuarioAModificar.domicilio = form.value.domicilio;
-      this.usuarioAModificar.provincia = form.value.provincia;
-      this.usuarioAModificar.localidad = form.value.localidad;
-      this.usuarioAModificar.email = form.value.email;
-      this.usuarioAModificar.telefono = form.value.telefono;
-    } else {
-      //valores pasados por formulario si eres admin
-      this.usuarioAModificar.password = form.value.password;
-      this.usuarioAModificar.domicilio = form.value.domicilio;
-      this.usuarioAModificar.provincia = form.value.provincia;
-      this.usuarioAModificar.localidad = form.value.localidad;
-      this.usuarioAModificar.email = form.value.email;
-      this.usuarioAModificar.telefono = form.value.telefono;
-      this.usuarioAModificar.nombre = form.value.nombre;
-      this.usuarioAModificar.apellidos = form.value.apellidos;
-      this.usuarioAModificar.fechaNacimiento = form.value.fechaNacimiento;
-      this.usuarioAModificar.username = form.value.username;
-      this.usuarioAModificar.nuss = form.value.nuss;
-    }
 
 
 
