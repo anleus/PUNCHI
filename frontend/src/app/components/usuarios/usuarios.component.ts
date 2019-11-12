@@ -14,7 +14,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
 export interface UserData {
   userName: string;
   userId: string;
-  confirmation: boolean;
 }
 
 
@@ -130,17 +129,12 @@ export class UsuariosComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  deleteUserSelected(element: User) {
-    //Falta mensaje de confirmación.
-    //this.userService.deleteUser(element._id).subscribe(
-    //  () => { window.location.reload() } //esto cambiar
-    //)
-  }
+  
 
   openDialog(element: User): void {
     const dialogRef = this.dialog.open(OverviewConfirmacionBorrado, {
-      width: '500px',
-      data: {userName: this.userName, userId: this.userId}
+      width: '650px',
+      data: {userName: element.nombre + " " + element.apellidos, userId: element._id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -165,9 +159,22 @@ export class OverviewConfirmacionBorrado {
 
   constructor(
     public dialogRef: MatDialogRef<OverviewConfirmacionBorrado>,
-    @Inject(MAT_DIALOG_DATA) public data: UserData) {}
+    @Inject(MAT_DIALOG_DATA) public data: UserData,
+    private userService: UserService) {}
   
     onNoClick() : void {
       this.dialogRef.close();
+    }
+
+    deleteUserSelected(elementId: string) {
+      this.userService.getUserById(elementId).subscribe(
+        (res: User) => {
+          res.deleted = true;
+          try {
+          this.userService.putUser(res);
+          } catch (err) {}
+          this.dialogRef.close();
+        }
+      )
     }
 }

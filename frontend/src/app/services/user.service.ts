@@ -48,7 +48,7 @@ export class UserService {
 
   putUser(user: User) {
     console.log(user);
-    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { });
+    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { console.log(response)});
   }
 
   deleteUser(id: string) {
