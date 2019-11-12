@@ -57,9 +57,6 @@ export class InicioComponent implements OnInit {
   constructor(private jornadaService : JornadaService, private authService : AuthenticationService) { }
 
   ngOnInit() {
-
-    this.authService.checkToken(); // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve
-
     if(this.authService.currentUserValue.becario)
       this.setBecarioButton();
     else if(localStorage.getItem('jornada')){

@@ -20,13 +20,13 @@
                             <mat-icon>account_circle</mat-icon>Perfil
                         </a>
                     </mat-list-item>
-                    <mat-list-item class="logOut">
-                        <a *ngIf="permisos" mat-list-item href="/departamentos">
+                    <mat-list-item *ngIf="permisos">
+                        <a mat-list-item href="/departamentos">
                             <mat-icon>business_center</mat-icon>Departamentos
                         </a>
                     </mat-list-item>
-                    <mat-list-item class="logOut">
-                            <a *ngIf="permisos" mat-list-item href="/usuarios">
+                    <mat-list-item *ngIf="permisos">
+                            <a mat-list-item href="/usuarios">
                                 <mat-icon>supervisor_account</mat-icon>Usuarios
                             </a>
                         </mat-list-item>
@@ -53,7 +53,7 @@
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="exit">
-                            <a (click)='logoutUser()'>
+                            <a (click)='logoutUser();sidenav.close()'>
                             <!-- </a>mat-list-item href="/login"> -->
                                 <mat-icon>input</mat-icon>Cerrar sesión
                             </a>
@@ -69,7 +69,6 @@
             <mat-toolbar class="topbar">
                 <button *ngIf="flag" mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
                 <h3>PUNCHI</h3>
-                <button class="notif-btn" mat-icon-button><mat-icon>info</mat-icon></button>
             </mat-toolbar> 
         </div>
         <ng-content></ng-content>

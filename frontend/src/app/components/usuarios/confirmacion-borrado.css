@@ -1,4 +1,4 @@
-.botonesConfirm {
-    position: absolute;
-    right: 10px;
+.confirm {
+    background-color: rgba(224, 69, 7, 0.932);
 }
+
