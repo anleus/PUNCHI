@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; 
+import { RouterModule, Routes, Router } from "@angular/router";
 
 import { environment } from "src/environments/environment";
 
@@ -23,7 +24,9 @@ export class LoginComponent implements OnInit {
   hide = true;
   durationSec = 3;
 
-  constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
+  constructor(private authservice : AuthenticationService,
+              private snackBar    : MatSnackBar,
+              private router      : Router) { }
 
   ngOnInit() {
     localStorage.clear();
@@ -47,7 +50,7 @@ export class LoginComponent implements OnInit {
           return;
         }
         console.log("Login correcto");
-        window.location.href = environment.urlf + '/inicio';
+        this.router.navigate(['/inicio']);
     },
       err => {
         console.error(err);
