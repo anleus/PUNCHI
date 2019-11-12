@@ -24,21 +24,20 @@ import { UsersTableComponent } from "./components/users-table/users-table.compon
 import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
-import { AuthGuard } from "./auth/auth.guard";
 
 const routes: Routes = [
-  { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard]},
-  { path: "crearusuario", component: CrearUsuarioComponent, canActivate: [AuthGuard]},
-  { path: "inicio", component: InicioComponent, canActivate: [AuthGuard]},
-  { path: "departamentos", component: DepartamentosComponent, canActivate: [AuthGuard]},
-  { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [AuthGuard]},
-  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [AuthGuard]},
+  { path: "usuarios", component: UsuariosComponent },
+  { path: "crearusuario", component: CrearUsuarioComponent },
+  { path: "inicio", component: InicioComponent },
+  { path: "departamentos", component: DepartamentosComponent },
+  { path: "fichapersonal", component: FichaPersonalComponent },
+  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent },
   //{ path: "informes" },
   //{ path: "vacaciones" },
   //{ path: "incidencias" },
-  { path: "", redirectTo: "inicio", pathMatch: "full", canActivate: [AuthGuard]},
+  { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  { path: '**', redirectTo: "inicio", canActivate: [AuthGuard]}
+  { path: '**', redirectTo: "inicio"}
 ];
 
 @NgModule({
