@@ -39,10 +39,9 @@ export class DepListComponent implements OnInit {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     ngOnInit() {
-      //this.determinarUsuario();
-      //if (this.admin) this.getDeptAdmin();
+      this.determinarUsuario();
+      if (this.admin) this.getDeptAdmin();
       //else this.getUsersGestor();
-      this.getDeptAdmin();
     }
   
   
@@ -53,42 +52,6 @@ export class DepListComponent implements OnInit {
       };
     }
   
-    //Mostrar usuarios para gestor
-    getUsersGestor() {
-      this.departamentosService.getDepartamentos().subscribe(
-        res => {
-          if (res != null) {
-            var nombreDepartamento = res["nombre"];
-            var idsUsuarios = res["usuarios"];
-            var numberUsers = idsUsuarios.length;
-            var auxnumber = 1;
-            var users;
-            idsUsuarios.forEach(element => {
-              this.userService.getUserById(element).subscribe(
-                resp => {
-                  if (resp != null) {
-                    var aux;
-                    aux = resp;
-                    this.deparset.push(aux);
-                    if (auxnumber == numberUsers) {
-                      this.addDepartmentGestor(this.deparset, nombreDepartamento);
-                    }
-                  }
-                  else { console.log("usuario no existente, ALERTA");}
-                  auxnumber++;
-  
-                });
-            });
-          } else { console.log("no es responsable de ningún deparatmento"); } //cambiar por alerta
-        });
-    }
-    addDepartmentGestor(users, nomDep) {
-      users.forEach(element => {
-        element.departamento = nomDep;
-      });
-      this.dataSource = new MatTableDataSource<User>(users);
-      this.dataSource.paginator = this.paginator;
-    }
   
     //Mostrar personas para admin
   
