@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router'
 import { DepartamentosService } from '../../services/departamentos.service'
 import { AuthenticationService } from '../../services/auth.service';
@@ -9,6 +9,7 @@ import { Departamento } from 'src/app/models/departamento';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface PeriodicElement {
   name: string;
@@ -137,4 +138,19 @@ export class UsuariosComponent implements OnInit {
   editUserSelected(element: User){
     this.router.navigate(['/fichapersonaladmin',element]);
   }
+}
+
+@Component ({
+  selector: 'confirmacion-borrado',
+  templateUrl: 'confirmacion-borrado.html',
+})
+export class OverviewConfirmacionBorrado {
+
+  constructor(
+    public dialogRef: MatDialogRef<OverviewConfirmacionBorrado>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
+  
+    onNoClick() : void {
+      
+    }
 }

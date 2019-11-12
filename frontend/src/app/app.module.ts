@@ -55,6 +55,9 @@ const routes: Routes = [
     UsersTableComponent,
     UsuariosComponent
   ],
+  entryComponents: [
+    
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
