@@ -21,6 +21,7 @@ import { Departamento } from "src/app/models/departamento";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -44,7 +45,8 @@ export class ModificarFichaAdminComponent implements OnInit {
     private userService: UserService,
     private authService: AuthenticationService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
 
@@ -53,10 +55,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   ngOnInit() {
     //guardar copia usuario sin modificar
     //this.usuarioSinModificar = this.route.elemento;
-    console.log("ss" + this.userService.selectedUser.nombre)
     this.usuarioAModificar = this.userService.selectedUser;
-    console.log(this.userService.selectedUser)
-    console.log(this.usuarioAModificar)
 
     //patrón email
     var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
@@ -103,6 +102,10 @@ export class ModificarFichaAdminComponent implements OnInit {
       this.usuarioform.controls["username"].disable();
       this.usuarioform.controls["nuss"].disable();
     }
+  }
+
+  volver(){
+    this.router.navigate(['/usuarios']);
   }
 
   guardarcambios(form) {

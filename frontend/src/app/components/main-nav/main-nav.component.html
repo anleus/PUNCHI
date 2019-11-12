@@ -20,16 +20,16 @@
                             <mat-icon>account_circle</mat-icon>Perfil
                         </a>
                     </mat-list-item>
-                    <mat-list-item *ngIf="permisos">
-                        <a  mat-list-item href="/usuarios">
-                            <mat-icon>group</mat-icon>Usuarios
-                        </a>
-                    </mat-list-item>
-                    <mat-list-item *ngIf="permisos">
-                        <a  mat-list-item href="/departamentos">
+                    <mat-list-item class="logOut">
+                        <a *ngIf="permisos" mat-list-item href="/departamentos">
                             <mat-icon>business_center</mat-icon>Departamentos
                         </a>
                     </mat-list-item>
+                    <mat-list-item class="logOut">
+                            <a *ngIf="permisos" mat-list-item href="/usuarios">
+                                <mat-icon>supervisor_account</mat-icon>Usuarios
+                            </a>
+                        </mat-list-item>
                     <mat-list-item>
                         <a mat-list-item>
                             <mat-icon>insert_drive_file</mat-icon>Informes
