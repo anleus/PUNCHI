@@ -24,6 +24,7 @@ import { UsersTableComponent } from "./components/users-table/users-table.compon
 import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
+import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent },
@@ -58,7 +59,8 @@ const routes: Routes = [
     UsuariosComponent,
     AsignarDepDragComponent,
     DepListComponent,
-    OverviewConfirmacionBorrado
+    OverviewConfirmacionBorrado,
+    VacacionesComponent
   ],
   entryComponents: [
     UsuariosComponent, 
