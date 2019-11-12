@@ -1,5 +1,5 @@
 import { MaterialModule } from "./material-module";
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, DomSanitizer} from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
@@ -24,6 +24,8 @@ import { UsersTableComponent } from "./components/users-table/users-table.compon
 import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
+import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
 
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent },
@@ -58,7 +60,8 @@ const routes: Routes = [
     UsuariosComponent,
     AsignarDepDragComponent,
     DepListComponent,
-    OverviewConfirmacionBorrado
+    OverviewConfirmacionBorrado,
+    CalendarioComponent
   ],
   entryComponents: [
     UsuariosComponent, 
@@ -74,7 +77,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     LayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularCalendarYearViewModule,
+    
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
