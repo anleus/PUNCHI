@@ -34,9 +34,7 @@ export class UserService {
 
   getUserByUsernameDOS(username) {
     return this.http.get(this.url + `/username/${username}`)
-      .pipe(map(user => {
-        return user;
-      }));
+      
   }
 
   getUserById(id: string) {
