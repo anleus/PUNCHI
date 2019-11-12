@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>
+    ¿Está seguro de querer eliminar al usuario: {{data.userName}}
+</h1>
+<mat-divider></mat-divider>
+<div mat-dialog-content>
+    <br>
+    <p>Recuerde que el borrado será sólo lógico</p>
+    <br>
+</div>
+<div botonesConfirm>
+    <button mat-button (click)="onNoClick()">No, gracias</button>
+    <button mat-button background-color="red" [mat-dialog-close]=data.confirmation cdkFocusInitial>Ok</button>
+</div>
