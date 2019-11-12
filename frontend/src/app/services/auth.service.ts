@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { RouterModule, Routes, Router, Route } from "@angular/router";
 import { map } from 'rxjs/operators';
+
 
 import { User } from '../models/users';
 import { environment } from "src/environments/environment";
@@ -14,10 +14,9 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
     public redirectUrl : string;
 
-    constructor(private http    : HttpClient,
-                private router  : Router) {
+    constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser        = this.currentUserSubject.asObservable();
+        this.currentUser = this.currentUserSubject.asObservable();
     }
 
     public get currentUserValue(): User {
@@ -48,7 +47,7 @@ export class AuthenticationService {
         localStorage.removeItem('isLoggedin');
         this.currentUserSubject.next(null);
         console.log("Loggin out");
-        this.router.navigate(['/login']);
+        window.location.href = environment.urlf + '/login';
     }
 
     checkToken() {  // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve

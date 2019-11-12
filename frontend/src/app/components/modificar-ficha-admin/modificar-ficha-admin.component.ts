@@ -64,61 +64,9 @@ export class ModificarFichaAdminComponent implements OnInit {
         console.log(this.nombreUsuario);
 
 
-        /*this.userService.getUserById(this.nombreUsuario).subscribe(
-          resp => {
-            if (resp != null) {
-              this.usuarioAModificar._id = resp;
-            }
-
-          });  */ 
+    this.userService.getUserByUsernameDOS(this.nombreUsuario).subscribe((user : User) =>  this.mostrarCambios(user));
     
     this.usuarioAModificar = this.userService.selectedUser;
-    
-    //patrón email
-    var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
-
-    this.usuarioform = new FormGroup({
-      nombre: new FormControl(this.usuarioAModificar.nombre, [Validators.required]),
-      apellidos: new FormControl(this.usuarioAModificar.apellidos,  [Validators.required]),
-      fechaNacimiento: new FormControl(this.usuarioAModificar.fechaNacimiento, [Validators.required]),
-      email: new FormControl(this.usuarioAModificar.email, [
-        Validators.required,
-        Validators.pattern(emailPattern)
-      ]),
-      nuss: new FormControl(this.usuarioAModificar.nuss, [Validators.required]),
-      telefono: new FormControl(this.usuarioAModificar.telefono, [
-        Validators.required,
-        Validators.minLength(8)
-      ]),
-      username: new FormControl(this.usuarioAModificar.username,  [Validators.required]),
-      password: new FormControl(this.usuarioAModificar.password, [
-        Validators.required,
-        Validators.minLength(5)
-      ]),
-      localidad: new FormControl(this.usuarioAModificar.localidad, [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z -']+")
-      ]),
-      provincia: new FormControl(this.usuarioAModificar.provincia, [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z -']+")
-      ]),
-      domicilio: new FormControl(this.usuarioAModificar.domicilio, [
-        Validators.required
-      ])
-    });
-
-    //si eres usuario NORMAL deshabilitamos la modificación de algunos campos
-    if (
-      this.usuarioAModificar.gestor == false &&
-      this.usuarioAModificar.admin == false
-    ) {
-      this.usuarioform.controls["nombre"].disable();
-      this.usuarioform.controls["apellidos"].disable();
-      this.usuarioform.controls["fechaNacimiento"].disable();
-      this.usuarioform.controls["username"].disable();
-      this.usuarioform.controls["nuss"].disable();
-    }
   }
 
   volver(){
@@ -126,10 +74,6 @@ export class ModificarFichaAdminComponent implements OnInit {
   }
 
   guardarcambios(form) {
-    //coger usuario logueado
-    var usuarioMod = this.authService.getCurrentUser();
-    usuarioMod.subscribe(user => (this.usuarioAModificar = user));
-    //valores pasados por formulario si eres usuario
     if (
       this.usuarioAModificar.admin == false ||
       this.usuarioAModificar.gestor == false
@@ -222,6 +166,45 @@ export class ModificarFichaAdminComponent implements OnInit {
       this.usuarioAModificar.password
     );
     this.usuarioform.controls["email"].setValue(this.usuarioAModificar.email);
+  }
+
+  mostrarCambios(user: User){
+    console.log(1);
+    this.usuarioAModificar = user;
+
+    //patrón email
+    var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+
+    this.usuarioform = new FormGroup({
+      nombre: new FormControl(user.nombre, [Validators.required]),
+      apellidos: new FormControl(user.apellidos,  [Validators.required]),
+      fechaNacimiento: new FormControl(user.fechaNacimiento, [Validators.required]),
+      email: new FormControl(user.email, [
+        Validators.required,
+        Validators.pattern(emailPattern)
+      ]),
+      nuss: new FormControl(user.nuss, [Validators.required]),
+      telefono: new FormControl(user.telefono, [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
+      username: new FormControl(user.username,  [Validators.required]),
+      password: new FormControl(user.password, [
+        Validators.required,
+        Validators.minLength(5)
+      ]),
+      localidad: new FormControl(user.localidad, [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z -']+")
+      ]),
+      provincia: new FormControl(user.provincia, [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z -']+")
+      ]),
+      domicilio: new FormControl(user.domicilio, [
+        Validators.required
+      ])
+    });
   }
 
 }

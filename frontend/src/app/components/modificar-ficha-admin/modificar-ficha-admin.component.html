@@ -9,9 +9,9 @@
       <div class="row">
         <div class="col">
           <div>
-            <form [formGroup]="usuarioform">
+            <form *ngIf="usuarioform" [formGroup]="usuarioform">
               <br>
-              <h3>Perfil de usuario: {{nombreUsuario}} {{usuarioAModificar.apellidos}}</h3>
+              <h3>Perfil de usuario: {{usuarioAModificar.nombre}} {{usuarioAModificar.apellidos}}</h3>
   
   
               <div class="row p-2">
