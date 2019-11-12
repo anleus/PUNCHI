@@ -26,6 +26,7 @@ import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-d
 import { DepListComponent } from './components/dep-list/dep-list.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
+import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent },
@@ -61,7 +62,8 @@ const routes: Routes = [
     AsignarDepDragComponent,
     DepListComponent,
     OverviewConfirmacionBorrado,
-    CalendarioComponent
+    CalendarioComponent,
+    VacacionesComponent
   ],
   entryComponents: [
     UsuariosComponent, 
