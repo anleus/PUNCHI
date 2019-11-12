@@ -1,12 +1,12 @@
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA, OnInit, Component, LOCALE_ID } from '@angular/core';
 import { BrowserModule, platformBrowser } from '@angular/platform-browser';
-import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
+//import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PlatformModule } from '@angular/cdk/platform';
 @NgModule({
   imports: [
     BrowserModule,
-    AngularCalendarYearViewModule,
+    //AngularCalendarYearViewModule,
     PopoverModule,
     PlatformModule
   ],

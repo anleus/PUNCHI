@@ -25,7 +25,7 @@ import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usu
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
-import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
+//import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 
 const routes: Routes = [
@@ -79,9 +79,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     LayoutModule,
-    ReactiveFormsModule,
-    AngularCalendarYearViewModule,
-    
+    ReactiveFormsModule,    
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
