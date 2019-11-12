@@ -20,7 +20,7 @@ departamentFunctions.getDepartamentoById = async (req, res, next) => {
 departamentFunctions.createDepartamento = async (req, res, next) => {
 	const deparamento = new Departamento({
 		usuarios:  req.body.usuarios, // los usuarios se añaden posteriormente en otra peticion req.body.usuarios,
-		gestor: null, //el gestor se añade posteriormente en otra peticion  req.body.gestor,
+		responsable: req.body.responsable, //el gestor se añade posteriormente en otra peticion  req.body.gestor,
 		nombre: req.body.nombre
 	});
 	deparamento.save().then(() => res.json({ status: "Departamento saved" }));
@@ -29,7 +29,7 @@ departamentFunctions.createDepartamento = async (req, res, next) => {
 departamentFunctions.updateDepartamento = async (req, res, next) => {
 	const deparamento = new Departamento({
 		users: req.body.users,
-		gestor: req.body.gestor,
+		responsable: req.body.responsable,
 		nombre: req.body.nombre
 	});
 	Departamento.findByIdAndUpdate(
