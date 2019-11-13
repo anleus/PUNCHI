@@ -1,4 +1,4 @@
-<div class="botones-inicio" style="display: inline;">
+<!--<div class="botones-inicio" style="display: inline;">
     <div id="warningHorasExtra" class="alert alert-warning" style="display: none" role="alert">
         <div style="display: inline;">
         <i class="material-icons warningicon">warning</i>
@@ -47,4 +47,41 @@
 <div>
         <app-history-table></app-history-table>
         <app-calendario></app-calendario>
+</div>-->
+
+<div class="container">
+    <div class="d-flex flex-row">
+        <div class="p-2">
+            <div class="d-flex flex-column"> <!--parte izquierda ventana-->
+            <div class="p-2">
+                <div class="d-flex flex-row">
+                <div class="p-2"> <!--boton start-->
+                    <mat-button-toggle #toggleButton [disabled]="this.authService.currentUserValue.becario" class=".col-md-4 botonfichar" 
+                    [ngClass]="{fichando: (this.fichando || this.authService.currentUserValue.becario), nofichando: !this.fichando}" 
+                    (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+                </div>
+                <div class="p-2"> <!--texto horas-->
+                    <div class="d-flex flex-column"> 
+                        <div class="p-2">
+                            Inicio:
+                        </div>
+                        <div class="p-2">
+                            {{startLabel}}
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="p-2">
+                <app-history-table></app-history-table>
+            </div>
+            </div>
+        </div>
+        <div class="p-2">
+            <mat-divider [vertical]="true"></mat-divider>
+        </div>
+        <div class="p-2">
+            <app-calendario></app-calendario>
+        </div>
+    </div>
 </div>

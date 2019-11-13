@@ -45,7 +45,7 @@ export class InicioComponent implements OnInit {
 
   fichando = false;
   icon = 'play_arrow';
-  text = 'Empezar jornada';
+  text = 'Fichar';
   class = 'nofichando';
   tiempoFichando = 0;
   timeLabel = '00:00:00';
@@ -73,7 +73,7 @@ export class InicioComponent implements OnInit {
     if(this.authService.currentUserValue.becario) return;
     this.fichando = !this.fichando;
     this.icon =  !this.fichando ? 'play_arrow' : 'stop';
-    this.text = !this.fichando ? 'Empezar jornada' : 'Terminar jornada';
+    this.text = !this.fichando ? 'Fichar' : 'Salida';
     if(this.fichando){
       t = setInterval(() => {++this.tiempoFichando; this.updateTimeLabel()}, 1000);
       if(!onInit)
