@@ -1,5 +1,5 @@
 import { MaterialModule } from "./material-module";
-import { BrowserModule, DomSanitizer} from "@angular/platform-browser";
+import { BrowserModule, DomSanitizer } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
@@ -25,8 +25,9 @@ import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usu
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
-//import { AngularCalendarYearViewModule } from 'angular-calendar-year-view';
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
+import { IgxCalendarModule } from 'igniteui-angular';
+
 import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
@@ -41,7 +42,7 @@ const routes: Routes = [
   //{ path: "incidencias" },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  { path: '**', redirectTo: "inicio"}
+  { path: '**', redirectTo: "inicio" /*, canActivate: [AuthGuard]*/ }
 ];
 
 @NgModule({
@@ -67,7 +68,7 @@ const routes: Routes = [
     VacacionesComponent
   ],
   entryComponents: [
-    UsuariosComponent, 
+    UsuariosComponent,
     OverviewConfirmacionBorrado
   ],
   imports: [
@@ -80,9 +81,12 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     LayoutModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    IgxCalendarModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
