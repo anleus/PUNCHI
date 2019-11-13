@@ -28,14 +28,15 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 import { IgxCalendarModule } from 'igniteui-angular';
 
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  { path: "usuarios", component: UsuariosComponent },
-  { path: "crearusuario", component: CrearUsuarioComponent },
-  { path: "inicio", component: InicioComponent },
-  { path: "departamentos", component: DepartamentosComponent },
-  { path: "fichapersonal", component: FichaPersonalComponent },
-  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent },
+  { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard] },
+  { path: "crearusuario", component: CrearUsuarioComponent, canActivate: [AuthGuard] },
+  { path: "inicio", component: InicioComponent, canActivate: [AuthGuard] },
+  { path: "departamentos", component: DepartamentosComponent, canActivate: [AuthGuard] },
+  { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [AuthGuard] },
+  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [AuthGuard] },
   //{ path: "informes" },
   //{ path: "vacaciones" },
   //{ path: "incidencias" },
