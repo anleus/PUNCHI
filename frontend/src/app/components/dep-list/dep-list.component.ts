@@ -23,12 +23,17 @@ import {
 import { UserData } from "../usuarios/usuarios.component";
 import { resolve } from "url";
 import { reject } from "q";
+import { map } from 'rxjs/operators';
 
 export interface PeriodicElement {
   name: string;
   position: number;
   weight: number;
   symbol: string;
+}
+export interface DepData {
+  DepName: string;
+  DepId: string;
 }
 @Component({
   selector: "app-dep-list",
@@ -41,6 +46,9 @@ export class DepListComponent implements OnInit {
   admin = false;
   gestor = false;
   logUser = this.authService.getCurrentUser();
+  userName: string;
+  userId: string;
+  confirmation: boolean;
 
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ["nombre", "responsable", "select"];
@@ -135,16 +143,15 @@ export class DepListComponent implements OnInit {
 
   editDepResponsibleSelected(element: Departamento) {}
 
-  gotoDrag() {}
 
   searchResponsible(element: string) {
     return new Promise((resolve, reject) => {});
   }
 
-  /*     openDialog(element: User): void {
-      const dialogRef = this.dialog.open(OverviewConfirmacionBorrado, {
+      openDialog(element: User): void {
+      const dialogRef = this.dialog.open(OverviewConfirmacionBorradoDep, {
         width: '500px',
-        data: {userName: this.departamento.nombre}
+        data: {}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -153,15 +160,33 @@ export class DepListComponent implements OnInit {
         }
         
       });
-    } */
+    }
 }
-export class OverviewConfirmacionBorrado {
+@Component ({
+  selector: 'confirmacion-borrado-dep',
+  templateUrl: 'confirmacion-borrado-dep.html',
+  styleUrls: ['./confirmacion-borrado-dep.css']
+})
+export class OverviewConfirmacionBorradoDep {
   constructor(
-    public dialogRef: MatDialogRef<OverviewConfirmacionBorrado>,
-    @Inject(MAT_DIALOG_DATA) public data: UserData
-  ) {}
+    public dialogRef: MatDialogRef<OverviewConfirmacionBorradoDep>,
+    @Inject(MAT_DIALOG_DATA) public data: DepData,
+    private departamentoService: DepartamentosService) {}
+   
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  deleteDepSelected(elementId: string) {
+     let Dep = null
+    this.departamentoService.getDepartamentoByIDObject(elementId).subscribe(
+      (res: Departamento) => {
+        try {
+        this.departamentoService.deleteDept(res._id)
+        } catch (err) {}
+        this.dialogRef.close();
+      }
+    )
   }
 }
