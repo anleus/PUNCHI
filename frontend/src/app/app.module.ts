@@ -12,9 +12,9 @@ import { MainNavComponent } from "./components/main-nav/main-nav.component";
 import { LayoutModule } from "@angular/cdk/layout";
 import { FichaPersonalComponent } from "./components/ficha-personal/ficha-personal.component";
 import { DepartamentosComponent } from "./components/departamentos/departamentos.component";
-import { IncidenciasComponent } from './components/incidencias/incidencias.component';
-import { InformesComponent } from './components/informes/informes.component';
-import { CalendarioComponent } from './components/calendario/calendario.component';
+import { IncidenciasComponent } from "./components/incidencias/incidencias.component";
+import { InformesComponent } from "./components/informes/informes.component";
+import { CalendarioComponent } from "./components/calendario/calendario.component";
 import { AsignarDepComponent } from "./components/asignar-dep/asignar-dep.component";
 import { HistoryTableComponent } from "./components/history-table/history-table.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -24,28 +24,67 @@ import { UserService } from "./services/user.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CrearDepartamentoComponent } from "./components/crear-departamento/crear-departamento.component";
 import { UsersTableComponent } from "./components/users-table/users-table.component";
-import { UsuariosComponent, ConfirmacionBorrarUsuario } from './components/usuarios/usuarios.component';
-import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
-import { DepListComponent } from './components/dep-list/dep-list.component';
-import { IgxCalendarModule } from 'igniteui-angular';
-import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
-import { AuthGuard } from './auth/auth.guard';
-import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
+import {
+  UsuariosComponent,
+  ConfirmacionBorrarUsuario
+} from "./components/usuarios/usuarios.component";
+import { AsignarDepDragComponent } from "./components/asignar-dep-drag/asignar-dep-drag.component";
+import { DepListComponent } from "./components/dep-list/dep-list.component";
+import { IgxCalendarModule } from "igniteui-angular";
+import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";
+import { AuthGuard } from "./auth/auth.guard";
+import { VacacionesComponent } from "./components/vacaciones/vacaciones.component";
+import { MatGridListModule } from "@angular/material/grid-list";
 
+import { PersonalizarDepartamentoComponent } from "./components/personalizar-departamento/personalizar-departamento.component";
 
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard] },
-  { path: "crearusuario", component: CrearUsuarioComponent, canActivate: [AuthGuard] },
+  {
+    path: "crearusuario",
+    component: CrearUsuarioComponent,
+    canActivate: [AuthGuard]
+  },
   { path: "inicio", component: InicioComponent, canActivate: [AuthGuard] },
-  { path: "departamentos", component: DepartamentosComponent, canActivate: [AuthGuard] },
-  { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [AuthGuard] },
-  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [AuthGuard] },
-  { path: "caledario", component: CalendarioComponent, canActivate: [AuthGuard] },
-  { path: "incidencias", component: IncidenciasComponent, canActivate: [AuthGuard] },
+  {
+    path: "departamentos",
+    component: DepartamentosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "personalizarDepartamento",
+    component: PersonalizarDepartamentoComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "fichapersonal",
+    component: FichaPersonalComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "fichapersonaladmin",
+    component: ModificarFichaAdminComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "caledario",
+    component: CalendarioComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "incidencias",
+    component: IncidenciasComponent,
+    canActivate: [AuthGuard]
+  },
   { path: "informes", component: InformesComponent, canActivate: [AuthGuard] },
+  {
+    path: "vacaciones",
+    component: VacacionesComponent,
+    canActivate: [AuthGuard]
+  },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  { path: '**', redirectTo: "inicio"}
+  { path: "**", redirectTo: "inicio" }
 ];
 
 @NgModule({
@@ -70,12 +109,10 @@ const routes: Routes = [
     AsignarDepDragComponent,
     DepListComponent,
     ConfirmacionBorrarUsuario,
-    VacacionesComponent
+    VacacionesComponent,
+    PersonalizarDepartamentoComponent
   ],
-  entryComponents: [
-    UsuariosComponent,
-    ConfirmacionBorrarUsuario
-  ],
+  entryComponents: [UsuariosComponent, ConfirmacionBorrarUsuario],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -88,10 +125,10 @@ const routes: Routes = [
     LayoutModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    IgxCalendarModule
+    IgxCalendarModule,
+    MatGridListModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

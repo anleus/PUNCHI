@@ -12,8 +12,7 @@ import { environment } from "src/environments/environment";
  *  Misteriosamente si pongo esto dentro de la clase no funciona,
  *  de momento se quedará aqui, si, se que es mas feo que pegarle a un padre pero es lo que hay ¯\_(ツ)_/¯  
  */
-var t; 
-const endpoint = 'http://localhost:3000/api/v1/'
+var t;
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'

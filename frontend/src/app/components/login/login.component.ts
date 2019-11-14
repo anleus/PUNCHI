@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
 
   loginUser(username, password) {
     if (typeof username == 'undefined' || typeof password == 'undefined') {
+      this.openSnack('Por favor, rellena los campos');
       console.log("Username o contraseña undefined");                 //Toast notification de que no puedes avanzar sin alguno de los dos campos
       return;
     }

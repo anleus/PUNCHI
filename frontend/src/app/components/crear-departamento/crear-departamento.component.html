@@ -3,7 +3,8 @@
     <form class="example-form" #form="ngForm">
 
         <mat-form-field name="formCrearDep" class="col-7">
-            <input matInput (keyup)="nombreDepartamento($event)" placeholder="Nombre del departamento">
+            <input matInput ng-class="{red: (departamentoAlreadyExists)}" (keyup)="nombreDepartamento($event)"
+                placeholder="Nombre del departamento">
 
         </mat-form-field>
         <button class="border" (click)="crearDepartamento()" mat-button> Crear</button>
