@@ -110,7 +110,7 @@ export class FichaPersonalComponent implements OnInit {
     usuarioAct.subscribe(user => (this.usuarioLogueado = user));
     //valores pasados por formulario si eres usuario
     if (
-      this.usuarioLogueado.admin == false ||
+      this.usuarioLogueado.admin == false &&
       this.usuarioLogueado.gestor == false
     ) {
       this.usuarioLogueado.password = form.value.password;
