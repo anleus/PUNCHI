@@ -46,7 +46,6 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('isLoggedin');
         this.currentUserSubject.next(null);
-        console.log("Loggin out");
         window.location.href = environment.urlf + '/login';
     }
 
