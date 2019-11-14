@@ -31,7 +31,7 @@ import { IgxCalendarModule } from 'igniteui-angular';
 import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
 import { AuthGuard } from './auth/auth.guard';
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
-import {MatGridListModule} from '@angular/material/grid-list'; 
+import {MatListModule} from '@angular/material/list'; 
 
 
 const routes: Routes = [
@@ -91,7 +91,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     IgxCalendarModule,
-    MatGridListModule
+    MatListModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
