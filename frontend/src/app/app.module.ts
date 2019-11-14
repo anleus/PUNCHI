@@ -12,6 +12,9 @@ import { MainNavComponent } from "./components/main-nav/main-nav.component";
 import { LayoutModule } from "@angular/cdk/layout";
 import { FichaPersonalComponent } from "./components/ficha-personal/ficha-personal.component";
 import { DepartamentosComponent } from "./components/departamentos/departamentos.component";
+import { IncidenciasComponent } from './components/incidencias/incidencias.component';
+import { InformesComponent } from './components/informes/informes.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 import { AsignarDepComponent } from "./components/asignar-dep/asignar-dep.component";
 import { HistoryTableComponent } from "./components/history-table/history-table.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -24,11 +27,10 @@ import { UsersTableComponent } from "./components/users-table/users-table.compon
 import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
-import { CalendarioComponent } from './components/calendario/calendario.component';
-import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 import { IgxCalendarModule } from 'igniteui-angular';
-
+import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
 import { AuthGuard } from './auth/auth.guard';
+
 
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard] },
@@ -37,9 +39,9 @@ const routes: Routes = [
   { path: "departamentos", component: DepartamentosComponent, canActivate: [AuthGuard] },
   { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [AuthGuard] },
   { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [AuthGuard] },
-  //{ path: "informes" },
-  //{ path: "vacaciones" },
-  //{ path: "incidencias" },
+  { path: "caledario", component: CalendarioComponent, canActivate: [AuthGuard] },
+  { path: "incidencias", component: IncidenciasComponent, canActivate: [AuthGuard] },
+  { path: "informes", component: InformesComponent, canActivate: [AuthGuard] },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   { path: '**', redirectTo: "inicio" /*, canActivate: [AuthGuard]*/ }
@@ -52,6 +54,9 @@ const routes: Routes = [
     InicioComponent,
     MainNavComponent,
     FichaPersonalComponent,
+    CalendarioComponent,
+    IncidenciasComponent,
+    InformesComponent,
     DepartamentosComponent,
     AsignarDepComponent,
     HistoryTableComponent,
@@ -63,9 +68,7 @@ const routes: Routes = [
     UsuariosComponent,
     AsignarDepDragComponent,
     DepListComponent,
-    OverviewConfirmacionBorrado,
-    CalendarioComponent,
-    VacacionesComponent
+    OverviewConfirmacionBorrado
   ],
   entryComponents: [
     UsuariosComponent,
