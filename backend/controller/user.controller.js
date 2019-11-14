@@ -80,7 +80,7 @@ userFunctions.addUser = async (req, res, next) => {
 
 userFunctions.updateUser = (req, res, next) => {
   const user = new User({
-    _id: req.params.id,
+   // _id: req.params.id,
     nombre: req.body.nombre,
     apellidos: req.body.apellido,
     fechaNacimiento: req.body.date,
