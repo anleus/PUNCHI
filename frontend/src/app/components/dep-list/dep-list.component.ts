@@ -99,14 +99,14 @@ export class DepListComponent implements OnInit {
     console.log("tots", users);
 
     users.forEach((element, i) => {
-          if (element.responsable === null)
+      if (element.responsable === null)
         element.responsable = "No hay responsable";
       else {
         this.userService
           .getUserById(element.responsable)
           .subscribe((res: User) => {
-            element.responsable = res.nombre+" "+res.apellidos        
-              this.rellenar(users);
+            element.responsable = res.nombre + " " + res.apellidos;
+            this.rellenar(users);
           });
       }
     });
@@ -131,7 +131,13 @@ export class DepListComponent implements OnInit {
       )}); */
   }
 
-  editDepSelected(element: Departamento) {}
+  editDepSelected(element: Departamento) {
+    console.log(element);
+    localStorage.setItem("editDepartamento", "true");
+    localStorage.setItem("departamentoID", element._id);
+
+    this.router.navigate(["/personalizarDepartamento"]);
+  }
 
   editDepResponsibleSelected(element: Departamento) {}
 
