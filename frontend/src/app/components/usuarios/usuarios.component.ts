@@ -132,7 +132,7 @@ export class UsuariosComponent implements OnInit {
   
 
   openDialog(element: User): void {
-    const dialogRef = this.dialog.open(OverviewConfirmacionBorrado, {
+    const dialogRef = this.dialog.open(ConfirmacionBorrarUsuario, {
       width: '650px',
       data: {userName: element.nombre + " " + element.apellidos, userId: element._id}
     });
@@ -155,10 +155,10 @@ export class UsuariosComponent implements OnInit {
   templateUrl: 'confirmacion-borrado.html',
   styleUrls: ['./confirmacion-borrado.css']
 })
-export class OverviewConfirmacionBorrado {
+export class ConfirmacionBorrarUsuario {
 
   constructor(
-    public dialogRef: MatDialogRef<OverviewConfirmacionBorrado>,
+    public dialogRef: MatDialogRef<ConfirmacionBorrarUsuario>,
     @Inject(MAT_DIALOG_DATA) public data: UserData,
     private userService: UserService) {}
   
