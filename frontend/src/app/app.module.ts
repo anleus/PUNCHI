@@ -30,6 +30,7 @@ import { DepListComponent } from './components/dep-list/dep-list.component';
 import { IgxCalendarModule } from 'igniteui-angular';
 import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
 import { AuthGuard } from './auth/auth.guard';
+import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 
 
 const routes: Routes = [
@@ -44,7 +45,7 @@ const routes: Routes = [
   { path: "informes", component: InformesComponent, canActivate: [AuthGuard] },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  { path: '**', redirectTo: "inicio" /*, canActivate: [AuthGuard]*/ }
+  { path: '**', redirectTo: "inicio"}
 ];
 
 @NgModule({
@@ -68,7 +69,8 @@ const routes: Routes = [
     UsuariosComponent,
     AsignarDepDragComponent,
     DepListComponent,
-    OverviewConfirmacionBorrado
+    OverviewConfirmacionBorrado,
+    VacacionesComponent
   ],
   entryComponents: [
     UsuariosComponent,

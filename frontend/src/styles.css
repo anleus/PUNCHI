@@ -2,6 +2,7 @@
 
 /*https://stackoverflow.com/questions/1875852/how-can-i-define-colors-as-variables-in-css*/
 /* Para usarlo background-color: var(--main-color)*/
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 :root{
     --main-color: #88CBE8;
