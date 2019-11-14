@@ -8,6 +8,7 @@ import { Component, OnInit,NgModule } from '@angular/core';
 })
 export class IncidenciasComponent implements OnInit {
 
+  Incidencias = {1:2,3:4};
   constructor() { }
 
   ngOnInit() {
