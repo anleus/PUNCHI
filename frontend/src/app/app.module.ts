@@ -24,12 +24,13 @@ import { UserService } from "./services/user.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CrearDepartamentoComponent } from "./components/crear-departamento/crear-departamento.component";
 import { UsersTableComponent } from "./components/users-table/users-table.component";
-import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usuarios/usuarios.component';
+import { UsuariosComponent, ConfirmacionBorrarUsuario } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent, OverviewConfirmacionBorradoDep } from './components/dep-list/dep-list.component';
 import { IgxCalendarModule } from 'igniteui-angular';
 import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
 import { AuthGuard } from './auth/auth.guard';
+import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
 
 
 const routes: Routes = [
@@ -44,7 +45,7 @@ const routes: Routes = [
   { path: "informes", component: InformesComponent, canActivate: [AuthGuard] },
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  { path: '**', redirectTo: "inicio" /*, canActivate: [AuthGuard]*/ }
+  { path: '**', redirectTo: "inicio"}
 ];
 
 @NgModule({
@@ -68,15 +69,18 @@ const routes: Routes = [
     UsuariosComponent,
     AsignarDepDragComponent,
     DepListComponent,
-    OverviewConfirmacionBorrado,
-    OverviewConfirmacionBorradoDep 
+    OverviewConfirmacionBorradoDep,
+    ConfirmacionBorrarUsuario,
+    VacacionesComponent
   ],
   entryComponents: [
     UsuariosComponent,
-    OverviewConfirmacionBorrado,
-    OverviewConfirmacionBorradoDep 
-
+    ConfirmacionBorrarUsuario,
+    OverviewConfirmacionBorradoDep,
+    ConfirmacionBorrarUsuario,
+    VacacionesComponent
   ],
+  
   imports: [
     BrowserModule,
     HttpClientModule,
