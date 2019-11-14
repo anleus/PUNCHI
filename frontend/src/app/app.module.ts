@@ -31,18 +31,20 @@ import { IgxCalendarModule } from 'igniteui-angular';
 import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
 import { AuthGuard } from './auth/auth.guard';
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
+import {MatGridListModule} from '@angular/material/grid-list'; 
 
 
 const routes: Routes = [
-  { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard] },
-  { path: "crearusuario", component: CrearUsuarioComponent, canActivate: [AuthGuard] },
-  { path: "inicio", component: InicioComponent, canActivate: [AuthGuard] },
-  { path: "departamentos", component: DepartamentosComponent, canActivate: [AuthGuard] },
-  { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [AuthGuard] },
-  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [AuthGuard] },
-  { path: "caledario", component: CalendarioComponent, canActivate: [AuthGuard] },
-  { path: "incidencias", component: IncidenciasComponent, canActivate: [AuthGuard] },
-  { path: "informes", component: InformesComponent, canActivate: [AuthGuard] },
+  { path: "usuarios", component: UsuariosComponent, canActivate: [ AuthGuard ] },
+  { path: "crearusuario", component: CrearUsuarioComponent, canActivate: [ AuthGuard ] },
+  { path: "inicio", component: InicioComponent, canActivate: [ AuthGuard ] },
+  { path: "departamentos", component: DepartamentosComponent, canActivate: [ AuthGuard ] },
+  { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [ AuthGuard ] },
+  { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [ AuthGuard ] },
+  { path: "caledario", component: CalendarioComponent, canActivate: [ AuthGuard ] },
+  { path: "incidencias", component: IncidenciasComponent, canActivate: [ AuthGuard ] },
+  { path: "informes", component: InformesComponent, canActivate: [ AuthGuard ] },
+  { path: "vacaciones", component: VacacionesComponent, canActivate: [ AuthGuard ]},
   { path: "", redirectTo: "inicio", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   { path: '**', redirectTo: "inicio"}
@@ -88,7 +90,8 @@ const routes: Routes = [
     LayoutModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    IgxCalendarModule
+    IgxCalendarModule,
+    MatGridListModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
