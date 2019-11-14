@@ -31,6 +31,7 @@ import { IgxCalendarModule } from 'igniteui-angular';
 import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";             
 import { AuthGuard } from './auth/auth.guard';
 import { VacacionesComponent } from './components/vacaciones/vacaciones.component';
+import { PersonalizarDepartamentoComponent } from './components/personalizar-departamento/personalizar-departamento.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: "crearusuario", component: CrearUsuarioComponent, canActivate: [AuthGuard] },
   { path: "inicio", component: InicioComponent, canActivate: [AuthGuard] },
   { path: "departamentos", component: DepartamentosComponent, canActivate: [AuthGuard] },
+  { path: "personalizarDepartamento", component: PersonalizarDepartamentoComponent, canActivate: [AuthGuard] },
   { path: "fichapersonal", component: FichaPersonalComponent, canActivate: [AuthGuard] },
   { path: "fichapersonaladmin", component: ModificarFichaAdminComponent, canActivate: [AuthGuard] },
   { path: "caledario", component: CalendarioComponent, canActivate: [AuthGuard] },
@@ -70,7 +72,8 @@ const routes: Routes = [
     AsignarDepDragComponent,
     DepListComponent,
     ConfirmacionBorrarUsuario,
-    VacacionesComponent
+    VacacionesComponent,
+    PersonalizarDepartamentoComponent
   ],
   entryComponents: [
     UsuariosComponent,
