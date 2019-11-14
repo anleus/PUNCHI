@@ -1,1 +1,46 @@
-<p>incidencias works!</p>
+<div>
+    <p></p>
+  </div>
+  <div class="card-container">
+    <mat-card class="card" flex="20">
+      <div>
+        <h1>Incidencias
+        </h1>
+      </div>
+
+      <div>
+        <p></p>
+      </div>
+
+      <div class="table-container mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+      
+              <ng-container matColumnDef="usuario">
+                <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="asunto" >
+                <th mat-header-cell *matHeaderCellDef> Asunto </th>
+                <td mat-cell *matCellDef="let element"> {{element.apellidos}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="mensaje">
+                <th mat-header-cell *matHeaderCellDef> Mensaje </th>
+                <td mat-cell *matCellDef="let element"> {{element.departamento}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="estadp">
+                    <th mat-header-cell *matHeaderCellDef> Estado de la incidencia </th>
+                    <td mat-cell *matCellDef="let element"> {{element.departamento}} </td>
+                  </ng-container>
+      
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+  
+    </mat-card>
+  </div>
+  
