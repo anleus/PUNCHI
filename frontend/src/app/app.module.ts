@@ -24,7 +24,7 @@ import { UserService } from "./services/user.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CrearDepartamentoComponent } from "./components/crear-departamento/crear-departamento.component";
 import { UsersTableComponent } from "./components/users-table/users-table.component";
-import { UsuariosComponent, OverviewConfirmacionBorrado } from './components/usuarios/usuarios.component';
+import { UsuariosComponent, ConfirmacionBorrarUsuario } from './components/usuarios/usuarios.component';
 import { AsignarDepDragComponent } from './components/asignar-dep-drag/asignar-dep-drag.component';
 import { DepListComponent } from './components/dep-list/dep-list.component';
 import { IgxCalendarModule } from 'igniteui-angular';
@@ -71,12 +71,12 @@ const routes: Routes = [
     UsuariosComponent,
     AsignarDepDragComponent,
     DepListComponent,
-    OverviewConfirmacionBorrado,
+    ConfirmacionBorrarUsuario,
     VacacionesComponent
   ],
   entryComponents: [
     UsuariosComponent,
-    OverviewConfirmacionBorrado
+    ConfirmacionBorrarUsuario
   ],
   imports: [
     BrowserModule,
