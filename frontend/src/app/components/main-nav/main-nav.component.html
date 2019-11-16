@@ -1,46 +1,76 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
-    <mat-nav-list class="lista-navegacion">
-        <mat-list-item>
-            <a mat-list-item href="/inicio">
-              <mat-icon>home</mat-icon>
-              <span>Inicio</span>
-            </a>
-        </mat-list-item>
-        <mat-list-item>
-            <a mat-list-item href="/fichapersonal">
-              <mat-icon>face</mat-icon>
-              <h3>Perfil</h3>
-            </a>
-        </mat-list-item>
-        <mat-list-item>
-            <a mat-list-item href="/departamentos">
-              <mat-icon>add_to_queue</mat-icon>
-              <h3>Gestionar</h3>
-            </a>
-        </mat-list-item>
-        <mat-list-item>
-            <mat-icon>add_circle</mat-icon>
-            <h3>Añadir</h3>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item class="btn-logOut">
-            <mat-icon>lock</mat-icon>
-            <h3>Cerrar sesion</h3>
-            </mat-list-item>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>PUNCHI</span>
-    </mat-toolbar>
-    <ng-content></ng-content>
-  </mat-sidenav-content>
+<mat-sidenav-container class="nav-container">
+    <!-- Contenedor panel lateral -->
+    <mat-sidenav #sidenav [opened]="screenWidth > 840" [mode]="(screenWidth > 840) ? 'side' : 'over'">
+        <div class="sidenav-header">
+                <!--<mat-toolbar color="primary">Menu</mat-toolbar>-->
+                <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
+                        <mat-toolbar class="topbar">
+                            <button *ngIf="flag" mat-icon-button (click)="sidenav.close()"><mat-icon>menu</mat-icon></button>
+                            <h3>Menú</h3>
+                        </mat-toolbar> 
+                </div>
+                <mat-nav-list>
+                    <mat-list-item>  
+                        <a mat-list-item href="/inicio">
+                            <mat-icon >home</mat-icon>Inicio
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item href="/fichapersonal">
+                            <mat-icon>account_circle</mat-icon>Perfil
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="permisos">
+                        <a mat-list-item href="/departamentos">
+                            <mat-icon>business_center</mat-icon>Departamentos
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="permisos">
+                            <a mat-list-item href="/usuarios">
+                                <mat-icon>supervisor_account</mat-icon>Usuarios
+                            </a>
+                        </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item>
+                            <mat-icon>insert_drive_file</mat-icon>Informes
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item>
+                            <mat-icon>airplanemode_active</mat-icon>Vacaciones
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a mat-list-item href="/incidencias">
+                            <mat-icon>error_outline</mat-icon>Incidencias
+                        </a>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="permisos">
+                        <a  mat-list-item href="/crearusuario">
+                            <mat-icon>supervisor_account</mat-icon>Crear usuarios-prueba
+                        </a>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="exit">
+                            <a (click)='logoutUser();sidenav.close()'>
+                            <!-- </a>mat-list-item href="/login"> -->
+                                <mat-icon>input</mat-icon>Cerrar sesión
+                            </a>
+                            </div>
+                        </mat-list-item>
+                </mat-nav-list>
+        </div>
+    </mat-sidenav>
+    
+    <!-- Contenedor principal -->
+    <mat-sidenav-content>
+        <div [ngStyle]="{'display' : (screenWidth > 840) ? 'none' : 'block'}">      
+            <mat-toolbar class="topbar">
+                <button *ngIf="flag" mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
+                <h3>PUNCHI</h3>
+            </mat-toolbar> 
+        </div>
+        <ng-content></ng-content>
+    </mat-sidenav-content>          
 </mat-sidenav-container>

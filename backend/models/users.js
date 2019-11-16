@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Users = new Schema({
+let Users = Schema({
     nombre: {
         type: String,
          required: true 
@@ -46,7 +46,7 @@ let Users = new Schema({
         type: Number
     },
     deleted: {
-        type: Boolean
+        type: Boolean //*
     },
     username: {
         type: String,
@@ -59,10 +59,8 @@ let Users = new Schema({
     becario: {
         type: Boolean,
         required: true
-    },
-    deleted: {
-        type: Boolean,
     }
 });
+    //}, {collection: 'User'});
 
 module.exports = mongoose.model('Users', Users, 'Users');

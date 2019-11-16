@@ -1,0 +1,120 @@
+<div>
+  <p></p>
+</div>
+
+<div>
+  <p></p>
+</div>
+
+<div class="example-container">
+  <mat-card class="card" flex="20">
+    <form [formGroup]="usuarioform" >
+      <h1 class="text-center">Crear usuario</h1>
+
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
+          <mat-form-field>
+            <input matInput formControlName="nombre" placeholder="Nombre"  required>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4 offset-md-2">
+          <mat-form-field>
+            <input matInput placeholder="Apellidos" formControlName="apellidos"  required>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" 
+              required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4 offset-md-2">
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email"  required>
+            <mat-error>Introduce un e-mail válido</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row p-3">
+        <div class="col-md-4 offset-md-1">
+          <mat-form-field>
+            <mat-select placeholder="Tipo de usuario" formControlName="tipousuario"  required>
+              <mat-option value="normal">Normal</mat-option>
+              <mat-option value="becario">Becario</mat-option>
+              <mat-option value="gestor">Gestor</mat-option>
+              <mat-option value="admin">Administrador</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-4 offset-md-2">
+          <mat-form-field>
+            <input matInput type="number" formControlName="nuss" placeholder="Nuss" >
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="row p-3">
+        <div class="col">
+          <mat-form-field>
+            <input matInput type="number" formControlName="telefono" placeholder="Teléfono"  required>
+            <mat-error>Introduce un teléfono válido</mat-error>
+
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput formControlName="username" placeholder="Nombre de usuario"  required>
+          </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-form-field>
+                <input matInput formControlName="password" placeholder="Contraseña"  [type]="hide ? 'password' : 'text'"  required>
+                <mat-error>Introduce una contraseña más larga</mat-error>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row p-3">
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Localidad" formControlName="localidad"  required>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Provincia" formControlName="provincia"  required>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Domicilio" formControlName="domicilio"  required>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <!--<button type="submit" (click)="onCrearUsuario(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"-->
+        <button type="submit" (click)="usuarioExistente2(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+          autocomplete="off">
+          Confirmar
+        </button>
+      </div>
+
+    </form>
+  </mat-card>
+</div>
+<div>
+  <p></p>
+</div>

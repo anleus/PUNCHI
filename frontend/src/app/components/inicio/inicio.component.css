@@ -1,19 +1,37 @@
 .botonfichar{
-    margin: 3rem;
-    height: 5rem;
-    width: 11rem;
+    height: 7rem;
+    width: 14rem;
+    font-size: 2rem;
+    overflow: auto;
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
 }
+
+.info {
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+}
+
 .fichando {
-    background-color: #e0584f;
+    background-color: var(--red-color);
 }
 
 .nofichando {
-    background-color: #6fe39e;
+    background-color:  var(--green-color);
 }
 
-.botones-inicio {         
-  margin-left: 25px;
-  margin-right: 25px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+.sep {
+    border-left: 1px solid rgb(122, 122, 122);
+    height: 500px;
+}
+
+.calendario {
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 20px;
 }

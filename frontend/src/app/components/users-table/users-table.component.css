@@ -1,0 +1,24 @@
+.header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: Roboto;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+  }
+
+.table-container{
+    height: 400px;
+    overflow: auto;
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+  
+  }
+
+  .mat-icon {
+    color: crimson;
+  }
