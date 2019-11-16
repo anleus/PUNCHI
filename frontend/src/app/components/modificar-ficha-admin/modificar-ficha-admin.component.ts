@@ -74,18 +74,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   }
 
   guardarcambios(form) {
-    if (
-      this.usuarioAModificar.admin == false ||
-      this.usuarioAModificar.gestor == false
-    ) {
-      this.usuarioAModificar.password = form.value.password;
-      this.usuarioAModificar.domicilio = form.value.domicilio;
-      this.usuarioAModificar.provincia = form.value.provincia;
-      this.usuarioAModificar.localidad = form.value.localidad;
-      this.usuarioAModificar.email = form.value.email;
-      this.usuarioAModificar.telefono = form.value.telefono;
-    } else {
-      //valores pasados por formulario si eres admin
+    
       this.usuarioAModificar.password = form.value.password;
       this.usuarioAModificar.domicilio = form.value.domicilio;
       this.usuarioAModificar.provincia = form.value.provincia;
@@ -97,7 +86,7 @@ export class ModificarFichaAdminComponent implements OnInit {
       this.usuarioAModificar.fechaNacimiento = form.value.fechaNacimiento;
       this.usuarioAModificar.username = form.value.username;
       this.usuarioAModificar.nuss = form.value.nuss;
-    }
+    
 
     if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
