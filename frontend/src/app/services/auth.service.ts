@@ -12,7 +12,6 @@ import { environment } from "src/environments/environment";
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    public redirectUrl : string;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -26,13 +25,8 @@ export class AuthenticationService {
     login(username, password) {
         return this.http.post(environment.urlb + `/users/username/${username}`, {username, password})
             .pipe(map(user => {
-                //this.currentUserSubject = new BehaviorSubject<User>(user);
-                if (user == null) {
-                    localStorage.setItem('isLoggedin', 'false');
-                    return null;
-                }
                 localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('isLoggedin', 'true');
+                //this.currentUserSubject.next(user);
                 return user;
             }));
     }
@@ -44,8 +38,8 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('currentUser');
-        localStorage.removeItem('isLoggedin');
         this.currentUserSubject.next(null);
+        console.log("Loggin out");
         window.location.href = environment.urlf + '/login';
     }
 

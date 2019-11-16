@@ -1,21 +1,8 @@
 .botonfichar{
     height: 7rem;
-    width: 14rem;
+    width: 20rem;
     font-size: 2rem;
-    overflow: auto;
-    margin-top: 20px;
-    margin-left: 25px;
-    margin-right: 25px;
-    margin-bottom: 20px;
 }
-
-.info {
-    margin-top: 20px;
-    margin-left: 25px;
-    margin-right: 25px;
-    margin-bottom: 20px;
-}
-
 .fichando {
     background-color: var(--red-color);
 }
@@ -24,14 +11,59 @@
     background-color:  var(--green-color);
 }
 
-.sep {
-    border-left: 1px solid rgb(122, 122, 122);
-    height: 500px;
+.botones-inicio {         
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-.calendario {
-    margin-top: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 20px;
+#warningHorasExtra{
+    width: 90%;    
+    font-size: 2rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+.warningicon{
+    font-size: 2rem;
+}
+
+.campoTabla{
+    font-size: 2rem;
+    vertical-align: center;
+}
+
+.vacaciones{
+    text-align: center;
+    width: 12.5%;
+    height:100%
+}
+
+
+.tablaFichar{
+    width:90%;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+.filaVacaciones{
+    display: inline;
+}
+
+.vacaciones{
+    width: 3rem;
+    min-height:3rem;
+}
+
+.expand{
+    height:100%;
+    width: 100%;
+}
+
+.hh{
+    font-size: 3rem;
+}
+.principal{
+    width: 90%
 }

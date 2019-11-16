@@ -12,6 +12,12 @@
   background-color: var(--main-color);
 }
 
+.notif-btn {
+  overflow: auto;
+  left: 1080px;
+  margin-right: 30px;
+}
+
 .exit {
   color: rgba(252, 4, 4, 0.938);
   

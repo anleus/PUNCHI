@@ -61,10 +61,4 @@ export class DepartamentosService {
   getDepartamentoByID(id: string) : Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.url + id);
   }
-  getDepartamentoByIDObject(id: string) {
-    return this.http.get(this.url + "/" + id)
-    .pipe(map(dep => {
-      return dep;
-    }));
-  }
 }

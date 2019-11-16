@@ -15,14 +15,12 @@
         <div class="col-md-4 offset-md-1">
           <mat-form-field>
             <input matInput formControlName="nombre" placeholder="Nombre">
-            <mat-error>Introduce un nombre válido</mat-error>
           </mat-form-field>
         </div>
 
         <div class="col-md-4 offset-md-2">
             <mat-form-field>
               <input matInput  formControlName="apellidos" placeholder="Apellidos" >
-              <mat-error>Introduce un apellido válido</mat-error>
             </mat-form-field>
           </div>
       </div>
@@ -33,7 +31,6 @@
             <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" >
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error>Introduce una fecha válida</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-4 offset-md-2">
@@ -57,14 +54,12 @@
           <div class="col-md-4 offset-md-1">
             <mat-form-field>
               <input matInput formControlName="localidad" placeholder="Localidad"  required>
-              <mat-error>Introduce una localidad válida</mat-error>
             </mat-form-field>
           </div>
   
           <div class="col-md-4 offset-md-2">
             <mat-form-field>
               <input matInput  formControlName="provincia" placeholder="Provincia" required>
-              <mat-error>Introduce una provincia válida</mat-error>
             </mat-form-field>
           </div>
       </div>
@@ -73,14 +68,12 @@
           <div class="col-md-4 offset-md-1">
             <mat-form-field>
               <input matInput formControlName="username" placeholder="Usuario"  required>
-              <mat-error>Introduce un nombre de usuario válido</mat-error>
             </mat-form-field>
           </div>
   
           <div class="col-md-4 offset-md-2">
             <mat-form-field>
               <input matInput  formControlName="password" placeholder="Contraseña" type="password" required>
-              <mat-error>Introduce una contraseña con más de 5 carácteres</mat-error>
             </mat-form-field>
           </div>
       </div>
@@ -89,14 +82,12 @@
           <div class="col-md-4 offset-md-1">
             <mat-form-field>
               <input matInput formControlName="nuss" placeholder="NUSS"  required>
-              <mat-error>Introduce una nuss válido</mat-error>
             </mat-form-field>
           </div>
   
           <div class="col-md-4 offset-md-2">
             <mat-form-field>
               <input matInput  formControlName="email" placeholder="Email" required>
-              <mat-error>Introduce una email válido</mat-error>
             </mat-form-field>
           </div>
       </div>

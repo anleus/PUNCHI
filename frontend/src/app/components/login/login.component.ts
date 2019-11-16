@@ -2,8 +2,6 @@ import { Component, OnInit, Injectable, NgModule } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar'; 
-import { RouterModule, Routes, Router } from "@angular/router";
-import { MainNavComponent } from "../main-nav/main-nav.component";
 
 import { environment } from "src/environments/environment";
 
@@ -25,19 +23,14 @@ export class LoginComponent implements OnInit {
   hide = true;
   durationSec = 3;
 
-  constructor(private authservice : AuthenticationService,
-              private snackBar    : MatSnackBar,
-              private router      : Router,
-              private mainnav     : MainNavComponent) { }
-              
+  constructor(private authservice : AuthenticationService, private snackBar: MatSnackBar) { }
+
   ngOnInit() {
-    //localStorage.clear();
-    this.mainnav.shouldIShowMyHamburguer();
+    localStorage.clear();
   }
 
   loginUser(username, password) {
     if (typeof username == 'undefined' || typeof password == 'undefined') {
-      this.openSnack('Por favor, rellena los campos');
       console.log("Username o contraseña undefined");                 //Toast notification de que no puedes avanzar sin alguno de los dos campos
       return;
     }
@@ -53,11 +46,8 @@ export class LoginComponent implements OnInit {
           this.openSnack('Usuario o contraseña incorrectos');
           return;
         }
-        let redirect = this.authservice.redirectUrl ? this.router.parseUrl(this.authservice.redirectUrl) : '/inicio';
-        //this.router.navigateByUrl(redirect);
         console.log("Login correcto");
         window.location.href = environment.urlf + '/inicio';
-        //this.router.navigate(['/inicio']);
     },
       err => {
         console.error(err);

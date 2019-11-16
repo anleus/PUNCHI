@@ -6,7 +6,6 @@ import { environment } from "src/environments/environment";
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DepartamentosService } from './departamentos.service';
-import { forkJoin } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -34,7 +33,9 @@ export class UserService {
 
   getUserByUsernameDOS(username) {
     return this.http.get(this.url + `/username/${username}`)
-      
+      .pipe(map(user => {
+        return user;
+      }));
   }
 
   getUserById(id: string) {
@@ -46,7 +47,7 @@ export class UserService {
 
   putUser(user: User) {
     console.log(user);
-    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { console.log(response)});
+   return this.http.put(this.url + "/" + user._id, user).subscribe(response => {});
   }
 
   deleteUser(id: string) {
@@ -61,37 +62,41 @@ export class UserService {
     return this.http.get<User[]>(this.url);
   }
 
-  getUsersByDepartment(departamentoId: string) {
-      this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
-        res => {
-          let all_obs = [];
-          if (res != null) {
-            var nombreDepartamento = res["nombre"];
-            var idsUsuarios = res["usuarios"];
-            var numberUsers = idsUsuarios.length;
-            var auxnumber = 1;
-            var users = [];
-            all_obs.push(
-            idsUsuarios.forEach(element => {
-              this.getUserById(element).subscribe(
-                resp => {
-                  if (resp != null) {
-                    var aux;
-                    aux = resp;
-                    aux.deparatmento = nombreDepartamento;
-                    users.push(aux);
-                    if (auxnumber == numberUsers) {
-                      return users;
-                    }
-                  }
-                  auxnumber++;
-  
-                });
-            }));
-            //console.log("userservice", users);
+  getUsersByDepartment(departamentoId: string) { //mal
+    return this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
+      res => {
+        var users=[];
+        var idsUsuarios = res["usuarios"];
+        //var users = [];
+        idsUsuarios.forEach(element => {
+          this.getUserById(element).subscribe(
+            resp => {
+              var aux;
+              aux = resp;
+              users.push(aux);
+              console.log("usersret",users)
+            });
             return users;
-          }
         });
+      });      
   }
 }
- 
+  /*this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
+    res => {
+      var idsUsuarios = res["usuarios"];
+      var users = [];
+      idsUsuarios.forEach(element => {
+        this.getUserById(element).subscribe(
+          resp => {
+            console.log("USERSERVICE USER ENCONTRADO", resp);
+            var aux;
+            aux = resp;
+            users.push(aux);
+          }
+        );
+      });
+      return users;
+    });
+    console.log("PROBLEMA", users)
+    return users;*/
+

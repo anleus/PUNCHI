@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router'
 import { DepartamentosService } from '../../services/departamentos.service'
 import { AuthenticationService } from '../../services/auth.service';
@@ -9,12 +9,14 @@ import { Departamento } from 'src/app/models/departamento';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
-export interface UserData {
-  userName: string;
-  userId: string;
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
 }
+
 
 
 @Component({
@@ -29,10 +31,6 @@ export class UsuariosComponent implements OnInit {
   admin = false;
   gestor = false;
   logUser = this.authService.getCurrentUser();
-  userName: string;
-  userId: string;
-  confirmation: boolean;
-
 
   //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   //dataSource = ELEMENT_DATA;
@@ -40,7 +38,7 @@ export class UsuariosComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'apellidos', 'departamento', 'select'];
 
   constructor(private departamentosService: DepartamentosService, private router: Router,
-    private authService: AuthenticationService, private userService: UserService, public dialog: MatDialog) { }
+    private authService: AuthenticationService, private userService: UserService) { }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -129,52 +127,10 @@ export class UsuariosComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
-
-  openDialog(element: User): void {
-    const dialogRef = this.dialog.open(ConfirmacionBorrarUsuario, {
-      width: '650px',
-      data: {userName: element.nombre + " " + element.apellidos, userId: element._id}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (this.confirmation) {
-        console.log('Usuario' + result + 'eliminado');
-      }
-      
-    });
+  deleteUserSelected(element: User) {
+    //Falta mensaje de confirmación.
+    //this.userService.deleteUser(element._id).subscribe(
+    //  () => { window.location.reload() } //esto cambiar
+    //)
   }
-
-  editUserSelected(element: User){
-    this.router.navigate(['/fichapersonaladmin'],{queryParams: {nombre: element.username}});
-  }
-}
-
-@Component ({
-  selector: 'confirmacion-borrado',
-  templateUrl: 'confirmacion-borrado.html',
-  styleUrls: ['./confirmacion-borrado.css']
-})
-export class ConfirmacionBorrarUsuario {
-
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmacionBorrarUsuario>,
-    @Inject(MAT_DIALOG_DATA) public data: UserData,
-    private userService: UserService) {}
-  
-    onNoClick() : void {
-      this.dialogRef.close();
-    }
-
-    deleteUserSelected(elementId: string) {
-      this.userService.getUserById(elementId).subscribe(
-        (res: User) => {
-          res.deleted = true;
-          try {
-          this.userService.putUser(res);
-          } catch (err) {}
-          this.dialogRef.close();
-        }
-      )
-    }
 }
