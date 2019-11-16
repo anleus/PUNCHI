@@ -29,9 +29,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 @NgModule({ imports: [FormsModule] })
 export class FichaPersonalComponent implements OnInit {
-
   usuarioLogueado: User;
-  usuarioSinModificar :User;
+  usuarioSinModificar: User;
   public userForm: FormGroup;
   public userV: User;
   usuarioform: FormGroup;
@@ -43,9 +42,8 @@ export class FichaPersonalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
     //guardar copia usuario sin modificar
-    this.usuarioSinModificar=this.usuarioLogueado;
+    this.usuarioSinModificar = this.usuarioLogueado;
 
     //usuario logueado
     var usuarioAct = this.authService.getCurrentUser();
@@ -55,9 +53,15 @@ export class FichaPersonalComponent implements OnInit {
     var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
 
     this.usuarioform = new FormGroup({
-      nombre: new FormControl(this.usuarioLogueado.nombre, [Validators.required]),
-      apellidos: new FormControl(this.usuarioLogueado.apellidos,  [Validators.required]),
-      fechaNacimiento: new FormControl(this.usuarioLogueado.fechaNacimiento, [Validators.required]),
+      nombre: new FormControl(this.usuarioLogueado.nombre, [
+        Validators.required
+      ]),
+      apellidos: new FormControl(this.usuarioLogueado.apellidos, [
+        Validators.required
+      ]),
+      fechaNacimiento: new FormControl(this.usuarioLogueado.fechaNacimiento, [
+        Validators.required
+      ]),
       email: new FormControl(this.usuarioLogueado.email, [
         Validators.required,
         Validators.pattern(emailPattern)
@@ -67,10 +71,12 @@ export class FichaPersonalComponent implements OnInit {
         Validators.required,
         Validators.minLength(8)
       ]),
-      username: new FormControl(this.usuarioLogueado.username,  [Validators.required]),
+      username: new FormControl(this.usuarioLogueado.username, [
+        Validators.required
+      ]),
       password: new FormControl(this.usuarioLogueado.password, [
         Validators.required,
-        Validators.minLength(5)
+        Validators.minLength(4)
       ]),
       localidad: new FormControl(this.usuarioLogueado.localidad, [
         Validators.required,
@@ -104,7 +110,7 @@ export class FichaPersonalComponent implements OnInit {
     usuarioAct.subscribe(user => (this.usuarioLogueado = user));
     //valores pasados por formulario si eres usuario
     if (
-      this.usuarioLogueado.admin == false ||
+      this.usuarioLogueado.admin == false &&
       this.usuarioLogueado.gestor == false
     ) {
       this.usuarioLogueado.password = form.value.password;
@@ -130,32 +136,31 @@ export class FichaPersonalComponent implements OnInit {
 
     if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
-      if (this.comprobarNumeroAlInicioDomicilio() == false ) {
+      if (this.comprobarNumeroAlInicioDomicilio() == false) {
         this.snackError("Domicilio con números al inicio.");
-      } 
-      else {
+      } else {
         this.userService.putUser(this.usuarioLogueado);
         this.snackSuccess("Usuario modificado correctamente");
       }
     }
   }
 
-   comprobarNumeroAlInicioDomicilio(){
-     if(this.usuarioLogueado.domicilio.indexOf("1") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("2") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("3") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("4") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("5") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("6") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("7") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("8") > -1 ||
-     this.usuarioLogueado.domicilio.indexOf("9") > -1){
-       return false;
-     }else{
-       return true;
-     }
-     
-
+  comprobarNumeroAlInicioDomicilio() {
+    if (
+      this.usuarioLogueado.domicilio.indexOf("1") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("2") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("3") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("4") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("5") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("6") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("7") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("8") > -1 ||
+      this.usuarioLogueado.domicilio.indexOf("9") > -1
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   snackError(message) {
@@ -179,21 +184,56 @@ export class FichaPersonalComponent implements OnInit {
   }
 
   eliminarcambios(form) {
-    this.usuarioform.controls["domicilio"].setValue(
-      this.usuarioLogueado.domicilio
-    );
-    this.usuarioform.controls["localidad"].setValue(
-      this.usuarioLogueado.localidad
-    );
-    this.usuarioform.controls["telefono"].setValue(
-      this.usuarioLogueado.telefono
-    );
-    this.usuarioform.controls["provincia"].setValue(
-      this.usuarioLogueado.provincia
-    );
-    this.usuarioform.controls["password"].setValue(
-      this.usuarioLogueado.password
-    );
-    this.usuarioform.controls["email"].setValue(this.usuarioLogueado.email);
+    //si eres usuario NORMAL limpiamos solo los campos que puede mofificar
+    if (
+      this.usuarioLogueado.gestor == false &&
+      this.usuarioLogueado.admin == false
+    ) {
+      this.usuarioform.controls["domicilio"].setValue(
+        this.usuarioLogueado.domicilio
+      );
+      this.usuarioform.controls["localidad"].setValue(
+        this.usuarioLogueado.localidad
+      );
+      this.usuarioform.controls["telefono"].setValue(
+        this.usuarioLogueado.telefono
+      );
+      this.usuarioform.controls["provincia"].setValue(
+        this.usuarioLogueado.provincia
+      );
+      this.usuarioform.controls["password"].setValue(
+        this.usuarioLogueado.password
+      );
+      this.usuarioform.controls["email"].setValue(this.usuarioLogueado.email);
+    }
+    //si eres usuario GESTOR/ADMIN limpiamos solo los campos que puede mofificar
+    else {
+      this.usuarioform.controls["nombre"].setValue(this.usuarioLogueado.nombre);
+      this.usuarioform.controls["apellidos"].setValue(
+        this.usuarioLogueado.apellidos
+      );
+      this.usuarioform.controls["fechaNacimiento"].setValue(
+        this.usuarioLogueado.fechaNacimiento
+      );
+      this.usuarioform.controls["username"].setValue(
+        this.usuarioLogueado.username
+      );
+      this.usuarioform.controls["domicilio"].setValue(
+        this.usuarioLogueado.domicilio
+      );
+      this.usuarioform.controls["localidad"].setValue(
+        this.usuarioLogueado.localidad
+      );
+      this.usuarioform.controls["telefono"].setValue(
+        this.usuarioLogueado.telefono
+      );
+      this.usuarioform.controls["provincia"].setValue(
+        this.usuarioLogueado.provincia
+      );
+      this.usuarioform.controls["password"].setValue(
+        this.usuarioLogueado.password
+      );
+      this.usuarioform.controls["email"].setValue(this.usuarioLogueado.email);
+    }
   }
 }

@@ -12,8 +12,7 @@ import { environment } from "src/environments/environment";
  *  Misteriosamente si pongo esto dentro de la clase no funciona,
  *  de momento se quedará aqui, si, se que es mas feo que pegarle a un padre pero es lo que hay ¯\_(ツ)_/¯  
  */
-var t; 
-const endpoint = 'http://localhost:3000/api/v1/'
+var t;
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -45,7 +44,7 @@ export class InicioComponent implements OnInit {
 
   fichando = false;
   icon = 'play_arrow';
-  text = 'Empezar jornada';
+  text = 'Fichar';
   class = 'nofichando';
   tiempoFichando = 0;
   timeLabel = '00:00:00';
@@ -57,9 +56,6 @@ export class InicioComponent implements OnInit {
   constructor(private jornadaService : JornadaService, private authService : AuthenticationService) { }
 
   ngOnInit() {
-
-    this.authService.checkToken(); // Chequea si hay un token, esto hay que hacerlo mejor con el Resolve
-
     if(this.authService.currentUserValue.becario)
       this.setBecarioButton();
     else if(localStorage.getItem('jornada')){
@@ -76,7 +72,7 @@ export class InicioComponent implements OnInit {
     if(this.authService.currentUserValue.becario) return;
     this.fichando = !this.fichando;
     this.icon =  !this.fichando ? 'play_arrow' : 'stop';
-    this.text = !this.fichando ? 'Empezar jornada' : 'Terminar jornada';
+    this.text = !this.fichando ? 'Fichar' : 'Salida';
     if(this.fichando){
       t = setInterval(() => {++this.tiempoFichando; this.updateTimeLabel()}, 1000);
       if(!onInit)

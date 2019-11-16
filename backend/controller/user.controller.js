@@ -80,7 +80,7 @@ userFunctions.addUser = async (req, res, next) => {
 
 userFunctions.updateUser = (req, res, next) => {
   const user = new User({
-    _id: req.body._id,
+   // _id: req.params.id,
     nombre: req.body.nombre,
     apellidos: req.body.apellido,
     fechaNacimiento: req.body.date,
@@ -92,15 +92,15 @@ userFunctions.updateUser = (req, res, next) => {
     gestor: req.body.gestor,
     admin: req.body.admin,
     nuss: req.body.nuss,
-    deleted: false,
+    deleted: req.body.deleted,
     username: req.body.username,
     password: req.body.password,
     becario: req.body.becario
   });
-
-  User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
+    User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
       //res.status(200);
+      console.log("data")
       res.send("User updated");
     })
     .catch(err => {
