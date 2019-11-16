@@ -12,7 +12,7 @@ import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FichaPersonalComponent } from './components/ficha-personal/ficha-personal.component';
 import { DepartamentosComponent } from './components/departamentos/departamentos.component';
-import { IncidenciasComponent } from './components/incidencias/incidencias.component';
+import { IncidenciasComponent } from './components/incidencias-usuario/incidencias.component';
 import { InformesComponent } from './components/informes/informes.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { AsignarDepComponent } from './components/asignar-dep/asignar-dep.component';

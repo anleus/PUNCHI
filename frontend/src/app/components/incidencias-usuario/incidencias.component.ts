@@ -1,6 +1,6 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs';
@@ -24,8 +24,13 @@ export class IncidenciasComponent implements OnInit {
   usuarioLogueado: User;
   vacation: Vacation;
   vacacionesUsuario: Date[];
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['usuario', 'asunto', 'mensaje', 'estado'];
+  selection = new SelectionModel<User>(true, []);
+
+  
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private router: Router,
@@ -35,13 +40,23 @@ export class IncidenciasComponent implements OnInit {
    */ {}
 
   ngOnInit() {
-    this.authService
+    /*this.authService
       .getCurrentUser()
       .subscribe((user) => (this.usuarioLogueado = user));
     console.log('holaa');
     console.log(this.usuarioLogueado);
-    //this.vacationService.getVacationByUsername(this.usuarioLogueado._id).then(vac=> if(pending==undefined){}else{(this.vacation = vac)});
-    //console.log("hollaaa" + this.vacation.pending);
-    //this.vacacionesUsuario = this.vacation.pending;
+    this.vacationService.getVacationByUsername(this.usuarioLogueado._id).then(vac=> if(pending==undefined){}else{(this.vacation = vac)});
+    console.log("hollaaa" + this.vacation.pending);
+    this.vacacionesUsuario = this.vacation.pending;*/
+
+    this.userService.getUsersNoDeleted().subscribe(
+      (resp) => {
+        this.dataSource = new MatTableDataSource<User>(resp);
+        this.dataSource.paginator = this.paginator;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
