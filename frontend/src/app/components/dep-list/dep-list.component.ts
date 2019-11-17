@@ -157,7 +157,7 @@ export class DepListComponent implements OnInit {
       openDialog(element: User): void {
       const dialogRef = this.dialog.open(OverviewConfirmacionBorradoDep, {
         width: '500px',
-        data: {}
+        data: {DepName: element.nombre, DepId: element._id}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -185,14 +185,14 @@ export class OverviewConfirmacionBorradoDep {
   }
 
   deleteDepSelected(elementId: string) {
-     let Dep = null
-    this.departamentoService.getDepartamentoByIDObject(elementId).subscribe(
-      (res: Departamento) => {
         try {
-        this.departamentoService.deleteDept(res._id)
+        console.log('Intente borrar')  
+        this.departamentoService.deleteDept(elementId).subscribe()
         } catch (err) {}
         this.dialogRef.close();
+        window.location.reload();
       }
-    )
-  }
-}
+    
+    
+    }    
+

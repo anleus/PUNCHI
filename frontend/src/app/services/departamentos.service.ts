@@ -43,8 +43,8 @@ export class DepartamentosService {
     return Promise.resolve(res);
   }
 
-  deleteDept(_id: string) {
-    return this.http.delete(this.url + _id);
+  deleteDept(id: string) {
+    return this.http.delete(this.url + id);
   }
   getDepartamentoByUser(user: string) {
     return this.http.get(this.url + `usuarios/${user}`).pipe(
@@ -62,8 +62,9 @@ export class DepartamentosService {
     return this.http.get<Departamento[]>(this.url + id);
   }
   getDepartamentoByIDObject(id: string) {
-    return this.http.get(this.url + "/" + id)
+    return this.http.get(this.url +  id)
     .pipe(map(dep => {
+      console.log(dep)
       return dep;
     }));
   }
