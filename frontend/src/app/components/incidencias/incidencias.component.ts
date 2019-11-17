@@ -15,6 +15,8 @@ import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
 import { Incidencia } from "src/app/models/Incidencia";
 import { IncidenciaService } from "src/app/services/incidencia.service";
+import { element } from 'protractor';
+import { IgxCardThumbnailDirective, changei18n } from 'igniteui-angular';
 
 @Component({
   selector: "app-incidencias",
@@ -53,12 +55,25 @@ export class IncidenciasComponent implements OnInit {
     console.log("hollaaa" + this.vacation.pending);
     this.vacacionesUsuario = this.vacation.pending;*/
 
-    this.getIncidencias();
+    if(this.usuarioLogueado.source["_value"].admin == false && this.usuarioLogueado.source["_value"].gestor == false){
+      this.getIncidenciaByUserId();
+    }else{
+      this.getIncidencias();
+    }
   }
 
   getIncidencias() {
     var incidenciaObs = this.incidenciaService.getIncidencias();
     console.log(incidenciaObs);
+    incidenciaObs.subscribe(incidencias => {
+      this.incidencias = incidencias;
+      this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  getIncidenciaByUserId() {
+    var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
       this.incidencias = incidencias;
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);

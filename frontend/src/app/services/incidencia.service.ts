@@ -17,7 +17,7 @@ export class IncidenciaService {
     return this.http.get<Incidencia[]>(this.url);
   }
 
-  getIncidenciaByUserId(userId: string): Promise<any> {
+  /*getIncidenciaByUserId(userId: string): Promise<any> {
     return this.http
       .get(this.url + "user/" + userId)
       .toPromise()
@@ -25,5 +25,9 @@ export class IncidenciaService {
   }
   onGetIncidenciaByUserId(res: any) {
     return Promise.resolve(res);
+  }*/
+
+  getIncidenciaByUserId(userId): Observable<Incidencia[]> {
+    return this.http.get<Incidencia[]>(this.url + "user/" + userId);
   }
 }

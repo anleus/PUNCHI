@@ -22,6 +22,14 @@ let Incidencia = new Schema({
     estado: {
         type: String,
         required: true
+    },
+    asunto: {
+        type: String,
+        required: true
+    },
+    usuario: {
+        type: String,
+        required: true
     }
 });
 

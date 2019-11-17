@@ -34,7 +34,6 @@ export class UserService {
 
   getUserByUsernameDOS(username) {
     return this.http.get(this.url + `/username/${username}`)
-      
   }
 
   getUserById(id: string) {

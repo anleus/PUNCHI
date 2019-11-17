@@ -5,4 +5,6 @@ export interface Incidencia {
     incidencias: boolean;
     mensaje: string;
     estado: string;
+    asunto: string;
+    usuario: string;
 }

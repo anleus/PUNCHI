@@ -50,9 +50,6 @@ export class AsignarDepComponent implements OnInit {
     this.getDepartamentos()
 
   }
-  private onGetUserByName(res: any) {
-    this.user = res;
-  }
 
 
     getUsuarios(){
