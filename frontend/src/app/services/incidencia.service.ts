@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Incidencia } from "../models/Incidencia";
+import Incidencia from "../models/incidencia";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { AuthenticationService } from "./auth.service";
