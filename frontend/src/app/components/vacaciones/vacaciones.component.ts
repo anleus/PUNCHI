@@ -32,6 +32,7 @@ export class VacacionesComponent implements OnInit {
     this.currentUserId = this.authservice.currentUserValue._id.toString();
 
     console.log(this.authservice.currentUserValue._id);
+    
     this.vacationservice.getVacationByUsername(this.authservice.currentUserValue._id.toString()).then(
       res => {
         console.log("Got the vacation days!");

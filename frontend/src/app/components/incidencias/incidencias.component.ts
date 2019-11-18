@@ -10,7 +10,7 @@ import {
   MatDialog
 } from "@angular/material/dialog";
 import { UserService } from "src/app/services/user.service";
-//import { VacationService } from 'src/app/services/vacation.service';
+import { VacationService } from 'src/app/services/vacation.service';
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
 import Incidencia from "src/app/models/incidencia";
@@ -41,7 +41,8 @@ export class IncidenciasComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private incidenciaService: IncidenciaService,
-    private authService: AuthenticationService // private vacationService: VacationService
+    private authService: AuthenticationService, // private vacationService: VacationService
+    private vacationService: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
@@ -74,12 +75,13 @@ export class IncidenciasComponent implements OnInit {
           resp => {
             if (resp != null) {
               element.usuario = resp["username"];
-            } 
+            }
             else { element.usuario = "usuario no existente, ALERTA"; }
             auxnumber++;
             if (auxnumber == numberUsers) {
               this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
-              this.dataSource.paginator = this.paginator;            }
+              this.dataSource.paginator = this.paginator;
+            }
           });
       });
     });
@@ -98,33 +100,52 @@ export class IncidenciasComponent implements OnInit {
     });
   }
 
-  aceptarIncidencia(inc: Incidencia){
+  aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    console.log(inc.estado);
+    let incDate = this.getDayFromIncidencia(inc);
+    console.log('hola');
+    console.log(inc.id_user);
+    this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
+      userVacations.left--;
+      userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
+      userVacations.past.push(new Date(incDate));
+      this.vacationService.putVacationUser(userVacations._id, userVacations);
+    }).catch((err) => console.log(err));
   }
 
-  denegarIncidencia(inc: Incidencia){
+  getDayFromIncidencia(inc: Incidencia) {
+    return inc.mensaje.slice(5);
+  }
+
+  pad2(num) {
+    return num < 10 ? '0' + num : num;
+  }
+
+  getDayFromDate(date: Date) {
+    return this.pad2(date.getDay()) + '/' + this.pad2(date.getMonth()) + '/' + this.pad2(date.getFullYear())
+  }
+  denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
     console.log(inc.estado);
   }
 
-  esPendiente(inc: Incidencia){
+  esPendiente(inc: Incidencia) {
     return inc.estado == "pendiente";
   }
-  esAdmin(){
+  esAdmin() {
     return this.userL.admin;
   }
 
-  getDC(){
+  getDC() {
     this.authService.getCurrentUser().subscribe((user) => (this.userL = user));
-    if(this.userL.admin){
-      return ["usuario", "asunto", "mensaje", "estado","select"];
-    }else{
+    if (this.userL.admin) {
+      return ["usuario", "asunto", "mensaje", "estado", "select"];
+    } else {
       return ["usuario", "asunto", "mensaje", "estado"];
     }
   }
 
-  
+
 }
