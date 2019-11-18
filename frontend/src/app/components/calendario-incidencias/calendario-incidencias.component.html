@@ -8,15 +8,11 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 
 <div class="container">
     <div class='app'>
-        <div class='app-top'>
-            <button (click)='toggleWeekends()'>Ocultar/Mostrar fines de semana</button>
-        </div>
-
         <div class='app-calendar'>
             <full-calendar #calendar defaultView="dayGridMonth" [selectMinDistance]="2" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
-                      left: 'prev,next today',
+                      left: 'today',
                       center: 'title',
-                      right: ''
+                      right: 'prev,next'
                     }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
                     [selectable]= 'true'
                 (dateClick)="handleDateClick($event)" (select)="handleSelectDate($event)"></full-calendar>
