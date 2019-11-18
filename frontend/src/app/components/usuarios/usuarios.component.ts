@@ -73,14 +73,18 @@ export class UsuariosComponent implements OnInit {
             this.userService.getUserById(element).subscribe(
               resp => {
                 if (resp != null) {
-                  var aux;
-                  aux = resp;
-                  this.usersret.push(aux);
-                  if (auxnumber == numberUsers) {
-                    this.addDepartmentGestor(this.usersret, nombreDepartamento);
+                  if (resp["_id"] != this.logUser.source["_value"]._id) {
+                    if (resp["deleted"] == false) {
+                      var aux;
+                      aux = resp;
+                      this.usersret.push(aux);
+                      if (auxnumber == numberUsers) {
+                        this.addDepartmentGestor(this.usersret, nombreDepartamento);
+                      }
+                    }
                   }
                 }
-                else { console.log("usuario no existente, ALERTA");}
+                else { console.log("usuario no existente, ALERTA"); }
                 auxnumber++;
 
               });
@@ -101,8 +105,16 @@ export class UsuariosComponent implements OnInit {
   getUsersAdmin() {
     this.userService.getAllUsers().subscribe(
       (res) => {
+        res.forEach((element, i) => {
+          if (element["_id"] == this.logUser.source["_value"]._id) {
+            res.splice(i, 1);
+          }
+          if (element["deleted"] == true) {
+            console.log(this.logUser);
+            res.splice(i, 1);
+          }
+        });
         this.addDepartment(res);
-        //console.log(res);
       },
       (err) => {
         console.log(err);
@@ -111,7 +123,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   addDepartment(users) {
-    console.log("add departemnt users null?", users);
     users.forEach(element => {
       this.departamentosService.getDepartamentoByUser(element._id).subscribe(
         res => {
@@ -124,33 +135,32 @@ export class UsuariosComponent implements OnInit {
         }
       );
     });
-    console.log("tots", users);
     this.dataSource = new MatTableDataSource<User>(users);
     this.dataSource.paginator = this.paginator;
   }
 
-  
+
 
   openDialog(element: User): void {
     const dialogRef = this.dialog.open(ConfirmacionBorrarUsuario, {
       width: '650px',
-      data: {userName: element.nombre + " " + element.apellidos, userId: element._id}
+      data: { userName: element.nombre + " " + element.apellidos, userId: element._id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
         console.log('Usuario' + result + 'eliminado');
       }
-      
+
     });
   }
 
-  editUserSelected(element: User){
-    this.router.navigate(['/fichapersonaladmin'],{queryParams: {nombre: element.username}});
+  editUserSelected(element: User) {
+    this.router.navigate(['/fichapersonaladmin'], { queryParams: { nombre: element.username } });
   }
 }
 
-@Component ({
+@Component({
   selector: 'confirmacion-borrado',
   templateUrl: 'confirmacion-borrado.html',
   styleUrls: ['./confirmacion-borrado.css']
@@ -160,21 +170,21 @@ export class ConfirmacionBorrarUsuario {
   constructor(
     public dialogRef: MatDialogRef<ConfirmacionBorrarUsuario>,
     @Inject(MAT_DIALOG_DATA) public data: UserData,
-    private userService: UserService) {}
-  
-    onNoClick() : void {
-      this.dialogRef.close();
-    }
+    private userService: UserService) { }
 
-    deleteUserSelected(elementId: string) {
-      this.userService.getUserById(elementId).subscribe(
-        (res: User) => {
-          res.deleted = true;
-          try {
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  deleteUserSelected(elementId: string) {
+    this.userService.getUserById(elementId).subscribe(
+      (res: User) => {
+        res.deleted = true;
+        try {
           this.userService.putUser(res);
-          } catch (err) {}
-          this.dialogRef.close();
-        }
-      )
-    }
+        } catch (err) { }
+        this.dialogRef.close();
+      }
+    )
+  }
 }

@@ -55,20 +55,32 @@ export class IncidenciasComponent implements OnInit {
     console.log("hollaaa" + this.vacation.pending);
     this.vacacionesUsuario = this.vacation.pending;*/
 
-    if(this.usuarioLogueado.source["_value"].admin == false && this.usuarioLogueado.source["_value"].gestor == false){
+    if (this.usuarioLogueado.source["_value"].admin == false && this.usuarioLogueado.source["_value"].gestor == false) {
       this.getIncidenciaByUserId();
-    }else{
+    } else {
       this.getIncidencias();
     }
   }
 
   getIncidencias() {
     var incidenciaObs = this.incidenciaService.getIncidencias();
-    console.log(incidenciaObs);
     incidenciaObs.subscribe(incidencias => {
+      var numberUsers = incidencias.length;
+      var auxnumber = 0;
       this.incidencias = incidencias;
-      this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
-      this.dataSource.paginator = this.paginator;
+      this.incidencias.forEach(element => {
+        this.userService.getUserById(element.id_user).subscribe(
+          resp => {
+            if (resp != null) {
+              element.usuario = resp["username"];
+            } 
+            else { element.usuario = "usuario no existente, ALERTA"; }
+            auxnumber++;
+            if (auxnumber == numberUsers) {
+              this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
+              this.dataSource.paginator = this.paginator;            }
+          });
+      });
     });
   }
 
@@ -76,6 +88,9 @@ export class IncidenciasComponent implements OnInit {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
       this.incidencias = incidencias;
+      this.incidencias.forEach((element, i) => {
+        element.usuario = this.usuarioLogueado.source["_value"].username;
+      });
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
       this.dataSource.paginator = this.paginator;
     });
