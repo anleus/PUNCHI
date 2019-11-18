@@ -54,18 +54,19 @@ export class DepartamentosService {
     );
   }
 
-  getDepartamentoByGestor(user: string) : Observable<Departamento[]> {
+  getDepartamentoByGestor(user: string): Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.url + `responsable/${user}`);
   }
 
-  getDepartamentoByID(id: string) : Observable<Departamento[]> {
+  getDepartamentoByID(id: string): Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.url + id);
   }
   getDepartamentoByIDObject(id: string) {
-    return this.http.get(this.url +  id)
-    .pipe(map(dep => {
-      console.log(dep)
-      return dep;
-    }));
+    return this.http.get(this.url + id).pipe(
+      map((dep: Departamento) => {
+        console.log(dep);
+        return dep;
+      })
+    );
   }
 }
