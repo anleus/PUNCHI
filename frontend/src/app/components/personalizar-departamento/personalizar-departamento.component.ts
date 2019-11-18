@@ -41,7 +41,9 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     if (localStorage.getItem("editDepartamento") === "true") this.isEdit = true;
 
     this.UserService.getAllUsersObject().subscribe((res: User[]) => {
-      this.allUsers = res;
+      this.allUsers = res.filter((v: User) => {
+        return v.deleted == false;
+      });
     });
     this.initDrag();
     if (this.isEdit) {
