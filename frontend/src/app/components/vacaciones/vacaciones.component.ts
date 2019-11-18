@@ -23,7 +23,7 @@ export class VacacionesComponent implements OnInit {
   }
 
   handleDateClick(arg) {
-    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + arg.dateStr + '?')) {
+    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + this.dateFormatter(arg.date) + '?')) {
       this.calendarEvents = this.calendarEvents.concat(
         { // add new event data. must create new array
         start: arg.date,
@@ -35,7 +35,7 @@ export class VacacionesComponent implements OnInit {
   }
 
   handleSelectDate(arg) {
-    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + arg.startStr + ' hasta: ' + arg.endStr + '?')) {
+    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + this.dateFormatter(arg.start) + ' hasta: ' + this.dateFormatter(arg.end) + '?')) {
       this.calendarEvents = this.calendarEvents.concat(
         { // add new event data. must create new array
         title: 'Día de vacaciones',
@@ -48,6 +48,10 @@ export class VacacionesComponent implements OnInit {
 
   handleButton() {
     console.log("Button clicked");
+  }
+
+  dateFormatter(date : Date) {
+    return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
   }
 
   constructor() { }
