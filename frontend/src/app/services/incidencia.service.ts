@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Incidencia } from "../models/Incidencia";
+import Incidencia from "../models/incidencia";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { AuthenticationService } from "./auth.service";
@@ -33,7 +33,6 @@ export class IncidenciaService {
 
   putIncidencia(incidencia: Incidencia) {
     console.log(incidencia);
-    console.log(this.url + "user/" + incidencia.id_user, incidencia);
-    return this.http.put(this.url + "user/" + incidencia.id_user, incidencia).subscribe(response => { console.log(response)});
+    return this.http.put(this.url + "user/" + incidencia._id, incidencia).subscribe(response => { console.log(response)});
   }
 }
