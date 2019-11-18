@@ -5,7 +5,7 @@
         </div>
 
         <div class='app-calendar'>
-            <full-calendar #calendar defaultView="dayGridMonth" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
+            <full-calendar #calendar defaultView="dayGridMonth" [selectMinDistance]="1" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
                       left: 'prev,next today',
                       center: 'title',
                       right: ''

@@ -23,24 +23,24 @@ export class VacacionesComponent implements OnInit {
   }
 
   handleDateClick(arg) {
-    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + arg.dateStr + ' ?')) {
+    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + arg.dateStr + '?')) {
       this.calendarEvents = this.calendarEvents.concat(
         { // add new event data. must create new array
-        title: 'Día de vacaciones',
         start: arg.date,
-        allDay: arg.allDay,
-        color: 'orange'
+        allDay: true,
+        rendering: 'background',
+        backgroundColor: '#FF0000'
         })
     }
   }
 
   handleSelectDate(arg) {
-    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + arg.startStr + ' hasta : ' + arg.endStr + '?')) {
+    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + arg.startStr + ' hasta: ' + arg.endStr + '?')) {
       this.calendarEvents = this.calendarEvents.concat(
         { // add new event data. must create new array
         title: 'Día de vacaciones',
         start: arg.date,
-        allDay: arg.allDay,
+        allDay: true,
         color: 'orange'
         })
     }
