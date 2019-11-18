@@ -22,21 +22,33 @@ export class VacacionesComponent implements OnInit {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
-  gotoPast() {
-    let calendarApi = this.calendarComponent.getApi();
-    calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
-  }
-
   handleDateClick(arg) {
-    if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
-      this.calendarEvents = this.calendarEvents.concat({ // add new event data. must create new array
-        title: 'New Event',
+    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + arg.dateStr + ' ?')) {
+      this.calendarEvents = this.calendarEvents.concat(
+        { // add new event data. must create new array
+        title: 'Día de vacaciones',
         start: arg.date,
-        allDay: arg.allDay
-      })
+        allDay: arg.allDay,
+        color: 'orange'
+        })
     }
   }
 
+  handleSelectDate(arg) {
+    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + arg.startStr + ' hasta : ' + arg.endStr + '?')) {
+      this.calendarEvents = this.calendarEvents.concat(
+        { // add new event data. must create new array
+        title: 'Día de vacaciones',
+        start: arg.date,
+        allDay: arg.allDay,
+        color: 'orange'
+        })
+    }
+  }
+
+  handleButton() {
+    console.log("Button clicked");
+  }
 
   constructor() { }
 

@@ -5,13 +5,14 @@
         </div>
 
         <div class='app-calendar'>
-            <full-calendar #calendar defaultView="dayGridMonth" [header]="{
+            <full-calendar #calendar defaultView="dayGridMonth" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
                       left: 'prev,next today',
                       center: 'title',
                       right: ''
                     }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
                     [selectable]= 'true'
-                (dateClick)="handleDateClick($event)"></full-calendar>
+                (dateClick)="handleDateClick($event)" (select)="handleSelectDate($event)"></full-calendar>
         </div>
+        <button (click)="handleButton()">Solicitar vacaciones</button>
     </div>
 </div>
