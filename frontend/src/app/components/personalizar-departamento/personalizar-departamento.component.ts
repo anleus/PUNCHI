@@ -14,7 +14,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   isEdit: Boolean;
   departamentoEditing: Departamento;
   departamentos: Departamento[];
-  departamentoAlreadyExists: Boolean;
+  departamentoAlreadyExists: Boolean = false;
   nombre: string;
   responsable: User;
   allUsers: User[];
@@ -50,8 +50,8 @@ export class PersonalizarDepartamentoComponent implements OnInit {
       this.selectedResponsable = "";
     }
   }
-  nombreDepartamento(event: any) {
-    this.nombre = event.target.value;
+
+  isDuplicate() {
     let duplicate = this.departamentos.filter(v => {
       return v.nombre === this.nombre;
     });
@@ -61,6 +61,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     } else {
       this.departamentoAlreadyExists = false;
     }
+    return this.departamentoAlreadyExists;
   }
   getDepartamentos() {
     var departamentoObs = this.departamentosService.getDepartamentos();
