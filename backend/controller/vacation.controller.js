@@ -8,7 +8,7 @@ vacationFunctions.getVacations = async (req, res, next) => {
 }
 
 vacationFunctions.getUserVacations = async (req, res, next) => {
-    Vacation.find({user: Mongoose.Types.ObjectId(req.params.id)}).then(docs => res.json(docs)).catch(err => {console.log(err); res.status('400').send('An error ocurred')})
+    Vacation.find({user: Mongoose.Types.ObjectId(req.params.id)}).then(docs => {res.json(docs[0])}).catch(err => {console.log(err); res.status('400').send('An error ocurred')})
 }
 
 vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo debe ejecutarse al crear un usuario
@@ -27,12 +27,13 @@ vacationFunctions.updateVacations = async (req, res, next) => {
                 "\nleft: "    + req.body.left    +
                 "\npast: "    + req.body.past);
     const vacation = new Vacation({
-        user: req.body.id,
+        _id: req.body._id,
+        user: req.body.user,
         pending: req.body.pending,
         left: req.body.left,
         past: req.body.past
     });
-    Vacation.findByIdAndUpdate(req.body.id,{$set: vacation}).then(res.status(200).json('Vacation updated')).catch(err => {console.log(err);res.status(400).send('An error ocurred')});
+    Vacation.findByIdAndUpdate(req.params.id,{$set: vacation}).then(res.status(200).json('Vacation updated')).catch(err => {console.log(err);res.status(400).send('An error ocurred')});
 }
 
 vacationFunctions.deleteVacations = async(req, res, next) => {//Esto no deberia ejecutarse pero esta por si acaso

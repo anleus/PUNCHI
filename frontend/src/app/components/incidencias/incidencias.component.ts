@@ -41,7 +41,7 @@ export class IncidenciasComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private incidenciaService: IncidenciaService,
-    private authService: AuthenticationService, // private vacationService: VacationService
+    private authService: AuthenticationService,
     private vacationService: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
@@ -88,6 +88,19 @@ export class IncidenciasComponent implements OnInit {
   }
 
 
+  getDayFromIncidencia(inc : Incidencia){
+    return inc.mensaje.slice(5);
+  }
+
+  pad2(num){
+    return num < 10 ? '0'+num : num ;
+  }
+
+  getDayFromDate(date : Date){
+    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+  }
+
+
   getIncidenciaByUserId() {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
@@ -128,7 +141,6 @@ export class IncidenciasComponent implements OnInit {
   denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
-    console.log(inc.estado);
   }
 
   esPendiente(inc: Incidencia) {

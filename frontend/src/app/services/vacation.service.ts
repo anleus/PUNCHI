@@ -33,4 +33,8 @@ export class VacationService {
     this.http.post('http://localhost:4000/vacation/user/' + userid,vacation);
   }
 
+    public putVacationUser(userid, vacation){
+      this.http.put('http://localhost:4000/vacation/user/'+userid,vacation);
+    }
+
 }
