@@ -1,23 +1,16 @@
 <div class="container">
-    <div class="calendariocontainer">
-        <igx-calendar></igx-calendar>
-    </div>
-
-
     <div class='app'>
         <div class='app-top'>
-            <button (click)='toggleVisible()'>toggle visible</button>
-            <button (click)='toggleWeekends()'>toggle weekends</button>
-            <button (click)='gotoPast()'>go to a date in the past</button>
-            (also, click a date/time to add an event)
+            <button (click)='toggleWeekends()'>Ocultar/Mostrar fines de semana</button>
         </div>
 
-        <div class='app-calendar' *ngIf="calendarVisible">
+        <div class='app-calendar'>
             <full-calendar #calendar defaultView="dayGridMonth" [header]="{
                       left: 'prev,next today',
                       center: 'title',
-                      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                      right: ''
                     }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
+                    [selectable]= 'true'
                 (dateClick)="handleDateClick($event)"></full-calendar>
         </div>
     </div>

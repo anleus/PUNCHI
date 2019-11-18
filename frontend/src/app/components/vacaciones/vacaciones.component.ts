@@ -14,16 +14,9 @@ export class VacacionesComponent implements OnInit {
 
   calendarComponent: FullCalendarComponent;
 
-  calendarVisible = true;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
-  calendarEvents: EventInput[] = [
-    { title: 'Event Now', start: new Date() }
-  ];
-
-  toggleVisible() {
-    this.calendarVisible = !this.calendarVisible;
-  }
+  calendarEvents: EventInput[] = [];
 
   toggleWeekends() {
     this.calendarWeekends = !this.calendarWeekends;
