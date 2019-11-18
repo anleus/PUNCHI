@@ -12,17 +12,22 @@ export class VacationService {
 
   constructor(private http: HttpClient) { }
 
-    getUserVacations = () => this.http.get('http://localhost:4000/vacation')
+  getUserVacations = () => this.http.get('http://localhost:4000/vacation')
 
-    //getUserJornadas = (userid) => this.http.get(this.url + userid);
-
-    getVacationByUsername(userid: string): Promise<any> {
+  getVacationByUsername(userid: string): Promise<any> {
     return this.http.get(this.url + "user/" + userid)
       .toPromise()
       .then(this.onGetVacationByName.bind(this));
-    }
-    onGetVacationByName(res: any) {
-        return Promise.resolve(res);
-    }
+  }
+
+  updateVacation(userid: string, dateP : Date, daysLeft : number) {  //para hacer update se le pasa el userid, la fecha de pending y el número de días que le quedan
+    return this.http.put(this.url + "user/update" + userid, {userid, daysLeft})
+      .toPromise()
+      .then(this.onGetVacationByName.bind(this));
+  }
+
+  onGetVacationByName(res: any) {
+    return Promise.resolve(res);
+  }
 
 }
