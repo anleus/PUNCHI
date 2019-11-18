@@ -15,7 +15,7 @@ import { AuthenticationService } from 'src/app/services/auth.service';
 })
 export class VacacionesComponent implements OnInit {
 
-  calendarComponent: FullCalendarComponent;
+  @ViewChild(FullCalendarComponent, { static: true }) calendarComponent: FullCalendarComponent;
 
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
@@ -26,7 +26,8 @@ export class VacacionesComponent implements OnInit {
     private authservice: AuthenticationService) { }
 
   ngOnInit() {
-    /*this.vacationservice.getVacationByUsername(this.authservice.currentUser.source["_value"].username).then(
+    console.log(this.authservice.currentUserValue._id);
+    this.vacationservice.getVacationByUsername(this.authservice.currentUserValue._id).then(
       res => {
         console.log("Got the vacation days!");
         console.log(typeof res);
@@ -48,9 +49,9 @@ export class VacacionesComponent implements OnInit {
             })
         });
       }
-    ); */
+    );
 
-    this.vacationservice.getUserVacations().subscribe(res => {
+    /* this.vacationservice.getUserVacations().subscribe(res => {
       res[0].pending.forEach(vac => {
         this.calendarEvents = this.calendarEvents.concat(
           {
@@ -61,9 +62,8 @@ export class VacacionesComponent implements OnInit {
             backgroundColor: '#FF0000'
           })
       });
-    });
+    }); */
   }
-
 
   toggleWeekends() {
     this.calendarWeekends = !this.calendarWeekends;
@@ -83,14 +83,30 @@ export class VacacionesComponent implements OnInit {
 
   handleSelectDate(arg) {
     if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + this.dateFormatter(arg.start) + ' hasta: ' + this.dateFormatter(arg.end) + '?')) {
-      this.calendarEvents = this.calendarEvents.concat(
-        { // add new event data. must create new array
-          title: 'Día de vacaciones',
-          start: arg.date,
-          allDay: true,
-          color: 'orange'
-        })
+      var i;
+      let date = arg.start;
+      for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
+        this.calendarEvents = this.calendarEvents.concat(
+          { // add new event data. must create new array
+            title: 'Día de vacaciones',
+            start: this.addDay2Month(arg.start, i),
+            allDay: true,
+            rendering: 'background',
+            backgroundColor: '#FF0000'
+          })
+      }
     }
+  }
+
+  addDay2Month(d: Date, i: number) {
+    var date = new Date(d.valueOf());
+    date.setDate(date.getDate() + i);
+    return date;
+  }
+
+  daysCount(ini: Date, fi: Date) {
+    let count = (fi.getTime() - ini.getTime()) / (1000 * 3600 * 24);
+    return Math.floor(count);
   }
 
   handleButton() {
@@ -98,7 +114,9 @@ export class VacacionesComponent implements OnInit {
     console.log("All events: ")
   }
 
+  getCorrectMonth(date: Date) { return (date.getMonth() + 1) }
+
   dateFormatter(date: Date) {
-    return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+    return date.getDate() + "/" + this.getCorrectMonth(date) + "/" + date.getFullYear();
   }
 }
