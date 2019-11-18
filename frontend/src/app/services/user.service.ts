@@ -76,7 +76,7 @@ export class UserService {
   }
 
   getUsersByDepartment(departamentoId: string) {
-    this.departamentosService
+    return this.departamentosService
       .getDepartamentoByID(departamentoId)
       .subscribe(res => {
         let all_obs = [];
@@ -105,6 +105,7 @@ export class UserService {
           //console.log("userservice", users);
           return users;
         }
+        
       });
   }
 }
