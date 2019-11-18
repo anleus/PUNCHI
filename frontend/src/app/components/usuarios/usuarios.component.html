@@ -5,11 +5,10 @@
   <mat-card class="card" flex="20">
     <div>
       <h1>Usuarios
-        <button mat-flat-button color="primary" mat-icon-button>
-          <mat-icon class="poc-mat-icon">
-            <i class="material-icons">add</i>
-          </mat-icon>
-        </button>
+        <button type="submit" (click)="newUser() " class="btn btn-primary text-center" data-toggle="button"
+        aria-pressed="false" autocomplete="off">
+        Nuevo usuario
+      </button>
       </h1>
     </div>
     <div>
