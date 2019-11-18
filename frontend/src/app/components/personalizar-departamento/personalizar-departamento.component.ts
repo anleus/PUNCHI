@@ -112,12 +112,20 @@ export class PersonalizarDepartamentoComponent implements OnInit {
       return;
     }
 
-    if (!this.isEdit)
+    if (!this.isEdit) {
       this.departamentosService.crearDepartamento({
         nombre: this.nombre,
         users: this.done,
         responsable: this.responsable
       });
+    } else {
+      this.departamentosService.updateDepartamento({
+        _id: this.departamentoEditing._id,
+        nombre: this.nombre,
+        users: this.done,
+        responsable: this.responsable
+      });
+    }
   }
 
   // drag
