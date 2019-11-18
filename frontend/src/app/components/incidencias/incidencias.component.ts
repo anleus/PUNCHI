@@ -13,7 +13,7 @@ import { UserService } from "src/app/services/user.service";
 //import { VacationService } from 'src/app/services/vacation.service';
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
-import { Incidencia } from "src/app/models/Incidencia";
+import Incidencia from "src/app/models/incidencia";
 import { IncidenciaService } from "src/app/services/incidencia.service";
 import { element } from 'protractor';
 import { IgxCardThumbnailDirective, changei18n } from 'igniteui-angular';
@@ -31,7 +31,7 @@ export class IncidenciasComponent implements OnInit {
   //vacacionesUsuario: Date[];
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ["usuario", "asunto", "mensaje", "estado"];
+  displayedColumns: string[] = ["usuario", "asunto", "mensaje", "estado","select"];
   selection = new SelectionModel<User>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -84,6 +84,7 @@ export class IncidenciasComponent implements OnInit {
     });
   }
 
+
   getIncidenciaByUserId() {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
@@ -94,5 +95,21 @@ export class IncidenciasComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  aceptarIncidencia(inc: Incidencia){
+    inc.estado = "aceptado";
+    this.incidenciaService.putIncidencia(inc);
+    console.log(inc.estado);
+  }
+
+  denegarIncidencia(inc: Incidencia){
+    inc.estado = "denegado";
+    this.incidenciaService.putIncidencia(inc);
+    console.log(inc.estado);
+  }
+
+  esPendiente(inc: Incidencia){
+    return inc.estado == "pendiente";
   }
 }

@@ -36,7 +36,6 @@ export class MainNavComponent {
 
   shouldIShowMyHamburguer() {
     this.urlrn = window.location.href;
-    console.log(this.urlrn);
     if (this.urlrn.substring(this.urlrn.length - 5, this.urlrn.length) == 'login') {
       this.flag = false;
     }

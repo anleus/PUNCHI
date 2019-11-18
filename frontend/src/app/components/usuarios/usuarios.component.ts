@@ -155,8 +155,9 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editUserSelected(element: User) {
-    this.router.navigate(['/fichapersonaladmin'], { queryParams: { nombre: element.username } });
+  editUserSelected(element: User){
+    this.userService.selectedUser = element;
+    this.router.navigate(['/fichapersonaladmin'],{queryParams: {nombre: element.username}});
   }
 
   newUser() {

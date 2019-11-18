@@ -61,11 +61,9 @@ export class ModificarFichaAdminComponent implements OnInit {
         .subscribe(params => {
             this.nombreUsuario = params['nombre'] || 0;
         });
-        console.log(this.nombreUsuario);
-
 
     this.userService.getUserByUsernameDOS(this.nombreUsuario).subscribe((user : User) =>  this.mostrarCambios(user));
-    
+
     this.usuarioAModificar = this.userService.selectedUser;
   }
 
@@ -74,7 +72,6 @@ export class ModificarFichaAdminComponent implements OnInit {
   }
 
   guardarcambios(form) {
-    
       this.usuarioAModificar.password = form.value.password;
       this.usuarioAModificar.domicilio = form.value.domicilio;
       this.usuarioAModificar.provincia = form.value.provincia;
@@ -158,7 +155,6 @@ export class ModificarFichaAdminComponent implements OnInit {
   }
 
   mostrarCambios(user: User){
-    console.log(1);
     this.usuarioAModificar = user;
 
     //patrón email

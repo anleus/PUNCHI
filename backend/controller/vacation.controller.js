@@ -18,7 +18,7 @@ vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo d
         left: req.body.left,
         past: req.body.past
     });
-    vacation.save().then(res.status('200').json('Vacation saved')).catch(err => {console.log(err); res.status('400').json('An error ocurred')});
+    Vacation.save().then(res.status('200').json('Vacation saved')).catch(err => {console.log(err); res.status('400').json('An error ocurred')});
 }
 
 vacationFunctions.updateVacations = async (req, res, next) => {

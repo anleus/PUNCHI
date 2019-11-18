@@ -3,8 +3,8 @@ import { IgxCalendarComponent, IgxDialogComponent } from "igniteui-angular";
 
 @Component({
   selector: 'app-calendario',
-  templateUrl: './calendario.component.html',
-  styleUrls: ['./calendario.component.css']
+  templateUrl: './calendario-incidencias.component.html',
+  styleUrls: ['./calendario-incidencias.component.css']
 })
 
 export class CalendarioComponent implements OnInit {
