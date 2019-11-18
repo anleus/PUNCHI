@@ -1,15 +1,25 @@
 
 .card-container > * {
+  margin-top: 20px;
   width: 80%;
+  height: 550px;
   left: 10%;
+  
+}
+
+.cabecera {
+  margin: right;
 }
 
 .table-container{
-  height: 400px;
+  height: 500px;
+  width: 800px;
+  height: 300px;
+  width: 1200px;
+  margin-left:auto; 
+  margin-right:auto;
   overflow: auto;
   margin-top: 20px;
-  margin-left: 25px;
-  margin-right: 25px;
   margin-bottom: 20px;
 }
 
