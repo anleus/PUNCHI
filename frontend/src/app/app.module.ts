@@ -41,6 +41,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PersonalizarDepartamentoComponent } from './components/personalizar-departamento/personalizar-departamento.component';
 import { HistoryTableSelectedComponent } from './components/history-table-selected/history-table-selected.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
@@ -141,6 +142,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     IgxCalendarModule,
     MatListModule,
+    FullCalendarModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent],
