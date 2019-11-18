@@ -12,7 +12,7 @@ export class DepartamentosService {
 
   constructor(private http: HttpClient) {}
 
-  postDepartamentos = departamentoData =>
+  crearDepartamento = departamentoData =>
     new Promise((resolve, reject) => {
       this.http.post(this.url, departamentoData).subscribe(
         res => {
@@ -38,6 +38,18 @@ export class DepartamentosService {
       .toPromise()
       .then(this.onGetDepartamentoByName.bind(this));
   }
+  updateDepartamento = departamentoData =>
+    new Promise((resolve, reject) => {
+      this.http.post(this.url, departamentoData).subscribe(
+        res => {
+          // * not callback
+          resolve(res);
+        },
+        error => {
+          reject(error);
+        }
+      );
+    });
 
   onGetDepartamentoByName(res: any) {
     return Promise.resolve(res);
