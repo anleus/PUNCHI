@@ -26,12 +26,13 @@ import { IgxCardThumbnailDirective, changei18n } from 'igniteui-angular';
 export class IncidenciasComponent implements OnInit {
   public usuarioLogueado = this.authService.getCurrentUser();
   public user: User;
+  public userL: User;
   incidencias: Incidencia[];
   //vacation: Vacation;
   //vacacionesUsuario: Date[];
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ["usuario", "asunto", "mensaje", "estado","select"];
+  displayedColumns: string[] = this.getDC();
   selection = new SelectionModel<User>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -54,7 +55,7 @@ export class IncidenciasComponent implements OnInit {
     this.vacationService.getVacationByUsername(this.usuarioLogueado._id).then(vac=> if(pending==undefined){}else{(this.vacation = vac)});
     console.log("hollaaa" + this.vacation.pending);
     this.vacacionesUsuario = this.vacation.pending;*/
-
+    this.authService.getCurrentUser().subscribe((user) => (this.userL = user));
     if (this.usuarioLogueado.source["_value"].admin == false && this.usuarioLogueado.source["_value"].gestor == false) {
       this.getIncidenciaByUserId();
     } else {
@@ -112,4 +113,18 @@ export class IncidenciasComponent implements OnInit {
   esPendiente(inc: Incidencia){
     return inc.estado == "pendiente";
   }
+  esAdmin(){
+    return this.userL.admin;
+  }
+
+  getDC(){
+    this.authService.getCurrentUser().subscribe((user) => (this.userL = user));
+    if(this.userL.admin){
+      return ["usuario", "asunto", "mensaje", "estado","select"];
+    }else{
+      return ["usuario", "asunto", "mensaje", "estado"];
+    }
+  }
+
+  
 }
