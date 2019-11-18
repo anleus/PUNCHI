@@ -33,7 +33,6 @@ export class IncidenciaService {
 
   putIncidencia(incidencia: Incidencia) {
     console.log(incidencia);
-    console.log(this.url + "user/" + incidencia.id_user, incidencia);
-    return this.http.put(this.url + "user/" + incidencia.id_user, incidencia).subscribe(response => { console.log(response)});
+    return this.http.put(this.url + "user/" + incidencia._id, incidencia).subscribe(response => { console.log(response)});
   }
 }

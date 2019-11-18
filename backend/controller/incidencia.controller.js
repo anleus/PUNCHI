@@ -40,13 +40,15 @@ incidenciaFunctions.createUserIncidencia = async (req, res, next) => {
 
 incidenciaFunctions.updateIncidencias = async (req, res, next) => {
   const incidencia = new Incidencia({
+    _id: req.body._id,
     id_user: req.body.id_user,
     vacaciones: req.body.vacaciones,
     incidencias: req.body.incidencias,
     mensaje: req.body.mensaje,
     estado: req.body.estado
   });
-  Incidencia.findByIdAndUpdate(req.body.id, { $set: incidencia })
+  console.log(req.body.estado);
+  Incidencia.findByIdAndUpdate(req.params.id, { $set: incidencia })
     .then(res.status(200).json("Incidencia updated"))
     .catch(err => {
       console.log(err);
