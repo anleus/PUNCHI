@@ -20,6 +20,7 @@ export class VacacionesComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
   calendarEvents: EventInput[] = [];
+  eventCount;
 
   constructor(private vacationservice: VacationService,
     private authservice: AuthenticationService) { }
@@ -51,9 +52,9 @@ export class VacacionesComponent implements OnInit {
 
     this.vacationservice.getUserVacations().subscribe(res => {
       res[0].pending.forEach(vac => {
-        console.log(vac);
         this.calendarEvents = this.calendarEvents.concat(
           {
+            editable: false,
             start: vac,
             allDay: true,
             rendering: 'background',
@@ -94,6 +95,7 @@ export class VacacionesComponent implements OnInit {
 
   handleButton() {
     console.log("Button clicked");
+    console.log("All events: ")
   }
 
   dateFormatter(date: Date) {
