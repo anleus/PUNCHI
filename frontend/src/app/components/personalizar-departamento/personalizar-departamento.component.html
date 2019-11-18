@@ -14,7 +14,7 @@
             <mat-label>Responsable</mat-label>
             <mat-select [(ngModel)]="selectedResponsable">
                 <mat-option *ngFor="let user of allUsers" [value]="user._id">
-                    {{user.nombre}}
+                    {{user.nombre}} {{user.apellidos}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
