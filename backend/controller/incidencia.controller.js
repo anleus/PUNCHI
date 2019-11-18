@@ -47,7 +47,6 @@ incidenciaFunctions.updateIncidencias = async (req, res, next) => {
     mensaje: req.body.mensaje,
     estado: req.body.estado
   });
-  console.log(req.body.estado);
   Incidencia.findByIdAndUpdate(req.params.id, { $set: incidencia })
     .then(res.status(200).json("Incidencia updated"))
     .catch(err => {
