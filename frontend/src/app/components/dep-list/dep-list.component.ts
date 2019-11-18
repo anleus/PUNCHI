@@ -67,7 +67,7 @@ export class DepListComponent implements OnInit {
   ngOnInit() {
     this.determinarUsuario();
     if (this.admin) this.getDeptAdmin();
-    //else this.getUsersGestor();
+    else this.getDeptGestor();
   }
 
   determinarUsuario() {
@@ -90,6 +90,21 @@ export class DepListComponent implements OnInit {
       }
     );
   }
+
+  getDeptGestor() {
+    var depGestor: Departamento[] = []
+    this.authService.getCurrentUser().subscribe((res: User) => {
+     this.departamentosService.getDepartamentoByGestorOBJ(res._id).subscribe((res: Departamento)=> {
+       depGestor.push(res)
+       this.addDepartment(depGestor)
+     })
+     
+
+     
+   
+  })
+}
+  
 
   addDepartment(users) {
     console.log("add departemnt users null?", users);

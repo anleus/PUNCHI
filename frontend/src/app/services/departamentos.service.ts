@@ -54,6 +54,14 @@ export class DepartamentosService {
     );
   }
 
+  getDepartamentoByGestorOBJ(user: string) {
+    return this.http.get(this.url + `responsable/${user}`).pipe(
+      map((dep: Departamento) => {
+        return dep;
+      })
+    );
+  }
+
   getDepartamentoByGestor(user: string): Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.url + `responsable/${user}`);
   }
@@ -64,7 +72,6 @@ export class DepartamentosService {
   getDepartamentoByIDObject(id: string) {
     return this.http.get(this.url + id).pipe(
       map((dep: Departamento) => {
-        console.log(dep);
         return dep;
       })
     );

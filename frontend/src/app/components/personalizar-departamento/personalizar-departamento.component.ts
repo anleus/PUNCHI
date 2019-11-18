@@ -29,6 +29,8 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   todo = [];
 
+  subtodo = [];
+
   done = [];
 
   constructor(
@@ -85,6 +87,10 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   guardarDepartamento() {
     //button guardar on click
+  this.departamentosService.deleteDept(this.departamentoEditing._id)
+
+  this.departamentoEditing.usuarios = this.done
+  //this.departamentosService.postDepartamentos(this.departamentoEditing)
   }
 
   // drag
@@ -107,6 +113,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   }
 
   initDrag() {
+    let i = 0;
     var users: string[];
     var idDep = localStorage.getItem("departamentoID");
     this.departamentosService
@@ -114,28 +121,33 @@ export class PersonalizarDepartamentoComponent implements OnInit {
       .subscribe((Dep: Departamento) => {
         Dep.usuarios.forEach((element: any) => {
           this.userService.getUserById(element).subscribe((res: User) => {
-            this.done.push(res.nombre);
-            this.userService.getAllUsersObject().subscribe(res => {
-              res.forEach(element => {
-                if (!this.comprobarUserRepe(element.nombre, this.done)) {
-                  this.todo.push(element.nombre);
-                }
-              });
-            });
+            this.done.push(res);
+            
           });
         });
       });
+      
+      this.userService.getAllUsersObject().subscribe(res => {
+        //res.forEach(element => {
+          for (let index = 0; index < res.length; index++) {
+           console.log(this.done.length)
+          if (!this.comprobarUserRepe(res[index].nombre, this.done) ) {
+            this.todo.push(res[index]);
+          }
+          
+        }
+        
+       // });
+      });   
   }
 
-  comprobarUserRepe(user: string, listUser: string[]) {
+  comprobarUserRepe(user: string, listUser: User[]) {
     for (let index = 0; index < listUser.length; index++) {
-      console.log("sdfsdfdsdds");
-      console.log(user);
-      console.log(listUser[index]);
-
-      if (user == listUser[index]) return true;
+      if (user == listUser[index].nombre) return true;
     }
 
     return false;
   }
+
+
 }
