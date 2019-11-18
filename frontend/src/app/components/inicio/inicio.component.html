@@ -1,86 +1,33 @@
-<!--<div class="botones-inicio" style="display: inline;">
-    <div id="warningHorasExtra" class="alert alert-warning" style="display: none" role="alert">
-        <div style="display: inline;">
-        <i class="material-icons warningicon">warning</i>
-            Estas haciendo horas extra!
-        </div>
-    </div>
-    <div class="principal container-fluid border">
-        <div class="row">
-            <div class="row tablaFichar">
-                <div class="col">
-                    <div class="row">Fichar</div> 
-                </div>
-                <div class="col">
-                    <div class="row">Tiempo trabajado:</div>
-                </div>
-                <div class="col">
-                        <div class="row">Hora inicio</div>
-
-                </div>
-                <div class="col">Vacaciones
-                        <button class="border" style="display: inline-block" mat-button>Solicitar</button></div>  
-            </div>
-            <div class="row tablaFichar">
-                    <div class="col campoTabla">
-
-                            <mat-button-toggle #toggleButton [disabled]="this.authService.currentUserValue.becario" class=".col-md-4 botonfichar" [ngClass]="{fichando: (this.fichando || this.authService.currentUserValue.becario), nofichando: !this.fichando}" (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
-                    </div>
-                    <div class="col text-center hh">
-                        {{timeLabel}}
-                    </div>
-                    <div class="col text-center hh">
-                        {{startLabel}}                    
-                    </div>
-                    <div class="col">
-                        <div class="row py-2" style="height: 100%">
-                            <div class="col nofichando text-center py-4">{{left}}</div>
-                            <div class="col fichando text-center py-4">{{pending}}</div>
-                        </div>
-
-                </div>
-            
-    </div>
-</div>
-<mat-divider class="mt-5"></mat-divider>
-<p class="h3 mt-2">Historial</p>
-<div>
-        <app-history-table></app-history-table>
-        <app-calendario></app-calendario>
-</div>-->
-
-<div class="container">
+<div class="container-fluid">
     <div class="d-flex flex-row">
-        <div class="p-2">
+        <div class="col-6"> <!--parte izquierda-->
             <div class="d-flex flex-column"> <!--parte izquierda ventana-->
-            <div class="p-2">
-                <div class="d-flex flex-row">
-                <div class="p-2"> <!--boton start-->
-                    <mat-button-toggle #toggleButton [disabled]="this.authService.currentUserValue.becario" class=".col-md-4 botonfichar" 
-                    [ngClass]="{fichando: (this.fichando || this.authService.currentUserValue.becario), nofichando: !this.fichando}" 
-                    (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
-                </div>
-                <div class="p-2"> <!--texto horas-->
-                    <div class="d-flex flex-column"> 
-                        <div class="p-2">
-                            Inicio:
-                        </div>
-                        <div class="p-2">
-                            {{startLabel}}
+                <div class="row-6">
+                    <div class="d-flex flex-row">
+                    <div class="col-8"> <!--boton start-->
+                        <mat-button-toggle #toggleButton [disabled]="this.authService.currentUserValue.becario" class=".col-md-4 botonfichar" 
+                        [ngClass]="{fichando: (this.fichando || this.authService.currentUserValue.becario), nofichando: !this.fichando}" 
+                        (click)="toggleFicharState()"><i class="material-icons">{{icon}}</i>{{text}}</mat-button-toggle>
+                    </div>
+                    <div class="col-4"> <!--texto horas-->
+                        <div class="info d-flex flex-column"> 
+                            <div class="row-2">
+                                Inicio:
+                            </div>
+                            <div class="row-2">
+                                {{startLabel}}
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
             </div>
-            <div class="p-2">
+            <div class="row-6">
                 <app-history-table></app-history-table>
             </div>
             </div>
         </div>
-        <div class="p-2">
-            <mat-divider [vertical]="true"></mat-divider>
-        </div>
-        <div class="p-2">
+        <div class="sep col-1"></div>
+        <div class="calendario col-4"> <!--paarte derecha-->
             <app-calendario></app-calendario>
         </div>
     </div>

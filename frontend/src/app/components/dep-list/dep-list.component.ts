@@ -23,12 +23,17 @@ import {
 import { UserData } from "../usuarios/usuarios.component";
 import { resolve } from "url";
 import { reject } from "q";
+import { map } from 'rxjs/operators';
 
 export interface PeriodicElement {
   name: string;
   position: number;
   weight: number;
   symbol: string;
+}
+export interface DepData {
+  DepName: string;
+  DepId: string;
 }
 @Component({
   selector: "app-dep-list",
@@ -41,6 +46,9 @@ export class DepListComponent implements OnInit {
   admin = false;
   gestor = false;
   logUser = this.authService.getCurrentUser();
+  userName: string;
+  userId: string;
+  confirmation: boolean;
 
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ["nombre", "responsable", "select"];
@@ -99,14 +107,14 @@ export class DepListComponent implements OnInit {
     console.log("tots", users);
 
     users.forEach((element, i) => {
-          if (element.responsable === null)
+      if (element.responsable === null)
         element.responsable = "No hay responsable";
       else {
         this.userService
           .getUserById(element.responsable)
           .subscribe((res: User) => {
-            element.responsable = res.nombre+" "+res.apellidos        
-              this.rellenar(users);
+            element.responsable = res.nombre + " " + res.apellidos;
+            this.rellenar(users);
           });
       }
     });
@@ -131,20 +139,25 @@ export class DepListComponent implements OnInit {
       )}); */
   }
 
-  editDepSelected(element: Departamento) {}
+  editDepSelected(element: Departamento) {
+    console.log(element);
+    localStorage.setItem("editDepartamento", "true");
+    localStorage.setItem("departamentoID", element._id);
+
+    this.router.navigate(["/personalizarDepartamento"]);
+  }
 
   editDepResponsibleSelected(element: Departamento) {}
 
-  gotoDrag() {}
 
   searchResponsible(element: string) {
     return new Promise((resolve, reject) => {});
   }
 
-  /*     openDialog(element: User): void {
-      const dialogRef = this.dialog.open(OverviewConfirmacionBorrado, {
+      openDialog(element: User): void {
+      const dialogRef = this.dialog.open(OverviewConfirmacionBorradoDep, {
         width: '500px',
-        data: {userName: this.departamento.nombre}
+        data: {DepName: element.nombre, DepId: element._id}
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -153,15 +166,33 @@ export class DepListComponent implements OnInit {
         }
         
       });
-    } */
+    }
 }
-export class OverviewConfirmacionBorrado {
+@Component ({
+  selector: 'confirmacion-borrado-dep',
+  templateUrl: 'confirmacion-borrado-dep.html',
+  styleUrls: ['./confirmacion-borrado-dep.css']
+})
+export class OverviewConfirmacionBorradoDep {
   constructor(
-    public dialogRef: MatDialogRef<OverviewConfirmacionBorrado>,
-    @Inject(MAT_DIALOG_DATA) public data: UserData
-  ) {}
+    public dialogRef: MatDialogRef<OverviewConfirmacionBorradoDep>,
+    @Inject(MAT_DIALOG_DATA) public data: DepData,
+    private departamentoService: DepartamentosService) {}
+   
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-}
+
+  deleteDepSelected(elementId: string) {
+        try {
+        console.log('Intente borrar')  
+        this.departamentoService.deleteDept(elementId).subscribe()
+        } catch (err) {}
+        this.dialogRef.close();
+        window.location.reload();
+      }
+    
+    
+    }    
+

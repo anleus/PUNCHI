@@ -11,9 +11,18 @@ export class CalendarioComponent implements OnInit {
   @ViewChild('calendar', { static: true }) public calendar: IgxCalendarComponent;
   @ViewChild("alert", { static: true }) public dialog: IgxDialogComponent;
 
-  constructor() { }
+  public dayselected : Date;
+  
+  constructor() { 
+    
+  }
 
   ngOnInit() {
+  }
+
+  changeSelectedDate(date : Date){
+    this.dayselected = date;
+    
   }
 
 }
