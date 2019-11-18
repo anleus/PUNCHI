@@ -4,6 +4,7 @@ import { DepartamentosService } from "../../services/departamentos.service";
 import { UserService } from "../../services/user.service";
 import { GestureConfig } from "@angular/material/core";
 import { User } from "src/app/models/users";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -20,7 +21,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   departamentoEditing: Departamento;
   departamentos: Departamento[];
   departamentoAlreadyExists: Boolean = false;
-  nombre: string;
+  nombre: string = "";
   responsable: User;
   allUsers: User[];
   selectedResponsable: string;
@@ -36,14 +37,18 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   constructor(
     private userService: UserService,
     private departamentosService: DepartamentosService,
-    private UserService: UserService
+    private UserService: UserService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     if (localStorage.getItem("editDepartamento") === "true") this.isEdit = true;
+    this.getDepartamentos();
 
     this.UserService.getAllUsersObject().subscribe((res: User[]) => {
-      this.allUsers = res;
+      this.allUsers = res.filter((v: User) => {
+        return v.deleted == false;
+      });
     });
     this.initDrag();
     if (this.isEdit) {
@@ -66,15 +71,22 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   }
 
   isDuplicate() {
+    if (!this.departamentos) return false;
     let duplicate = this.departamentos.filter(v => {
       return v.nombre === this.nombre;
     });
-    if (duplicate.length > 0) {
-      //error departamento already exists
-      this.departamentoAlreadyExists = true;
-    } else {
+    if (!this.departamentoEditing) return false;
+    if (this.isEdit && this.departamentoEditing.nombre === this.nombre) {
       this.departamentoAlreadyExists = false;
+    } else {
+      if (duplicate.length > 0) {
+        //error departamento already exists
+        this.departamentoAlreadyExists = true;
+      } else {
+        this.departamentoAlreadyExists = false;
+      }
     }
+
     return this.departamentoAlreadyExists;
   }
   getDepartamentos() {
@@ -84,13 +96,38 @@ export class PersonalizarDepartamentoComponent implements OnInit {
       departamentos => (this.departamentos = departamentos)
     );
   }
+  openErrorSnack(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Ha ocurrido un error. Inténtalo de nuevo",
+      duration: 3 * 1000,
+      panelClass: ["alert-red"],
+      horizontalPosition: "right",
+      verticalPosition: "top"
+    });
+  }
 
   guardarDepartamento() {
     //button guardar on click
-  this.departamentosService.deleteDept(this.departamentoEditing._id)
+    if (this.isDuplicate()) {
+      //throw duplicate name error
+      this.openErrorSnack("Nombre del departamento duplicado");
+      return;
+    }
 
-  this.departamentoEditing.usuarios = this.done
-  //this.departamentosService.postDepartamentos(this.departamentoEditing)
+    if (!this.isEdit) {
+      this.departamentosService.crearDepartamento({
+        nombre: this.nombre,
+        users: this.done,
+        responsable: this.responsable
+      });
+    } else {
+      this.departamentosService.updateDepartamento({
+        id: this.departamentoEditing._id,
+        nombre: this.nombre,
+        users: this.done,
+        responsable: this.responsable
+      });
+    }
   }
 
   // drag

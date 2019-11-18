@@ -3,17 +3,18 @@
     <div class="col-md-5 ml-5">
 
         <mat-form-field name="formCrearDep">
-            <input matInput [(ngModel)]="nombre" placeholder="Nombre del departamento">
+            <input matInput [ngClass]="{'red': (isDuplicate()) }" [(ngModel)]="nombre"
+                placeholder="Nombre del departamento">
 
         </mat-form-field>
 
     </div>
     <div class="col-md-3">
         <mat-form-field>
-            <mat-label>Gestor</mat-label>
+            <mat-label>Responsable</mat-label>
             <mat-select [(ngModel)]="selectedResponsable">
                 <mat-option *ngFor="let user of allUsers" [value]="user._id">
-                    {{user.nombre}}
+                    {{user.nombre}} {{user.apellidos}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

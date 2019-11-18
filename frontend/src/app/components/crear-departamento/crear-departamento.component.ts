@@ -61,7 +61,7 @@ export class CrearDepartamentoComponent implements OnInit {
       var departamento = {
         nombre: this.nombre
       };
-      this.departamentosService.postDepartamentos(departamento).then(res => {
+      this.departamentosService.crearDepartamento(departamento).then(res => {
         this.snackSuccess("Se ha creado el departamento correctamente");
       });
     }
