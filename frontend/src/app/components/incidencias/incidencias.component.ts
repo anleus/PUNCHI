@@ -108,4 +108,8 @@ export class IncidenciasComponent implements OnInit {
     this.incidenciaService.putIncidencia(inc);
     console.log(inc.estado);
   }
+
+  esPendiente(inc: Incidencia){
+    return inc.estado == "pendiente";
+  }
 }

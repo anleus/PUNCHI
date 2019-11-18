@@ -40,11 +40,11 @@
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-button data='element.id' (click)='aceptarIncidencia(element)'>
+            <button class="bot" mat-button data='element.id' (click)='aceptarIncidencia(element)' [disabled]="!esPendiente(element)">
               <mat-icon>check_circle</mat-icon>
               
             </button>
-            <button mat-button data='element.id' (click)='denegarIncidencia(element)'>
+            <button mat-button data='element.id' (click)='denegarIncidencia(element)' [disabled]="!esPendiente(element)">
               <mat-icon>cancel</mat-icon>
             </button>
           </td>
