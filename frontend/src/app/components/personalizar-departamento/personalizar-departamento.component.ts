@@ -159,24 +159,20 @@ export class PersonalizarDepartamentoComponent implements OnInit {
         Dep.usuarios.forEach((element: any) => {
           this.userService.getUserById(element).subscribe((res: User) => {
             this.done.push(res);
-            this.userService.getAllUsersObject().subscribe(res => {
-              //res.forEach(element => {
-                for (let index = 0; index < res.length; index++) {
-                 console.log()
-                if (!this.comprobarUserRepe(res[index].nombre, this.done) ) {
-                  this.todo.push(res[index]);
-                }
-                
-              }
-              
-             // });
-            }); 
-            
           });
         });
+        this.userService.getAllUsersObject().subscribe(res => {
+          //res.forEach(element => {
+          for (let index = 0; index < res.length; index++) {
+            console.log(this.done.length);
+            if (!this.comprobarUserRepe(res[index].nombre, this.done)) {
+              this.todo.push(res[index]);
+            }
+          }
+
+          // });
+        });
       });
-      
-  
   }
 
   comprobarUserRepe(user: string, listUser: User[]) {
@@ -186,6 +182,4 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
     return false;
   }
-
-
 }
