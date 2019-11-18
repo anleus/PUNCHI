@@ -120,7 +120,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
       });
     } else {
       this.departamentosService.updateDepartamento({
-        _id: this.departamentoEditing._id,
+        id: this.departamentoEditing._id,
         nombre: this.nombre,
         users: this.done,
         responsable: this.responsable
