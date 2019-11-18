@@ -40,7 +40,7 @@ export class DepartamentosService {
   }
   updateDepartamento = departamentoData =>
     new Promise((resolve, reject) => {
-      this.http.post(this.url, departamentoData).subscribe(
+      this.http.put(this.url, departamentoData).subscribe(
         res => {
           // * not callback
           resolve(res);
