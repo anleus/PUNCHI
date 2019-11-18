@@ -63,9 +63,8 @@ export class ModificarFichaAdminComponent implements OnInit {
         });
         console.log(this.nombreUsuario);
 
-
     this.userService.getUserByUsernameDOS(this.nombreUsuario).subscribe((user : User) =>  this.mostrarCambios(user));
-    
+
     this.usuarioAModificar = this.userService.selectedUser;
   }
 
@@ -160,6 +159,7 @@ export class ModificarFichaAdminComponent implements OnInit {
   mostrarCambios(user: User){
     console.log(1);
     this.usuarioAModificar = user;
+    this.userService.selectedUser = user;
 
     //patrón email
     var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";

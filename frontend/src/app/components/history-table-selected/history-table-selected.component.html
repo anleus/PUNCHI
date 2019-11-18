@@ -1,0 +1,25 @@
+<div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="day">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let element">{{changeToDate(element.begin)}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="begin">
+            <th mat-header-cell *matHeaderCellDef>Hora entrada</th>
+            <td mat-cell *matCellDef="let element">{{changeToTime(element.begin)}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="end">
+            <th mat-header-cell *matHeaderCellDef>Hora salida</th>
+            <td mat-cell *matCellDef="let element">{{changeToTime(element.end)}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+</div>
