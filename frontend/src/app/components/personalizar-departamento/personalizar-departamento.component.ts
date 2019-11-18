@@ -4,6 +4,11 @@ import { DepartamentosService } from "../../services/departamentos.service";
 import { UserService } from "../../services/user.service";
 import { GestureConfig } from "@angular/material/core";
 import { User } from "src/app/models/users";
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem
+} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "app-personalizar-departamento",
@@ -20,7 +25,14 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   allUsers: User[];
   selectedResponsable: string;
 
+  // drag
+
+  todo = [];
+
+  done = [];
+
   constructor(
+    private userService: UserService,
     private departamentosService: DepartamentosService,
     private UserService: UserService
   ) {}
@@ -31,7 +43,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     this.UserService.getAllUsersObject().subscribe((res: User[]) => {
       this.allUsers = res;
     });
-
+    this.initDrag();
     if (this.isEdit) {
       //edit departamento
       var depID = localStorage.getItem("departamentoID");
@@ -73,5 +85,57 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   guardarDepartamento() {
     //button guardar on click
+  }
+
+  // drag
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  initDrag() {
+    var users: string[];
+    var idDep = localStorage.getItem("departamentoID");
+    this.departamentosService
+      .getDepartamentoByIDObject(idDep)
+      .subscribe((Dep: Departamento) => {
+        Dep.usuarios.forEach((element: any) => {
+          this.userService.getUserById(element).subscribe((res: User) => {
+            this.done.push(res.nombre);
+            this.userService.getAllUsersObject().subscribe(res => {
+              res.forEach(element => {
+                if (!this.comprobarUserRepe(element.nombre, this.done)) {
+                  this.todo.push(element.nombre);
+                }
+              });
+            });
+          });
+        });
+      });
+  }
+
+  comprobarUserRepe(user: string, listUser: string[]) {
+    for (let index = 0; index < listUser.length; index++) {
+      console.log("sdfsdfdsdds");
+      console.log(user);
+      console.log(listUser[index]);
+
+      if (user == listUser[index]) return true;
+    }
+
+    return false;
   }
 }
