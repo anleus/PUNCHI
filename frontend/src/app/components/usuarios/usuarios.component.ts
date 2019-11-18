@@ -73,8 +73,7 @@ export class UsuariosComponent implements OnInit {
             this.userService.getUserById(element).subscribe(
               resp => {
                 if (resp != null) {
-                  if (resp["_id"] != this.logUser.source["_id"]) {
-                    console.log(resp["deleted"])
+                  if (resp["_id"] != this.logUser.source["_value"]._id) {
                     if (resp["deleted"] == false) {
                       var aux;
                       aux = resp;
@@ -83,9 +82,7 @@ export class UsuariosComponent implements OnInit {
                         this.addDepartmentGestor(this.usersret, nombreDepartamento);
                       }
                     }
-                    else { console.log("deleted") }
                   }
-                  else { console.log("es el mismo") }
                 }
                 else { console.log("usuario no existente, ALERTA"); }
                 auxnumber++;
@@ -109,17 +106,15 @@ export class UsuariosComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       (res) => {
         res.forEach((element, i) => {
-          if (res["_id"] == this.logUser.source["_id"]) {
+          if (element["_id"] == this.logUser.source["_value"]._id) {
             res.splice(i, 1);
-            console.log("eliminado el elemento del array porque es el mismp", i)
           }
-          if (res["deleted"] == true) {
+          if (element["deleted"] == true) {
+            console.log(this.logUser);
             res.splice(i, 1);
-            console.log("eliminado el elemento del array proque esta borrado", i)
           }
         });
         this.addDepartment(res);
-        //console.log(res);
       },
       (err) => {
         console.log(err);
