@@ -31,7 +31,7 @@ export class IncidenciasComponent implements OnInit {
   //vacacionesUsuario: Date[];
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ["usuario", "asunto", "mensaje", "estado"];
+  displayedColumns: string[] = ["usuario", "asunto", "mensaje", "estado","select"];
   selection = new SelectionModel<User>(true, []);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -84,6 +84,7 @@ export class IncidenciasComponent implements OnInit {
     });
   }
 
+
   getIncidenciaByUserId() {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
@@ -94,5 +95,17 @@ export class IncidenciasComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  aceptarIncidencia(inc: Incidencia){
+    inc.estado = "aceptado";
+    this.incidenciaService.putIncidencia(inc);
+    console.log(inc.estado);
+  }
+
+  denegarIncidencia(inc: Incidencia){
+    inc.estado = "denegado";
+    this.incidenciaService.putIncidencia(inc);
+    console.log(inc.estado);
   }
 }
