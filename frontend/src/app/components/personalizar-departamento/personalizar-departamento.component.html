@@ -1,4 +1,29 @@
-<p>personalizar-departamento works!</p>
+<div class="row mt-3">
+
+    <div class="col-md-5 ml-5">
+
+        <mat-form-field name="formCrearDep">
+            <input matInput [(ngModel)]="nombre" ng-class="{red: (departamentoAlreadyExists)}"
+                (keyup)="nombreDepartamento($event)" placeholder="Nombre del departamento">
+
+        </mat-form-field>
+
+    </div>
+    <div class="col-md-3">
+        <mat-form-field>
+            <mat-label>Gestor</mat-label>
+            <mat-select [(ngModel)]="selectedResponsable">
+                <mat-option *ngFor="let user of allUsers" [value]="user._id">
+                    {{user.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-3">
+        <button class="border" (click)="guardarDepartamento()" mat-button> Guardar</button>
+
+    </div>
+</div>
 
 <app-asignar-dep-drag>
 </app-asignar-dep-drag>
