@@ -25,4 +25,8 @@ export class VacationService {
         return Promise.resolve(res);
     }
 
+    public putVacationUser(userid, vacation){
+      this.http.put('http://localhost:4000/vacation/user/'+userid,vacation);
+    }
+
 }

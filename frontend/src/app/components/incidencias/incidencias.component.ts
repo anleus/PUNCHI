@@ -10,7 +10,7 @@ import {
   MatDialog
 } from "@angular/material/dialog";
 import { UserService } from "src/app/services/user.service";
-//import { VacationService } from 'src/app/services/vacation.service';
+import { VacationService } from 'src/app/services/vacation.service';
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
 import Incidencia from "src/app/models/incidencia";
@@ -40,7 +40,8 @@ export class IncidenciasComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private incidenciaService: IncidenciaService,
-    private authService: AuthenticationService // private vacationService: VacationService
+    private authService: AuthenticationService,
+    private vacationService: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
@@ -85,6 +86,19 @@ export class IncidenciasComponent implements OnInit {
   }
 
 
+  getDayFromIncidencia(inc : Incidencia){
+    return inc.mensaje.slice(5);
+  }
+
+  pad2(num){
+    return num < 10 ? '0'+num : num ;
+  }
+
+  getDayFromDate(date : Date){
+    return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+  }
+
+
   getIncidenciaByUserId() {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
@@ -100,16 +114,23 @@ export class IncidenciasComponent implements OnInit {
   aceptarIncidencia(inc: Incidencia){
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    console.log(inc.estado);
+    let incDate = this.getDayFromIncidencia(inc);
+    this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
+      userVacations.left = 23- userVacations.past.legnth;
+      userVacations.pending = userVacations.pending.filter((date) => date.slice(0,10) != incDate)
+      userVacations.past.push(new Date(incDate));
+      this.vacationService.putVacationUser(userVacations._id, userVacations).subscribe((doc) => console.log(doc));
+    }).catch((err) => console.log(err));
+   
+
   }
 
   denegarIncidencia(inc: Incidencia){
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
-    console.log(inc.estado);
   }
 
   esPendiente(inc: Incidencia){
-    return inc.estado == "pendiente";
+    return inc.estado !== "pendiente";
   }
 }
