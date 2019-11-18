@@ -87,7 +87,6 @@ export class IncidenciasComponent implements OnInit {
     });
   }
 
-
   getIncidenciaByUserId() {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(this.usuarioLogueado.source["_value"]._id);
     incidenciaObs.subscribe(incidencias => {
