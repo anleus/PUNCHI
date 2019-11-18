@@ -58,6 +58,11 @@ export class CrearUsuarioComponent implements OnInit {
     }
   }
 
+  cancelar(){
+    this.router.navigate(['/usuarios']);
+
+  }
+
   determinarusuario(form) {
     if (form.value.tipousuario == "normal") {
       form.value.becario = false;
