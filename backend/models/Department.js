@@ -6,12 +6,12 @@ let Departamento = new Schema({
 		type: String,
 		required: true
 	},
-	gestor: {
+	responsable: {
 		type: Schema.Types.ObjectId,
 		ref: "Users"
 	},
 	usuarios: {
-		type: [Schema.Types.ObjectId], 
+		type: [Schema.Types.ObjectId],
 		ref: "Users"
 	}
 });
