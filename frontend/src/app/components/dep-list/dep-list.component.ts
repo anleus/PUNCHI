@@ -23,7 +23,7 @@ import {
 import { UserData } from "../usuarios/usuarios.component";
 import { resolve } from "url";
 import { reject } from "q";
-import { map } from 'rxjs/operators';
+import { map } from "rxjs/operators";
 
 export interface PeriodicElement {
   name: string;
@@ -92,19 +92,21 @@ export class DepListComponent implements OnInit {
   }
 
   getDeptGestor() {
-    var depGestor: Departamento[] = []
+    var depGestor: Departamento[] = [];
     this.authService.getCurrentUser().subscribe((res: User) => {
-     this.departamentosService.getDepartamentoByGestorOBJ(res._id).subscribe((res: Departamento)=> {
-       depGestor.push(res)
-       this.addDepartment(depGestor)
-     })
-     
+      this.departamentosService
+        .getDepartamentoByGestorOBJ(res._id)
+        .subscribe((res: Departamento) => {
+          depGestor.push(res);
+          this.addDepartment(depGestor);
+        });
+    });
+  }
+  newDepartamento() {
+    localStorage.setItem("editDepartamento", "false");
 
-     
-   
-  })
-}
-  
+    this.router.navigate(["/personalizarDepartamento"]);
+  }
 
   addDepartment(users) {
     console.log("add departemnt users null?", users);
@@ -164,50 +166,45 @@ export class DepListComponent implements OnInit {
 
   editDepResponsibleSelected(element: Departamento) {}
 
-
   searchResponsible(element: string) {
     return new Promise((resolve, reject) => {});
   }
 
-      openDialog(element: User): void {
-      const dialogRef = this.dialog.open(OverviewConfirmacionBorradoDep, {
-        width: '500px',
-        data: {DepName: element.nombre, DepId: element._id}
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (this.confirmation) {
-          console.log('Usuario' + result + 'eliminado');
-        }
-        
-      });
-    }
+  openDialog(element: User): void {
+    const dialogRef = this.dialog.open(OverviewConfirmacionBorradoDep, {
+      width: "500px",
+      data: { DepName: element.nombre, DepId: element._id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (this.confirmation) {
+        console.log("Usuario" + result + "eliminado");
+      }
+    });
+  }
 }
-@Component ({
-  selector: 'confirmacion-borrado-dep',
-  templateUrl: 'confirmacion-borrado-dep.html',
-  styleUrls: ['./confirmacion-borrado-dep.css']
+@Component({
+  selector: "confirmacion-borrado-dep",
+  templateUrl: "confirmacion-borrado-dep.html",
+  styleUrls: ["./confirmacion-borrado-dep.css"]
 })
 export class OverviewConfirmacionBorradoDep {
   constructor(
     public dialogRef: MatDialogRef<OverviewConfirmacionBorradoDep>,
     @Inject(MAT_DIALOG_DATA) public data: DepData,
-    private departamentoService: DepartamentosService) {}
-   
+    private departamentoService: DepartamentosService
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   deleteDepSelected(elementId: string) {
-        try {
-        console.log('Intente borrar')  
-        this.departamentoService.deleteDept(elementId).subscribe()
-        } catch (err) {}
-        this.dialogRef.close();
-        window.location.reload();
-      }
-    
-    
-    }    
-
+    try {
+      console.log("Intente borrar");
+      this.departamentoService.deleteDept(elementId).subscribe();
+    } catch (err) {}
+    this.dialogRef.close();
+    window.location.reload();
+  }
+}

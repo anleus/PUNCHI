@@ -4,6 +4,9 @@ import { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { VacationService } from "src/app/services/vacation.service";
+import { AuthenticationService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-vacaciones',
@@ -18,30 +21,73 @@ export class VacacionesComponent implements OnInit {
   calendarWeekends = true;
   calendarEvents: EventInput[] = [];
 
+  constructor(private vacationservice: VacationService,
+    private authservice: AuthenticationService) { }
+
+  ngOnInit() {
+    /*this.vacationservice.getVacationByUsername(this.authservice.currentUser.source["_value"].username).then(
+      res => {
+        console.log("Got the vacation days!");
+        console.log(typeof res);
+        console.log(typeof res[0]);
+        console.log(typeof res[0].pending);
+        console.log(res.entries());
+        if (res == null || typeof res == 'undefined') {
+          console.log("User has no vacation days");
+          return;
+        }
+        res.pending.array.forEach(vac => {
+          console.log(vac);
+          this.calendarEvents = this.calendarEvents.concat(
+            {
+              start: vac,
+              allDay: true,
+              rendering: 'background',
+              backgroundColor: '#FF0000'
+            })
+        });
+      }
+    ); */
+
+    this.vacationservice.getUserVacations().subscribe(res => {
+      res[0].pending.forEach(vac => {
+        console.log(vac);
+        this.calendarEvents = this.calendarEvents.concat(
+          {
+            start: vac,
+            allDay: true,
+            rendering: 'background',
+            backgroundColor: '#FF0000'
+          })
+      });
+    });
+  }
+
+
   toggleWeekends() {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
   handleDateClick(arg) {
-    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + arg.dateStr + '?')) {
+    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + this.dateFormatter(arg.date) + '?')) {
       this.calendarEvents = this.calendarEvents.concat(
         { // add new event data. must create new array
-        start: arg.date,
-        allDay: true,
-        rendering: 'background',
-        backgroundColor: '#FF0000'
+          start: arg.date,
+          allDay: true,
+          rendering: 'background',
+          backgroundColor: '#FF0000'
         })
     }
   }
 
   handleSelectDate(arg) {
-    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + arg.startStr + ' hasta: ' + arg.endStr + '?')) {
+    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + this.dateFormatter(arg.start) + ' hasta: ' + this.dateFormatter(arg.end) + '?')) {
       this.calendarEvents = this.calendarEvents.concat(
         { // add new event data. must create new array
-        title: 'Día de vacaciones',
-        start: arg.date,
-        allDay: true,
-        color: 'orange'
+          title: 'Día de vacaciones',
+          start: arg.date,
+          allDay: true,
+          color: 'orange'
         })
     }
   }
@@ -50,9 +96,7 @@ export class VacacionesComponent implements OnInit {
     console.log("Button clicked");
   }
 
-  constructor() { }
-
-  ngOnInit() {
+  dateFormatter(date: Date) {
+    return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
   }
-
 }

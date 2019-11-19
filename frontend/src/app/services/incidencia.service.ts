@@ -30,4 +30,10 @@ export class IncidenciaService {
   getIncidenciaByUserId(userId): Observable<Incidencia[]> {
     return this.http.get<Incidencia[]>(this.url + "user/" + userId);
   }
+
+  putIncidencia(incidencia: Incidencia) {
+    console.log(incidencia);
+    console.log(this.url + "user/" + incidencia.id_user, incidencia);
+    return this.http.put(this.url + "user/" + incidencia.id_user, incidencia).subscribe(response => { console.log(response)});
+  }
 }
