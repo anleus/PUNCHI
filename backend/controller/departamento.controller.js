@@ -51,7 +51,7 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 
 			result.save();
 			res.status(200);
-			res.send("Departamento updated");
+			res.json({ status: "Departamento saved" });
 		})
 		.catch(err => {
 			res.status(400);
