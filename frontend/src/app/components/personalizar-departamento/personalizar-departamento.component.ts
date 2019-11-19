@@ -225,6 +225,8 @@ export class OverviewConfirmacionEditDep {
 
     confirmarEdit() {
       this.data.PersObj.guardarDepartamento()
+      this.dialogRef.close()
+      
     }
   
 }
