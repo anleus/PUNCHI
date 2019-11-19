@@ -40,7 +40,6 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   todo = [];
 
-
   done = [];
 
   constructor(
@@ -127,8 +126,8 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     if (!this.isEdit) {
       this.departamentosService.crearDepartamento({
         nombre: this.nombre,
-        users: this.done,
-        responsable: this.responsable
+        usuarios: this.done,
+        responsable: this.selectedResponsable
       });
     } else {
       this.departamentosService.updateDepartamento({
@@ -195,38 +194,38 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(OverviewConfirmacionEditDep, {
-      width: '500px',
-      data: {DepName: this.departamentoEditing.nombre, DepId: this.departamentoEditing._id}
+      width: "500px",
+      data: {
+        DepName: this.departamentoEditing.nombre,
+        DepId: this.departamentoEditing._id
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
-        console.log('Usuario' + result + 'eliminado');
+        console.log("Usuario" + result + "eliminado");
       }
-      
     });
   }
 }
-@Component ({
-  selector: 'confirmacion-edit-dep',
-  templateUrl: 'confirmacion-edit-dep.html',
-  styleUrls: ['./confirmacion-edit-dep.css']
+@Component({
+  selector: "confirmacion-edit-dep",
+  templateUrl: "confirmacion-edit-dep.html",
+  styleUrls: ["./confirmacion-edit-dep.css"]
 })
+export class OverviewConfirmacionEditDep {
+  constructor(
+    public dialogRef: MatDialogRef<OverviewConfirmacionEditDep>,
+    @Inject(MAT_DIALOG_DATA) public data: DepData,
+    private departamentoService: DepartamentosService
+  ) {}
+  private personalizarDep: PersonalizarDepartamentoComponent;
 
-  export class OverviewConfirmacionEditDep {
-    constructor(
-      public dialogRef: MatDialogRef<OverviewConfirmacionEditDep>,
-      @Inject(MAT_DIALOG_DATA) public data: DepData,
-      private departamentoService: DepartamentosService) {}
-      private personalizarDep: PersonalizarDepartamentoComponent
-     
-  
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
-    confirmarEdit() {
-      this.personalizarDep.guardarDepartamento()
-    }
-  
+  confirmarEdit() {
+    this.personalizarDep.guardarDepartamento();
+  }
 }
