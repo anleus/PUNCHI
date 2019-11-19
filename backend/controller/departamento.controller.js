@@ -27,6 +27,13 @@ departamentFunctions.createDepartamento = async (req, res, next) => {
 };
 
 departamentFunctions.updateDepartamento = async (req, res, next) => {
+  console.log(req.body);
+  var users = [];
+
+  req.body.users.forEach(element => {
+    users.push(element._id);
+  });
+
   const departamento = new Departamento({
     users: req.body.users,
     responsable: req.body.responsable,
