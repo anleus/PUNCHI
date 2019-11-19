@@ -25,13 +25,9 @@ vacationFunctions.updateVacations = async (req, res, next) => {
     console.log("----------------");
     console.log(req.body);
     console.log("----------------");
-    console.log("req.params.id: " + req.params.id);
-
-    //Vacation.findByIdAndUpdate(req.params.id, vacation).then(res.status(200).json('Vacation updated')).catch(err => { console.log(err); res.status(400).send('An error ocurred') });
-    Vacation.findByIdAndUpdate(req.params.id, {'$set' : {'$push': { pending: req.body.pending }, left: req.body.left, '$push': { past: req.body.past} }}, {'new' : true, 'lean' : true}, (err, doc) => {
+    Vacation.findByIdAndUpdate(req.params.id, {pending: req.body.pending, left: req.body.left, $push: { past: req.body.past } }, {'new' : true, 'lean' : true}, (err, doc) => {
         if (err) console.log("Something wrong when updating data!");
-        //console.log(doc);
-    });
+    }).catch(err => { console.log(err); res.status('400').json('An error ocurred') });
     
     
     /* )

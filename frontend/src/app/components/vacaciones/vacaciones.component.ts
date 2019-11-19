@@ -82,9 +82,8 @@ export class VacacionesComponent implements OnInit {
             backgroundColor: '#FF0000'
           })
         //console.log("arg.date: " + arg.date + " this.vacationDaysLeft: " + (this.vacationDaysLeft - 1));
-        this.pending.push(new Date(arg.date).toUTCString()); 
-        console.log(this.pending);
-        this.vacationservice.updateVacation(this._vid, this.pending.push(arg.date), this.left = (this.vacationDaysLeft - 1), this.vacationPast);
+        this.pending.push(new Date(arg.date).toISOString());
+        this.vacationservice.updateVacation(this._vid, this.pending, this.left = (this.vacationDaysLeft - 1), this.vacationPast);
       }
     } else {alert('No puedes seleccionar el día de hoy ni uno pasado');}
   }
