@@ -114,12 +114,12 @@ export class IncidenciasComponent implements OnInit {
     return inc.estado == "pendiente";
   }
   esAdmin(){
-    return this.userL.admin;
+    return (this.userL.admin || this.userL.gestor);
   }
 
   getDC(){
     this.authService.getCurrentUser().subscribe((user) => (this.userL = user));
-    if(this.userL.admin){
+    if(this.esAdmin()){
       return ["usuario", "asunto", "mensaje", "estado","select"];
     }else{
       return ["usuario", "asunto", "mensaje", "estado"];

@@ -49,6 +49,7 @@ export class FichaPersonalComponent implements OnInit {
     var usuarioAct = this.authService.getCurrentUser();
     usuarioAct.subscribe(user => (this.usuarioLogueado = user));
 
+    console.log(this.usuarioLogueado);
     //patrón email
     var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
 
@@ -133,6 +134,7 @@ export class FichaPersonalComponent implements OnInit {
       this.usuarioLogueado.username = form.value.username;
       this.usuarioLogueado.nuss = form.value.nuss;
     }
+    this.userService.selectedUser = this.usuarioLogueado;
 
     if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
