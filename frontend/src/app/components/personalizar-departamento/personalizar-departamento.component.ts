@@ -19,7 +19,7 @@ import {
 export interface DepData {
   DepName: string;
   DepId: string;
-  PersObj: PersonalizarDepartamentoComponent
+  PersObj: PersonalizarDepartamentoComponent;
 }
 @Component({
   selector: "app-personalizar-departamento",
@@ -125,19 +125,47 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     }
 
     if (!this.isEdit) {
-      this.departamentosService.crearDepartamento({
-        nombre: this.nombre,
-        usuarios: this.done,
-        responsable: this.selectedResponsable
-      });
+      this.departamentosService
+        .crearDepartamento({
+          nombre: this.nombre,
+          usuarios: this.done,
+          responsable: this.selectedResponsable
+        })
+        .then(() => {
+          this.snackSuccess("Departamento creado correctamente");
+        })
+        .catch(() => {
+          this.openErrorSnack("No se pudo actualizar");
+        });
     } else {
-      this.departamentosService.updateDepartamento({
-        id: this.departamentoEditing._id,
-        nombre: this.nombre,
-        users: this.done,
-        responsable: this.selectedResponsable
-      });
+      this.departamentosService
+        .updateDepartamento({
+          id: this.departamentoEditing._id,
+          nombre: this.nombre,
+          users: this.done,
+          responsable: this.selectedResponsable
+        })
+        .then(() => {
+          this.snackSuccess("Departamento actualizado correctamente");
+        })
+        .catch(() => {
+          this.openErrorSnack("No se pudo actualizar");
+        });
     }
+  }
+
+  snackSuccess(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Departamento creado correctamente",
+
+      duration: 3 * 1000,
+
+      panelClass: ["success-red"],
+
+      horizontalPosition: "right",
+
+      verticalPosition: "top"
+    });
   }
 
   // drag
@@ -174,7 +202,6 @@ export class PersonalizarDepartamentoComponent implements OnInit {
         this.userService.getAllUsersObject().subscribe(res => {
           //res.forEach(element => {
           for (let index = 0; index < res.length; index++) {
-            console.log(this.done.length);
             if (!this.comprobarUserRepe(res[index].nombre, this.done)) {
               this.todo.push(res[index]);
             }
@@ -195,8 +222,12 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(OverviewConfirmacionEditDep, {
-      width: '500px',
-      data: {DepName: this.departamentoEditing.nombre, DepId: this.departamentoEditing._id, PersObj: this}
+      width: "500px",
+      data: {
+        DepName: this.departamentoEditing.nombre,
+        DepId: this.departamentoEditing._id,
+        PersObj: this
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -218,26 +249,25 @@ export class OverviewConfirmacionEditDep {
     private departamentoService: DepartamentosService
   ) {}
   private personalizarDep: PersonalizarDepartamentoComponent;
-  private snackBar: MatSnackBar
+  private snackBar: MatSnackBar;
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-    confirmarEdit() {
-      this.data.PersObj.guardarDepartamento()
-      //this.openConfirmSnack('Edición completada')
-      this.dialogRef.close()    
-    }
+  confirmarEdit() {
+    this.data.PersObj.guardarDepartamento();
+    //this.openConfirmSnack('Edición completada')
+    this.dialogRef.close();
+  }
 
-    openConfirmSnack(message) {
-      this.snackBar.open(message, "", {
-        announcementMessage: "Departamento guardado con éxito",
-        duration: 3 * 1000,
-        panelClass: ["alert-green"],
-        horizontalPosition: "right",
-        verticalPosition: "top"
-      });
-    }
-  
+  openConfirmSnack(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Departamento guardado con éxito",
+      duration: 3 * 1000,
+      panelClass: ["alert-green"],
+      horizontalPosition: "right",
+      verticalPosition: "top"
+    });
+  }
 }
