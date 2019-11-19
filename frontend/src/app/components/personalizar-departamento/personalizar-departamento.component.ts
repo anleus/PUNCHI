@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { Departamento } from "src/app/models/departamento";
 import { DepartamentosService } from "../../services/departamentos.service";
 import { UserService } from "../../services/user.service";
@@ -10,7 +10,16 @@ import {
   moveItemInArray,
   transferArrayItem
 } from "@angular/cdk/drag-drop";
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog
+} from "@angular/material/dialog";
 
+export interface DepData {
+  DepName: string;
+  DepId: string;
+}
 @Component({
   selector: "app-personalizar-departamento",
   templateUrl: "./personalizar-departamento.component.html",
@@ -25,12 +34,12 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   responsable: User;
   allUsers: User[];
   selectedResponsable: string;
+  confirmation: boolean;
 
   // drag
 
   todo = [];
 
-  subtodo = [];
 
   done = [];
 
@@ -38,7 +47,8 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     private userService: UserService,
     private departamentosService: DepartamentosService,
     private UserService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -182,4 +192,41 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
     return false;
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(OverviewConfirmacionEditDep, {
+      width: '500px',
+      data: {DepName: this.departamentoEditing.nombre, DepId: this.departamentoEditing._id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (this.confirmation) {
+        console.log('Usuario' + result + 'eliminado');
+      }
+      
+    });
+  }
+}
+@Component ({
+  selector: 'confirmacion-edit-dep',
+  templateUrl: 'confirmacion-edit-dep.html',
+  styleUrls: ['./confirmacion-edit-dep.css']
+})
+
+  export class OverviewConfirmacionEditDep {
+    constructor(
+      public dialogRef: MatDialogRef<OverviewConfirmacionEditDep>,
+      @Inject(MAT_DIALOG_DATA) public data: DepData,
+      private departamentoService: DepartamentosService) {}
+      private personalizarDep: PersonalizarDepartamentoComponent
+     
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    confirmarEdit() {
+      this.personalizarDep.guardarDepartamento()
+    }
+  
 }

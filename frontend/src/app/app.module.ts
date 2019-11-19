@@ -38,7 +38,7 @@ import { AuthGuard } from "./auth/auth.guard";
 import { VacacionesComponent } from "./components/vacaciones/vacaciones.component";
 import { MatListModule } from "@angular/material/list";
 import { MatGridListModule } from "@angular/material/grid-list";
-import { PersonalizarDepartamentoComponent } from "./components/personalizar-departamento/personalizar-departamento.component";
+import { PersonalizarDepartamentoComponent,OverviewConfirmacionEditDep } from "./components/personalizar-departamento/personalizar-departamento.component";
 import { HistoryTableSelectedComponent } from "./components/history-table-selected/history-table-selected.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
 
@@ -115,7 +115,8 @@ const routes: Routes = [
     ConfirmacionBorrarUsuario,
     PersonalizarDepartamentoComponent,
     VacacionesComponent,
-    HistoryTableSelectedComponent
+    HistoryTableSelectedComponent,
+    OverviewConfirmacionEditDep
   ],
   entryComponents: [
     UsuariosComponent,
@@ -123,7 +124,8 @@ const routes: Routes = [
     OverviewConfirmacionBorradoDep,
     ConfirmacionBorrarUsuario,
     VacacionesComponent,
-    PersonalizarDepartamentoComponent
+    PersonalizarDepartamentoComponent,
+    OverviewConfirmacionEditDep
   ],
 
   imports: [
