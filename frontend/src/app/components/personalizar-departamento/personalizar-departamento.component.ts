@@ -218,6 +218,7 @@ export class OverviewConfirmacionEditDep {
     private departamentoService: DepartamentosService
   ) {}
   private personalizarDep: PersonalizarDepartamentoComponent;
+  private snackBar: MatSnackBar
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -225,7 +226,18 @@ export class OverviewConfirmacionEditDep {
 
     confirmarEdit() {
       this.data.PersObj.guardarDepartamento()
-      this.dialogRef.close()
+      //this.openConfirmSnack('Edición completada')
+      this.dialogRef.close()    
+    }
+
+    openConfirmSnack(message) {
+      this.snackBar.open(message, "", {
+        announcementMessage: "Departamento guardado con éxito",
+        duration: 3 * 1000,
+        panelClass: ["alert-green"],
+        horizontalPosition: "right",
+        verticalPosition: "top"
+      });
     }
   
 }
