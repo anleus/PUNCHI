@@ -145,21 +145,20 @@ export class IncidenciasComponent implements OnInit {
   denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
-    console.log(inc.estado);
   }
 
   esPendiente(inc: Incidencia) {
     return inc.estado == "pendiente";
   }
-  esAdmin() {
-    return this.userL.admin;
+  esAdmin(){
+    return (this.userL.admin || this.userL.gestor);
   }
 
   getDC() {
-    this.authService.getCurrentUser().subscribe(user => (this.userL = user));
-    if (this.userL.admin) {
-      return ["usuario", "asunto", "mensaje", "estado", "select"];
-    } else {
+    this.authService.getCurrentUser().subscribe((user) => (this.userL = user));
+    if(this.esAdmin()){
+      return ["usuario", "asunto", "mensaje", "estado","select"];
+    }else{
       return ["usuario", "asunto", "mensaje", "estado"];
     }
   }
