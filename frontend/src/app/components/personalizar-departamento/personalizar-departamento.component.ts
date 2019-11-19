@@ -125,7 +125,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
         id: this.departamentoEditing._id,
         nombre: this.nombre,
         users: this.done,
-        responsable: this.responsable
+        responsable: this.selectedResponsable
       });
     }
   }
