@@ -3,10 +3,10 @@ import { HttpClient } from "@angular/common/http";
 
 import { User } from "../models/users";
 import { environment } from "src/environments/environment";
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DepartamentosService } from './departamentos.service';
-import { forkJoin } from 'rxjs';
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { DepartamentosService } from "./departamentos.service";
+import { forkJoin } from "rxjs";
 
 @Injectable()
 export class UserService {
@@ -15,7 +15,10 @@ export class UserService {
 
   url: string = "";
 
-  constructor(private http: HttpClient, private departamentosService: DepartamentosService) {
+  constructor(
+    private http: HttpClient,
+    private departamentosService: DepartamentosService
+  ) {
     this.selectedUser = new User();
     this.url = environment.urlb + "/users";
   }
@@ -33,25 +36,24 @@ export class UserService {
   }
 
   getUserByUsernameDOS(username) {
-    return this.http.get(this.url + `/username/${username}`)
+    return this.http.get(this.url + `/username/${username}`);
   }
 
   getUserById(id: string) {
-    return this.http.get(this.url + "/" + id)
-      .pipe(map(user => {
+    return this.http.get(this.url + "/" + id).pipe(
+      map(user => {
         return user;
-      }));
+      })
+    );
   }
 
   putUser(user: User) {
-    console.log(user);
-    console.log(this.url + "/" + user._id, user);
-    return this.http.put(this.url + "/" + user._id, user).subscribe(response => { console.log(response)});
+    return this.http
+      .put(this.url + "/" + user._id, user)
+      .subscribe(response => {
+        console.log(response);
+      });
   }
-
-
-  
-  
 
   deleteUser(id: string) {
     return this.http.delete(this.url + "/" + id);
@@ -64,38 +66,44 @@ export class UserService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
+  getAllUsersObject(): Observable<User[]> {
+    return this.http.get<User[]>(this.url).pipe(
+      map(user => {
+        return user;
+      })
+    );
+  }
 
   getUsersByDepartment(departamentoId: string) {
-      this.departamentosService.getDepartamentoByID(departamentoId).subscribe(
-        res => {
-          let all_obs = [];
-          if (res != null) {
-            var nombreDepartamento = res["nombre"];
-            var idsUsuarios = res["usuarios"];
-            var numberUsers = idsUsuarios.length;
-            var auxnumber = 1;
-            var users = [];
-            all_obs.push(
+    return this.departamentosService
+      .getDepartamentoByID(departamentoId)
+      .subscribe(res => {
+        let all_obs = [];
+        if (res != null) {
+          var nombreDepartamento = res["nombre"];
+          var idsUsuarios = res["usuarios"];
+          var numberUsers = idsUsuarios.length;
+          var auxnumber = 1;
+          var users = [];
+          all_obs.push(
             idsUsuarios.forEach(element => {
-              this.getUserById(element).subscribe(
-                resp => {
-                  if (resp != null) {
-                    var aux;
-                    aux = resp;
-                    aux.deparatmento = nombreDepartamento;
-                    users.push(aux);
-                    if (auxnumber == numberUsers) {
-                      return users;
-                    }
+              this.getUserById(element).subscribe(resp => {
+                if (resp != null) {
+                  var aux;
+                  aux = resp;
+                  aux.deparatmento = nombreDepartamento;
+                  users.push(aux);
+                  if (auxnumber == numberUsers) {
+                    return users;
                   }
-                  auxnumber++;
-  
-                });
-            }));
-            //console.log("userservice", users);
-            return users;
-          }
-        });
+                }
+                auxnumber++;
+              });
+            })
+          );
+          //console.log("userservice", users);
+          return users;
+        }
+      });
   }
 }
- 

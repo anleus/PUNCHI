@@ -1,1 +1,44 @@
-<p>personalizar-departamento works!</p>
+<div class="row mt-3">
+
+    <div class="col-md-5 ml-5">
+
+        <mat-form-field name="formCrearDep">
+            <input matInput [ngClass]="{'red': (isDuplicate()) }" [(ngModel)]="nombre"
+                placeholder="Nombre del departamento">
+
+        </mat-form-field>
+
+    </div>
+    <div class="col-md-3">
+        <mat-form-field>
+            <mat-label>Responsable</mat-label>
+            <mat-select [(ngModel)]="selectedResponsable">
+                <mat-option *ngFor="let user of allUsers" [value]="user._id">
+                    {{user.nombre}} {{user.apellidos}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-3">
+        <button class="border" (click)="openDialog()" mat-button> Guardar</button>
+
+    </div>
+</div>
+
+<div class="example-container">
+    <h2>Personas externas al departamento</h2>
+
+    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item.nombre}}</div>
+    </div>
+</div>
+
+<div class="example-container">
+    <h2>Personas en el departamento</h2>
+
+    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item.nombre}}</div>
+    </div>
+</div>
