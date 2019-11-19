@@ -19,7 +19,7 @@ import { AsignarDepComponent } from "./components/asignar-dep/asignar-dep.compon
 import { HistoryTableComponent } from "./components/history-table/history-table.component";
 import { LoginComponent } from "./components/login/login.component";
 import { UserListComponent } from "./components/asignar-dep/user-list/user-list.component";
-import { ModificarFichaAdminComponent } from "./components/modificar-ficha-admin/modificar-ficha-admin.component";
+import { ModificarFichaAdminComponent, ConfirmModificUsuario } from "./components/modificar-ficha-admin/modificar-ficha-admin.component";
 import { UserService } from "./services/user.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CrearDepartamentoComponent } from "./components/crear-departamento/crear-departamento.component";
@@ -119,7 +119,8 @@ const routes: Routes = [
     PersonalizarDepartamentoComponent,
     VacacionesComponent,
     HistoryTableSelectedComponent,
-    OverviewConfirmacionEditDep
+    OverviewConfirmacionEditDep,
+    ConfirmModificUsuario
   ],
   entryComponents: [
     UsuariosComponent,
@@ -128,7 +129,9 @@ const routes: Routes = [
     ConfirmacionBorrarUsuario,
     VacacionesComponent,
     PersonalizarDepartamentoComponent,
-    OverviewConfirmacionEditDep
+    OverviewConfirmacionEditDep,
+    ModificarFichaAdminComponent, 
+    ConfirmModificUsuario
   ],
 
   imports: [
