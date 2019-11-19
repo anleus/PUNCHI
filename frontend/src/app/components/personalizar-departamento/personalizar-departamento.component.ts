@@ -227,7 +227,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     }
 
     confirmarEdit() {
-      this.personalizarDep.guardarDepartamento()
+      this.data.PersObj.guardarDepartamento()
     }
   
 }
