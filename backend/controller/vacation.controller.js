@@ -4,11 +4,11 @@ const Mongoose = require('mongoose');
 const vacationFunctions = {}
 
 vacationFunctions.getVacations = async (req, res, next) => {
-    Vacation.find().then(docs => res.json(docs)).catch(err => {console.log(err); res.status('400').send('An error ocurred')})
+    Vacation.find().then(docs => res.json(docs)).catch(err => { console.log(err); res.status('400').send('An error ocurred') })
 }
 
 vacationFunctions.getUserVacations = async (req, res, next) => {
-    Vacation.find({user: Mongoose.Types.ObjectId(req.params.id)}).then(docs => {res.json(docs[0])}).catch(err => {console.log(err); res.status('400').send('An error ocurred')})
+    Vacation.find({ user: Mongoose.Types.ObjectId(req.params.id) }).then(docs => { res.json(docs[0]) }).catch(err => { console.log(err); res.status('400').send('An error ocurred') })
 }
 
 vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo debe ejecutarse al crear un usuario
@@ -18,33 +18,40 @@ vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo d
         left: req.body.left,
         past: req.body.past
     });
-    Vacation.save().then(res.status('200').json('Vacation saved')).catch(err => {console.log(err); res.status('400').json('An error ocurred')});
+    Vacation.save().then(res.status('200').json('Vacation saved')).catch(err => { console.log(err); res.status('400').json('An error ocurred') });
 }
 
 vacationFunctions.updateVacations = async (req, res, next) => {
-    console.log("userid: "    + req.body.id      +
-                "\npending: " + req.body.pending + 
-                "\nleft: "    + req.body.left    +
-                "\npast: "    + req.body.past);
+    console.log(req);
+    console.log("userid: " + req.body.userid +
+        "\npending: " + req.body.pending +
+        "\nleft: " + req.body.left +
+        "\npast: " + req.body.past);
     const vacation = new Vacation({
-        _id: req.body._id,
-        user: req.body.user,
+        _id: req.params.id,
+        user: req.body.userid,
         pending: req.body.pending,
-        left: req.body.left,
-        past: req.body.past
-    });
-    Vacation.findByIdAndUpdate(req.params.id,{$set: vacation}).then(res.status(200).json('Vacation updated')).catch(err => {console.log(err);res.status(400).send('An error ocurred')});
+        left: req.body.daysLeft,
+        past: []
+        });
+
+    //Vacation.findByIdAndUpdate(req.params.id, vacation).then(res.status(200).json('Vacation updated')).catch(err => { console.log(err); res.status(400).send('An error ocurred') });
+    Vacation.findByIdAndUpdate(req.params.id, { $set: vacation }, {new: true})
+        .then(() => {
+            console.log("Vacation updated");
+            res.status(200).json('Vacation updated');
+        }).catch(err => { console.log(err); res.status(400).send('An error ocurred') });
 }
 
-vacationFunctions.deleteVacations = async(req, res, next) => {//Esto no deberia ejecutarse pero esta por si acaso
+vacationFunctions.deleteVacations = async (req, res, next) => {//Esto no deberia ejecutarse pero esta por si acaso
     Vacation.findByIdAndDelete(req.body.id).then(() => {
         res.status(200);
         res.json({ status: "Vacation deleted" });
     })
-    .catch(() => {
-        res.status(500);
-        res.send("An error ocurred");
-    });
+        .catch(() => {
+            res.status(500);
+            res.send("An error ocurred");
+        });
 }
 
 module.exports = vacationFunctions;
