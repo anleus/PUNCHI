@@ -10,10 +10,10 @@ import {
   MatDialog
 } from "@angular/material/dialog";
 import { UserService } from "src/app/services/user.service";
-import { VacationService } from 'src/app/services/vacation.service';
+import { VacationService } from "src/app/services/vacation.service";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
-import Incidencia from "src/app/models/incidencia";
+import Incidencia from "../../models/incidencia";
 import { IncidenciaService } from "src/app/services/incidencia.service";
 import { element } from "protractor";
 import { IgxCardThumbnailDirective, changei18n } from "igniteui-angular";
@@ -44,7 +44,7 @@ export class IncidenciasComponent implements OnInit {
     private incidenciaService: IncidenciaService,
     private departamentosService: DepartamentosService,
     private authService: AuthenticationService,
-     private vacationService: VacationService
+    private vacationService: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
@@ -131,7 +131,7 @@ export class IncidenciasComponent implements OnInit {
   aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-   /* let incDate = this.getDayFromIncidencia(inc);
+    /* let incDate = this.getDayFromIncidencia(inc);
     console.log('hola');
     console.log(inc.id_user);
     this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
@@ -150,18 +150,16 @@ export class IncidenciasComponent implements OnInit {
   esPendiente(inc: Incidencia) {
     return inc.estado == "pendiente";
   }
-  esAdmin(){
-    return (this.userL.admin || this.userL.gestor);
+  esAdmin() {
+    return this.userL.admin || this.userL.gestor;
   }
 
   getDC() {
-    this.authService.getCurrentUser().subscribe((user) => (this.userL = user));
-    if(this.esAdmin()){
-      return ["usuario", "asunto", "mensaje", "estado","select"];
-    }else{
+    this.authService.getCurrentUser().subscribe(user => (this.userL = user));
+    if (this.esAdmin()) {
+      return ["usuario", "asunto", "mensaje", "estado", "select"];
+    } else {
       return ["usuario", "asunto", "mensaje", "estado"];
     }
   }
-
-
 }
