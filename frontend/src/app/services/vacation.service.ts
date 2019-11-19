@@ -8,19 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class VacationService {
 
-  readonly url = "http://localhost:4000/Vacation/";
+  readonly url = "http://localhost:4000/vacation/";
 
   constructor(private http: HttpClient) { }
 
-    getUserVacations = () => this.http.get('http://localhost:4000/Vacation')
-
+    getUserVacations = () => this.http.get('http://localhost:4000/vacation')
 
     //getUserJornadas = (userid) => this.http.get(this.url + userid);
 
-
     getVacationByUsername(userid: string): Promise<any> {
-    return this.http
-      .get(this.url + "user/" + userid)
+    return this.http.get(this.url + "user/" + userid)
       .toPromise()
       .then(this.onGetVacationByName.bind(this));
     }
