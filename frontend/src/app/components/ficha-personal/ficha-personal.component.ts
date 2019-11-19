@@ -45,64 +45,13 @@ export class FichaPersonalComponent implements OnInit {
     //guardar copia usuario sin modificar
     this.usuarioSinModificar = this.usuarioLogueado;
 
-    //usuario logueado
-    var usuarioAct = this.authService.getCurrentUser();
-    usuarioAct.subscribe(user => (this.usuarioLogueado = user));
 
-    console.log(this.usuarioLogueado);
-    //patrón email
-    var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+    this.authService.getCurrentUser().subscribe(user =>  this.userService.getUserByUsernameDOS(user.username).subscribe((user2 : User) =>  this.mostrarCambios(user2)));
+    
 
-    this.usuarioform = new FormGroup({
-      nombre: new FormControl(this.usuarioLogueado.nombre, [
-        Validators.required
-      ]),
-      apellidos: new FormControl(this.usuarioLogueado.apellidos, [
-        Validators.required
-      ]),
-      fechaNacimiento: new FormControl(this.usuarioLogueado.fechaNacimiento, [
-        Validators.required
-      ]),
-      email: new FormControl(this.usuarioLogueado.email, [
-        Validators.required,
-        Validators.pattern(emailPattern)
-      ]),
-      nuss: new FormControl(this.usuarioLogueado.nuss, [Validators.required]),
-      telefono: new FormControl(this.usuarioLogueado.telefono, [
-        Validators.required,
-        Validators.minLength(8)
-      ]),
-      username: new FormControl(this.usuarioLogueado.username, [
-        Validators.required
-      ]),
-      password: new FormControl(this.usuarioLogueado.password, [
-        Validators.required,
-        Validators.minLength(4)
-      ]),
-      localidad: new FormControl(this.usuarioLogueado.localidad, [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z -']+")
-      ]),
-      provincia: new FormControl(this.usuarioLogueado.provincia, [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z -']+")
-      ]),
-      domicilio: new FormControl(this.usuarioLogueado.domicilio, [
-        Validators.required
-      ])
-    });
+    
 
-    //si eres usuario NORMAL deshabilitamos la modificación de algunos campos
-    if (
-      this.usuarioLogueado.gestor == false &&
-      this.usuarioLogueado.admin == false
-    ) {
-      this.usuarioform.controls["nombre"].disable();
-      this.usuarioform.controls["apellidos"].disable();
-      this.usuarioform.controls["fechaNacimiento"].disable();
-      this.usuarioform.controls["username"].disable();
-      this.usuarioform.controls["nuss"].disable();
-    }
+    
   }
 
   guardarcambios(form) {
@@ -134,7 +83,6 @@ export class FichaPersonalComponent implements OnInit {
       this.usuarioLogueado.username = form.value.username;
       this.usuarioLogueado.nuss = form.value.nuss;
     }
-    this.userService.selectedUser = this.usuarioLogueado;
 
     if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
@@ -237,5 +185,56 @@ export class FichaPersonalComponent implements OnInit {
       );
       this.usuarioform.controls["email"].setValue(this.usuarioLogueado.email);
     }
+  }
+
+  mostrarCambios(user: User){
+    this.usuarioLogueado = user;
+
+    //patrón email
+    var emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+
+    this.usuarioform = new FormGroup({
+      nombre: new FormControl(user.nombre, [Validators.required]),
+      apellidos: new FormControl(user.apellidos,  [Validators.required]),
+      fechaNacimiento: new FormControl(user.fechaNacimiento, [Validators.required]),
+      email: new FormControl(user.email, [
+        Validators.required,
+        Validators.pattern(emailPattern)
+      ]),
+      nuss: new FormControl(user.nuss, [Validators.required]),
+      telefono: new FormControl(user.telefono, [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
+      username: new FormControl(user.username,  [Validators.required]),
+      password: new FormControl(user.password, [
+        Validators.required,
+        Validators.minLength(5)
+      ]),
+      localidad: new FormControl(user.localidad, [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z -']+")
+      ]),
+      provincia: new FormControl(user.provincia, [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z -']+")
+      ]),
+      domicilio: new FormControl(user.domicilio, [
+        Validators.required
+      ])
+    });
+
+    //si eres usuario NORMAL deshabilitamos la modificación de algunos campos
+    if (
+      user.gestor == false &&
+      user.admin == false
+    ) {
+      this.usuarioform.controls["nombre"].disable();
+      this.usuarioform.controls["apellidos"].disable();
+      this.usuarioform.controls["fechaNacimiento"].disable();
+      this.usuarioform.controls["username"].disable();
+      this.usuarioform.controls["nuss"].disable();
+    }
+    
   }
 }

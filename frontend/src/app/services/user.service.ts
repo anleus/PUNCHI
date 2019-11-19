@@ -49,29 +49,6 @@ export class UserService {
     return this.http.put(this.url + "/" + user._id, user).subscribe(response => { console.log(response)});
   }
 
-  putUser2(user: User) {
-    const usuario = {
-        
-    };
-    console.log(usuario);
-    console.log("este");
-    return this.http.put(this.url + "/" + user._id, { 
-      nombre: user.nombre,
-      apellidos: user.apellidos,
-      fechaNacimiento: user.fechaNacimiento,
-      email: user.email,
-      localidad: user.localidad,
-      provincia: user.provincia,
-      domicilio: user.domicilio,
-      telefono: user.telefono,
-      gestor: user.gestor,
-      admin: user.admin,
-      nuss: user.nuss,
-      deleted: user.deleted,
-      username: user.username,
-      password: user.password,
-      becario: user.becario }).subscribe(response => { console.log(response)});
-  }
 
   
   
