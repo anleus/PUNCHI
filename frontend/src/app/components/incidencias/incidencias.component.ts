@@ -10,7 +10,7 @@ import {
   MatDialog
 } from "@angular/material/dialog";
 import { UserService } from "src/app/services/user.service";
-//import { VacationService } from 'src/app/services/vacation.service';
+import { VacationService } from 'src/app/services/vacation.service';
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
 import Incidencia from "src/app/models/incidencia";
@@ -43,7 +43,8 @@ export class IncidenciasComponent implements OnInit {
     private userService: UserService,
     private incidenciaService: IncidenciaService,
     private departamentosService: DepartamentosService,
-    private authService: AuthenticationService // private vacationService: VacationService
+    private authService: AuthenticationService,
+     private vacationService: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
@@ -130,7 +131,15 @@ export class IncidenciasComponent implements OnInit {
   aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    console.log(inc.estado);
+    let incDate = this.getDayFromIncidencia(inc);
+    console.log('hola');
+    console.log(inc.id_user);
+    this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
+      userVacations.left--;
+      userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
+      userVacations.past.push(new Date(incDate));
+      this.vacationService.putVacationUser(userVacations._id, userVacations);
+    }).catch((err) => console.log(err));
   }
 
   denegarIncidencia(inc: Incidencia) {
@@ -155,5 +164,5 @@ export class IncidenciasComponent implements OnInit {
     }
   }
 
-  
+
 }

@@ -29,5 +29,8 @@ export class VacationService {
   onGetVacationByName(res: any) {
     return Promise.resolve(res);
   }
+  putVacationUser(userid, vacation){
+    this.http.post('http://localhost:4000/vacation/user/' + userid,vacation);
+  }
 
 }

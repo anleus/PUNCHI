@@ -1,19 +1,75 @@
-<div>
-  <p></p>
-</div>
-<div class="card-container">
-  <mat-card class="card" flex="20">
-    <div class="cabecera">
-      <h1  style="margin-left: 50px" >Usuarios </h1>
-      <div class="text-right">
-        <button style="margin-right: 150px"  type="submit" (click)="newUser()" class="btn btn-primary text-center" data-toggle="button"
+<div class="card-container container-fluid">
+  <mat-card class="card ">
+    <div class="d-flex flex-column">
+      <div class="row-4">
+        <div class="d-flex flex-row">
+            <div class="col-6">
+              <h1> Usuarios </h1>
+            </div>
+            <div class="col-6 text-right">
+              <button type="submit" (click)="newUser()" class="btn btn-primary" data-toggle="button"
+              aria-pressed="false" autocomplete="off">
+              Nuevo usuario
+              </button>
+            </div>
+        </div>
+      </div>
+      <div class="col-flex"><mat-divider></mat-divider></div>
+      <div class="row-4">
+        <div class="table-container mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+    
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> Nombre </th>
+              <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="apellidos">
+              <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+              <td mat-cell *matCellDef="let element"> {{element.apellidos}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="departamento">
+              <th mat-header-cell *matHeaderCellDef> Departamento </th>
+              <td mat-cell *matCellDef="let element"> {{element.departamento}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>Acciones</th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button data='element.id' (click)='editUserSelected(element)'>
+                  <mat-icon>edit</mat-icon>
+    
+                </button>
+                <button mat-button data='element.id' (click)='openDialog(element)'>
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          </div>
+      </div>
+      <div class="row-6 text-center">
+          <button type="submit" [disabled]="true" (click)="nada()" class="btn btn-primary " data-toggle="button"
           aria-pressed="false" autocomplete="off">
-          Nuevo usuario
+          Crear informe (próximamente)
         </button>
       </div>
     </div>
-    <div>
-      <p></p>
+  </mat-card>
+</div>
+
+
+  <!--  <h1  style="margin-left: 50px" >Usuarios </h1>
+      <div class="text-right">
+        
+      </div>
+
+
+
     </div>
     <div class="table-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">
@@ -51,10 +107,6 @@
       </table>
     </div>
 
-    <div>
-      <p></p>
-    </div>
-
     <div class="text-center">
       <button type="submit" [disabled]="true" (click)="nada()" class="btn btn-primary " data-toggle="button"
         aria-pressed="false" autocomplete="off">
@@ -64,3 +116,4 @@
 
   </mat-card>
 </div>
+-->

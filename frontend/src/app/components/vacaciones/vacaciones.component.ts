@@ -23,6 +23,7 @@ export class VacacionesComponent implements OnInit {
   eventCount;
   vacationDaysLeft;
   currentUserId;
+  d;
 
   constructor(private vacationservice: VacationService,
     private authservice: AuthenticationService) { }
@@ -31,10 +32,11 @@ export class VacacionesComponent implements OnInit {
     this.currentUserId = this.authservice.currentUserValue._id.toString();
 
     console.log(this.authservice.currentUserValue._id);
+
     this.vacationservice.getVacationByUsername(this.authservice.currentUserValue._id.toString()).then(
       res => {
         console.log("Got the vacation days!");
-        if (res == null || typeof res == 'undefined') {
+        if (res == null || typeof res === 'undefined') {
           console.log("User has no vacation days");
           return;
         }
@@ -73,34 +75,40 @@ export class VacacionesComponent implements OnInit {
   }
 
   handleDateClick(arg) {
-    if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + this.dateFormatter(arg.date) + '?')) {
-      this.calendarEvents = this.calendarEvents.concat(
-        { // add new event data. must create new array
-          start: arg.date,
-          allDay: true,
-          rendering: 'background',
-          backgroundColor: '#FF0000'
-        })
-      console.log("arg.date: " + arg.date + " this.vacationDaysLeft: " + (this.vacationDaysLeft-1));
-      this.vacationservice.updateVacation(this.currentUserId, arg.date, (this.vacationDaysLeft-1));
-    }
-  }
-
-  handleSelectDate(arg) {
-    if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + this.dateFormatter(arg.start) + ' hasta: ' + this.dateFormatter(arg.end) + '?')) {
-      var i;
-      let date = arg.start;
-      for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
+    this.d = Date.now();
+    if (arg.date.getTime() > this.d) {
+      if (confirm('¿Seguro que quieres solicitar un día de vacaciones este día: ' + this.dateFormatter(arg.date) + '?')) {
         this.calendarEvents = this.calendarEvents.concat(
           { // add new event data. must create new array
-            title: 'Día de vacaciones',
-            start: this.addDay2Month(arg.start, i),
+            start: arg.date,
             allDay: true,
             rendering: 'background',
             backgroundColor: '#FF0000'
           })
+        console.log("arg.date: " + arg.date + " this.vacationDaysLeft: " + (this.vacationDaysLeft - 1));
+        this.vacationservice.updateVacation(this.currentUserId, arg.date, (this.vacationDaysLeft - 1));
       }
-    }
+    } else {alert('No puedes seleccionar el día de hoy ni uno pasado');}
+  }
+
+  handleSelectDate(arg) {
+    this.d = Date.now();
+    if (arg.start.getTime() > this.d) {
+      if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + this.dateFormatter(arg.start) + ' hasta: ' + this.dateFormatter(arg.end) + '?')) {
+        var i;
+        let date = arg.start;
+        for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
+          this.calendarEvents = this.calendarEvents.concat(
+            { // add new event data. must create new array
+              title: 'Día de vacaciones',
+              start: this.addDay2Month(arg.start, i),
+              allDay: true,
+              rendering: 'background',
+              backgroundColor: '#FF0000'
+            })
+        }
+      }
+    } else {alert('No puedes seleccionar el día de hoy ni uno pasado');}
   }
 
   addDay2Month(d: Date, i: number) {
