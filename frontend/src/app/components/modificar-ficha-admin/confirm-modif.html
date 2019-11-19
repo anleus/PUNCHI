@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>
+    Confirmar cambios
+</h1>
+<mat-divider></mat-divider>
+<br>
+<p>Si aceptas, los cambios serán efectivos</p>
+<br>
+<div botones-ventana class="text-right">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button class="confirm" (click)="confirmacion()" cdkFocusInitial>Aceptar</button>
+</div>
