@@ -6,6 +6,7 @@ import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { VacationService } from "src/app/services/vacation.service";
 import { AuthenticationService } from 'src/app/services/auth.service';
+import { type } from 'os';
 
 
 @Component({
@@ -24,6 +25,9 @@ export class VacacionesComponent implements OnInit {
   vacationDaysLeft;
   currentUserId;
   d;
+  _id;
+  pending;
+  left;
 
   constructor(private vacationservice: VacationService,
     private authservice: AuthenticationService) { }
@@ -36,12 +40,12 @@ export class VacacionesComponent implements OnInit {
     this.vacationservice.getVacationByUsername(this.authservice.currentUserValue._id.toString()).then(
       res => {
         console.log("Got the vacation days!");
-        if (res == null || typeof res === 'undefined') {
+        if (res == null || typeof res == 'undefined') {
           console.log("User has no vacation days");
           return;
         }
-        res[0].pending.forEach(vac => {
-          console.log(vac);
+        res.pending.forEach(vac => {
+          //console.log(vac);
           this.calendarEvents = this.calendarEvents.concat(
             {
               start: vac,
@@ -51,23 +55,10 @@ export class VacacionesComponent implements OnInit {
             })
         });
 
-        this.vacationDaysLeft = res[0].left;
-        console.log(res[0].left);
+        this.vacationDaysLeft = res.left;
+        //console.log(res.left);
       }
     );
-
-    /* this.vacationservice.getUserVacations().subscribe(res => {
-      res[0].pending.forEach(vac => {
-        this.calendarEvents = this.calendarEvents.concat(
-          {
-            editable: false,
-            start: vac,
-            allDay: true,
-            rendering: 'background',
-            backgroundColor: '#FF0000'
-          })
-      });
-    }); */
   }
 
   toggleWeekends() {
@@ -86,7 +77,7 @@ export class VacacionesComponent implements OnInit {
             backgroundColor: '#FF0000'
           })
         console.log("arg.date: " + arg.date + " this.vacationDaysLeft: " + (this.vacationDaysLeft - 1));
-        this.vacationservice.updateVacation(this.currentUserId, arg.date, (this.vacationDaysLeft - 1));
+        this.vacationservice.updateVacation(this._id = this.currentUserId, this.pending = arg.date, this.left = (this.vacationDaysLeft - 1));
       }
     } else {alert('No puedes seleccionar el día de hoy ni uno pasado');}
   }

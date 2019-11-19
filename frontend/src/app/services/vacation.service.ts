@@ -20,8 +20,8 @@ export class VacationService {
       .then(this.onGetVacationByName.bind(this));
   }
 
-  updateVacation(userid: string, dateP : Date, daysLeft : number) {  //para hacer update se le pasa el userid, la fecha de pending y el número de días que le quedan
-    return this.http.put(this.url + "user/update" + userid, {userid, daysLeft})
+  updateVacation(userid: string, pending : Date, left : number) {  //para hacer update se le pasa el userid, la fecha de pending y el número de días que le quedan
+    return this.http.post(this.url + "user/update/" + userid, {userid, pending, left})
       .toPromise()
       .then(this.onGetVacationByName.bind(this));
   }

@@ -12,18 +12,14 @@ export class DepartamentosService {
 
   constructor(private http: HttpClient) {}
 
-  crearDepartamento = departamentoData =>
-    new Promise((resolve, reject) => {
+  crearDepartamento = departamentoData => {
+    return new Promise((resolve, reject) => {
       this.http.post(this.url, departamentoData).subscribe(
-        res => {
-          // * not callback
-          resolve(res);
-        },
-        error => {
-          console.log("Error", error);
-        }
+        data => resolve(data), // success path
+        error => reject(error) // error path
       );
     });
+  };
 
   //Cambiado para mejor funcionamiento att:josevi
   //getDepartamentos = () => this.http.get(this.url);
@@ -38,18 +34,22 @@ export class DepartamentosService {
       .toPromise()
       .then(this.onGetDepartamentoByName.bind(this));
   }
-  updateDepartamento = departamentoData =>
-    new Promise((resolve, reject) => {
+  updateDepartamento = departamentoData => {
+    return new Promise((resolve, reject) => {
       this.http.put(this.url, departamentoData).subscribe(
-        res => {
-          // * not callback
-          resolve(res);
-        },
+        data => {
+          console.log("works");
+          resolve(data);
+        }, // success path
         error => {
+          console.log("error");
+          console.log(error);
+
           reject(error);
-        }
+        } // error path
       );
     });
+  };
 
   onGetDepartamentoByName(res: any) {
     return Promise.resolve(res);
