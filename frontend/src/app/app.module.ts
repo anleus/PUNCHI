@@ -14,7 +14,7 @@ import { FichaPersonalComponent } from "./components/ficha-personal/ficha-person
 import { DepartamentosComponent } from "./components/departamentos/departamentos.component";
 import { IncidenciasComponent } from "./components/incidencias/incidencias.component";
 import { InformesComponent } from "./components/informes/informes.component";
-import { CalendarioComponent } from "./components/calendario/calendario.component";
+import { CalendarioComponent } from "./components/calendario-incidencias/calendario-incidencias.component";
 import { AsignarDepComponent } from "./components/asignar-dep/asignar-dep.component";
 import { HistoryTableComponent } from "./components/history-table/history-table.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -38,7 +38,10 @@ import { AuthGuard } from "./auth/auth.guard";
 import { VacacionesComponent } from "./components/vacaciones/vacaciones.component";
 import { MatListModule } from "@angular/material/list";
 import { MatGridListModule } from "@angular/material/grid-list";
-import { PersonalizarDepartamentoComponent,OverviewConfirmacionEditDep } from "./components/personalizar-departamento/personalizar-departamento.component";
+import {
+  PersonalizarDepartamentoComponent,
+  OverviewConfirmacionEditDep
+} from "./components/personalizar-departamento/personalizar-departamento.component";
 import { HistoryTableSelectedComponent } from "./components/history-table-selected/history-table-selected.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
 

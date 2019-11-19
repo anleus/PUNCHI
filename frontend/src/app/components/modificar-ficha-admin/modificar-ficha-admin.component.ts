@@ -1,20 +1,12 @@
-import { Component, OnInit, NgModule} from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
+import { Component, OnInit, NgModule, Inject} from "@angular/core";
+import {FormBuilder, FormGroup, Validators, FormControl
 } from "@angular/forms";
 import { User } from "src/app/models/users";
 import { UserService } from "src/app/services/user.service";
 import { DatePipe } from "@angular/common";
-import { throwMatDialogContentAlreadyAttachedError } from "@angular/material/dialog";
+import { throwMatDialogContentAlreadyAttachedError, MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { FormsModule } from "@angular/forms";
-import {
-  HttpClient,
-  HttpClientModule,
-  HttpHeaders,
-  HttpErrorResponse
+import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse
 } from "@angular/common/http";
 import { DepartamentosService } from "src/app/services/departamentos.service";
 import { Departamento } from "src/app/models/departamento";
@@ -47,7 +39,8 @@ export class ModificarFichaAdminComponent implements OnInit {
     private authService: AuthenticationService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
 
@@ -192,4 +185,26 @@ export class ModificarFichaAdminComponent implements OnInit {
     });
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmModificUsuario, {
+      width: '650px',
+    });
+
+    dialogRef.afterClosed()
+  }
+
+}
+
+@Component({
+  selector: 'confirm-modific',
+  templateUrl: 'confirm-modif.html'
+})
+export class ConfirmModificUsuario {
+
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmModificUsuario>) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }
