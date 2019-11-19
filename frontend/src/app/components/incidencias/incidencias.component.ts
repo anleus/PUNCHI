@@ -131,15 +131,13 @@ export class IncidenciasComponent implements OnInit {
   aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    /* let incDate = this.getDayFromIncidencia(inc);
-    console.log('hola');
-    console.log(inc.id_user);
+    let incDate = this.getDayFromIncidencia(inc);
     this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
       userVacations.left--;
       userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
       userVacations.past.push(new Date(incDate));
-      this.vacationService.putVacationUser(userVacations._id, userVacations);
-    }).catch((err) => console.log(err));*/
+      this.vacationService.putVacationUser(userVacations._id, userVacations).subscribe();
+    }).catch((err) => console.log(err));
   }
 
   denegarIncidencia(inc: Incidencia) {
@@ -152,6 +150,19 @@ export class IncidenciasComponent implements OnInit {
   }
   esAdmin() {
     return this.userL.admin || this.userL.gestor;
+  }
+
+  getDayFromIncidencia(inc: Incidencia) {
+    return inc.mensaje.slice(5);
+  }
+
+  pad2(num) {
+    return num < 10 ? '0' + num : num;
+  }
+
+  getDayFromDate(date: Date) {
+    date = new Date(date);
+    return this.pad2(date.getDate()) + '/' + this.pad2(date.getMonth()) + '/' + this.pad2(date.getFullYear())
   }
 
   getDC() {

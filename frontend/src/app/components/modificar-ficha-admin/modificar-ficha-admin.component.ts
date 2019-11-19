@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators, FormControl
 import { User } from "src/app/models/users";
 import { UserService } from "src/app/services/user.service";
 import { DatePipe } from "@angular/common";
-import { throwMatDialogContentAlreadyAttachedError, MatDialogRef, MatDialog } from "@angular/material/dialog";
+import { throwMatDialogContentAlreadyAttachedError, MatDialogRef, MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FormsModule } from "@angular/forms";
 import { HttpClient, HttpClientModule, HttpHeaders, HttpErrorResponse
 } from "@angular/common/http";
@@ -13,7 +13,11 @@ import { Departamento } from "src/app/models/departamento";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+
+export interface UserData {
+  userModified: User;
+}
 
 
 @Component({
@@ -81,11 +85,13 @@ export class ModificarFichaAdminComponent implements OnInit {
     if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
       if (this.comprobarNumeroAlInicioDomicilio() == false ) {
+        
         this.snackError("Domicilio con números al inicio.");
       } 
       else {
-        this.userService.putUser(this.usuarioAModificar);
-        this.snackSuccess("Usuario modificado correctamente");
+        this.openDialog(this.usuarioAModificar);
+        //this.userService.putUser(this.usuarioAModificar);
+        //this.snackSuccess("Usuario modificado correctamente");
       }
     }
   }
@@ -104,8 +110,6 @@ export class ModificarFichaAdminComponent implements OnInit {
      }else{
        return true;
      }
-     
-
   }
 
   snackError(message) {
@@ -185,9 +189,10 @@ export class ModificarFichaAdminComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
+  openDialog(user: User): void {
     const dialogRef = this.dialog.open(ConfirmModificUsuario, {
-      width: '650px',
+      width: '450px',
+      data: user
     });
 
     dialogRef.afterClosed()
@@ -197,14 +202,26 @@ export class ModificarFichaAdminComponent implements OnInit {
 
 @Component({
   selector: 'confirm-modific',
-  templateUrl: 'confirm-modif.html'
+  templateUrl: 'confirm-modif.html',
+  styleUrls: ['./confirm-modif.css'],
 })
 export class ConfirmModificUsuario {
 
+
   constructor(
-    public dialogRef: MatDialogRef<ConfirmModificUsuario>) {}
+    public dialogRef: MatDialogRef<ConfirmModificUsuario>,
+    @Inject(MAT_DIALOG_DATA) public data: User,
+    private userService: UserService) {}
 
   onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  confirmacion(): void {
+    try {
+      this.userService.putUser(this.data);
+    } catch (err) {}
+    console.log(this.data.nombre);
     this.dialogRef.close();
   }
 }
