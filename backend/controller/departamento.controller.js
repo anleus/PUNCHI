@@ -69,9 +69,11 @@ departamentFunctions.getDepartamentoByUser = async (req, res, next) => {
 }
 
 departamentFunctions.getDepartamentoByGestor = async (req, res, next) => {
+	console.log('yay');
+
 	var departamentoget = await Departamento.findOne({ responsable: mongoose.Types.ObjectId(req.params.responsable)}).catch(err =>
 		console.error(err)
-	);;
+	);
 	res.status(200);
 	res.json(departamentoget);
 }

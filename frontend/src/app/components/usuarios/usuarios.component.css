@@ -1,15 +1,12 @@
 
-.card-container > * {
+.card-container {
   margin-top: 20px;
   width: 80%;
-  height: 550px;
+  height: 200%;
   left: 10%;
   
 }
 
-.cabecera {
-  margin: right;
-}
 
 .table-container{
   height: 500px;
