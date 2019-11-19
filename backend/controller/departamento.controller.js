@@ -48,10 +48,16 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 			console.log(result);
 			result.responsable = departamento.responsable;
 			result.usuarios = departamento.usuarios;
-
 			result.save();
-			res.status(200);
-			res.json({ status: "Departamento saved" });
+
+			User.findByIdAndUpdate(
+				departamento.responsable,
+				{ $set: { gestor: true } },
+				{}
+			).then(() => {
+				res.status(200);
+				res.json({ status: "Departamento saved" });
+			});
 		})
 		.catch(err => {
 			res.status(400);
