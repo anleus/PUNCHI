@@ -22,14 +22,9 @@ vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo d
 }
 
 vacationFunctions.updateVacations = async (req, res, next) => {
-    console.log(req);
-    console.log("userid: " + req.body.userid +
-        "\npending: " + req.body.pending +
-        "\nleft: " + req.body.left +
-        "\npast: " + req.body.past);
     const vacation = new Vacation({
         _id: req.params.id,
-        user: req.body.userid,
+        user: req.body.user,
         pending: req.body.pending,
         left: req.body.daysLeft,
         past: []
