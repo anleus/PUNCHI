@@ -136,7 +136,7 @@ export class IncidenciasComponent implements OnInit {
       userVacations.left--;
       userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
       userVacations.past.push(new Date(incDate));
-      this.vacationService.putVacationUser(userVacations._id, userVacations).M();
+      this.vacationService.putVacationUser(userVacations._id, userVacations);
     }).catch((err) => console.log(err));
   }
 

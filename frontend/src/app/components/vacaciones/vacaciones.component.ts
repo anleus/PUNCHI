@@ -23,9 +23,11 @@ export class VacacionesComponent implements OnInit {
   calendarEvents: EventInput[] = [];
   eventCount;
   vacationDaysLeft;
+  vacationPast;
   currentUserId;
   d;
   _id;
+  _vid;
   pending;
   left;
 
@@ -34,6 +36,8 @@ export class VacacionesComponent implements OnInit {
 
   ngOnInit() {
     this.currentUserId = this.authservice.currentUserValue._id.toString();
+
+    this.calendarComponent.selectMinDistance = 2;
 
     console.log(this.authservice.currentUserValue._id);
 
@@ -54,9 +58,10 @@ export class VacacionesComponent implements OnInit {
               backgroundColor: '#FF0000'
             })
         });
-
+        this._vid = res._id;
+        this.pending = res.pending;
         this.vacationDaysLeft = res.left;
-        //console.log(res.left);
+        this.vacationPast = res.past;
       }
     );
   }
@@ -76,14 +81,17 @@ export class VacacionesComponent implements OnInit {
             rendering: 'background',
             backgroundColor: '#FF0000'
           })
-        console.log("arg.date: " + arg.date + " this.vacationDaysLeft: " + (this.vacationDaysLeft - 1));
-        this.vacationservice.updateVacation(this._id = this.currentUserId, this.pending = arg.date, this.left = (this.vacationDaysLeft - 1));
+        //console.log("arg.date: " + arg.date + " this.vacationDaysLeft: " + (this.vacationDaysLeft - 1));
+        this.pending.push(new Date(arg.date).toUTCString()); 
+        console.log(this.pending);
+        this.vacationservice.updateVacation(this._vid, this.pending.push(arg.date), this.left = (this.vacationDaysLeft - 1), this.vacationPast);
       }
     } else {alert('No puedes seleccionar el día de hoy ni uno pasado');}
   }
 
   handleSelectDate(arg) {
     this.d = Date.now();
+    if (this.addDay2Month(arg.start, 1).getTime() == arg.end.getTime()) return; //Workaround guarro para evitar la selección de un único día
     if (arg.start.getTime() > this.d) {
       if (confirm('¿Seguro que quieres solicitar vacaciones desde: ' + this.dateFormatter(arg.start) + ' hasta: ' + this.dateFormatter(arg.end) + '?')) {
         var i;

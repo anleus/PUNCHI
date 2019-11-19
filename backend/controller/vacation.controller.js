@@ -22,20 +22,25 @@ vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo d
 }
 
 vacationFunctions.updateVacations = async (req, res, next) => {
-    const vacation = new Vacation({
-        _id: req.params.id,
-        user: req.body.user,
-        pending: req.body.pending,
-        left: req.body.daysLeft,
-        past: []
-        });
+    console.log("----------------");
+    console.log(req.body);
+    console.log("----------------");
+    console.log("req.params.id: " + req.params.id);
 
     //Vacation.findByIdAndUpdate(req.params.id, vacation).then(res.status(200).json('Vacation updated')).catch(err => { console.log(err); res.status(400).send('An error ocurred') });
-    Vacation.findByIdAndUpdate(req.params.id, { $set: vacation }, {new: true})
-        .then(() => {
-            console.log("Vacation updated");
-            res.status(200).json('Vacation updated');
-        }).catch(err => { console.log(err); res.status(400).send('An error ocurred') });
+    Vacation.findByIdAndUpdate(req.params.id, {'$set' : {'$push': { pending: req.body.pending }, left: req.body.left, '$push': { past: req.body.past} }}, {'new' : true, 'lean' : true}, (err, doc) => {
+        if (err) console.log("Something wrong when updating data!");
+        //console.log(doc);
+    });
+    
+    
+    /* )
+        .then(vac => {
+            console.log(typeof vac);
+            console.log(vac);
+            res.json(vac);
+            //res.status(200).json('Vacation updated');
+        }).catch(err => { console.log(err); res.status(400).send('An error ocurred') }); */
 }
 
 vacationFunctions.deleteVacations = async (req, res, next) => {//Esto no deberia ejecutarse pero esta por si acaso
