@@ -19,6 +19,7 @@ import {
 export interface DepData {
   DepName: string;
   DepId: string;
+  PersObj: PersonalizarDepartamentoComponent
 }
 @Component({
   selector: "app-personalizar-departamento",
@@ -196,7 +197,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(OverviewConfirmacionEditDep, {
       width: '500px',
-      data: {DepName: this.departamentoEditing.nombre, DepId: this.departamentoEditing._id}
+      data: {DepName: this.departamentoEditing.nombre, DepId: this.departamentoEditing._id, PersObj: this}
     });
 
     dialogRef.afterClosed().subscribe(result => {
