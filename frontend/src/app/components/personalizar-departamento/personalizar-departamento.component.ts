@@ -221,14 +221,26 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(OverviewConfirmacionEditDep, {
-      width: "500px",
-      data: {
-        DepName: this.departamentoEditing.nombre,
-        DepId: this.departamentoEditing._id,
-        PersObj: this
-      }
-    });
+    var dialogRef;
+    if (this.isEdit) {
+      this.dialog.open(OverviewConfirmacionEditDep, {
+        width: "500px",
+        data: {
+          DepName: this.departamentoEditing.nombre,
+          DepId: this.departamentoEditing._id,
+          PersObj: this
+        }
+      });
+    } else {
+      this.dialog.open(OverviewConfirmacionEditDep, {
+        width: "500px",
+        data: {
+          DepName: this.nombre,
+          // DepId: this.departamentoEditing._id,
+          PersObj: this
+        }
+      });
+    }
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
