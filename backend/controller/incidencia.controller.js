@@ -29,8 +29,7 @@ incidenciaFunctions.createUserIncidencia = async (req, res, next) => {
     mensaje: req.body.mensaje,
     estado: req.body.estado
   });
-  incidencia
-    .save()
+  incidencia.save()
     .then(res.status("200").json("Incidencia saved"))
     .catch(err => {
       console.log(err);

@@ -7,6 +7,9 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { VacationService } from "src/app/services/vacation.service";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { type } from "os";
+import { IncidenciaService } from 'src/app/services/incidencia.service';
+import Incidencia from "../../models/incidencia";
+
 
 @Component({
   selector: "app-vacaciones",
@@ -77,6 +80,7 @@ export class VacacionesComponent implements OnInit {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
+  //falta comprobar si no tens vacacions
   handleDateClick(arg) {
     console.log(this._vid);
     this.d = Date.now();
@@ -96,10 +100,24 @@ export class VacacionesComponent implements OnInit {
           (this.left = this.vacationDaysLeft - 1),
           this.vacationPast
         );
+        //this.crearSolicitud(arg.date);
       }
     } else {
       alert("No puedes seleccionar el día de hoy ni uno pasado");
     }
+  }
+
+  crearSolicitud(date) {
+    console.log(date);
+    var ininsertar : Incidencia;
+    ininsertar.id_user = this.authservice.currentUserValue._id;
+    ininsertar.vacaciones = true;
+    ininsertar.incidencias = false;
+    ininsertar.estado = "pendiente";
+    ininsertar.asunto = "Solicitud vacaciones"
+    ininsertar.mensaje = "Dia" + date;
+    console.log(ininsertar);
+    //this.pending.push(new Date(arg.date).toISOString());
   }
 
   handleSelectDate(arg) {

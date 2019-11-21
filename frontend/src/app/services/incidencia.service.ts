@@ -26,6 +26,9 @@ export class IncidenciaService {
   onGetIncidenciaByUserId(res: any) {
     return Promise.resolve(res);
   }*/
+  crearIncidencia(incidencia: Incidencia) {
+    return this.http.post(this.url, incidencia);
+  }
 
   getIncidenciaByUserId(userId): Observable<Incidencia[]> {
     return this.http.get<Incidencia[]>(this.url + "user/" + userId);
