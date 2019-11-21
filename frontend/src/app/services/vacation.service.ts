@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vacation } from '../models/Vacation';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +19,12 @@ export class VacationService {
       .then(this.onGetVacationByName.bind(this));
   }
 
-  updateVacation(userid: string, pending : Date, left : number) {  //para hacer update se le pasa el userid, la fecha de pending y el número de días que le quedan
-    return this.http.post(this.url + "user/update/" + userid, {userid, pending, left})
-      .toPromise()
-      .then(this.onGetVacationByName.bind(this));
+  updateVacation(_vid: string, pending : Date[], left : number, past : Date[]) {
+    return this.http.post(this.url + "user/update/" + _vid, {_vid, pending, left, past})
+      .subscribe(vac => {
+                    console.log(vac);
+                    return vac;
+      });
   }
 
   onGetVacationByName(res: any) {
@@ -32,7 +33,7 @@ export class VacationService {
 
 
     public putVacationUser(userid, vacation){
-      return this.http.post('http://localhost:4000/vacation/user/update/'+userid,vacation);
+      return this.http.post('http://localhost:4000/vacation/user/update/' + userid,vacation);
     }
 
 }

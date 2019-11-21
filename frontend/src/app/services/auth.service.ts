@@ -26,7 +26,6 @@ export class AuthenticationService {
     login(username, password) {
         return this.http.post(environment.urlb + `/users/username/${username}`, {username, password})
             .pipe(map(user => {
-                //this.currentUserSubject = new BehaviorSubject<User>(user);
                 if (user == null) {
                     localStorage.setItem('isLoggedin', 'false');
                     return null;
