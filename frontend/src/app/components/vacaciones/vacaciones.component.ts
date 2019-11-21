@@ -79,6 +79,7 @@ export class VacacionesComponent implements OnInit {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
+  //falta comprobar si no tens vacacions
   handleDateClick(arg) {
     this.d = Date.now();
     if (arg.date.getTime() > this.d) {
@@ -104,10 +105,15 @@ export class VacacionesComponent implements OnInit {
           (this.left = this.vacationDaysLeft - 1),
           this.vacationPast
         );
+        this.crearSolicitud(arg.date);
       }
     } else {
       alert("No puedes seleccionar el día de hoy ni uno pasado");
     }
+  }
+
+  crearSolicitud(date) {
+    //this.pending.push(new Date(arg.date).toISOString());
   }
 
   handleSelectDate(arg) {
