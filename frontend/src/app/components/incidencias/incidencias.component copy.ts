@@ -28,9 +28,7 @@ export class IncidenciasComponent implements OnInit {
   public usuarioLogueado = this.authService.getCurrentUser();
   public user: User;
   public userL: User;
-  public userAux : User;
   incidencias: Incidencia[];
-  incidenciasDeLosUsersDelGestor: Incidencia[];
   //vacation: Vacation;
   //vacacionesUsuario: Date[];
 
@@ -107,55 +105,21 @@ export class IncidenciasComponent implements OnInit {
   }
 
   getIncidenciaByGestor() {
-    var i = 0;
     this.departamentosService
       .getDepartamentoByGestor(this.usuarioLogueado.source["_value"]._id)
       .subscribe(res => {
         if (res != null) {
+          console.log(res);
           var idsUsuarios = res["usuarios"];
           idsUsuarios.forEach(element => {
-              var usuariosDelGestor = element;
-              var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
-                element
-              );
-              var useraux;
-              var username;
-            incidenciaObs.subscribe(incidencias => {
-              this.incidencias = incidencias;
-              this.incidencias.forEach(element=> {
-                if(element != null && element != undefined && usuariosDelGestor != null && usuariosDelGestor != undefined){
-                  //console.log(element);
-                  //console.log(usuariosDelGestor);
-                 /* var contador=0;
-                  contador++;
-                 console.log(contador);
-                  for(var i=0; i<contador;i++ ){
-                    useraux = this.userService.getUserById(usuariosDelGestor);
-                    console.log(useraux.username);
-                    username = useraux.username;
-                  }*/
-                  element.usuario = usuariosDelGestor;
-                }
-                this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
-                this.dataSource.paginator = this.paginator;
-              });
-              
-            });
-
+            this.incidenciaService.getIncidenciaByUserId(element);
           });
+          this.dataSource = new MatTableDataSource<Incidencia>(
+            this.incidencias
+          );
+          this.dataSource.paginator = this.paginator;
         }
       });
-  }
-
-
-
-  convertirIdToUsername(userId : string){
-    var aux;
-    if(userId != undefined){
-     aux = this.userService.getUserById(userId);
-     aux= aux.username;
-    }
-    return aux;
   }
 
   aceptarIncidencia(inc: Incidencia) {
