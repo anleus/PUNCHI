@@ -32,8 +32,6 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 	req.body.users.forEach(element => {
 		users.push(element._id);
 	});
-	console.log(users);
-	console.log(req.body.responsable);
 
 	const departamento = {
 		usuarios: req.body.users,
@@ -45,7 +43,6 @@ departamentFunctions.updateDepartamento = async (req, res, next) => {
 		new: true
 	})
 		.then(result => {
-			console.log(result);
 			result.responsable = departamento.responsable;
 			result.usuarios = departamento.usuarios;
 			result.save();

@@ -161,17 +161,22 @@ export class IncidenciasComponent implements OnInit {
   aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    let incDate = this.getDayFromIncidencia(inc);
+    /*let incDate = this.getDayFromIncidencia(inc);
     this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
       userVacations.left--;
       userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
       userVacations.past.push(new Date(incDate));
       this.vacationService.putVacationUser(userVacations._id, userVacations).subscribe();
-    }).catch((err) => console.log(err));
+    }).catch((err) => console.log(err));*/
   }
 
   denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
+    this.incidenciaService.putIncidencia(inc);
+  }
+
+  editarIncidencia(inc: Incidencia) {
+    inc.estado = "pendiente";
     this.incidenciaService.putIncidencia(inc);
   }
 
