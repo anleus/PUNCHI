@@ -17,15 +17,6 @@ export class IncidenciaService {
     return this.http.get<Incidencia[]>(this.url);
   }
 
-  /*getIncidenciaByUserId(userId: string): Promise<any> {
-    return this.http
-      .get(this.url + "user/" + userId)
-      .toPromise()
-      .then(this.onGetIncidenciaByUserId.bind(this));
-  }
-  onGetIncidenciaByUserId(res: any) {
-    return Promise.resolve(res);
-  }*/
   crearIncidencia(incidencia: Incidencia) {
     return this.http.post(this.url, incidencia);
   }

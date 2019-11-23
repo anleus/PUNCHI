@@ -9,6 +9,7 @@ import { AuthenticationService } from "src/app/services/auth.service";
 import { type } from "os";
 import { IncidenciaService } from 'src/app/services/incidencia.service';
 import {Incidencia} from "../../models/incidencia";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -35,7 +36,9 @@ export class VacacionesComponent implements OnInit {
 
   constructor(
     private vacationservice: VacationService,
-    private authservice: AuthenticationService
+    private authservice: AuthenticationService,
+    private incidenciaService: IncidenciaService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -115,8 +118,10 @@ export class VacacionesComponent implements OnInit {
     newIncidencia.incidencias = false;
     newIncidencia.estado = "pendiente";
     newIncidencia.asunto = "Solicitud vacaciones"
-    newIncidencia.mensaje = "Dia " + date.toISOString();
+    newIncidencia.mensaje = date.toISOString();
     console.log(newIncidencia);
+    this.incidenciaService.crearIncidencia(newIncidencia).subscribe(res => console.log("incidencia creada!"));
+    this.snackSuccess('Dia de vacaciones solicitado correctamente');
     //this.pending.push(new Date(arg.date).toISOString());
   }
 
@@ -172,5 +177,15 @@ export class VacacionesComponent implements OnInit {
       "/" +
       date.getFullYear()
     );
+  }
+
+  snackSuccess(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Usuario guardado correctamente',
+      duration: 3 * 1000,
+      panelClass: ['success-red'],
+      horizontalPosition: "right",
+      verticalPosition: "top",
+    });
   }
 }
