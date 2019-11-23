@@ -1,4 +1,4 @@
-export default interface Incidencia {
+export class Incidencia {
     _id: string;
     id_user: string;
     vacaciones: boolean;

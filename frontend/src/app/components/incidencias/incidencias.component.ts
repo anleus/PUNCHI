@@ -13,7 +13,7 @@ import { UserService } from "src/app/services/user.service";
 import { VacationService } from "src/app/services/vacation.service";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
-import Incidencia from "../../models/incidencia";
+import  {Incidencia} from "../../models/incidencia";
 import { IncidenciaService } from "src/app/services/incidencia.service";
 import { element } from "protractor";
 import { IgxCardThumbnailDirective, changei18n } from "igniteui-angular";

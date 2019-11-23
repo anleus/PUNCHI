@@ -8,7 +8,7 @@ import { VacationService } from "src/app/services/vacation.service";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { type } from "os";
 import { IncidenciaService } from 'src/app/services/incidencia.service';
-import Incidencia from "../../models/incidencia";
+import {Incidencia} from "../../models/incidencia";
 
 
 @Component({
@@ -108,7 +108,7 @@ export class VacacionesComponent implements OnInit {
           (this.left = this.vacationDaysLeft - 1),
           this.vacationPast
         );
-        //this.crearSolicitud(arg.date);
+        this.crearSolicitud(arg.date);
       }
     } else {
       alert("No puedes seleccionar el día de hoy ni uno pasado");
@@ -116,15 +116,15 @@ export class VacacionesComponent implements OnInit {
   }
 
   crearSolicitud(date) {
-    console.log(date);
-    var ininsertar : Incidencia;
-    ininsertar.id_user = this.authservice.currentUserValue._id;
-    ininsertar.vacaciones = true;
-    ininsertar.incidencias = false;
-    ininsertar.estado = "pendiente";
-    ininsertar.asunto = "Solicitud vacaciones"
-    ininsertar.mensaje = "Dia" + date;
-    console.log(ininsertar);
+    console.log((date).toISOString())
+    var newIncidencia = new Incidencia;
+    newIncidencia.id_user = this.authservice.currentUserValue._id;
+    newIncidencia.vacaciones = true;
+    newIncidencia.incidencias = false;
+    newIncidencia.estado = "pendiente";
+    newIncidencia.asunto = "Solicitud vacaciones"
+    newIncidencia.mensaje = "Dia " + date.toISOString();
+    console.log(newIncidencia);
     //this.pending.push(new Date(arg.date).toISOString());
   }
 
