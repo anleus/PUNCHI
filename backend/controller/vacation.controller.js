@@ -26,14 +26,6 @@ vacationFunctions.updateVacations = async (req, res, next) => {
         if (err) console.log("Something wrong when updating data!");
     }).catch(err => { console.log(err); res.status('400').json('An error ocurred') });
     
-    
-    /* )
-        .then(vac => {
-            console.log(typeof vac);
-            console.log(vac);
-            res.json(vac);
-            //res.status(200).json('Vacation updated');
-        }).catch(err => { console.log(err); res.status(400).send('An error ocurred') }); */
 }
 
 vacationFunctions.deleteVacations = async (req, res, next) => {//Esto no deberia ejecutarse pero esta por si acaso
