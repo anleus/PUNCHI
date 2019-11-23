@@ -44,20 +44,12 @@ export class IncidenciasComponent implements OnInit {
     private incidenciaService: IncidenciaService,
     private departamentosService: DepartamentosService,
     private authService: AuthenticationService,
-    private vacationService: VacationService
+    private vacationservice: VacationService,
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
 
   ngOnInit() {
-    /*this.authService
-      .getCurrentUser()
-      .subscribe((user) => (this.usuarioLogueado = user));
-    console.log('holaa');
-    console.log(this.usuarioLogueado);
-    this.vacationService.getVacationByUsername(this.usuarioLogueado._id).then(vac=> if(pending==undefined){}else{(this.vacation = vac)});
-    console.log("hollaaa" + this.vacation.pending);
-    this.vacacionesUsuario = this.vacation.pending;*/
     this.authService.getCurrentUser().subscribe(user => (this.userL = user));
     if (
       this.usuarioLogueado.source["_value"].admin == false &&
@@ -131,23 +123,36 @@ export class IncidenciasComponent implements OnInit {
   aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    /*let incDate = this.getDayFromIncidencia(inc);
-    this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
-      userVacations.left--;
-      userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
-      userVacations.past.push(new Date(incDate));
-      this.vacationService.putVacationUser(userVacations._id, userVacations).subscribe();
-    }).catch((err) => console.log(err));*/
+
+    var usuarioDestino = inc.id_user;
+    this.vacationservice.getVacationByUsername(usuarioDestino)
+      .then(res => {
+        if (res == null || typeof res == "undefined") {
+          console.log("ALGO VA MAL!!!!!!")
+        } else {
+          var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
+          res.pending.splice(index,1)
+          res.past.push(new Date(inc.mensaje).toISOString());
+          this.vacationservice.updateVacation(
+            res._id,
+            res.pending,
+            (res.left = res.vacationDaysLeft - 1), //hablar esto
+            res.past
+          );
+        }
+      });
   }
 
   denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
+    //TODO conexion base de datos
   }
 
   editarIncidencia(inc: Incidencia) {
     inc.estado = "pendiente";
     this.incidenciaService.putIncidencia(inc);
+    //TODO conexion base de datos
   }
 
   esPendiente(inc: Incidencia) {

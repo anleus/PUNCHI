@@ -39,7 +39,7 @@ export class VacacionesComponent implements OnInit {
     private incidenciaService: IncidenciaService,
     private snackBar: MatSnackBar
   ) {}
-
+//!!!!!!!!!!!!!!!!!!!!!!!!EL DIA SALE MAL
   ngOnInit() {
     this.currentUserId = this.authservice.currentUserValue._id.toString();
     this.calendarComponent.selectMinDistance = 2;
@@ -101,6 +101,7 @@ export class VacacionesComponent implements OnInit {
           backgroundColor: "#FF0000"
         });
         this.pending.push(new Date(arg.date).toISOString());
+        // hablarlo
         this.vacationservice.updateVacation(
           this._vid,
           this.pending,
@@ -116,6 +117,7 @@ export class VacacionesComponent implements OnInit {
 
   crearSolicitud(date) {
     //aqui solo se está teniendo en cuenta si pulsas solo uno
+    console.log(date)
     var newIncidencia = new Incidencia();
     newIncidencia.id_user = this.authservice.currentUserValue._id;
     newIncidencia.vacaciones = true;
