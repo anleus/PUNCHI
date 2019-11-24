@@ -28,9 +28,11 @@ export class IncidenciasComponent implements OnInit {
   public usuarioLogueado = this.authService.getCurrentUser();
   public user: User;
   public userL: User;
-  public userAux : User;
+  public userAux: User;
   incidencias: Incidencia[];
   incidenciasDeLosUsersDelGestor: Incidencia[];
+  incidenciaAux = [];
+  usuario =[];
   //vacation: Vacation;
   //vacacionesUsuario: Date[];
 
@@ -46,7 +48,7 @@ export class IncidenciasComponent implements OnInit {
     private incidenciaService: IncidenciaService,
     private departamentosService: DepartamentosService,
     private authService: AuthenticationService,
-    private vacationservice: VacationService,
+    private vacationservice: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
@@ -60,7 +62,7 @@ export class IncidenciasComponent implements OnInit {
       this.getIncidenciaByUserId();
     } else if (this.usuarioLogueado.source["_value"].admin == true) {
       this.getIncidencias();
-    } else if(this.usuarioLogueado.source["_value"].gestor == true) {
+    } else if (this.usuarioLogueado.source["_value"].gestor == true) {
       this.getIncidenciaByGestor();
       //this.getIncidencias();
     }
@@ -90,7 +92,6 @@ export class IncidenciasComponent implements OnInit {
       });
     });
   }
-  
 
   getIncidenciaByUserId() {
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
@@ -107,53 +108,43 @@ export class IncidenciasComponent implements OnInit {
   }
 
   getIncidenciaByGestor() {
-    var i = 0;
     this.departamentosService
       .getDepartamentoByGestor(this.usuarioLogueado.source["_value"]._id)
       .subscribe(res => {
         if (res != null) {
           var idsUsuarios = res["usuarios"];
           idsUsuarios.forEach(element => {
-              var usuariosDelGestor = element;
-              var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
-                element
-              );
-              var useraux;
-              var username;
-            incidenciaObs.subscribe(incidencias => {
-              this.incidencias = incidencias;
-              this.incidencias.forEach(element=> {
-                if(element != null && element != undefined && usuariosDelGestor != null && usuariosDelGestor != undefined){
-                  //console.log(element);
-                  //console.log(usuariosDelGestor);
-                 /* var contador=0;
-                  contador++;
-                 console.log(contador);
-                  for(var i=0; i<contador;i++ ){
-                    useraux = this.userService.getUserById(usuariosDelGestor);
-                    console.log(useraux.username);
-                    username = useraux.username;
-                  }*/
-                  element.usuario = usuariosDelGestor;
-                }
-                this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
-                this.dataSource.paginator = this.paginator;
-              });
-              
+            // this.usuario.push(userAux["nombre"]);
+            
+            this.userService.getUserById(element).subscribe(user => {
+              var userAux = user;
+              var aux;
+              if (userAux["deleted"] == false) {
+                
+                var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
+                  userAux["_id"]
+                );
+                incidenciaObs.subscribe(incidencias => {
+                  aux = incidencias;
+                  aux.forEach(inc => {
+                    this.incidenciaAux.push(inc);
+                  })
+                  this.dataSource = new MatTableDataSource<Incidencia>(this.incidenciaAux);
+                  this.dataSource.paginator = this.paginator;
+                 
+                });
+              }
             });
-
           });
         }
       });
   }
 
-
-
-  convertirIdToUsername(userId : string){
+  convertirIdToUsername(userId: string) {
     var aux;
-    if(userId != undefined){
-     aux = this.userService.getUserById(userId);
-     aux= aux.username;
+    if (userId != undefined) {
+      aux = this.userService.getUserById(userId);
+      aux = aux.username;
     }
     return aux;
   }
@@ -163,22 +154,21 @@ export class IncidenciasComponent implements OnInit {
     this.incidenciaService.putIncidencia(inc);
 
     var usuarioDestino = inc.id_user;
-    this.vacationservice.getVacationByUsername(usuarioDestino)
-      .then(res => {
-        if (res == null || typeof res == "undefined") {
-          console.log("ALGO VA MAL!!!!!!")
-        } else {
-          var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
-          res.pending.splice(index,1)
-          res.past.push(new Date(inc.mensaje).toISOString());
-          this.vacationservice.updateVacation(
-            res._id,
-            res.pending,
-            (res.left = res.vacationDaysLeft - 1), //hablar esto
-            res.past
-          );
-        }
-      });
+    this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
+      if (res == null || typeof res == "undefined") {
+        console.log("ALGO VA MAL!!!!!!");
+      } else {
+        var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
+        res.pending.splice(index, 1);
+        res.past.push(new Date(inc.mensaje).toISOString());
+        this.vacationservice.updateVacation(
+          res._id,
+          res.pending,
+          (res.left = res.vacationDaysLeft - 1), //hablar esto
+          res.past
+        );
+      }
+    });
   }
 
   denegarIncidencia(inc: Incidencia) {
@@ -205,12 +195,18 @@ export class IncidenciasComponent implements OnInit {
   }
 
   pad2(num) {
-    return num < 10 ? '0' + num : num;
+    return num < 10 ? "0" + num : num;
   }
 
   getDayFromDate(date: Date) {
     date = new Date(date);
-    return this.pad2(date.getDate()) + '/' + this.pad2(date.getMonth()) + '/' + this.pad2(date.getFullYear())
+    return (
+      this.pad2(date.getDate()) +
+      "/" +
+      this.pad2(date.getMonth()) +
+      "/" +
+      this.pad2(date.getFullYear())
+    );
   }
 
   getDC() {

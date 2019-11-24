@@ -73,6 +73,7 @@ export class UsuariosComponent implements OnInit {
     this.departamentosService
       .getDepartamentoByGestor(this.logUser.source["_value"]._id)
       .subscribe(res => {
+        
         if (res != null) {
           var nombreDepartamento = res["nombre"];
           var idsUsuarios = res["usuarios"];
@@ -87,6 +88,7 @@ export class UsuariosComponent implements OnInit {
                     var aux;
                     aux = resp;
                     this.usersret.push(aux);
+                    console.log(this.usersret);
                   }
                 }
               } else {
