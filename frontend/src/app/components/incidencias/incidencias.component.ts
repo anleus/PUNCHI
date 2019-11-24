@@ -114,18 +114,24 @@ export class IncidenciasComponent implements OnInit {
         if (res != null) {
           var idsUsuarios = res["usuarios"];
           idsUsuarios.forEach(element => {
-            // this.usuario.push(userAux["nombre"]);
-            
             this.userService.getUserById(element).subscribe(user => {
               var userAux = user;
               var aux;
               if (userAux["deleted"] == false) {
-                
                 var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
                   userAux["_id"]
                 );
                 incidenciaObs.subscribe(incidencias => {
                   aux = incidencias;
+                  var anterior;
+                  if(this.usuario.length == 0){
+                    this.usuario.push(userAux["nombre"]);
+                    anterior = userAux["nombre"];
+                  }
+                  else if(anterior != userAux["nombre"]){
+                    this.usuario.pop();
+                    this.usuario.push(userAux["nombre"]);
+                  }
                   aux.forEach(inc => {
                     this.incidenciaAux.push(inc);
                   })
