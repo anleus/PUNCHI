@@ -71,42 +71,51 @@ export class IncidenciasComponent implements OnInit {
   getIncidencias() {
     var incidenciaObs = this.incidenciaService.getIncidencias();
     incidenciaObs.subscribe(incidencias => {
-      var numberUsers = incidencias.length;
-      var auxnumber = 0;
       this.incidencias = incidencias;
       this.incidencias.forEach(element => {
-        this.userService.getUserById(element.id_user).subscribe(resp => {
-          if (resp != null) {
+        this.userService.getUserById(element["id_user"]).subscribe(resp => {
+          if (resp != null && resp != undefined && resp["deleted"] == false) {
             element.usuario = resp["username"];
-          } else {
-            element.usuario = "usuario no existente, ALERTA";
           }
-          auxnumber++;
-          if (auxnumber == numberUsers) {
+          var anterior;
+          if (this.usuario.length == 0) {
+            this.usuario.push(resp["username"]);
+            anterior = resp["username"];
+          } else if (anterior != resp["username"]) {
+            this.usuario.pop();
+            this.usuario.push(resp["username"]);
+          }
             this.dataSource = new MatTableDataSource<Incidencia>(
               this.incidencias
             );
             this.dataSource.paginator = this.paginator;
-          }
+          
         });
       });
     });
   }
 
   getIncidenciaByUserId() {
+    this.usuario = [];
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
       this.usuarioLogueado.source["_value"]._id
     );
     incidenciaObs.subscribe(incidencias => {
       this.incidencias = incidencias;
-      this.incidencias.forEach((element, i) => {
-        element.usuario = this.usuarioLogueado.source["_value"].username;
+      this.incidencias.forEach(element => {
+        var anterior;
+        if (this.usuario.length == 0) {
+          this.usuario.push(this.usuarioLogueado.source["_value"].username);
+          anterior = element["nombre"];
+        } else if (anterior != element["nombre"]) {
+          this.usuario.pop();
+          this.usuario.push(element["nombre"]);
+        }
       });
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
       this.dataSource.paginator = this.paginator;
     });
   }
-
   getIncidenciaByGestor() {
     this.departamentosService
       .getDepartamentoByGestor(this.usuarioLogueado.source["_value"]._id)
