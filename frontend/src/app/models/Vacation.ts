@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 
-export interface Vacation {
+export class Vacation {
+    user: string;
     pending: Date[];
     left: number;
+    past: Date[];
 }
