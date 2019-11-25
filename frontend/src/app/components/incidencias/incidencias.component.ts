@@ -71,6 +71,7 @@ export class IncidenciasComponent implements OnInit {
     }
   }
 
+  //obtener todas las incidencias existentes
   getIncidencias() {
     var incidenciaObs = this.incidenciaService.getIncidencias();
     var userAuxx;
@@ -98,6 +99,7 @@ export class IncidenciasComponent implements OnInit {
     });
   }
 
+  //obtener incidencias a partir del Id del usuario
   getIncidenciaByUserId() {
     this.usuario = [];
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
@@ -114,12 +116,13 @@ export class IncidenciasComponent implements OnInit {
           this.usuario.pop();
           this.usuario.push(element["nombre"]);
         }
-        console.log(this.usuario);
       });
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
       this.dataSource.paginator = this.paginator;
     });
   }
+
+  //obtener incidencias del departamento de un gestor
   getIncidenciaByGestor() {
     this.departamentosService
       .getDepartamentoByGestor(this.usuarioLogueado.source["_value"]._id)
