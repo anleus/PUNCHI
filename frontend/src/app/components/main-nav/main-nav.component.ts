@@ -17,6 +17,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class MainNavComponent {
   flag = true;
   permisos = false; //si eres admin o gestor puedes ver todo el menú
+  permisosSoloAdmin= false;
   urlrn;
   logUser = this.authService.getCurrentUser();
   constructor(private breakpointObserver: BreakpointObserver,
@@ -27,7 +28,10 @@ export class MainNavComponent {
     if (this.logUser.source["_value"]!= null) {
       var admin = this.logUser.source["_value"].admin;
       var gestor = this.logUser.source["_value"].gestor;
-      if (gestor || admin) { this.permisos = true; }
+      if (gestor) { this.permisos = true; }
+      else if(admin){
+        this.permisosSoloAdmin=true;
+        this.permisos=true;}
       else { this.permisos = false; }
     } else {
       this.permisos = false;
