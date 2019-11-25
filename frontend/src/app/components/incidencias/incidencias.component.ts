@@ -32,7 +32,9 @@ export class IncidenciasComponent implements OnInit {
   incidencias: Incidencia[];
   incidenciasDeLosUsersDelGestor: Incidencia[];
   incidenciaAux = [];
-  usuario =[];
+  incidenciaAuxT = [];
+  usuario = [];
+  usuarios = [];
   //vacation: Vacation;
   //vacacionesUsuario: Date[];
 
@@ -61,6 +63,7 @@ export class IncidenciasComponent implements OnInit {
     ) {
       this.getIncidenciaByUserId();
     } else if (this.usuarioLogueado.source["_value"].admin == true) {
+      this.usuario = [];
       this.getIncidencias();
     } else if (this.usuarioLogueado.source["_value"].gestor == true) {
       this.getIncidenciaByGestor();
@@ -68,33 +71,35 @@ export class IncidenciasComponent implements OnInit {
     }
   }
 
+  //obtener todas las incidencias existentes
   getIncidencias() {
     var incidenciaObs = this.incidenciaService.getIncidencias();
+    var userAuxx;
     incidenciaObs.subscribe(incidencias => {
-      this.incidencias = incidencias;
-      this.incidencias.forEach(element => {
+      var aux =[];
+      aux = incidencias;
+      aux.forEach(element => {
         this.userService.getUserById(element["id_user"]).subscribe(resp => {
-          if (resp != null && resp != undefined && resp["deleted"] == false) {
-            element.usuario = resp["username"];
-          }
           var anterior;
+          userAuxx= resp["username"];
           if (this.usuario.length == 0) {
-            this.usuario.push(resp["username"]);
-            anterior = resp["username"];
-          } else if (anterior != resp["username"]) {
+            this.usuario.push(userAuxx);
+            anterior = userAuxx;
+          } else if (anterior != userAuxx) {
             this.usuario.pop();
-            this.usuario.push(resp["username"]);
+            this.usuario.push(userAuxx);
           }
-            this.dataSource = new MatTableDataSource<Incidencia>(
-              this.incidencias
-            );
-            this.dataSource.paginator = this.paginator;
-          
+          this.incidenciaAuxT.push(element);
+          this.dataSource = new MatTableDataSource<Incidencia>(
+            this.incidenciaAuxT
+          );
+          this.dataSource.paginator = this.paginator;
         });
       });
     });
   }
 
+  //obtener incidencias a partir del Id del usuario
   getIncidenciaByUserId() {
     this.usuario = [];
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
@@ -116,6 +121,8 @@ export class IncidenciasComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
+
+  //obtener incidencias del departamento de un gestor
   getIncidenciaByGestor() {
     this.departamentosService
       .getDepartamentoByGestor(this.usuarioLogueado.source["_value"]._id)
@@ -133,20 +140,20 @@ export class IncidenciasComponent implements OnInit {
                 incidenciaObs.subscribe(incidencias => {
                   aux = incidencias;
                   var anterior;
-                  if(this.usuario.length == 0){
+                  if (this.usuario.length == 0) {
                     this.usuario.push(userAux["nombre"]);
                     anterior = userAux["nombre"];
-                  }
-                  else if(anterior != userAux["nombre"]){
+                  } else if (anterior != userAux["nombre"]) {
                     this.usuario.pop();
                     this.usuario.push(userAux["nombre"]);
                   }
                   aux.forEach(inc => {
                     this.incidenciaAux.push(inc);
-                  })
-                  this.dataSource = new MatTableDataSource<Incidencia>(this.incidenciaAux);
+                  });
+                  this.dataSource = new MatTableDataSource<Incidencia>(
+                    this.incidenciaAux
+                  );
                   this.dataSource.paginator = this.paginator;
-                 
                 });
               }
             });
