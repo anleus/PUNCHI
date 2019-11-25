@@ -6,5 +6,4 @@ export class Incidencia {
     mensaje: string;
     estado: string;
     asunto: string;
-    usuario: string;
 }
