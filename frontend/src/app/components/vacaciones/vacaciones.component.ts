@@ -38,8 +38,8 @@ export class VacacionesComponent implements OnInit {
     private authservice: AuthenticationService,
     private incidenciaService: IncidenciaService,
     private snackBar: MatSnackBar
-  ) {}
-//!!!!!!!!!!!!!!!!!!!!!!!!EL DIA SALE MAL
+  ) { }
+  //!!!!!!!!!!!!!!!!!!!!!!!!EL DIA SALE MAL
   ngOnInit() {
     this.currentUserId = this.authservice.currentUserValue._id.toString();
     this.calendarComponent.selectMinDistance = 2;
@@ -47,7 +47,9 @@ export class VacacionesComponent implements OnInit {
     this.vacationservice
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
+        console.log(this.authservice.currentUserValue._id.toString());
         console.log("Got the vacation days!");
+        console.log("res", res);
         if (res == null || typeof res == "undefined") {
           console.log("User has no vacation days");
           this._vid = this.currentUserId;
@@ -82,25 +84,23 @@ export class VacacionesComponent implements OnInit {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
+  returnBDCorrectDate(d : Date) { // Devuelve la fecha correcta para su almacenamiento en la BD
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString();
+  }
+
   //falta comprobar si no tens vacacions
   handleDateClick(arg) {
-    console.log(this._vid);
     this.d = Date.now();
     if (arg.date.getTime() > this.d) {
-      if (
-        confirm(
-          "¿Seguro que quieres solicitar un día de vacaciones este día: " +
-            this.dateFormatter(arg.date) +
-            "?"
-        )
-      ) {
+      if (confirm("¿Seguro que quieres solicitar un día de vacaciones este día: " +
+        this.dateFormatter(arg.date) + "?")) {
         this.calendarEvents = this.calendarEvents.concat({
           start: arg.date,
           allDay: true,
           rendering: "background",
           backgroundColor: "#FF0000"
         });
-        this.pending.push(new Date(arg.date).toISOString());
+        this.pending.push(this.returnBDCorrectDate(arg.date));
         // hablarlo
         this.vacationservice.updateVacation(
           this._vid,
@@ -115,16 +115,49 @@ export class VacacionesComponent implements OnInit {
     }
   }
 
+  handleSelectDate(arg) {
+    this.d = Date.now();
+    if (this.addDay2Month(arg.start, 1).getTime() == arg.end.getTime()) return; //Workaround guarro para evitar la selección de un único día
+    if (arg.start.getTime() > this.d) {
+      if (confirm("¿Seguro que quieres solicitar vacaciones desde: " + this.dateFormatter(arg.start) +
+        " hasta: " + this.dateFormatter(arg.end) + "?")) {
+        var i;
+        let date = arg.start;
+        for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
+          date = this.addDay2Month(arg.start, i);
+          this.calendarEvents = this.calendarEvents.concat({
+            // add new event data. must create new array
+            title: "Día de vacaciones",
+            start: date,
+            allDay: true,
+            rendering: "background",
+            backgroundColor: "#FF0000"
+          });
+          this.pending.push(this.returnBDCorrectDate(date));
+          this.vacationservice.updateVacation(
+            this._vid,
+            this.pending,
+            (this.left = this.vacationDaysLeft - 1),
+            this.vacationPast
+          );
+          this.crearSolicitud(date);
+        }
+      }
+    } else {
+      alert("No puedes seleccionar el día de hoy ni uno pasado");
+    }
+  }
+
   crearSolicitud(date) {
     //aqui solo se está teniendo en cuenta si pulsas solo uno
-    console.log(date)
+    //console.log(date)
     var newIncidencia = new Incidencia();
     newIncidencia.id_user = this.authservice.currentUserValue._id;
     newIncidencia.vacaciones = true;
     newIncidencia.incidencias = false;
     newIncidencia.estado = "pendiente";
     newIncidencia.asunto = "Solicitud vacaciones";
-    newIncidencia.mensaje = date.toISOString();
+    newIncidencia.mensaje = this.returnBDCorrectDate(date);
     this.vacationservice.getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
@@ -139,7 +172,7 @@ export class VacacionesComponent implements OnInit {
           if (!existe) {
             this.newIncidenciaFunc(newIncidencia);
           } else {
-            this.snackError("Ya has solicitado este dia de vacaciones");
+            this.snackError("Ya has solicitado este día de vacaciones");
           }
         }
       });
@@ -148,37 +181,6 @@ export class VacacionesComponent implements OnInit {
   newIncidenciaFunc(incidencia: Incidencia) {
     this.incidenciaService.crearIncidencia(incidencia)
       .subscribe(res => this.snackSuccess("Dia de vacaciones solicitado correctamente"));
-  }
-
-  handleSelectDate(arg) {
-    this.d = Date.now();
-    if (this.addDay2Month(arg.start, 1).getTime() == arg.end.getTime()) return; //Workaround guarro para evitar la selección de un único día
-    if (arg.start.getTime() > this.d) {
-      if (
-        confirm(
-          "¿Seguro que quieres solicitar vacaciones desde: " +
-            this.dateFormatter(arg.start) +
-            " hasta: " +
-            this.dateFormatter(arg.end) +
-            "?"
-        )
-      ) {
-        var i;
-        let date = arg.start;
-        for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
-          this.calendarEvents = this.calendarEvents.concat({
-            // add new event data. must create new array
-            title: "Día de vacaciones",
-            start: this.addDay2Month(arg.start, i),
-            allDay: true,
-            rendering: "background",
-            backgroundColor: "#FF0000"
-          });
-        }
-      }
-    } else {
-      alert("No puedes seleccionar el día de hoy ni uno pasado");
-    }
   }
 
   addDay2Month(d: Date, i: number) {
@@ -231,3 +233,10 @@ export class VacacionesComponent implements OnInit {
     });
   }
 }
+
+/*
+- que no pete si no té vacacions
+- petició de vacacions múltiple
+- si el dia ja està, no tornar a posar-lo
+- en sel·lecció múltiple, comprovar que algun dels dies no estiga ja demanat
+- taula de dies restants */

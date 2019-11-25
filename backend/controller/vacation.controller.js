@@ -24,6 +24,8 @@ vacationFunctions.createUserVacations = async (req, res, next) => {//Esto solo d
 vacationFunctions.updateVacations = async (req, res, next) => {
     Vacation.findByIdAndUpdate(req.params.id, {pending: req.body.pending, left: req.body.left, past: req.body.past }, {'new' : true, 'lean' : true, 'upsert':true}, (err, doc) => {
         if (err) console.log("Something wrong when updating data!");
+        res.status(200);
+        res.json({ status: "Vacation updated" });
     }).catch(err => { console.log(err); res.status('400').json('An error ocurred') });
     
 }
