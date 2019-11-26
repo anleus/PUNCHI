@@ -73,10 +73,10 @@
                 
                 </a>
                 <div class="loggedUser">
-                <h4>{{loggedUser}}</h4>
+                <h4>{{loggedUser.nombre}}</h4>
                 </div>
                 <div class= "infoicon">
-                <button mat-icon-button (click)='showNotifications()'>  <span class="badge badge-danger">3</span> <mat-icon>info</mat-icon>   </button> 
+                <button mat-icon-button (click)='showNotifications()'>  <span *ngIf="NewAlerts"class="badge badge-danger">{{notifications.length}}</span> <mat-icon>info</mat-icon>   </button> 
                 </div>
             </mat-toolbar> 
         </div>
