@@ -32,6 +32,7 @@ export class VacacionesComponent implements OnInit {
   _vid;
   pending = [];
   left;
+  diasRestantes = 0;
 
   constructor(
     private vacationservice: VacationService,
@@ -55,6 +56,8 @@ export class VacacionesComponent implements OnInit {
           this._vid = this.currentUserId;
           return;
         }
+        this.diasRestantes = res.left;
+        console.log(res.left);
         res.pending.forEach(vac => {
           //console.log(vac);
           this.calendarEvents = this.calendarEvents.concat({
