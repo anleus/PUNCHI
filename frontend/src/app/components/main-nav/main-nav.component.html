@@ -69,6 +69,10 @@
             <mat-toolbar class="topbar">
                 <button *ngIf="flag" mat-icon-button (click)="sidenav.open()"><mat-icon>menu</mat-icon></button>
                 <h3>PUNCHI</h3>
+                <a (click)='showNotifications()'>
+                
+                </a>
+                <button mat-icon-button (click)='showNotifications()'>  <mat-icon>info</mat-icon>   </button> 
             </mat-toolbar> 
         </div>
         <ng-content></ng-content>

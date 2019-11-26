@@ -40,6 +40,9 @@ export class MainNavComponent {
       this.flag = false;
     }
   };
+  showNotifications(){
+    
+  }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
