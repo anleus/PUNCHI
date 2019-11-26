@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { JornadaService } from 'src/app/services/jornada.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AuthenticationService } from 'src/app/services/auth.service';
+import { VacationService } from  'src/app/services/vacation.service';
 
 import { environment } from "src/environments/environment";
 
@@ -53,11 +54,14 @@ export class InicioComponent implements OnInit {
   vacations;
   left; pending;
 
-  constructor(private jornadaService : JornadaService, private authService : AuthenticationService) { }
+  constructor(private jornadaService : JornadaService, 
+              private authService : AuthenticationService, 
+              private vacationService: VacationService
+              ) {}
 
   ngOnInit() {
     if(this.authService.currentUserValue.becario)
-      this.setBecarioButton();
+      this.setDisabledButton();
     else if(localStorage.getItem('jornada')){
       this.toggleFicharState(true);
       var timeStart = new Date(JSON.parse(localStorage.getItem('jornada')).begin);
@@ -110,7 +114,7 @@ export class InicioComponent implements OnInit {
     this.timeLabel = `${hour}:${minutes}:${seconds}`;
   }
 
-  setBecarioButton(){
+  setDisabledButton(){
     this.text = "No puedes fichar";
     this.icon = '';
   }
@@ -128,5 +132,20 @@ export class InicioComponent implements OnInit {
 
   pad2(number) {
    return (number < 10 ? '0' : '') + number
+  }
+
+  botonFicharDisabled() : boolean {
+    var d = new Date
+    var currentDay = d.getDay() + "-" + d.getMonth() + "-" + d.getFullYear();
+
+    var user = this.authService.currentUserValue;
+    var userVacation = this.vacationService.getVacationByUsername(user._id).then(res => {
+      if(res == null || typeof res =="undefined") {
+        return false;
+      }
+      
+    });
+
+    return true
   }
 }

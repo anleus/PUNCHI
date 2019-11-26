@@ -1,4 +1,4 @@
-export default interface Incidencia {
+export class Incidencia {
     _id: string;
     id_user: string;
     vacaciones: boolean;
@@ -6,5 +6,4 @@ export default interface Incidencia {
     mensaje: string;
     estado: string;
     asunto: string;
-    usuario: string;
 }

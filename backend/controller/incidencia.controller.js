@@ -24,12 +24,14 @@ incidenciaFunctions.getUserIncidencias = async (req, res, next) => {
 incidenciaFunctions.createUserIncidencia = async (req, res, next) => {
   const incidencia = new Incidencia({
     id_user: req.body.id_user,
+    asunto: req.body.asunto,
     vacaciones: req.body.vacaciones,
     incidencias: req.body.incidencias,
     mensaje: req.body.mensaje,
     estado: req.body.estado
   });
-  incidencia.save()
+
+ incidencia.save()
     .then(res.status("200").json("Incidencia saved"))
     .catch(err => {
       console.log(err);

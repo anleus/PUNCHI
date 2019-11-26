@@ -13,7 +13,7 @@ import { UserService } from "src/app/services/user.service";
 import { VacationService } from "src/app/services/vacation.service";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { User } from "src/app/models/users";
-import Incidencia from "../../models/incidencia";
+import { Incidencia } from "../../models/incidencia";
 import { IncidenciaService } from "src/app/services/incidencia.service";
 import { element } from "protractor";
 import { IgxCardThumbnailDirective, changei18n } from "igniteui-angular";
@@ -28,7 +28,13 @@ export class IncidenciasComponent implements OnInit {
   public usuarioLogueado = this.authService.getCurrentUser();
   public user: User;
   public userL: User;
+  public userAux: User;
   incidencias: Incidencia[];
+  incidenciasDeLosUsersDelGestor: Incidencia[];
+  incidenciaAux = [];
+  incidenciaAuxT = [];
+  usuario = [];
+  usuarios = [];
   //vacation: Vacation;
   //vacacionesUsuario: Date[];
 
@@ -44,20 +50,12 @@ export class IncidenciasComponent implements OnInit {
     private incidenciaService: IncidenciaService,
     private departamentosService: DepartamentosService,
     private authService: AuthenticationService,
-    private vacationService: VacationService
+    private vacationservice: VacationService
   ) {
     //this.incidencias= new Array<Incidencia>();
   }
 
   ngOnInit() {
-    /*this.authService
-      .getCurrentUser()
-      .subscribe((user) => (this.usuarioLogueado = user));
-    console.log('holaa');
-    console.log(this.usuarioLogueado);
-    this.vacationService.getVacationByUsername(this.usuarioLogueado._id).then(vac=> if(pending==undefined){}else{(this.vacation = vac)});
-    console.log("hollaaa" + this.vacation.pending);
-    this.vacacionesUsuario = this.vacation.pending;*/
     this.authService.getCurrentUser().subscribe(user => (this.userL = user));
     if (
       this.usuarioLogueado.source["_value"].admin == false &&
@@ -65,52 +63,66 @@ export class IncidenciasComponent implements OnInit {
     ) {
       this.getIncidenciaByUserId();
     } else if (this.usuarioLogueado.source["_value"].admin == true) {
+      this.usuario = [];
       this.getIncidencias();
-    } else {
-      //this.getIncidenciaByGestor();
-      this.getIncidencias();
+    } else if (this.usuarioLogueado.source["_value"].gestor == true) {
+      this.getIncidenciaByGestor();
+      //this.getIncidencias();
     }
   }
 
+  //obtener todas las incidencias existentes
   getIncidencias() {
     var incidenciaObs = this.incidenciaService.getIncidencias();
+    var userAuxx;
     incidenciaObs.subscribe(incidencias => {
-      var numberUsers = incidencias.length;
-      var auxnumber = 0;
-      this.incidencias = incidencias;
-      this.incidencias.forEach(element => {
-        this.userService.getUserById(element.id_user).subscribe(resp => {
-          if (resp != null) {
-            element.usuario = resp["username"];
-          } else {
-            element.usuario = "usuario no existente, ALERTA";
+      var aux =[];
+      aux = incidencias;
+      aux.forEach(element => {
+        this.userService.getUserById(element["id_user"]).subscribe(resp => {
+          var anterior;
+          userAuxx= resp["username"];
+          if (this.usuario.length == 0) {
+            this.usuario.push(userAuxx);
+            anterior = userAuxx;
+          } else if (anterior != userAuxx) {
+            this.usuario.pop();
+            this.usuario.push(userAuxx);
           }
-          auxnumber++;
-          if (auxnumber == numberUsers) {
-            this.dataSource = new MatTableDataSource<Incidencia>(
-              this.incidencias
-            );
-            this.dataSource.paginator = this.paginator;
-          }
+          this.incidenciaAuxT.push(element);
+          this.dataSource = new MatTableDataSource<Incidencia>(
+            this.incidenciaAuxT
+          );
+          this.dataSource.paginator = this.paginator;
         });
       });
     });
   }
 
+  //obtener incidencias a partir del Id del usuario
   getIncidenciaByUserId() {
+    this.usuario = [];
     var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
       this.usuarioLogueado.source["_value"]._id
     );
     incidenciaObs.subscribe(incidencias => {
       this.incidencias = incidencias;
-      this.incidencias.forEach((element, i) => {
-        element.usuario = this.usuarioLogueado.source["_value"].username;
+      this.incidencias.forEach(element => {
+        var anterior;
+        if (this.usuario.length == 0) {
+          this.usuario.push(this.usuarioLogueado.source["_value"].username);
+          anterior = element["nombre"];
+        } else if (anterior != element["nombre"]) {
+          this.usuario.pop();
+          this.usuario.push(element["nombre"]);
+        }
       });
       this.dataSource = new MatTableDataSource<Incidencia>(this.incidencias);
       this.dataSource.paginator = this.paginator;
     });
   }
 
+  //obtener incidencias del departamento de un gestor
   getIncidenciaByGestor() {
     this.departamentosService
       .getDepartamentoByGestor(this.usuarioLogueado.source["_value"]._id)
@@ -118,31 +130,79 @@ export class IncidenciasComponent implements OnInit {
         if (res != null) {
           var idsUsuarios = res["usuarios"];
           idsUsuarios.forEach(element => {
-            this.incidenciaService.getIncidenciaByUserId(element);
+            this.userService.getUserById(element).subscribe(user => {
+              var userAux = user;
+              var aux;
+              if (userAux["deleted"] == false) {
+                var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
+                  userAux["_id"]
+                );
+                incidenciaObs.subscribe(incidencias => {
+                  aux = incidencias;
+                  var anterior;
+                  if (this.usuario.length == 0) {
+                    this.usuario.push(userAux["nombre"]);
+                    anterior = userAux["nombre"];
+                  } else if (anterior != userAux["nombre"]) {
+                    this.usuario.pop();
+                    this.usuario.push(userAux["nombre"]);
+                  }
+                  aux.forEach(inc => {
+                    this.incidenciaAux.push(inc);
+                  });
+                  this.dataSource = new MatTableDataSource<Incidencia>(
+                    this.incidenciaAux
+                  );
+                  this.dataSource.paginator = this.paginator;
+                });
+              }
+            });
           });
-          this.dataSource = new MatTableDataSource<Incidencia>(
-            this.incidencias
-          );
-          this.dataSource.paginator = this.paginator;
         }
       });
+  }
+
+  convertirIdToUsername(userId: string) {
+    var aux;
+    if (userId != undefined) {
+      aux = this.userService.getUserById(userId);
+      aux = aux.username;
+    }
+    return aux;
   }
 
   aceptarIncidencia(inc: Incidencia) {
     inc.estado = "aceptado";
     this.incidenciaService.putIncidencia(inc);
-    let incDate = this.getDayFromIncidencia(inc);
-    this.vacationService.getVacationByUsername(inc.id_user).then((userVacations) => {
-      userVacations.left--;
-      userVacations.pending.filter((date) => this.getDayFromDate(date) != incDate)
-      userVacations.past.push(new Date(incDate));
-      this.vacationService.putVacationUser(userVacations._id, userVacations).subscribe();
-    }).catch((err) => console.log(err));
+
+    var usuarioDestino = inc.id_user;
+    this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
+      if (res == null || typeof res == "undefined") {
+        console.log("ALGO VA MAL!!!!!!");
+      } else {
+        var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
+        res.pending.splice(index, 1);
+        res.past.push(new Date(inc.mensaje).toISOString());
+        this.vacationservice.updateVacation(
+          res._id,
+          res.pending,
+          (res.left = res.vacationDaysLeft - 1), //hablar esto
+          res.past
+        );
+      }
+    });
   }
 
   denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
+    //TODO conexion base de datos
+  }
+
+  editarIncidencia(inc: Incidencia) {
+    inc.estado = "pendiente";
+    this.incidenciaService.putIncidencia(inc);
+    //TODO conexion base de datos
   }
 
   esPendiente(inc: Incidencia) {
@@ -157,12 +217,18 @@ export class IncidenciasComponent implements OnInit {
   }
 
   pad2(num) {
-    return num < 10 ? '0' + num : num;
+    return num < 10 ? "0" + num : num;
   }
 
   getDayFromDate(date: Date) {
     date = new Date(date);
-    return this.pad2(date.getDate()) + '/' + this.pad2(date.getMonth()) + '/' + this.pad2(date.getFullYear())
+    return (
+      this.pad2(date.getDate()) +
+      "/" +
+      this.pad2(date.getMonth()) +
+      "/" +
+      this.pad2(date.getFullYear())
+    );
   }
 
   getDC() {
