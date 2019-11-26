@@ -30,8 +30,7 @@ export class VacationService {
   }
 
 
-    public putVacationUser(userid, vacation){
-      return this.http.post('http://localhost:4000/vacation/user/update/' + userid,vacation);
-    }
-
+  public putVacationUser(userid, vacation){
+    return this.http.post('http://localhost:4000/vacation/user/update/' + userid,vacation);
+  }
 }
