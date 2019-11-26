@@ -137,15 +137,22 @@ export class InicioComponent implements OnInit {
   botonFicharDisabled() : boolean {
     var d = new Date
     var currentDay = d.getDay() + "-" + d.getMonth() + "-" + d.getFullYear();
-
     var user = this.authService.currentUserValue;
-    var userVacation = this.vacationService.getVacationByUsername(user._id).then(res => {
-      if(res == null || typeof res =="undefined") {
-        return false;
-      }
-      
-    });
 
-    return true
+    if (user.becario) {
+      return true;
+    } else {
+      this.vacationService.getVacationByUsername(user._id).then(res => {
+        if(res == null || typeof res =="undefined") {
+          return false;
+        }
+        res.past.forEach(vac => {
+          var vacDay = vac.getDay() + "-" + vac.getMont() + "-" + vac.getFullYear();
+          if (vacDay == currentDay) return true;
+        }
+        );
+        return false;
+      });
+    }
   }
 }
