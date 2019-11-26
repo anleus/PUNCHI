@@ -19,12 +19,16 @@ export class MainNavComponent {
   permisos = false; //si eres admin o gestor puedes ver todo el menú
   permisosSoloAdmin= false; // si eres admin puedes crear usuarios
   urlrn;
+  loggedUser: string;
   logUser = this.authService.getCurrentUser();
   constructor(private breakpointObserver: BreakpointObserver,
     private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.shouldIShowMyHamburguer();
+    this.authService.getCurrentUser().subscribe((res: User) => {
+    this.loggedUser = res.nombre;
+    });
     if (this.logUser.source["_value"]!= null) {
       var admin = this.logUser.source["_value"].admin;
       var gestor = this.logUser.source["_value"].gestor;

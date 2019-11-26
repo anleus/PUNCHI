@@ -19,8 +19,16 @@
 
 h3 {
   margin-left: 20px;
-  margin-right: 1000px;
+  margin-right: 10px;
 }
 
+.loggedUser {
+  margin-left: 950px;
+  margin-right: 5px;
+}
 
+.infoicon{
+  margin-left: 0px;
+  margin-right: 10px;
+}
 
