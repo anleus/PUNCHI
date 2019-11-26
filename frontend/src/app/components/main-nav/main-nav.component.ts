@@ -32,8 +32,11 @@ export class MainNavComponent {
     this.shouldIShowMyHamburguer();
     this.authService.getCurrentUser().subscribe((res: User) => {
     this.loggedUser = res;
-    this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
+    
+    this.incidenciaService.getIncidenciaByUserId(this.loggedUser._id).subscribe((res: Incidencia[])=> {
       this.notifications = res;
+      console.log(res)
+      console.log(this.notifications.length)
       this.NewAlerts = this.notifications.length != 0;
     })
     });
