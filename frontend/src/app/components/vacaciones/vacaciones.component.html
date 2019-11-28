@@ -6,21 +6,22 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 });
 </script>
 
-<div class="container">
-    <div class='app'>
+<div class="container-fluid">
+    <div class="d-flex flew-row">
         <br>
-        <div class='app-top'>
-            <!--<button (click)='toggleWeekends()'>Ocultar/Mostrar fines de semana</button>-->
-        </div>
-        <br>
-        <div class='app-calendar'>
-            <full-calendar #calendar defaultView="dayGridMonth" [selectMinDistance]="2" [height]="500" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
-                      left: 'prev,next today',
-                      center: 'title',
-                      right: ''
+        <div class="col-8">
+            <div class='app-calendar'>
+                <full-calendar #calendar defaultView="dayGridMonth" [selectMinDistance]="2" [height]="500" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: ''
                     }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
                     [selectable]= 'true'
-                (dateClick)="handleDateClick($event)" (select)="handleSelectDate($event)"></full-calendar>
+                    (dateClick)="handleDateClick($event)" (select)="handleSelectDate($event)"></full-calendar>
+            </div>
+        </div>
+        <div class="col-1">
+            <p>Vacaciones restantes: {{diasRestantes}}</p>
         </div>
     </div>
 </div>
