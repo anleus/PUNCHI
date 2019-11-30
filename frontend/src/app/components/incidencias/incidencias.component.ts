@@ -76,12 +76,12 @@ export class IncidenciasComponent implements OnInit {
     var incidenciaObs = this.incidenciaService.getIncidencias();
     var userAuxx;
     incidenciaObs.subscribe(incidencias => {
-      var aux =[];
+      var aux = [];
       aux = incidencias;
       aux.forEach(element => {
         this.userService.getUserById(element["id_user"]).subscribe(resp => {
           var anterior;
-          userAuxx= resp["username"];
+          userAuxx = resp["username"];
           if (this.usuario.length == 0) {
             this.usuario.push(userAuxx);
             anterior = userAuxx;
@@ -130,13 +130,12 @@ export class IncidenciasComponent implements OnInit {
         if (res != null) {
           var idsUsuarios = res["usuarios"];
           idsUsuarios.forEach(element => {
+            console.log(element);
             this.userService.getUserById(element).subscribe(user => {
               var userAux = user;
               var aux;
               if (userAux["deleted"] == false) {
-                var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(
-                  userAux["_id"]
-                );
+                var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(userAux["_id"]);
                 incidenciaObs.subscribe(incidencias => {
                   aux = incidencias;
                   var anterior;

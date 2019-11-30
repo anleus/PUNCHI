@@ -108,7 +108,7 @@ export class VacacionesComponent implements OnInit {
         this.vacationservice.updateVacation(
           this._vid,
           this.pending,
-          (this.left = this.vacationDaysLeft - 1),
+          this.left = this.vacationDaysLeft,
           this.vacationPast
         );
         this.crearSolicitud(arg.date);
@@ -161,6 +161,7 @@ export class VacacionesComponent implements OnInit {
     newIncidencia.estado = "pendiente";
     newIncidencia.asunto = "Solicitud vacaciones";
     newIncidencia.mensaje = this.returnBDCorrectDate(date);
+    newIncidencia.leido = false;
     this.vacationservice.getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {

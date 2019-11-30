@@ -28,7 +28,8 @@ incidenciaFunctions.createUserIncidencia = async (req, res, next) => {
     vacaciones: req.body.vacaciones,
     incidencias: req.body.incidencias,
     mensaje: req.body.mensaje,
-    estado: req.body.estado
+    estado: req.body.estado,
+    leido: req.body.leido
   });
 
  incidencia.save()
@@ -46,7 +47,8 @@ incidenciaFunctions.updateIncidencias = async (req, res, next) => {
     vacaciones: req.body.vacaciones,
     incidencias: req.body.incidencias,
     mensaje: req.body.mensaje,
-    estado: req.body.estado
+    estado: req.body.estado,
+    leido: req.body.leido
   });
   Incidencia.findByIdAndUpdate(req.params.id, { $set: incidencia })
     .then(res.status(200).json("Incidencia updated"))
