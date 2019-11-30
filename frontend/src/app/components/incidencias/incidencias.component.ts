@@ -130,7 +130,6 @@ export class IncidenciasComponent implements OnInit {
         if (res != null) {
           var idsUsuarios = res["usuarios"];
           idsUsuarios.forEach(element => {
-            console.log(element);
             this.userService.getUserById(element).subscribe(user => {
               var userAux = user;
               var aux;
@@ -185,7 +184,7 @@ export class IncidenciasComponent implements OnInit {
         this.vacationservice.updateVacation(
           res._id,
           res.pending,
-          (res.left = res.vacationDaysLeft - 1), //hablar esto
+          res.left - 1, 
           res.past
         );
       }
@@ -195,13 +194,51 @@ export class IncidenciasComponent implements OnInit {
   denegarIncidencia(inc: Incidencia) {
     inc.estado = "denegado";
     this.incidenciaService.putIncidencia(inc);
-    //TODO conexion base de datos
+
+    var usuarioDestino = inc.id_user;
+    this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
+      if (res == null || typeof res == "undefined") {
+        console.log("ALGO VA MAL!!!!!!");
+      } else {
+        var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
+        res.pending.splice(index, 1);
+        this.vacationservice.updateVacation(
+          res._id,
+          res.pending,
+          res.left, 
+          res.past
+        );
+      }
+    });
   }
 
   editarIncidencia(inc: Incidencia) {
     inc.estado = "pendiente";
     this.incidenciaService.putIncidencia(inc);
-    //TODO conexion base de datos
+
+    var usuarioDestino = inc.id_user;
+    this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
+      if (res == null || typeof res == "undefined") {
+        console.log("ALGO VA MAL!!!!!!");
+      } else {
+        var estabaAceptada = false;;
+        var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
+        if(index != -1) {
+          res.past.splice(index, 1);
+          estabaAceptada = true;
+        }
+        var diasVacaciones;
+        if(estabaAceptada) diasVacaciones = res.left +1;
+        else diasVacaciones = res.left;
+        res.pending.push(new Date(inc.mensaje).toISOString());
+        this.vacationservice.updateVacation(
+          res._id,
+          res.pending, 
+          diasVacaciones, 
+          res.past
+        );
+      }
+    });
   }
 
   esPendiente(inc: Incidencia) {
