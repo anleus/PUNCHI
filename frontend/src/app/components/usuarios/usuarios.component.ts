@@ -14,6 +14,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialog
 } from "@angular/material/dialog";
+import { Button } from 'protractor';
 
 export interface UserData {
   userName: string;
@@ -31,9 +32,11 @@ export class UsuariosComponent implements OnInit {
   admin = false;
   gestor = false;
   logUser = this.authService.getCurrentUser();
-  userName: string;
+  userName: string
   userId: string;
   confirmation: boolean;
+  permisos : boolean;
+
 
   //displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   //dataSource = ELEMENT_DATA;
@@ -57,8 +60,15 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.determinarUsuario();
-    if (this.admin) this.getUsersAdmin();
-    else this.getUsersGestor();
+    if (this.admin){
+      this.getUsersAdmin();
+      this.permisos=true;
+    } 
+    else{
+      this.getUsersGestor();
+      this.permisos=false;
+    } 
+
   }
 
   determinarUsuario() {
@@ -176,7 +186,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   newUser() {
-    this.router.navigate(["/crearusuario"]);
+    if(this.admin){this.router.navigate(["/crearusuario"]);}
+    
   }
 }
 

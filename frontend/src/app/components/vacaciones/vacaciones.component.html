@@ -1,26 +1,54 @@
 <script src='fullcalendar/core/main.js'></script>
 <script src='fullcalendar/core/locales/es.js'></script>
 <script>
-var calendar = new FullCalendar.Calendar(calendarEl, {
-  locale: 'es'
-});
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'es'
+    });
 </script>
+<div class="d-flex flex-column">
+    <div class="row-4">
+        <div class="d-flex flex-row">
+            <div class="col-8">
 
-<div class="container">
-    <div class='app'>
-        <br>
-        <div class='app-top'>
-            <!--<button (click)='toggleWeekends()'>Ocultar/Mostrar fines de semana</button>-->
-        </div>
-        <br>
-        <div class='app-calendar'>
-            <full-calendar #calendar defaultView="dayGridMonth" [selectMinDistance]="2" [height]="500" [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
-                      left: 'prev,next today',
-                      center: 'title',
-                      right: ''
+                <div class="container-fluid">
+                    <div class="d-flex flew-row">
+                        <br>
+                        <div class='app-calendar'>
+                            <full-calendar #calendar defaultView="dayGridMonth" [selectMinDistance]="2" [height]="500"
+                                [titleFormat]="{month: 'long', year: 'numeric'}" [header]="{
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: ''
                     }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
-                    [selectable]= 'true'
-                (dateClick)="handleDateClick($event)" (select)="handleSelectDate($event)"></full-calendar>
+                                [selectable]='true' (dateClick)="handleDateClick($event)"
+                                (select)="handleSelectDate($event)"></full-calendar>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-4 text-right">
+                <!--Tabla-->
+                <div class="d-flex flex-column">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">Concepto</div>
+                            <div class="row">Vacaciones restantes:</div>
+                            <div class="row">Pendientes de confirmación: </div>
+                            <div class="row">Aceptados:</div>
+                        </div>
+                        <div class="col">
+                            <div class="row">Dias</div>
+                            <div class="row">
+                                <p>{{diasRestantes}}</p>
+                            </div>
+                            <div class="row">{{diasPorConfirmar}}</div>
+                            <div class="row">{{diasAceptados}}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

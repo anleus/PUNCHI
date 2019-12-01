@@ -29,7 +29,6 @@ export class IncidenciaService {
     return this.http
       .put(this.url + "user/" + incidencia._id, incidencia)
       .subscribe(response => {
-        console.log(response);
       });
   }
 }
