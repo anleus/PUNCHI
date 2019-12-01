@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ExportationService } from 'src/app/services/export.service';
 
 @Component({
   selector: 'app-informes',
@@ -12,4 +13,17 @@ export class InformesComponent implements OnInit {
   ngOnInit() {
   }
 
+  horasExtraCSV() {
+    console.log("Informe de horas extra")
+  }
+
+  horasMensualesCSV() {
+    console.log("Informe de horas mensuales");
+  }
+
+  horasBtwFechasCSV() {
+    console.log("Informe de horas entre fechas")
+  }
 }
+
+
