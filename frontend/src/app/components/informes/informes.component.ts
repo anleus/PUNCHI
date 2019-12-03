@@ -13,6 +13,24 @@ export class InformesComponent implements OnInit {
 
   horasExtraCSV() {
     console.log("Informe de horas extra");
+    const rows = [
+      ["user_id", "nombre", "fecha", "horas extra"],
+      ["test1","test2","test3"]
+    ];
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    rows.forEach(function(rowArray) {
+      let row = rowArray.join(",");
+      csvContent += row + "\r\n";
+    });
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "horasExtra.csv");
+    document.body.appendChild(link);
+
+    link.click();
   }
 
   horasMensualesCSV() {

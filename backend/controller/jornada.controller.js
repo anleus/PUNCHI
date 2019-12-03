@@ -54,4 +54,12 @@ jornadaFunctions.deleteJornada = async (req, res, next) => {
     });
 };
 
+jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
+  Jornada.find({
+    begin: { $gte: new Date(2012, 7, 14), $lt: new Date(2012, 7, 15) },
+    end: { $gte: new Date(2012, 12, 5), $lt: new Date(2012, 12, 5) },
+    user: req.params.id,
+	});  
+}
+
 module.exports = jornadaFunctions;
