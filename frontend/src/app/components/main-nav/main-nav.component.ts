@@ -7,6 +7,8 @@ import { User } from "src/app/models/users";
 
 import { environment } from "src/environments/environment";
 import { MatSidenav } from '@angular/material/sidenav';
+import { Incidencia } from 'src/app/models/incidencia';
+import { IncidenciaService } from 'src/app/services/incidencia.service';
 
 
 @Component({
@@ -19,15 +21,24 @@ export class MainNavComponent {
   permisos = false; //si eres admin o gestor puedes ver todo el menú
   permisosSoloAdmin= false; // si eres admin puedes crear usuarios
   urlrn;
-  loggedUser: string;
+  loggedUser: User;
+  notifications: Incidencia[];
+  NewAlerts: Boolean;
   logUser = this.authService.getCurrentUser();
   constructor(private breakpointObserver: BreakpointObserver,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService, private incidenciaService: IncidenciaService) { }
 
   ngOnInit() {
     this.shouldIShowMyHamburguer();
     this.authService.getCurrentUser().subscribe((res: User) => {
-    this.loggedUser = res.nombre;
+    this.loggedUser = res;
+    
+    this.incidenciaService.getIncidenciaByUserId(this.loggedUser._id).subscribe((res: Incidencia[])=> {
+      this.notifications = res;
+      console.log(res)
+      console.log(this.notifications.length)
+      this.NewAlerts = this.notifications.length != 0;
+    })
     });
     if (this.logUser.source["_value"]!= null) {
       var admin = this.logUser.source["_value"].admin;

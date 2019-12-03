@@ -31,7 +31,7 @@
                             </a>
                         </mat-list-item>
                     <mat-list-item>
-                        <a mat-list-item>
+                        <a mat-list-item href="/informes">
                             <mat-icon>insert_drive_file</mat-icon>Informes
                         </a>
                     </mat-list-item>
@@ -69,10 +69,10 @@
                 
                 </a>
                 <div class="loggedUser">
-                <h4>{{loggedUser}}</h4>
+                <h4>{{loggedUser.nombre}}</h4>
                 </div>
                 <div class= "infoicon">
-                <button mat-icon-button (click)='showNotifications()'>  <mat-icon>info</mat-icon>   </button> 
+                <button mat-icon-button (click)='showNotifications()'>  <span *ngIf="NewAlerts"class="badge badge-danger">{{notifications.length}}</span> <mat-icon>info</mat-icon>   </button> 
                 </div>
             </mat-toolbar> 
         </div>

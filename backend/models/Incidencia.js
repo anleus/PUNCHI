@@ -26,6 +26,10 @@ let Incidencia = new Schema({
     asunto: {
         type: String,
         required: true
+    },
+    leido: {
+        type: Boolean,
+        required: true
     }
 });
 
