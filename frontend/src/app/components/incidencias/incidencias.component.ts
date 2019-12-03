@@ -67,9 +67,10 @@ export class IncidenciasComponent implements OnInit {
       this.getIncidencias();
     } else if (this.usuarioLogueado.source["_value"].gestor == true) {
       this.getIncidenciaByGestor();
-      //this.getIncidencias();
+      
     }
   }
+
 
   //obtener todas las incidencias existentes
   getIncidencias() {
@@ -133,6 +134,7 @@ export class IncidenciasComponent implements OnInit {
             this.userService.getUserById(element).subscribe(user => {
               var userAux = user;
               var aux;
+              if (user["_id"] != this.usuarioLogueado.source["_value"]._id) {
               if (userAux["deleted"] == false) {
                 var incidenciaObs = this.incidenciaService.getIncidenciaByUserId(userAux["_id"]);
                 incidenciaObs.subscribe(incidencias => {
@@ -153,6 +155,7 @@ export class IncidenciasComponent implements OnInit {
                   );
                   this.dataSource.paginator = this.paginator;
                 });
+              }
               }
             });
           });
