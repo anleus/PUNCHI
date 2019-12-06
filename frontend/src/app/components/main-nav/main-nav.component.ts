@@ -22,7 +22,7 @@ export class MainNavComponent {
   permisosSoloAdmin= false; // si eres admin puedes crear usuarios
   urlrn;
   loggedUser: User;
-  notifications: Incidencia[];
+  notifications: Incidencia[] 
   NewAlerts: Boolean;
   logUser = this.authService.getCurrentUser();
   private notifier: NotifierService;
@@ -35,12 +35,16 @@ export class MainNavComponent {
     this.shouldIShowMyHamburguer();
     this.authService.getCurrentUser().subscribe((res: User) => {
     this.loggedUser = res;
-    
-    this.incidenciaService.getIncidenciaByUserId(this.loggedUser._id).subscribe((res: Incidencia[])=> {
-      this.notifications = res;
-      console.log(res)
-      console.log(this.notifications.length)
+    this.notifications = [];
+    this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
+      console.log(this.loggedUser._id)
+      res.forEach(element => {
+        console.log(element.id_user)
+        if(this.loggedUser._id == element.id_user && !element.leido)
+        this.notifications.push(element)
+      });
       this.NewAlerts = this.notifications.length != 0;
+      console.log(this.notifications)
     })
     });
     if (this.logUser.source["_value"]!= null) {
