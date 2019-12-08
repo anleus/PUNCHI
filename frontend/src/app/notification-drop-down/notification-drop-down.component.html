@@ -1,0 +1,14 @@
+
+<button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <span *ngIf="NewAlerts" class="badge badge-danger">{{notifications.length}}</span>
+        <mat-icon>info</mat-icon>
+      </button>
+<mat-menu #appMenu="matMenu" class="notificationPanel">
+    <button mat-button class="menuItem" *ngIf="!newAlerts" [disabled]="true">
+        <p>No tienes notificaciones</p>
+    </button>
+    <button mat-button class="menuItem" (click)="$event.stopPropagation(); leerNotificacion(notification)" *ngFor="let notification of notifications" >
+        <mat-icon>email</mat-icon><strong>  {{notification.asunto}}: {{notification.estado}}  </strong><br>
+        {{notification.mensaje}}
+    </button>
+</mat-menu>

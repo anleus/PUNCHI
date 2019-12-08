@@ -22,7 +22,6 @@ export class MainNavComponent {
   urlrn;
   loggedUser: User;
   notifications: Incidencia[] 
-  NewAlerts: Boolean;
   logUser = this.authService.getCurrentUser();
   constructor(private breakpointObserver: BreakpointObserver,
     private authService: AuthenticationService, private incidenciaService: IncidenciaService) { 
@@ -32,30 +31,19 @@ export class MainNavComponent {
   ngOnInit() {
     this.shouldIShowMyHamburguer();
     this.authService.getCurrentUser().subscribe((res: User) => {
-    this.loggedUser = res;
-    this.notifications = [];
-    this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
-      console.log(this.loggedUser._id)
-      res.forEach(element => {
-        console.log(element.id_user)
-        if(this.loggedUser._id == element.id_user && !element.leido)
-        this.notifications.push(element)
-      });
-      this.NewAlerts = this.notifications.length != 0;
-      console.log(this.notifications)
+      this.loggedUser = res;
+      if (this.logUser.source["_value"]!= null) {
+        var admin = this.logUser.source["_value"].admin;
+        var gestor = this.logUser.source["_value"].gestor;
+        if (gestor) { this.permisos = true; }
+        else if(admin){
+          this.permisosSoloAdmin=true;
+          this.permisos=true;}
+        else { this.permisos = false; }
+      } else {
+        this.permisos = false;
+      }
     })
-    });
-    if (this.logUser.source["_value"]!= null) {
-      var admin = this.logUser.source["_value"].admin;
-      var gestor = this.logUser.source["_value"].gestor;
-      if (gestor) { this.permisos = true; }
-      else if(admin){
-        this.permisosSoloAdmin=true;
-        this.permisos=true;}
-      else { this.permisos = false; }
-    } else {
-      this.permisos = false;
-    }
   }
 
   shouldIShowMyHamburguer() {

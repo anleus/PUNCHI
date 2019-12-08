@@ -44,7 +44,8 @@ import {
 } from "./components/personalizar-departamento/personalizar-departamento.component";
 import { HistoryTableSelectedComponent } from "./components/history-table-selected/history-table-selected.component";
 import { FullCalendarModule } from "@fullcalendar/angular";
-import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import { NotificationDropDownComponent } from './notification-drop-down/notification-drop-down.component';
+/*import { NotifierModule, NotifierOptions } from 'angular-notifier';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -85,7 +86,7 @@ const customNotifierOptions: NotifierOptions = {
     },
     overlap: 150
   }
-};
+};*/
 const routes: Routes = [
   { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard] },
   {
@@ -161,7 +162,8 @@ const routes: Routes = [
     VacacionesComponent,
     HistoryTableSelectedComponent,
     OverviewConfirmacionEditDep,
-    ConfirmModificUsuario
+    ConfirmModificUsuario,
+    NotificationDropDownComponent
   ],
   entryComponents: [
     UsuariosComponent,
@@ -190,7 +192,7 @@ const routes: Routes = [
     IgxCalendarModule,
     MatListModule,
     FullCalendarModule,
-    NotifierModule.withConfig(customNotifierOptions)
+    //NotifierModule.withConfig(customOptions)
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
