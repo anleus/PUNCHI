@@ -56,10 +56,34 @@ jornadaFunctions.deleteJornada = async (req, res, next) => {
 
 jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
   Jornada.find({
-    begin: { $gte: new Date(2012, 7, 14), $lt: new Date(2012, 7, 15) },
-    end: { $gte: new Date(2012, 12, 5), $lt: new Date(2012, 12, 5) },
+    begin: { $gte: req.params.begin },
+    end: { $lt: req.params.end },
     user: req.params.id,
-	});  
+  })
+  .then((jornadas) => {
+    jorn = []
+    mapa = new Map()
+    jornadas.forEach(elem => {
+      inicio = new Date(elem.values.begin)
+      dia = inicio.getDay()
+      mes = inicio.getMonth()+1
+      anyo = inicio.getFullYear()
+      fecha = dia +'/'+ mes +'/'+ anyo
+      difH = (new Date(elem.values.end)).getTime() - (new Date(elem.values.begin)).getTime();
+      
+      anterior = mapa.getKey(dia) ? mapa.getKey(dia) : 0;
+      mapa.setKey(dia, (difH + anterior))
+      
+      mapa.entries().forEach(([j,k]) => {
+        jorn.push(new Array(jornadas.values.userid, k, j))
+      });   
+    }); 
+    res.json(jorn);
+  })
+  .catch(() => {
+    res.status(500).json("No tienes ninguna jornada registrada")
+  });  
 }
+
 
 module.exports = jornadaFunctions;

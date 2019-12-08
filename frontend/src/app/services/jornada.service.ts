@@ -30,6 +30,8 @@ export class JornadaService {
     return this.http.get<Jornada[]>(this.url + userid);
   }
 
-
+  getJornadaFromUserToCSV(userid: string, begin: Date, end: Date): Observable<String[]> {
+    return this.http.get<String[]>(this.url + "exports/" + userid + '/' + begin + '/' + end);
+  }
 }
 

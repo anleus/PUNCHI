@@ -2,8 +2,24 @@
     <span>¿Que informe desea generar?</span>
 </div>
 
+<div class="text-center">
+    <p>Tipos de informes<p>
+    <br>
+    <p>Seleccione un rango de fechas:</p>
+</div>
 
-    <p class="text-center">Tipos de informes<p>
+<mat-form-field>
+    <input matInput [matDatepicker]="picker1" placeholder="Fecha inicio" [formControl]="inicio">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+    <input matInput [matDatepicker]="picker1" placeholder="Fecha fin" [formControl]="fin">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+    
 
 <div class="text-center">
     <button mat-button class="btn-inf" (click)='horasExtraCSV()'>Horas extra</button>
