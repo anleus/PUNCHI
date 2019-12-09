@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { JornadaService } from 'src/app/services/jornada.service';
 import { AuthenticationService } from 'src/app/services/auth.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: "app-informes",
@@ -11,6 +11,8 @@ import { FormControl } from '@angular/forms';
 export class InformesComponent implements OnInit {
 
   userPrueba;
+  usuarioform: FormGroup;
+  informes : String[] = ["Informe Horas", "Informe horas extra"];
   inicio = new FormControl(new Date()).value;
   fin = new FormControl(new Date()).value;
 
@@ -18,7 +20,12 @@ export class InformesComponent implements OnInit {
               private authService: AuthenticationService) {}
 
   ngOnInit() {
-    this.userPrueba = this.authService.currentUserValue._id; 
+    this.userPrueba = this.authService.currentUserValue._id;
+    
+    this.usuarioform = new FormGroup({
+      fechaInicio: new FormControl(),
+      fechaFin: new FormControl()
+    });
   }
 
   horasExtraCSV() {

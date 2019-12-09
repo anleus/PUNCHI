@@ -1,39 +1,48 @@
-<div class="text-info">
-    <span>¿Que informe desea generar?</span>
-</div>
+<div class="example-container">
+  <mat-card class="card" flex="20">
+    <form [formGroup]="usuarioform" >
+      <h1 class="text-center">Perfil:</h1>
+      <br>
 
-
-<<<<<<< HEAD
-<div class="entreFechas">
-    <mat-form-field>
-        <input matInput [matDatepicker]="pickerInit" placeholder="Fecha inicio" [formControl]="inicio">
-        <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
-        <mat-datepicker #pickerInit></mat-datepicker>
+      <div class="row p-1">
+          <div class=" col-center">
+      <mat-form-field>
+        <mat-label>Tipo de informe</mat-label>
+        <mat-select [(ngModel)]="selectedResponsable">
+            <mat-option value="Informe Horas">Informe Horas</mat-option>
+            <mat-option value="Informe horas extra">Informe horas extra</mat-option>
+        </mat-select>
     </mat-form-field>
-    <mat-form-field>
-        <input matInput [matDatepicker]="pickerEnd" placeholder="Fecha fin" [formControl]="fin">
-        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-        <mat-datepicker #pickerEnd></mat-datepicker>
-    </mat-form-field>
-</div>
-    
-=======
-<p class="text-center">Tipos de informes<p>
+          </div>
+      </div>
 
-        <div class="text-center">
-            <button mat-button class="btn-inf" (click)='horasExtraCSV()'>Horas extra</button>
-            <button mat-button class="btn-inf" (click)='horasBtwFechasCSV()'>Horas entre fechas</button>
-        </div>
->>>>>>> a163622d75398c0a9b8b4a7edc391e6c42106269
-
-
-        <div class="text-center">
-            <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Elige una fecha">
+<div class="row p-3">
+      <div class="col-md-4 offset-md-1">
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Fecha de inicio" formControlName="fechaInicio" >
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker (monthSelected)="closeDatePicker($event)"></mat-datepicker>
-            </mat-form-field>
-            <button mat-button class="btn-inf" (click)='horasMensualesCSV()'>Horas mensuales</button>
-        </div>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>Introduce fecha de inicio</mat-error>
+              </mat-form-field>
+            </div>
 
-        <p class="text-center">:)</p>
+            <div class="col-md-4 offset-md-3">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker2" placeholder="Fecha de fin" formControlName="fechaFin" >
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error>Introduce fecha de fin</mat-error>
+                  </mat-form-field>
+                </div>
+</div>
+<div class="row p-5">
+    <div class=" col-center">
+<button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+        autocomplete="off">
+        Generar informe
+      </button>
+    </div>
+</div>
+    </form>
+  </mat-card>
+</div>
