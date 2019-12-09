@@ -1,49 +1,48 @@
-<div class="text-info">
-    <span>¿Que informe desea generar?</span>
-</div>
-
-
-<p class="text-center">Tipos de informes<p>
-
-        <div class="text-center">
-            <button mat-button class="btn-inf" (click)='horasExtraCSV()'>Horas extra</button>
-            <button mat-button class="btn-inf" (click)='horasBtwFechasCSV()'>Horas entre fechas</button>
-        </div>
-
-
-        <div class="text-center">
-            <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Elige una fecha">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker (monthSelected)="closeDatePicker($event)"></mat-datepicker>
-            </mat-form-field>
-            <button mat-button class="btn-inf" (click)='horasMensualesCSV()'>Horas mensuales</button>
-        </div>
-
-<p class="text-center">:)</p>
-
 <div class="example-container">
         <mat-card class="card" flex="20">
           <form [formGroup]="usuarioform" >
             <h1 class="text-center">Perfil:</h1>
-      
+            <br>
+
+            <div class="row p-1">
+                <div class=" col-center">
+            <mat-form-field>
+              <mat-label>Tipo de informe</mat-label>
+              <mat-select [(ngModel)]="selectedResponsable">
+                  <mat-option value="Informe Horas">Informe Horas</mat-option>
+                  <mat-option value="Informe horas extra">Informe horas extra</mat-option>
+              </mat-select>
+          </mat-form-field>
+                </div>
+            </div>
+
+      <div class="row p-3">
             <div class="col-md-4 offset-md-1">
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" >
+                      <input matInput [matDatepicker]="picker" placeholder="Fecha de inicio" formControlName="fechaInicio" >
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
-                      <mat-error>Introduce una fecha válida</mat-error>
+                      <mat-error>Introduce fecha de inicio</mat-error>
                     </mat-form-field>
                   </div>
       
-                  <div class="col-md-4 offset-md-2">
+                  <div class="col-md-4 offset-md-3">
                         <mat-form-field>
-                          <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" >
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                          <mat-error>Introduce una fecha válida</mat-error>
+                          <input matInput [matDatepicker]="picker2" placeholder="Fecha de fin" formControlName="fechaFin" >
+                          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                          <mat-datepicker #picker2></mat-datepicker>
+                          <mat-error>Introduce fecha de fin</mat-error>
                         </mat-form-field>
                       </div>
+      </div>
+      <div class="row p-5">
+          <div class=" col-center">
+      <button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+              autocomplete="off">
+              Generar informe
+            </button>
+          </div>
+      </div>
           </form>
         </mat-card>
 </div>
