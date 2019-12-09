@@ -2,12 +2,8 @@
     <span>¿Que informe desea generar?</span>
 </div>
 
-<div class="text-center">
-    <p>Tipos de informes<p>
-    <br>
-    <p>Seleccione un rango de fechas:</p>
-</div>
 
+<<<<<<< HEAD
 <div class="entreFechas">
     <mat-form-field>
         <input matInput [matDatepicker]="pickerInit" placeholder="Fecha inicio" [formControl]="inicio">
@@ -21,11 +17,23 @@
     </mat-form-field>
 </div>
     
+=======
+<p class="text-center">Tipos de informes<p>
 
-<div class="text-center">
-    <button mat-button class="btn-inf" (click)='horasExtraCSV()'>Horas extra</button>
-    <button mat-button class="btn-inf" (click)='horasMensualesCSV()'>Horas mensuales</button>
-    <button mat-button class="btn-inf" (click)='horasBtwFechasCSV()'>Horas entre fechas</button>
-</div>
+        <div class="text-center">
+            <button mat-button class="btn-inf" (click)='horasExtraCSV()'>Horas extra</button>
+            <button mat-button class="btn-inf" (click)='horasBtwFechasCSV()'>Horas entre fechas</button>
+        </div>
+>>>>>>> a163622d75398c0a9b8b4a7edc391e6c42106269
 
-<p class="text-center">:)</p>
+
+        <div class="text-center">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Elige una fecha">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker (monthSelected)="closeDatePicker($event)"></mat-datepicker>
+            </mat-form-field>
+            <button mat-button class="btn-inf" (click)='horasMensualesCSV()'>Horas mensuales</button>
+        </div>
+
+        <p class="text-center">:)</p>
