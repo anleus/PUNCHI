@@ -10,7 +10,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Incidencia } from 'src/app/models/incidencia';
 import { IncidenciaService } from 'src/app/services/incidencia.service';
 
-
 @Component({
   selector: 'main-nav',
   templateUrl: './main-nav.component.html',
@@ -22,35 +21,29 @@ export class MainNavComponent {
   permisosSoloAdmin= false; // si eres admin puedes crear usuarios
   urlrn;
   loggedUser: User;
-  notifications: Incidencia[];
-  NewAlerts: Boolean;
+  notifications: Incidencia[] 
   logUser = this.authService.getCurrentUser();
   constructor(private breakpointObserver: BreakpointObserver,
-    private authService: AuthenticationService, private incidenciaService: IncidenciaService) { }
+    private authService: AuthenticationService, private incidenciaService: IncidenciaService) { 
+      
+    }
 
   ngOnInit() {
     this.shouldIShowMyHamburguer();
     this.authService.getCurrentUser().subscribe((res: User) => {
-    this.loggedUser = res;
-    
-    this.incidenciaService.getIncidenciaByUserId(this.loggedUser._id).subscribe((res: Incidencia[])=> {
-      this.notifications = res;
-      console.log(res)
-      console.log(this.notifications.length)
-      this.NewAlerts = this.notifications.length != 0;
+      this.loggedUser = res;
+      if (this.logUser.source["_value"]!= null) {
+        var admin = this.logUser.source["_value"].admin;
+        var gestor = this.logUser.source["_value"].gestor;
+        if (gestor) { this.permisos = true; }
+        else if(admin){
+          this.permisosSoloAdmin=true;
+          this.permisos=true;}
+        else { this.permisos = false; }
+      } else {
+        this.permisos = false;
+      }
     })
-    });
-    if (this.logUser.source["_value"]!= null) {
-      var admin = this.logUser.source["_value"].admin;
-      var gestor = this.logUser.source["_value"].gestor;
-      if (gestor) { this.permisos = true; }
-      else if(admin){
-        this.permisosSoloAdmin=true;
-        this.permisos=true;}
-      else { this.permisos = false; }
-    } else {
-      this.permisos = false;
-    }
   }
 
   shouldIShowMyHamburguer() {
@@ -72,4 +65,4 @@ export class MainNavComponent {
     logoutUser() {
       this.authService.logout();
     }
-}
+  }
