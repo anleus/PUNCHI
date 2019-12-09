@@ -9,7 +9,6 @@ import { environment } from "src/environments/environment";
 import { MatSidenav } from '@angular/material/sidenav';
 import { Incidencia } from 'src/app/models/incidencia';
 import { IncidenciaService } from 'src/app/services/incidencia.service';
-import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'main-nav',
@@ -22,38 +21,29 @@ export class MainNavComponent {
   permisosSoloAdmin= false; // si eres admin puedes crear usuarios
   urlrn;
   loggedUser: User;
-  notifications: Incidencia[];
-  NewAlerts: Boolean;
+  notifications: Incidencia[] 
   logUser = this.authService.getCurrentUser();
-  private notifier: NotifierService;
   constructor(private breakpointObserver: BreakpointObserver,
-    private authService: AuthenticationService, private incidenciaService: IncidenciaService, notifier: NotifierService) { 
-      this.notifier = notifier;
+    private authService: AuthenticationService, private incidenciaService: IncidenciaService) { 
+      
     }
 
   ngOnInit() {
     this.shouldIShowMyHamburguer();
     this.authService.getCurrentUser().subscribe((res: User) => {
-    this.loggedUser = res;
-    
-    this.incidenciaService.getIncidenciaByUserId(this.loggedUser._id).subscribe((res: Incidencia[])=> {
-      this.notifications = res;
-      console.log(res)
-      console.log(this.notifications.length)
-      this.NewAlerts = this.notifications.length != 0;
+      this.loggedUser = res;
+      if (this.logUser.source["_value"]!= null) {
+        var admin = this.logUser.source["_value"].admin;
+        var gestor = this.logUser.source["_value"].gestor;
+        if (gestor) { this.permisos = true; }
+        else if(admin){
+          this.permisosSoloAdmin=true;
+          this.permisos=true;}
+        else { this.permisos = false; }
+      } else {
+        this.permisos = false;
+      }
     })
-    });
-    if (this.logUser.source["_value"]!= null) {
-      var admin = this.logUser.source["_value"].admin;
-      var gestor = this.logUser.source["_value"].gestor;
-      if (gestor) { this.permisos = true; }
-      else if(admin){
-        this.permisosSoloAdmin=true;
-        this.permisos=true;}
-      else { this.permisos = false; }
-    } else {
-      this.permisos = false;
-    }
   }
 
   shouldIShowMyHamburguer() {
@@ -75,59 +65,4 @@ export class MainNavComponent {
     logoutUser() {
       this.authService.logout();
     }
-
-    	/**
-	 * Show a notification
-	 *
-	 * @param {string} type    Notification type
-	 * @param {string} message Notification message
-	 */
-	public showNotification( type: string, message: string ): void {
-		this.notifier.notify( type, message );
-	}
-
-	/**
-	 * Hide oldest notification
-	 */
-	public hideOldestNotification(): void {
-		this.notifier.hideOldest();
-	}
-
-	/**
-	 * Hide newest notification
-	 */
-	public hideNewestNotification(): void {
-		this.notifier.hideNewest();
-	}
-
-	/**
-	 * Hide all notifications at once
-	 */
-	public hideAllNotifications(): void {
-		this.notifier.hideAll();
-	}
-
-	/**
-	 * Show a specific notification (with a custom notification ID)
-	 *
-	 * @param {string} type    Notification type
-	 * @param {string} message Notification message
-	 * @param {string} id      Notification ID
-	 */
-	public showSpecificNotification( type: string, message: string, id: string ): void {
-		this.notifier.show( {
-			id,
-			message,
-			type
-		} );
-	}
-
-	/**
-	 * Hide a specific notification (by a given notification ID)
-	 *
-	 * @param {string} id Notification ID
-	 */
-	public hideSpecificNotification( id: string ): void {
-		this.notifier.hide( id );
-	}
-}
+  }
