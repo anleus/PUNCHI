@@ -36,6 +36,7 @@ export class VacacionesComponent implements OnInit {
   diasRestantes = 0;
   diasPorConfirmar = 0;
   diasAceptados = 0;
+  noVacationFlag = false; //Un bool que se pone a true si el usuario no tiene vacaciones
 
   constructor(
     private vacationservice: VacationService,
@@ -51,23 +52,15 @@ export class VacacionesComponent implements OnInit {
     this.vacationservice
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
-        //console.log(this.authservice.currentUserValue._id.toString());
         if (res == null || typeof res == "undefined") {
           console.log("User has no vacation days");
           this._vid = this.currentUserId;
+          this.llenartabla(undefined, undefined, 0);
+          this.noVacationFlag = true;
           return;
         }
-        //console.log(res)
-        //pending = diasPorConfirmar
-        //past = diasAceptados
-        //left = diasRestantes
-        //if (pendientes.length != undefined)
-        //if (aceptados.length != undefined)
         this.llenartabla(res.pending.length, res.past.length, res.left);
-        //this.llenartabla(res.pending, res.past, res.left);
-        //console.log(res.left);
         res.pending.forEach(vac => {
-          //console.log(vac);
           this.calendarEvents = this.calendarEvents.concat({
             start: vac,
             allDay: true,
@@ -111,22 +104,25 @@ export class VacacionesComponent implements OnInit {
               "?"
           )
         ) {
+          console.log('checkDiaSolicitado: ' + this.checkDiaSolicitado(arg.date));
+          //Crear vacaciones si el usuario no tiene anteriormente
+          //if (!this.noVacationFlag) {                                 //POR CONFIRMAR
+          //} else {
+            this.pending.push(this.returnBDCorrectDate(arg.date));
+            this.vacationservice.updateVacation(
+            this._vid,
+            this.pending,
+            (this.left = this.vacationDaysLeft),
+            this.vacationPast
+          );
+          //}
           this.diasPorConfirmar++;
-
           this.calendarEvents = this.calendarEvents.concat({
             start: arg.date,
             allDay: true,
             rendering: "background",
             backgroundColor: "#FF0000"
           });
-
-          this.pending.push(this.returnBDCorrectDate(arg.date));
-          this.vacationservice.updateVacation(
-            this._vid,
-            this.pending,
-            (this.left = this.vacationDaysLeft),
-            this.vacationPast
-          );
           this.crearSolicitud(arg.date);
         }
       } else {
@@ -138,13 +134,15 @@ export class VacacionesComponent implements OnInit {
   }
 
   checkDiaSolicitado(dia) {
-    //falta incluirlo
+    console.log(dia + ' ' + this.returnBDCorrectDate(dia))
+    dia = this.returnBDCorrectDate(dia);
     this.vacationservice
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
           return false;
         } else {
+          console.log('checkDiaSolicitado: ' + res);
           res.pending.forEach(element => {
             if (element == dia) {
               return true;
@@ -152,6 +150,8 @@ export class VacacionesComponent implements OnInit {
           });
         }
       });
+
+    return false;
   }
 
   handleSelectDate(arg) {
@@ -219,7 +219,12 @@ export class VacacionesComponent implements OnInit {
   }
 
   llenartabla(pendientes, aceptados, diastotales) {
-    this.diasRestantes = diastotales;
+    if (diastotales == 0 || diastotales == undefined) {
+      this.diasRestantes = 30;                              //CAMBIAR ¿CUÁL ES EL NÚMERO DE DÍAS DE VACACIONES POR DEFECTO?
+    }
+    else {
+      this.diasRestantes = diastotales;
+    }
     if (pendientes != undefined) {
       this.diasPorConfirmar = pendientes;
     } else this.diasPorConfirmar = 0;
@@ -288,9 +293,9 @@ export class VacacionesComponent implements OnInit {
 }
 
 /*
-- que no pete si no té vacacions
-- modificar el contador de la tabla
-- si el dia ja està, no tornar a posar-lo (metodo creado)
+- que no pete si no té vacacions -- Un usuario siempre tiene vacaciones o las creamos cuando no las tiene?
+- modificar el contador de la tabla   -- Parece hecho
+- si el dia ja està, no tornar a posar-lo (método creado)
 - en sel·lecció múltiple, comprovar que algun dels dies no estiga ja demanat
 - la tabla no se actualiza
 - hacer bonita la tabla
