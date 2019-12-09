@@ -8,17 +8,18 @@
     <p>Seleccione un rango de fechas:</p>
 </div>
 
-<mat-form-field>
-    <input matInput [matDatepicker]="picker1" placeholder="Fecha inicio" [formControl]="inicio">
-    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-    <mat-datepicker #picker1></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field>
-    <input matInput [matDatepicker]="picker1" placeholder="Fecha fin" [formControl]="fin">
-    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-    <mat-datepicker #picker1></mat-datepicker>
-</mat-form-field>
+<div class="entreFechas">
+    <mat-form-field>
+        <input matInput [matDatepicker]="pickerInit" placeholder="Fecha inicio" [formControl]="inicio">
+        <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInit></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="pickerEnd" placeholder="Fecha fin" [formControl]="fin">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+</div>
     
 
 <div class="text-center">
