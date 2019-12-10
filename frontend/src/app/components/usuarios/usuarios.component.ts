@@ -185,6 +185,14 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  generarInforme(element: User) {
+    this.userService.selectedUser = element;
+    this.router.navigate(["/informes"], {
+      queryParams: { nombre: element.username }
+    });
+  }
+  
+
   newUser() {
     if(this.admin){this.router.navigate(["/crearusuario"]);}
     
