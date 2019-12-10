@@ -76,30 +76,32 @@ jornadaFunctions.deleteJornada = async (req, res, next) => {
 
 jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
   Jornada.find({
-    begin: { $gte: req.params.begin },
-    end: { $lt: req.params.end },
+    begin: { $gte: req.params.inicio },
+    end: { $lt: req.params.fin },
     user: req.params.id,
   })
   .then((jornadas) => {
 	  console.log(jornadas);
     jorn = []
 	var mapa = {}
+	var user;
     jornadas.forEach(elem => {
 		console.log('inside ' + elem);
     
-		inicio = new Date(elem.begin)
-      dia = inicio.getDay()
-      mes = inicio.getMonth()+1
-      anyo = inicio.getFullYear()
-      fecha = dia + mes + anyo
-      difH = (new Date(elem.end)).getTime() - (new Date(elem.begin)).getTime();
+		//inicio = new Date(elem.begin)
+		user = elem.user
+      	dia = elem.begin.getDay()
+      	mes = elem.begin.getMonth()+1
+      	anyo = elem.begin.getFullYear()
+      	fecha = elem.begin.getFullYear() + "/" + (elem.begin.getMonth()+1) + "/" + elem.begin.getDay()
+      	difH = elem.end.getTime() - elem.begin.getTime();
       
-      anterior = mapa[dia] ? mapa[dia] : 0;
-      mapa[dia]= (difH + anterior)
+      	anterior = mapa[fecha] ? mapa[fecha] : 0;
+      	mapa[fecha]= (difH + anterior)
 	}) 
 	Object.keys(mapa).forEach((v)=>{
 		console.log('key: ' + v + ' value ' + mapa[v]);
-        jorn.push(new Array(elem.user, v,  mapa[v]))  
+        jorn.push(new Array(user, v,  mapa[v]))  
 	})
      
     res.json(jorn);
@@ -109,16 +111,5 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
     console.log(err)
   });  
 }
-
-				mapa.entries().forEach(([j, k]) => {
-					jorn.push(new Array(jornadas.values.userid, k, j));
-				});
-			});
-			res.json(jorn);
-		})
-		.catch(() => {
-			res.status(500).json("No tienes ninguna jornada registrada");
-		});
-}; */
 
 module.exports = jornadaFunctions;

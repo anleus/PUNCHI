@@ -15,15 +15,13 @@ import { Jornada } from "src/app/models/jornada.model";
 export class InformesComponent implements OnInit {
   userPrueba;
   informes: String[] = ["Informe Horas", "Informe horas extra"];
-  inicio = new FormControl(new Date()).value;
-  fin = new FormControl(new Date()).value;
   selected: String;
   nombreUsuario: string;
 
   usuarioform = new FormGroup({
     fechaInicio: new FormControl('', [Validators.required]),
     fechaFin: new FormControl('', [Validators.required]),
-    selector: new FormControl('', [Validators.required])
+    selector: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -36,8 +34,6 @@ export class InformesComponent implements OnInit {
 
   ngOnInit() {
     this.userPrueba = this.authService.currentUserValue._id;
-
-    
   }
 
   horasExtraCSV(user, finicio, fendo) {
@@ -50,23 +46,16 @@ export class InformesComponent implements OnInit {
       .getJornadaFromUserToCSV(user, finicio, fendo)
       .subscribe(response => {
         for (var i = 0; i < response.length; i++) {
-          //var id = response[i][0]
-          //var fecha = response[i][1]
           var h = Number(response[i][2]);
           h = h / (3.6 * Math.pow(Math.E, 6));
           h -= 8;
-          if (h < 0) h = 0;
-
-          //var jornada = new Array(id, fecha, h.toString())
-
-          //rows.push(jornada)
+          console.log(h);
           if (h < 0) response[i][2] = "0";
           else response[i][2] = h.toString();
 
           rows.push(response[i]);
         }
-        //rows.concat(response)
-      });
+      })
 
     let csvContent = "data:text/csv;charset=utf-8,";
 
@@ -114,16 +103,17 @@ export class InformesComponent implements OnInit {
 
   generarInforme(form) {
     var fechaI = form.value.fechaInicio;
+    var inicio = new Date(form.value.fechaInicio);
+    var fin = new Date(form.value.fechaFin)
     var fechaF = form.value.fechaFin;
     console.log(fechaF);
     if (fechaI == null || fechaF == null) {
       console.log("Necesario introducir fecha");
     } else{
     if (this.selected == "Informe horas extra") {
-      console.log(fechaI);
-      console.log(fechaF);
-      this.horasExtraCSV(this.userPrueba, fechaI, fechaF);
-      console.log("Informe horas extra");
+
+      this.horasExtraCSV(this.userPrueba, inicio, fin);
+
     } else if (this.selected == "Informe Horas") {
       console.log(fechaI);
       console.log(fechaF);
