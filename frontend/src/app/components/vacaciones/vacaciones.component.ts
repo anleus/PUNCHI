@@ -104,26 +104,9 @@ export class VacacionesComponent implements OnInit {
               "?"
           )
         ) {
-          console.log('checkDiaSolicitado: ' + this.checkDiaSolicitado(arg.date));
-          //Crear vacaciones si el usuario no tiene anteriormente
-          //if (!this.noVacationFlag) {                                 //POR CONFIRMAR
-          //} else {
-            this.pending.push(this.returnBDCorrectDate(arg.date));
-            this.vacationservice.updateVacation(
-            this._vid,
-            this.pending,
-            (this.left = this.vacationDaysLeft),
-            this.vacationPast
-          );
-          //}
-          this.diasPorConfirmar++;
-          this.calendarEvents = this.calendarEvents.concat({
-            start: arg.date,
-            allDay: true,
-            rendering: "background",
-            backgroundColor: "#FF0000"
-          });
-          this.crearSolicitud(arg.date);
+          var check = this.checkDiaSolicitado(arg.date);
+          this.createEvent(arg.date);
+          console.log(check);
         }
       } else {
         alert("No puedes seleccionar el día de hoy ni uno pasado");
@@ -133,28 +116,45 @@ export class VacacionesComponent implements OnInit {
     }
   }
 
+  createEvent(date) {
+    this.pending.push(this.returnBDCorrectDate(date));
+    this.vacationservice.updateVacation(
+      this._vid,
+      this.pending,
+      (this.left = this.vacationDaysLeft),
+      this.vacationPast
+    );
+    this.diasPorConfirmar++;
+    this.calendarEvents = this.calendarEvents.concat({
+      start: date,
+      allDay: true,
+      rendering: "background",
+      backgroundColor: "#FF0000"
+    });
+    this.crearSolicitud(date);
+  }
+
   checkDiaSolicitado(dia) {
-    console.log(dia + ' ' + this.returnBDCorrectDate(dia))
-    dia = this.returnBDCorrectDate(dia);
+    dia = new Date(this.returnBDCorrectDate(dia));
     this.vacationservice
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
-          return false;
+          return new Promise(resolve => false);
         } else {
-          console.log('checkDiaSolicitado: ' + res);
           res.pending.forEach(element => {
-            if (element == dia) {
-              return true;
+            element = new Date(element);
+            if (element.getTime() == dia.getTime()) {
+              console.log("It's true");
+              return new Promise(resolve => true);
             }
           });
         }
       });
-
-    return false;
+    return new Promise(resolve => false);
   }
 
-  handleSelectDate(arg) {
+  async handleSelectDate(arg) {
     this.d = Date.now();
     if (
       this.diasRestantes - this.diasPorConfirmar >=
@@ -178,23 +178,7 @@ export class VacacionesComponent implements OnInit {
 
           for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
             date = this.addDay2Month(arg.start, i);
-            this.calendarEvents = this.calendarEvents.concat({
-              title: "Día de vacaciones",
-              start: date,
-              allDay: true,
-              rendering: "background",
-              backgroundColor: "#FF0000"
-            });
-
-            this.pending.push(this.returnBDCorrectDate(date));
-            this.vacationservice.updateVacation(
-              this._vid,
-              this.pending,
-              (this.left = this.vacationDaysLeft),
-              this.vacationPast
-            );
-
-            this.crearSolicitud(date);
+            this.createEvent(date);
           }
         }
       } else {
@@ -220,9 +204,8 @@ export class VacacionesComponent implements OnInit {
 
   llenartabla(pendientes, aceptados, diastotales) {
     if (diastotales == 0 || diastotales == undefined) {
-      this.diasRestantes = 30;                              //CAMBIAR ¿CUÁL ES EL NÚMERO DE DÍAS DE VACACIONES POR DEFECTO?
-    }
-    else {
+      this.diasRestantes = 30; //CAMBIAR ¿CÓMO Y DÓNDE SE CALCULA EL NÚMERO DE DÍAS DE VACACIONES?
+    } else {
       this.diasRestantes = diastotales;
     }
     if (pendientes != undefined) {
