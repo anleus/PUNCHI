@@ -56,21 +56,19 @@ export class InformesComponent implements OnInit {
 
           rows.push(response[i]);
         }
+        let csvContent = "data:text/csv;charset=utf-8,";
+
+        rows.forEach(function(rowArray) {
+          let row = rowArray.join(",");
+          csvContent += row + "\r\n";
+        });
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "horasExtra.csv");
+        document.body.appendChild(link);
+        link.click();
       });
-
-    let csvContent = "data:text/csv;charset=utf-8,";
-
-    rows.forEach(function(rowArray) {
-      let row = rowArray.join(",");
-      csvContent += row + "\r\n";
-    });
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "horasExtra.csv");
-    document.body.appendChild(link);
-
-    link.click();
   }
 
   horasBtwFechasCSV() {
