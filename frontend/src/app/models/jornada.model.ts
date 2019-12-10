@@ -1,6 +1,6 @@
 export interface Jornada {
-  begin: Date;
-  end: Date;
+  begin: string;
+  end: string;
   user: string;
   _id: string;
 }
