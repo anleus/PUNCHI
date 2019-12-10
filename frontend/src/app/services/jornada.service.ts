@@ -44,7 +44,7 @@ export class JornadaService {
     );
   }
 
-  getUserMonthJornadas(userid): Observable<Jornada[]> {
+  getUserPeriodJornadas(userid): Observable<Jornada[]> {
     return this.http.get<Jornada[]>(this.url + "month/" + userid);
   }
 }
