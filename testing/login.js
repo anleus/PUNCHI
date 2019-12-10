@@ -1,8 +1,9 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
-let driver = await new Builder().forBrowser("chrome").build();
 
 async function logIn() {
 	try {
+		let driver = await new Builder().forBrowser("chrome").build();
+
 		await driver.get("http://localhost:4200/login");
 		await driver
 			.findElement(By.id("mat-input-0"))
@@ -22,11 +23,10 @@ async function logIn() {
 		}
 	} finally {
 		await driver.quit();
-		
 	}
 }
 
-logIn().then(checkMenu)
+logIn(); /* .then(checkMenu)
 
 function checkMenu(){
 	if(await driver
@@ -35,4 +35,4 @@ function checkMenu(){
 	} else {
 		console.log("error");
 	}
-}
+} */
