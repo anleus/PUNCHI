@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
+let driver = await new Builder().forBrowser("chrome").build();
 
 async function logIn() {
-	let driver = await new Builder().forBrowser("chrome").build();
 	try {
 		await driver.get("http://localhost:4200/login");
 		await driver
