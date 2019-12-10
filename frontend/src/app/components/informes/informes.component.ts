@@ -98,6 +98,9 @@ export class InformesComponent implements OnInit {
   horasBtwFechasCSV() {
     console.log("Informe de horas entre fechas");
   }
+  /*volver(){
+    this.router.navigate(['/usuarios']);
+  }*/
 
   generarInforme(form){
     var fechaI = form.value.fechaInicio;
