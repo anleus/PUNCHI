@@ -8,7 +8,7 @@
           <div class=" col-center">
       <mat-form-field>
         <mat-label>Tipo de informe</mat-label>
-        <mat-select [(ngModel)]="selectedResponsable">
+        <mat-select [(value)]="selected">
             <mat-option value="Informe Horas">Informe Horas</mat-option>
             <mat-option value="Informe horas extra">Informe horas extra</mat-option>
         </mat-select>
@@ -37,7 +37,7 @@
 </div>
 <div class="row p-5">
     <div class=" col-center">
-<button type="submit" (click)="guardarcambios(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
+<button type="submit" (click)="generarInforme(usuarioform)" class="btn btn-primary text-center" data-toggle="button" aria-pressed="false"
         autocomplete="off">
         Generar informe
       </button>
@@ -46,5 +46,3 @@
     </form>
   </mat-card>
 </div>
-
-<button mat-button (click)=" horasExtraCSV()">Informe prueba</button>
