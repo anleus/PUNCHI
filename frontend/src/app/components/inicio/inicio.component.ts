@@ -135,7 +135,7 @@ export class InicioComponent implements OnInit {
   }
 
   botonFicharDisabled() : boolean {
-    var d = new Date
+    /* var d = new Date
     var currentDay = d.getDay() + "-" + d.getMonth() + "-" + d.getFullYear();
     var user = this.authService.currentUserValue;
 
@@ -153,6 +153,6 @@ export class InicioComponent implements OnInit {
         );
         return false;
       });
-    }
+    } */
   }
 }
