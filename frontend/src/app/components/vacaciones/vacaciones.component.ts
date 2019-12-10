@@ -54,7 +54,7 @@ export class VacacionesComponent implements OnInit {
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
-          console.log("User has no vacation days");
+          //console.log("User has no vacation days");
           this._vid = this.currentUserId;
           this.llenartabla(undefined, undefined, 0);
           this.noVacationFlag = true;
@@ -91,10 +91,8 @@ export class VacacionesComponent implements OnInit {
 
   returnBDCorrectDate(d: Date) {
     // Devuelve la fecha correcta para su almacenamiento en la BD
-    console.log(d);
+    
     d = new Date(d);
-    console.log(d);
-    console.log(d.getTime());
     return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString();
   }
 
@@ -148,7 +146,7 @@ export class VacacionesComponent implements OnInit {
 
   checkDiaSolicitado(dia) {
     var flag = false;
-    console.log('dia solicitado is: ' + dia);
+    console.log('Dia solicitado is: ' + dia, new Date(this.returnBDCorrectDate(dia)));
     dia = new Date(this.returnBDCorrectDate(dia));
     this.pending.forEach(elem => {
       elem = new Date(elem);
@@ -187,7 +185,6 @@ export class VacacionesComponent implements OnInit {
 
           for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
             date = this.addDay2Month(arg.start, i);
-            console.log('handleSelectDate --> arg.start: ' + date + ' // i: ' + i);
             await this.checkDiaSolicitado(date).then(check => {
               if (check) {
                 console.log('Day not available');
@@ -195,7 +192,7 @@ export class VacacionesComponent implements OnInit {
                 return;
               } else {
                 console.log('Day available');
-                this.createEvent(arg.date);
+                this.createEvent(date);
               }
             });
           }
@@ -254,8 +251,6 @@ export class VacacionesComponent implements OnInit {
   }
 
   handleButton() {
-    console.log("Button clicked");
-    console.log("All events: ");
   }
 
   getCorrectMonth(date: Date) {
