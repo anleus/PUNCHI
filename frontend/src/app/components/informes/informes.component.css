@@ -22,6 +22,9 @@
     float: none;
     margin: 0 auto;
 }
+.bot2{
+    left: 20%;
+  }
   
   .example-container > * {
     width: 55%;
