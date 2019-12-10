@@ -11,6 +11,7 @@ import { Incidencia } from "../../models/incidencia";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
+import { resolve } from 'url';
 
 @Component({
   selector: "app-vacaciones",
@@ -90,10 +91,14 @@ export class VacacionesComponent implements OnInit {
 
   returnBDCorrectDate(d: Date) {
     // Devuelve la fecha correcta para su almacenamiento en la BD
+    console.log(d);
+    d = new Date(d);
+    console.log(d);
+    console.log(d.getTime());
     return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString();
   }
 
-  handleDateClick(arg) {
+  async handleDateClick(arg) {
     this.d = Date.now();
     if (this.diasRestantes - this.diasPorConfirmar >= 1) {
       if (arg.date.getTime() > this.d) {
@@ -104,9 +109,16 @@ export class VacacionesComponent implements OnInit {
               "?"
           )
         ) {
-          var check = this.checkDiaSolicitado(arg.date);
-          this.createEvent(arg.date);
-          console.log(check);
+          await this.checkDiaSolicitado(arg.date).then(check => {
+            if (check) {
+              console.log('Day not available');
+              alert("El día seleccionado ya está pendiente de confirmación o confirmado");
+              return;
+            } else {
+              console.log('Day available');
+              this.createEvent(arg.date);
+            }
+          });
         }
       } else {
         alert("No puedes seleccionar el día de hoy ni uno pasado");
@@ -135,23 +147,21 @@ export class VacacionesComponent implements OnInit {
   }
 
   checkDiaSolicitado(dia) {
+    var flag = false;
+    console.log('dia solicitado is: ' + dia);
     dia = new Date(this.returnBDCorrectDate(dia));
-    this.vacationservice
-      .getVacationByUsername(this.authservice.currentUserValue._id.toString())
-      .then(res => {
-        if (res == null || typeof res == "undefined") {
-          return new Promise(resolve => false);
-        } else {
-          res.pending.forEach(element => {
-            element = new Date(element);
-            if (element.getTime() == dia.getTime()) {
-              console.log("It's true");
-              return new Promise(resolve => true);
-            }
-          });
-        }
-      });
-    return new Promise(resolve => false);
+    this.pending.forEach(elem => {
+      elem = new Date(elem);
+      if (elem.getTime() == dia.getTime()) {
+        flag = true;
+      }
+    });
+
+    if (flag) {
+      return new Promise((resolve) => {resolve(true);});
+    } else {
+      return new Promise((resolve) => {resolve(false);});
+    }
   }
 
   async handleSelectDate(arg) {
@@ -161,8 +171,7 @@ export class VacacionesComponent implements OnInit {
       this.daysCount(arg.start, arg.end)
     ) {
       if (this.addDay2Month(arg.start, 1).getTime() == arg.end.getTime())
-        return; //Workaround guarro para evitar la selección de un único día
-
+        return;
       if (arg.start.getTime() > this.d) {
         if (
           confirm(
@@ -178,7 +187,17 @@ export class VacacionesComponent implements OnInit {
 
           for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
             date = this.addDay2Month(arg.start, i);
-            this.createEvent(date);
+            console.log('handleSelectDate --> arg.start: ' + date + ' // i: ' + i);
+            await this.checkDiaSolicitado(date).then(check => {
+              if (check) {
+                console.log('Day not available');
+                alert("Uno o varios de los días seleccionados ya están pendientes de confirmación o confirmados");
+                return;
+              } else {
+                console.log('Day available');
+                this.createEvent(arg.date);
+              }
+            });
           }
         }
       } else {
@@ -190,7 +209,6 @@ export class VacacionesComponent implements OnInit {
   }
 
   crearSolicitud(date) {
-    console.log(date);
     var newIncidencia = new Incidencia();
     newIncidencia.id_user = this.authservice.currentUserValue._id;
     newIncidencia.vacaciones = true;
@@ -225,8 +243,8 @@ export class VacacionesComponent implements OnInit {
   }
 
   addDay2Month(d: Date, i: number) {
-    var date = new Date(d.valueOf());
-    date.setDate(date.getDate() + i);
+    i = i * 3600 * 1000 * 24;
+    var date = new Date(d.valueOf() + i);
     return date;
   }
 
