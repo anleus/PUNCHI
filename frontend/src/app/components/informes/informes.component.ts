@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { JornadaService } from "src/app/services/jornada.service";
 import { AuthenticationService } from "src/app/services/auth.service";
-import { FormControl, FormGroup } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormControl, FormGroup, Validators  } from "@angular/forms";
+import { ActivatedRoute , Router} from "@angular/router";
 import { UserService } from "src/app/services/user.service";
 import { User } from "src/app/models/users";
 import { Jornada } from "src/app/models/jornada.model";
@@ -14,27 +14,30 @@ import { Jornada } from "src/app/models/jornada.model";
 })
 export class InformesComponent implements OnInit {
   userPrueba;
-  usuarioform: FormGroup;
   informes: String[] = ["Informe Horas", "Informe horas extra"];
   inicio = new FormControl(new Date()).value;
   fin = new FormControl(new Date()).value;
   selected: String;
   nombreUsuario: string;
 
+  usuarioform = new FormGroup({
+    fechaInicio: new FormControl('', [Validators.required]),
+    fechaFin: new FormControl('', [Validators.required]),
+    selector: new FormControl('', [Validators.required])
+  });
+
   constructor(
     private jornadaService: JornadaService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.userPrueba = this.authService.currentUserValue._id;
 
-    this.usuarioform = new FormGroup({
-      fechaInicio: new FormControl(),
-      fechaFin: new FormControl()
-    });
+    
   }
 
   horasExtraCSV(user, finicio, fendo) {
@@ -105,14 +108,23 @@ export class InformesComponent implements OnInit {
   horasBtwFechasCSV() {
     console.log("Informe de horas entre fechas");
   }
-  /*volver(){
+  volver(){
     this.router.navigate(['/usuarios']);
-  }*/
+  }
 
   generarInforme(form) {
     var fechaI = form.value.fechaInicio;
     var fechaF = form.value.fechaFin;
-    if (this.selected == "Informe Horas") {
+    console.log(fechaF);
+    if (fechaI == null || fechaF == null) {
+      console.log("Necesario introducir fecha");
+    } else{
+    if (this.selected == "Informe horas extra") {
+      console.log(fechaI);
+      console.log(fechaF);
+      this.horasExtraCSV(this.userPrueba, fechaI, fechaF);
+      console.log("Informe horas extra");
+    } else if (this.selected == "Informe Horas") {
       console.log(fechaI);
       console.log(fechaF);
       this.route.queryParams.subscribe(params => {
@@ -132,15 +144,9 @@ export class InformesComponent implements OnInit {
             console.log(jornadas);
           }); */
         });
-    } else if (this.selected == "Informe horas extra") {
-      console.log(fechaI);
-      console.log(fechaF);
-      this.horasExtraCSV(this.userPrueba, fechaI, fechaF);
-      console.log("Informe horas extra");
-    } else if (fechaI == null || fechaF == null) {
-      console.log("Necesario introducir fecha");
     } else {
       console.log("Necesario introducir tipo de informe");
     }
   }
+}
 }

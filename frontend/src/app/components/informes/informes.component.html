@@ -8,7 +8,7 @@
           <div class=" col-center">
       <mat-form-field>
         <mat-label>Tipo de informe</mat-label>
-        <mat-select [(value)]="selected">
+        <mat-select [(value)]="selected"  formControlName="selector" required>
             <mat-option value="Informe Horas">Informe Horas</mat-option>
             <mat-option value="Informe horas extra">Informe horas extra</mat-option>
         </mat-select>
@@ -19,7 +19,7 @@
 <div class="row p-3">
       <div class="col-md-4 offset-md-1">
               <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Fecha de inicio" formControlName="fechaInicio" >
+                <input matInput [matDatepicker]="picker" placeholder="Fecha de inicio" formControlName="fechaInicio" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error>Introduce fecha de inicio</mat-error>
@@ -28,7 +28,7 @@
 
             <div class="col-md-4 offset-md-3">
                   <mat-form-field>
-                    <input matInput [matDatepicker]="picker2" placeholder="Fecha de fin" formControlName="fechaFin" >
+                    <input matInput [matDatepicker]="picker2" placeholder="Fecha de fin" formControlName="fechaFin" required>
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                     <mat-error>Introduce fecha de fin</mat-error>

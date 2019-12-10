@@ -146,7 +146,6 @@ export class VacacionesComponent implements OnInit {
 
   checkDiaSolicitado(dia) {
     var flag = false;
-    console.log('Dia solicitado is: ' + dia, new Date(this.returnBDCorrectDate(dia)));
     dia = new Date(this.returnBDCorrectDate(dia));
     this.pending.forEach(elem => {
       elem = new Date(elem);
@@ -181,6 +180,7 @@ export class VacacionesComponent implements OnInit {
           )
         ) {
           var i;
+          var flag = false;
           let date = arg.start;
 
           for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
@@ -188,13 +188,16 @@ export class VacacionesComponent implements OnInit {
             await this.checkDiaSolicitado(date).then(check => {
               if (check) {
                 console.log('Day not available');
-                alert("Uno o varios de los días seleccionados ya están pendientes de confirmación o confirmados");
+                flag = true
                 return;
               } else {
                 console.log('Day available');
                 this.createEvent(date);
               }
             });
+          }
+          if (flag) {
+            this.snackWarning('Uno o varios días solicitados ya se estaban confirmados o pendientes de confirmación');
           }
         }
       } else {
@@ -286,13 +289,20 @@ export class VacacionesComponent implements OnInit {
       verticalPosition: "top"
     });
   }
+
+  snackWarning(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Uno o varios días solicitados ya se estaban confirmados o pendientes de confirmación. Se han solicitado' + ' los días disponibles",
+      duration: 3 * 1000,
+      panelClass: ["warning-yellow"],
+      horizontalPosition: "right",
+      verticalPosition: "bottom"
+    });
+  }
 }
 
 /*
-- que no pete si no té vacacions -- Un usuario siempre tiene vacaciones o las creamos cuando no las tiene?
-- modificar el contador de la tabla   -- Parece hecho
-- si el dia ja està, no tornar a posar-lo (método creado)
-- en sel·lecció múltiple, comprovar que algun dels dies no estiga ja demanat
+- crear la entrada vacaciones para un usuario que no la tenga
 - la tabla no se actualiza
 - hacer bonita la tabla
  */
