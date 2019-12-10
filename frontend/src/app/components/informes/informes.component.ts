@@ -15,6 +15,7 @@ export class InformesComponent implements OnInit {
   informes : String[] = ["Informe Horas", "Informe horas extra"];
   inicio = new FormControl(new Date()).value;
   fin = new FormControl(new Date()).value;
+  selected: String;
 
   constructor(private jornadaService: JornadaService,
               private authService: AuthenticationService) {}
@@ -28,29 +29,31 @@ export class InformesComponent implements OnInit {
     });
   }
 
-  horasExtraCSV() {
+  
+
+  horasExtraCSV(user, finicio, fendo) {
     console.log("Informe de horas extra");
     const rows = [
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
 
-    this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, new Date(this.inicio), new Date(this.fin))
+    this.jornadaService.getJornadaFromUserToCSV(user, finicio, fendo)
       .subscribe(response => { 
         for (var i = 0; i < response.length; i++) {
-          var id = response[i][0]
-          var fecha = response[i][1]
+          //var id = response[i][0]
+          //var fecha = response[i][1]
           var h = Number(response[i][2])
           h =  h / (3.6*Math.pow(Math.E,6))
           h -= 8
           if (h < 0) h = 0
           
-          var jornada = new Array(id, fecha, h.toString())
+          //var jornada = new Array(id, fecha, h.toString())
 
-          rows.push(jornada)
-          //if (h < 0) response[i][2]. = "0"
-          //else response[i][2] = h.toString()
+          //rows.push(jornada)
+          if (h < 0) response[i][2] = "0"
+          else response[i][2] = h.toString()
 
-          //rows.push(response[i])
+          rows.push(response[i])
         }
         //rows.concat(response)
     })
@@ -95,4 +98,25 @@ export class InformesComponent implements OnInit {
   horasBtwFechasCSV() {
     console.log("Informe de horas entre fechas");
   }
+
+  generarInforme(form){
+    var fechaI = form.value.fechaInicio;
+    var fechaF = form.value.fechaFin;
+    if(this.selected == "Informe Horas"){
+      console.log(fechaI);
+      console.log(fechaF);
+      console.log("Informe Horas");
+    }else if(this.selected == "Informe horas extra"){
+      console.log(fechaI);
+      console.log(fechaF);
+        this.horasExtraCSV(this.userPrueba, fechaI, fechaF)
+      console.log("Informe horas extra");
+    }else if(fechaI == null || fechaF == null){
+      console.log("Necesario introducir fecha");     
+    }else{
+      console.log("Necesario introducir tipo de informe");
+    }
+    
+  }
 }
+

@@ -99,7 +99,7 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
     res.json(jorn);
   })
   .catch(() => {
-    res.status(500).json("No tienes ninguna jornada registrada")
+    console.log(err)
   });  
 }
 
