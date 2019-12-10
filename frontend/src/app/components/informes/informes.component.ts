@@ -13,8 +13,10 @@ export class InformesComponent implements OnInit {
   userPrueba;
   usuarioform: FormGroup;
   informes : String[] = ["Informe Horas", "Informe horas extra"];
-  inicio = new FormControl(new Date()).value;
-  fin = new FormControl(new Date()).value;
+  //inicio = new FormControl(new Date()).value;
+  //fin = new FormControl(new Date()).value;
+  inicioPruebas = new Date(2019, 9, 1)
+  finPruebas = new Date(2019, 12, 10)
 
   constructor(private jornadaService: JornadaService,
               private authService: AuthenticationService) {}
@@ -34,23 +36,23 @@ export class InformesComponent implements OnInit {
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
 
-    this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, new Date(this.inicio), new Date(this.fin))
+    this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, this.inicioPruebas, this.finPruebas)
       .subscribe(response => { 
         for (var i = 0; i < response.length; i++) {
-          var id = response[i][0]
-          var fecha = response[i][1]
+          //var id = response[i][0]
+          //var fecha = response[i][1]
           var h = Number(response[i][2])
           h =  h / (3.6*Math.pow(Math.E,6))
           h -= 8
           if (h < 0) h = 0
           
-          var jornada = new Array(id, fecha, h.toString())
+          //var jornada = new Array(id, fecha, h.toString())
 
-          rows.push(jornada)
-          //if (h < 0) response[i][2]. = "0"
-          //else response[i][2] = h.toString()
+          //rows.push(jornada)
+          if (h < 0) response[i][2] = "0"
+          else response[i][2] = h.toString()
 
-          //rows.push(response[i])
+          rows.push(response[i])
         }
         //rows.concat(response)
     })

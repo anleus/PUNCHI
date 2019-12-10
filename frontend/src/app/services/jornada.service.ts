@@ -38,8 +38,8 @@ export class JornadaService {
     userid: string,
     begin: Date,
     end: Date
-  ): Observable<String[]> {
-    return this.http.get<String[]>(
+  ): Observable<string[][]> {
+    return this.http.get<string[][]>(
       this.url + "exports/" + userid + "/" + begin + "/" + end
     );
   }
