@@ -15,6 +15,7 @@ export class InformesComponent implements OnInit {
   informes : String[] = ["Informe Horas", "Informe horas extra"];
   inicio = new FormControl(new Date()).value;
   fin = new FormControl(new Date()).value;
+  selected: String;
 
   constructor(private jornadaService: JornadaService,
               private authService: AuthenticationService) {}
@@ -27,6 +28,8 @@ export class InformesComponent implements OnInit {
       fechaFin: new FormControl()
     });
   }
+
+  
 
   horasExtraCSV() {
     console.log("Informe de horas extra");
@@ -95,4 +98,24 @@ export class InformesComponent implements OnInit {
   horasBtwFechasCSV() {
     console.log("Informe de horas entre fechas");
   }
+
+  generarInforme(form){
+    var fechaI = form.value.fechaInicio;
+    var fechaF = form.value.fechaFin;
+    if(this.selected == "Informe Horas"){
+      console.log(fechaI);
+      console.log(fechaF);
+      console.log("Informe Horas");
+    }else if(this.selected == "Informe horas extra"){
+      console.log(fechaI);
+      console.log(fechaF);
+      console.log("Informe horas extra");
+    }else if(fechaI == null || fechaF == null){
+      console.log("Necesario introducir fecha");     
+    }else{
+      console.log("Necesario introducir tipo de informe");
+    }
+    
+  }
 }
+
