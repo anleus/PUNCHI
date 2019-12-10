@@ -79,26 +79,31 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
     user: req.params.id,
   })
   .then((jornadas) => {
+	  console.log(jornadas);
     jorn = []
-    mapa = new Map()
+	var mapa = {}
     jornadas.forEach(elem => {
-      inicio = new Date(elem.values.begin)
+		console.log('inside ' + elem);
+    
+		inicio = new Date(elem.begin)
       dia = inicio.getDay()
       mes = inicio.getMonth()+1
       anyo = inicio.getFullYear()
-      fecha = dia +'/'+ mes +'/'+ anyo
-      difH = (new Date(elem.values.end)).getTime() - (new Date(elem.values.begin)).getTime();
+      fecha = dia + mes + anyo
+      difH = (new Date(elem.end)).getTime() - (new Date(elem.begin)).getTime();
       
-      anterior = mapa.getKey(dia) ? mapa.getKey(dia) : 0;
-      mapa.setKey(dia, (difH + anterior))
-      
-      mapa.entries().forEach(([j,k]) => {
-        jorn.push(new Array(jornadas.values.userid, k, j))
-      });   
-    }); 
+      anterior = mapa[dia] ? mapa[dia] : 0;
+      mapa[dia]= (difH + anterior)
+	}) 
+	Object.keys(mapa).forEach((v)=>{
+		console.log('key: ' + v + ' value ' + mapa[v]);
+        jorn.push(new Array(elem.user, v,  mapa[v]))  
+	})
+     
     res.json(jorn);
   })
-  .catch(() => {
+  .catch(err => {
+	  console.log("no va :)")
     console.log(err)
   });  
 }

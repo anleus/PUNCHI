@@ -32,7 +32,7 @@ export class InformesComponent implements OnInit {
   
 
   horasExtraCSV(user, finicio, fendo) {
-    console.log("Informe de horas extra");
+    console.log("ye que tal");
     const rows = [
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
