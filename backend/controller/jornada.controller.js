@@ -8,15 +8,17 @@ jornadaFunctions.getJornadas = async (req, res, next) => {
 	res.json(jornadas);
 };
 
-jornadaFunctions.getJornadaByMonthAndUserId = async (req, res, next) => {
-	let userid = req.params.id;
-	let initDate = req.params.initDate;
-	let endDate = req.params.endDate;
+jornadaFunctions.getJornadaByPeriodAndUserId = async (req, res, next) => {
+	let userid = req.body.id;
+	let initDate = req.body.initDate;
+	let endDate = req.body.endDate;
 
 	//let today = new Date();
 	//let month = req.params.month || today.getMonth();
 	//let firstDay = new Date(today.getFullYear, month, 1);
 	//let lastDay = new Date(today.getFullYear, month, 1);
+
+	console.log(req.body);
 
 	const jornadas = await Jornada.find({
 		user: userid,
@@ -108,5 +110,15 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
   });  
 }
 
+				mapa.entries().forEach(([j, k]) => {
+					jorn.push(new Array(jornadas.values.userid, k, j));
+				});
+			});
+			res.json(jorn);
+		})
+		.catch(() => {
+			res.status(500).json("No tienes ninguna jornada registrada");
+		});
+}; */
 
 module.exports = jornadaFunctions;

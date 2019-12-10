@@ -1,32 +1,32 @@
 const { Builder, By, Key, until } = require("selenium-webdriver");
-let driver = await new Builder().forBrowser("chrome").build();
 
 async function logIn() {
-	try {
-		await driver.get("http://localhost:4200/login");
-		await driver
-			.findElement(By.id("mat-input-0"))
-			.sendKeys("root", Key.TAB, "roots");
-		await driver.findElement(By.className("mat-button")).click();
+  let driver = await new Builder().forBrowser("chrome").build();
 
-		//User should be logged in
+  try {
+    await driver.get("http://localhost:4200/login");
+    await driver
+      .findElement(By.id("mat-input-0"))
+      .sendKeys("root", Key.TAB, "root");
+    await driver.findElement(By.className("mat-button")).click();
 
-		let user = await driver
-			.findElement(By.className("getLoggedUser"))
-			.getText();
+    //User should be logged in
 
-		if (user === "root") {
-			console.log("Success!!");
-		} else {
-			console.log("error");
-		}
-	} finally {
-		await driver.quit();
-		
-	}
+    let user = await driver
+      .findElement(By.className("getLoggedUser"))
+      .getText();
+
+    if (user === "root") {
+      console.log("Success!!");
+    }
+  } catch (err) {
+    console.log("error");
+  } finally {
+    await driver.quit();
+  }
 }
 
-logIn().then(checkMenu)
+logIn(); /* .then(checkMenu)
 
 function checkMenu(){
 	if(await driver
@@ -35,4 +35,4 @@ function checkMenu(){
 	} else {
 		console.log("error");
 	}
-}
+} */

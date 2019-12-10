@@ -33,7 +33,7 @@ export class FichaPersonalComponent implements OnInit {
   usuarioSinModificar: User;
   public userForm: FormGroup;
   public userV: User;
-  usuarioform: FormGroup;
+  public usuarioform: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -44,14 +44,7 @@ export class FichaPersonalComponent implements OnInit {
   ngOnInit() {
     //guardar copia usuario sin modificar
     this.usuarioSinModificar = this.usuarioLogueado;
-
-
     this.authService.getCurrentUser().subscribe(user =>  this.userService.getUserByUsernameDOS(user.username).subscribe((user2 : User) =>  this.mostrarCambios(user2)));
-    
-
-    
-
-    
   }
 
   guardarcambios(form) {
