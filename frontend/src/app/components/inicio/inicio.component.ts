@@ -135,6 +135,7 @@ export class InicioComponent implements OnInit {
   }
 
   botonFicharDisabled() : boolean {
+    return false
     /* var d = new Date
     var currentDay = d.getDay() + "-" + d.getMonth() + "-" + d.getFullYear();
     var user = this.authService.currentUserValue;
