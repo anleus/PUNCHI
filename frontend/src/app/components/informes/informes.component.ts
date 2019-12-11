@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/services/user.service";
 import { User } from "src/app/models/users";
 import { Jornada } from "src/app/models/jornada.model";
+import { MatSnackBar } from '@angular/material/snack-bar'; 
 import { Observable } from "rxjs";
 
 @Component({
@@ -18,6 +19,7 @@ export class InformesComponent implements OnInit {
   informes: String[] = ["Informe Horas", "Informe horas extra"];
   selected: String;
   nombreUsuario: string;
+  durationSec = 3;
 
   usuarioform = new FormGroup({
     fechaInicio: new FormControl("", [Validators.required]),
@@ -30,6 +32,7 @@ export class InformesComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private authService: AuthenticationService,
+    private snackBar: MatSnackBar,
     private router: Router
   ) {}
 
@@ -109,7 +112,8 @@ export class InformesComponent implements OnInit {
     var fechaF = form.value.fechaFin;
     console.log(fechaF);
     if (fechaI == null || fechaF == null) {
-      console.log("Necesario introducir fecha");
+      this.openSnack("Necesario introducir fecha");   
+        return; 
     } else {
       if (this.selected == "Informe horas extra") {
         this.horasExtraCSV(this.userPrueba, inicio, fin);
@@ -136,8 +140,18 @@ export class InformesComponent implements OnInit {
           }); */
           });
       } else {
-        console.log("Necesario introducir tipo de informe");
+        this.openSnack("Necesario introducir tipo de informe");   
+        return; 
       }
     }
+  }
+  openSnack(message) {
+    this.snackBar.open(message, '', {
+      announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
+      duration: this.durationSec * 1000,
+      panelClass: ['alert-red'],                                            
+      horizontalPosition: "right",
+      verticalPosition: "top",
+    });
   }
 }
