@@ -8,7 +8,6 @@ import { User } from "src/app/models/users";
 import { Jornada } from "src/app/models/jornada.model";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
-import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-informes",
@@ -32,7 +31,6 @@ export class InformesComponent implements OnInit {
     private jornadaService: JornadaService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private snackBar: MatSnackBar,
 
     private authService: AuthenticationService,
     private snackBar: MatSnackBar,
