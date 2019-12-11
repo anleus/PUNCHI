@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
         }
         let redirect = this.authservice.redirectUrl ? this.router.parseUrl(this.authservice.redirectUrl) : '/inicio';
         //this.router.navigateByUrl(redirect);
-        console.log("Login correcto");
         window.location.href = environment.urlf + '/inicio';
         //this.router.navigate(['/inicio']);
     },

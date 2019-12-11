@@ -179,7 +179,6 @@ export class IncidenciasComponent implements OnInit {
     var usuarioDestino = inc.id_user;
     this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
       if (res == null || typeof res == "undefined") {
-        console.log("ALGO VA MAL!!!!!!");
       } else {
         var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
         res.pending.splice(index, 1);
@@ -201,7 +200,6 @@ export class IncidenciasComponent implements OnInit {
     var usuarioDestino = inc.id_user;
     this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
       if (res == null || typeof res == "undefined") {
-        console.log("ALGO VA MAL!!!!!!");
       } else {
         var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());
         res.pending.splice(index, 1);
@@ -222,7 +220,6 @@ export class IncidenciasComponent implements OnInit {
     var usuarioDestino = inc.id_user;
     this.vacationservice.getVacationByUsername(usuarioDestino).then(res => {
       if (res == null || typeof res == "undefined") {
-        console.log("ALGO VA MAL!!!!!!");
       } else {
         var estabaAceptada = false;;
         var index = res.pending.indexOf(new Date(inc.mensaje).toISOString());

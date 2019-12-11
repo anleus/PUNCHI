@@ -13,13 +13,6 @@ jornadaFunctions.getJornadaByPeriodAndUserId = async (req, res, next) => {
 	let initDate = req.body.initDate;
 	let endDate = req.body.endDate;
 
-	//let today = new Date();
-	//let month = req.params.month || today.getMonth();
-	//let firstDay = new Date(today.getFullYear, month, 1);
-	//let lastDay = new Date(today.getFullYear, month, 1);
-
-	console.log(req.body);
-
 	const jornadas = await Jornada.find({
 		user: userid,
 		begin: { $gte: new Date(initDate) },
@@ -81,13 +74,10 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
     user: req.params.id,
   })
   .then((jornadas) => {
-	  console.log(jornadas);
     jorn = []
 	var mapa = {}
 	var user;
-    jornadas.forEach(elem => {
-		console.log('inside ' + elem);
-    
+    jornadas.forEach(elem => {    
 		//inicio = new Date(elem.begin)
 		user = elem.user
       	dia = elem.begin.getDay()
@@ -100,14 +90,12 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
       	mapa[fecha]= (difH + anterior)
 	}) 
 	Object.keys(mapa).forEach((v)=>{
-		console.log('key: ' + v + ' value ' + mapa[v]);
         jorn.push(new Array(user, v,  mapa[v]))  
 	})
      
     res.json(jorn);
   })
   .catch(err => {
-	  console.log("no va :)")
     console.log(err)
   });  
 }

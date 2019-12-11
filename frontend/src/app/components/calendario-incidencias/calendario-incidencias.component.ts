@@ -29,24 +29,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*this.incidenciaService.getIncidenciaByUserId(this.authService.currentUserValue._id).subscribe(
-      res => {
-        if (res == null || typeof res == 'undefined') {
-          console.log("User has no faults");
-          return;
-        }
-        res.forEach(inc => {
-          console.log(inc);
-          this.calendarEvents = this.calendarEvents.concat(
-            {
-              
-            })
-          
-          
-        });
-      }
-    )
-    }*/
+
   }
 
 

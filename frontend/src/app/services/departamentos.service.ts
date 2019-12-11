@@ -38,13 +38,9 @@ export class DepartamentosService {
     return new Promise((resolve, reject) => {
       this.http.put(this.url, departamentoData).subscribe(
         data => {
-          console.log("works");
           resolve(data);
         }, // success path
         error => {
-          console.log("error");
-          console.log(error);
-
           reject(error);
         } // error path
       );

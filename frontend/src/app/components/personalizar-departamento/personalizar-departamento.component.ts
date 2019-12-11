@@ -101,7 +101,6 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   }
   getDepartamentos() {
     var departamentoObs = this.departamentosService.getDepartamentos();
-    console.log(departamentoObs);
     departamentoObs.subscribe(
       departamentos => (this.departamentos = departamentos)
     );
@@ -244,7 +243,6 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
-        console.log("Usuario" + result + "eliminado");
       }
     });
   }

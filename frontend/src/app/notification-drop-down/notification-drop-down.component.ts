@@ -31,9 +31,11 @@ export class NotificationDropDownComponent implements OnInit {
     this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
       //this.notifications = res;
       res.forEach(element => {
-        if(element.id_user == this.loggedUser._id && !element.leido)
-          this.notifications.push(element)
-      });
+        if(this.loggedUser != null) {
+          if(element.id_user == this.loggedUser._id && !element.leido)
+            this.notifications.push(element);
+        }
+      });    
       this.newAlerts = this.notifications.length != 0;
     })
   }

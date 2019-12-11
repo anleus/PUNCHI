@@ -98,11 +98,9 @@ export class UsuariosComponent implements OnInit {
                     var aux;
                     aux = resp;
                     this.usersret.push(aux);
-                    console.log(this.usersret);
                   }
                 }
               } else {
-                console.log("usuario no existente, ALERTA");
               }
               if (auxnumber == numberUsers) {
                 this.addDepartmentGestor(this.usersret, nombreDepartamento);
@@ -112,7 +110,6 @@ export class UsuariosComponent implements OnInit {
             });
           });
         } else {
-          console.log("no es responsable de ningún deparatmento");
         } //cambiar por alerta
       });
   }
@@ -134,14 +131,12 @@ export class UsuariosComponent implements OnInit {
             res.splice(i, 1);
           }
           if (element["deleted"] == true) {
-            console.log(this.logUser);
             res.splice(i, 1);
           }
         });
         this.addDepartment(res);
       },
       err => {
-        console.log(err);
       }
     );
   }
@@ -173,7 +168,6 @@ export class UsuariosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
-        console.log("Usuario" + result + "eliminado");
       }
     });
   }

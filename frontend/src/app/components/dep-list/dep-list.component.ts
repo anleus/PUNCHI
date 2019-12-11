@@ -83,10 +83,8 @@ export class DepListComponent implements OnInit {
     this.departamentosService.getDepartamentos().subscribe(
       res => {
         this.addDepartment(res);
-        //console.log(res);
       },
       err => {
-        console.log(err);
       }
     );
   }
@@ -109,7 +107,6 @@ export class DepListComponent implements OnInit {
   }
 
   addDepartment(users) {
-    console.log("add departemnt users null?", users);
     users.forEach(element => {
       this.departamentosService
         .getDepartamentoByUser(element._id)
@@ -121,7 +118,6 @@ export class DepListComponent implements OnInit {
           }
         });
     });
-    console.log("tots", users);
 
     users.forEach((element, i) => {
       if (element.responsable === null)
@@ -157,7 +153,6 @@ export class DepListComponent implements OnInit {
   }
 
   editDepSelected(element: Departamento) {
-    console.log(element);
     localStorage.setItem("editDepartamento", "true");
     localStorage.setItem("departamentoID", element._id);
 
@@ -178,7 +173,6 @@ export class DepListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
-        console.log("Usuario" + result + "eliminado");
       }
     });
   }
@@ -201,7 +195,6 @@ export class OverviewConfirmacionBorradoDep {
 
   deleteDepSelected(elementId: string) {
     try {
-      console.log("Intente borrar");
       this.departamentoService.deleteDept(elementId).subscribe();
     } catch (err) {}
     this.dialogRef.close();

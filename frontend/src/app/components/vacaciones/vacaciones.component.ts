@@ -54,7 +54,6 @@ export class VacacionesComponent implements OnInit {
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
-          //console.log("User has no vacation days");
           this._vid = this.currentUserId;
           this.llenartabla(undefined, undefined, 0);
           this.noVacationFlag = true;
@@ -109,11 +108,9 @@ export class VacacionesComponent implements OnInit {
         ) {
           await this.checkDiaSolicitado(arg.date).then(check => {
             if (check) {
-              console.log('Day not available');
               alert("El día seleccionado ya está pendiente de confirmación o confirmado");
               return;
             } else {
-              console.log('Day available');
               this.createEvent(arg.date);
             }
           });
@@ -187,11 +184,9 @@ export class VacacionesComponent implements OnInit {
             date = this.addDay2Month(arg.start, i);
             await this.checkDiaSolicitado(date).then(check => {
               if (check) {
-                console.log('Day not available');
                 flag = true
                 return;
               } else {
-                console.log('Day available');
                 this.createEvent(date);
               }
             });

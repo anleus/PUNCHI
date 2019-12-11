@@ -46,7 +46,6 @@ export class CrearDepartamentoComponent implements OnInit {
   }
   getDepartamentos() {
     var departamentoObs = this.departamentosService.getDepartamentos();
-    console.log(departamentoObs);
     departamentoObs.subscribe(
       departamentos => (this.departamentos = departamentos)
     );
