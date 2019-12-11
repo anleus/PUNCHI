@@ -242,11 +242,11 @@ export class PersonalizarDepartamentoComponent implements OnInit {
       });
     }
 
-    dialogRef.afterClosed().subscribe(result => {
+    /*    dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
         console.log("Usuario" + result + "eliminado");
       }
-    });
+    }); */
   }
 }
 @Component({
