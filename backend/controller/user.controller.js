@@ -41,7 +41,6 @@ userFunctions.getUserByUsername = async (req, res, next) => {
   const user = await User.findOne({ username: usernamefromreq }, function (err, docs) {
     if (err) {
       console.error(err)
-      console.log('Ha habido algun error');
     }
   });
 
@@ -100,7 +99,6 @@ userFunctions.updateUser = (req, res, next) => {
     User.findByIdAndUpdate(req.params.id, { $set: user }, { new: true })
     .then(() => {
       //res.status(200);
-      console.log("data")
       res.send("User updated");
     })
     .catch(err => {
@@ -127,7 +125,6 @@ userFunctions.getUsersNoDeleted = async (req, res, next) => {
   const users = await User.find({deleted: {$ne: true}}, function (err, docs) {
     if (err) {
       console,error(err)
-      console.log('Algún error aconteció'); 
     }
   });
   res.json(users);

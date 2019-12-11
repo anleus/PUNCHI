@@ -30,7 +30,6 @@ export class VacacionesComponent implements OnInit {
   vacationPast;
   currentUserId;
   d;
-  _id;
   _vid;
   pending = [];
   left;
@@ -54,7 +53,10 @@ export class VacacionesComponent implements OnInit {
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
+<<<<<<< HEAD
           console.log("User has no vacation days");
+=======
+>>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
           this._vid = this.currentUserId;
           this.llenartabla(undefined, undefined, 0);
           this.noVacationFlag = true;
@@ -91,7 +93,10 @@ export class VacacionesComponent implements OnInit {
 
   returnBDCorrectDate(d: Date) {
     // Devuelve la fecha correcta para su almacenamiento en la BD
+<<<<<<< HEAD
     console.log(d);
+=======
+>>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
     d = new Date(d);
     console.log(d);
     console.log(d.getTime());
@@ -111,11 +116,10 @@ export class VacacionesComponent implements OnInit {
         ) {
           await this.checkDiaSolicitado(arg.date).then(check => {
             if (check) {
-              console.log('Day not available');
-              alert("El día seleccionado ya está pendiente de confirmación o confirmado");
+              this.snackWarning('El día solicitado ya se estaba confirmado o pendiente de confirmación');
+              //alert("El día seleccionado ya está pendiente de confirmación o confirmado");
               return;
             } else {
-              console.log('Day available');
               this.createEvent(arg.date);
             }
           });
@@ -132,6 +136,7 @@ export class VacacionesComponent implements OnInit {
     this.pending.push(this.returnBDCorrectDate(date));
     this.vacationservice.updateVacation(
       this._vid,
+
       this.pending,
       (this.left = this.vacationDaysLeft),
       this.vacationPast
@@ -148,7 +153,10 @@ export class VacacionesComponent implements OnInit {
 
   checkDiaSolicitado(dia) {
     var flag = false;
+<<<<<<< HEAD
     console.log('dia solicitado is: ' + dia);
+=======
+>>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
     dia = new Date(this.returnBDCorrectDate(dia));
     this.pending.forEach(elem => {
       elem = new Date(elem);
@@ -183,6 +191,7 @@ export class VacacionesComponent implements OnInit {
           )
         ) {
           var i;
+          var flag = false;
           let date = arg.start;
 
           for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
@@ -190,14 +199,20 @@ export class VacacionesComponent implements OnInit {
             console.log('handleSelectDate --> arg.start: ' + date + ' // i: ' + i);
             await this.checkDiaSolicitado(date).then(check => {
               if (check) {
-                console.log('Day not available');
-                alert("Uno o varios de los días seleccionados ya están pendientes de confirmación o confirmados");
+                flag = true
                 return;
               } else {
+<<<<<<< HEAD
                 console.log('Day available');
                 this.createEvent(arg.date);
+=======
+                this.createEvent(date);
+>>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
               }
             });
+          }
+          if (flag) {
+            this.snackWarning('Uno o varios días solicitados ya se estaban confirmados o pendientes de confirmación');
           }
         }
       } else {
@@ -253,11 +268,14 @@ export class VacacionesComponent implements OnInit {
     return Math.floor(count);
   }
 
+<<<<<<< HEAD
   handleButton() {
     console.log("Button clicked");
     console.log("All events: ");
   }
 
+=======
+>>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
   getCorrectMonth(date: Date) {
     return date.getMonth() + 1;
   }
@@ -291,13 +309,20 @@ export class VacacionesComponent implements OnInit {
       verticalPosition: "top"
     });
   }
+
+  snackWarning(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Uno o varios días solicitados ya se estaban confirmados o pendientes de confirmación. Se han solicitado' + ' los días disponibles",
+      duration: 3 * 1000,
+      panelClass: ["warning-yellow"],
+      horizontalPosition: "right",
+      verticalPosition: "bottom"
+    });
+  }
 }
 
 /*
-- que no pete si no té vacacions -- Un usuario siempre tiene vacaciones o las creamos cuando no las tiene?
-- modificar el contador de la tabla   -- Parece hecho
-- si el dia ja està, no tornar a posar-lo (método creado)
-- en sel·lecció múltiple, comprovar que algun dels dies no estiga ja demanat
+- crear la entrada vacaciones para un usuario que no la tenga
 - la tabla no se actualiza
 - hacer bonita la tabla
  */

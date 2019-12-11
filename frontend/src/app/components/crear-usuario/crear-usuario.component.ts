@@ -46,9 +46,9 @@ export class CrearUsuarioComponent implements OnInit {
             this.determinarusuario(form);
             this.datos = false;
             this.userService.crearUsuario(form.value).subscribe(res => {
-            this.snackSuccess('Usuario guardado correctamente');
-            this.usuarioform.reset();
-            })
+              this.snackSuccess('Usuario guardado correctamente');
+              this.usuarioform.reset();
+            });
           } else {
             this.existe = true;
             this.snackError('Nombre de usuario existente');
@@ -60,7 +60,6 @@ export class CrearUsuarioComponent implements OnInit {
 
   cancelar(){
     this.router.navigate(['/usuarios']);
-
   }
 
   determinarusuario(form) {

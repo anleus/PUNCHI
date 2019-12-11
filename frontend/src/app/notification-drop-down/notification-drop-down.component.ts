@@ -41,7 +41,8 @@ export class NotificationDropDownComponent implements OnInit {
     })
   }
 
-  leerNotificacion(notificacion){
+  leerNotificacion(notificacion: Incidencia){
+    notificacion.leido = true;
     this.incidenciaService.putIncidencia(notificacion);
     this.notifications = this.notifications.filter((noti) => notificacion._id != noti._id);
     this.newAlerts = this.notifications.length != 0;

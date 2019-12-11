@@ -50,7 +50,6 @@ export class UsersTableComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       (err) => {
-        console.log(err);
       }
     );
   }

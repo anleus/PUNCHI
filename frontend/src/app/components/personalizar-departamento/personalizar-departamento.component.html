@@ -4,7 +4,7 @@
 
         <mat-form-field name="formCrearDep">
             <input matInput [ngClass]="{'red': (isDuplicate()) }" [(ngModel)]="nombre"
-                placeholder="Nombre del departamento">
+                placeholder="Nombre del departamento" required>
 
         </mat-form-field>
 
@@ -12,7 +12,7 @@
     <div class="col-md-3">
         <mat-form-field>
             <mat-label>Responsable</mat-label>
-            <mat-select [(ngModel)]="selectedResponsable">
+            <mat-select [(ngModel)]="selectedResponsable" required>
                 <mat-option *ngFor="let user of allUsers" [value]="user._id">
                     {{user.nombre}} {{user.apellidos}}
                 </mat-option>
@@ -24,23 +24,23 @@
 
     </div>
 </div>
-<div class ="ml-5">
-<div class="example-container">
-    <h2>Personas externas al departamento</h2>
+<div class="ml-5">
+    <div class="example-container">
+        <h2>Personas externas al departamento</h2>
 
-    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
-        class="example-list" (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item.nombre}}</div>
-    </div>
-</div>
-
-<div class="example-container">
-    <h2>Personas en el departamento</h2>
-
-    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
-        class="example-list" (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item.nombre}}</div>
+        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
+            class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item.nombre}}</div>
+        </div>
     </div>
 
-</div>
+    <div class="example-container">
+        <h2>Personas en el departamento</h2>
+
+        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+            class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of done" cdkDrag>{{item.nombre}}</div>
+        </div>
+
+    </div>
 </div>
