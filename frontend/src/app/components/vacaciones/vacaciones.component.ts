@@ -30,7 +30,6 @@ export class VacacionesComponent implements OnInit {
   vacationPast;
   currentUserId;
   d;
-  _id;
   _vid;
   pending = [];
   left;
@@ -90,7 +89,6 @@ export class VacacionesComponent implements OnInit {
 
   returnBDCorrectDate(d: Date) {
     // Devuelve la fecha correcta para su almacenamiento en la BD
-    
     d = new Date(d);
     return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString();
   }
@@ -108,7 +106,8 @@ export class VacacionesComponent implements OnInit {
         ) {
           await this.checkDiaSolicitado(arg.date).then(check => {
             if (check) {
-              alert("El día seleccionado ya está pendiente de confirmación o confirmado");
+              this.snackWarning('El día solicitado ya se estaba confirmado o pendiente de confirmación');
+              //alert("El día seleccionado ya está pendiente de confirmación o confirmado");
               return;
             } else {
               this.createEvent(arg.date);
@@ -127,6 +126,7 @@ export class VacacionesComponent implements OnInit {
     this.pending.push(this.returnBDCorrectDate(date));
     this.vacationservice.updateVacation(
       this._vid,
+
       this.pending,
       (this.left = this.vacationDaysLeft),
       this.vacationPast
@@ -246,9 +246,6 @@ export class VacacionesComponent implements OnInit {
   daysCount(ini: Date, fi: Date) {
     let count = (fi.getTime() - ini.getTime()) / (1000 * 3600 * 24);
     return Math.floor(count);
-  }
-
-  handleButton() {
   }
 
   getCorrectMonth(date: Date) {
