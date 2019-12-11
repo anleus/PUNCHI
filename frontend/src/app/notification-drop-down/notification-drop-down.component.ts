@@ -28,6 +28,8 @@ export class NotificationDropDownComponent implements OnInit {
     });
   }
 
+  
+
   getIncidencias(){
     this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
       //this.notifications = res;
@@ -45,6 +47,8 @@ export class NotificationDropDownComponent implements OnInit {
     notificacion.leido = true;
     this.incidenciaService.putIncidencia(notificacion);
     this.notifications = this.notifications.filter((noti) => notificacion._id != noti._id);
+    this.newAlerts = this.notifications.length != 0;
+
 
   }
 }
