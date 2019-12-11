@@ -16,6 +16,7 @@ export class NotificationDropDownComponent implements OnInit {
   loggedUser : User;
   notifications : Incidencia[];
   newAlerts : Boolean;
+  gestorOrAdmin : boolean;
 
   constructor(private incidenciaService : IncidenciaService, private authenticationService : AuthenticationService) { }
 
@@ -24,6 +25,8 @@ export class NotificationDropDownComponent implements OnInit {
       this.loggedUser = user;
       this.notifications = [];
       this.getIncidencias();  
+      this.gestorOrAdmin = (user.gestor ||  user.admin);
+      setInterval(() => this.getIncidencias(),1000);
     });
   }
 
@@ -31,7 +34,7 @@ export class NotificationDropDownComponent implements OnInit {
     this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
       //this.notifications = res;
       res.forEach(element => {
-        if(element.id_user == this.loggedUser._id && !element.leido)
+        if(element.id_user == this.loggedUser._id && !element.leido && ((!this.gestorOrAdmin && element.estado != "pendiente" ) || (this.gestorOrAdmin && element.estado == "pendiente")))
           this.notifications.push(element)
       });
       this.newAlerts = this.notifications.length != 0;
@@ -42,6 +45,5 @@ export class NotificationDropDownComponent implements OnInit {
     this.incidenciaService.putIncidencia(notificacion);
     this.notifications = this.notifications.filter((noti) => notificacion._id != noti._id);
     this.newAlerts = this.notifications.length != 0;
-
   }
 }
