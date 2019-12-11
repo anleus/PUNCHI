@@ -56,15 +56,12 @@ export class HistoryTableComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
-    console.log("user _id is" + this.authservice.currentUserValue._id + "\n"
-    + "username is: " + this.authservice.currentUserValue.username);
     this.jornadaService.getUserJornadas(this.authservice.currentUserValue._id).subscribe(
       (resp) => {
         this.dataSource = new MatTableDataSource<Jornada>(resp);
         this.dataSource.paginator = this.paginator;
       },
       (err) => {
-        console.log(err);
       }
     );
   }

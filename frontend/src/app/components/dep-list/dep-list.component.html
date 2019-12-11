@@ -3,18 +3,19 @@
 </div>
 <div class="card-container">
   <mat-card class="card" flex="20">
-    <div>
-      <h1>Departamentos
-        <button mat-flat-button color="primary" (click)="newDepartamento()" mat-icon-button>
-          <mat-icon class="poc-mat-icon">
-            <i class="material-icons">add</i>
-          </mat-icon>
-        </button>
-      </h1>
-    </div>
-    <div>
-      <p></p>
-    </div>
+      <div class="d-flex flex-row">
+        <div class="col-6">
+          <h1>Departamentos</h1>
+        </div>
+        <div class="col-6 text-right"  *ngIf="permisos">
+          <button type="submit" (click)="newDepartamento()" class="btn btn-primary" data-toggle="button"
+            aria-pressed="false" autocomplete="off">
+            Nuevo departamento
+          </button>
+        </div>
+      </div>
+
+
     <div class="table-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">
 

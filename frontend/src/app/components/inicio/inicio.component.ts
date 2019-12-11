@@ -107,7 +107,7 @@ export class InicioComponent implements OnInit {
 
   updateTimeLabel(){
     if(this.tiempoFichando > 1) //Lleva ya trabajando 8 horas (28800sec) //TODO: coger de cada usuario las horas que haga
-      document.getElementById('warningHorasExtra').removeAttribute('style');
+      //document.getElementById('warningHorasExtra').removeAttribute('style');
     var seconds = this.pad2(this.tiempoFichando % 60);
     var minutes = this.pad2(Math.floor(this.tiempoFichando / 60));
     var hour = this.pad2(Math.floor(this.tiempoFichando/ 3600));

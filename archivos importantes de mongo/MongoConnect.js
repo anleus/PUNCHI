@@ -4,7 +4,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true,  useUnifiedTopology
 client.connect(err => {
   var users = client.db("PUNCHI").collection("Users");
   // Inserción de usuarios
-  users.insertOne({"_id" : "123456789", "nombre" : "Arnau"}).then(() => console.log(users.findOne()));
+  users.insertOne({"_id" : "123456789", "nombre" : "Arnau"}).then(() => );
 
 
 });

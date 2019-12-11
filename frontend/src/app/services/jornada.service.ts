@@ -17,10 +17,8 @@ export class JornadaService {
     this.http.post(this.url, jornada).subscribe(
       res => {
         // * not callback
-        console.log(`this.brandListService`, { res });
       },
       error => {
-        console.log("Error", error);
       }
     );
 
