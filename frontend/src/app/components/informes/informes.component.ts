@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from "src/app/services/user.service";
 import { User } from "src/app/models/users";
 import { Jornada } from "src/app/models/jornada.model";
-import { MatSnackBar } from '@angular/material/snack-bar'; 
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 
 @Component({
@@ -31,6 +31,7 @@ export class InformesComponent implements OnInit {
     private jornadaService: JornadaService,
     private route: ActivatedRoute,
     private userService: UserService,
+
     private authService: AuthenticationService,
     private snackBar: MatSnackBar,
     private router: Router
@@ -72,12 +73,11 @@ export class InformesComponent implements OnInit {
       });
   }
 
-  horasBtwFechasCSV() {  }
+  horasBtwFechasCSV() {}
   volver() {
     this.router.navigate(["/usuarios"]);
   }
   getPeriodHoras(jornadas: Jornada[]) {
-
     const rows = [
       ["user_id", "id_jornada", "Comienzo", "Final"] //encabezado de la lista
     ];
@@ -100,14 +100,23 @@ export class InformesComponent implements OnInit {
     link.click();
   }
 
+  snackError(message) {
+    this.snackBar.open(message, "", {
+      announcementMessage: "Ha ocurrido un error. Inténtalo de nuevo",
+      duration: 3 * 1000,
+      panelClass: ["alert-red"],
+      horizontalPosition: "right",
+      verticalPosition: "top"
+    });
+  }
+
   generarInforme(form) {
     var fechaI = form.value.fechaInicio;
     var inicio = new Date(form.value.fechaInicio);
     var fin = new Date(form.value.fechaFin);
     var fechaF = form.value.fechaFin;
-    if (fechaI == null || fechaF == null) {
-      this.openSnack("Necesario introducir fecha");   
-        return; 
+    if (fechaI == null || fechaI == "" || fechaF == null || fechaF == "") {
+      this.snackError("Por favor introduce el periodo");
     } else {
       if (this.selected == "Informe horas extra") {
         this.horasExtraCSV(this.userPrueba, inicio, fin);
@@ -126,23 +135,19 @@ export class InformesComponent implements OnInit {
                 endDate: fechaF
               })
               .subscribe(this.getPeriodHoras);
-            /*     
-          .then(jornadas: Jornada[]) => {
-          }); */
           });
       } else {
-        this.openSnack("Necesario introducir tipo de informe");   
-        return; 
+        this.snackError("Por favor selecciona un informe.");
       }
     }
   }
   openSnack(message) {
-    this.snackBar.open(message, '', {
-      announcementMessage: 'Ha ocurrido un error. Inténtalo de nuevo',
+    this.snackBar.open(message, "", {
+      announcementMessage: "Ha ocurrido un error. Inténtalo de nuevo",
       duration: this.durationSec * 1000,
-      panelClass: ['alert-red'],                                            
+      panelClass: ["alert-red"],
       horizontalPosition: "right",
-      verticalPosition: "top",
+      verticalPosition: "top"
     });
   }
 }
