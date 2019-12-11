@@ -49,6 +49,8 @@ export class DepListComponent implements OnInit {
   userName: string;
   userId: string;
   confirmation: boolean;
+  permisos : boolean;
+
 
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ["nombre", "responsable", "select"];
@@ -66,8 +68,15 @@ export class DepListComponent implements OnInit {
 
   ngOnInit() {
     this.determinarUsuario();
-    if (this.admin) this.getDeptAdmin();
-    else this.getDeptGestor();
+    if (this.admin) 
+    {
+      this.getDeptAdmin();
+      this.permisos = true;
+    }
+    else {
+      this.getDeptGestor();
+      this.permisos = false;
+    }
   }
 
   determinarUsuario() {
