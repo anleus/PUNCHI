@@ -1,6 +1,6 @@
 
 <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <span *ngIf="NewAlerts" class="badge badge-danger">{{notifications.length}}</span>
+        <span *ngIf="newAlerts" class="badge badge-danger">{{notifications.length}}</span>
         <mat-icon>info</mat-icon>
       </button>
 <mat-menu #appMenu="matMenu" class="notificationPanel">

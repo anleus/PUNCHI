@@ -33,8 +33,23 @@ export class FichaPersonalComponent implements OnInit {
   usuarioSinModificar: User;
   public userForm: FormGroup;
   public userV: User;
-  public usuarioform: FormGroup;
 
+  usuarioform = new FormGroup({
+    nombre: new FormControl('', [Validators.required]),
+    apellidos: new FormControl('', [Validators.required]),
+    fechaNacimiento: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    tipousuario: new FormControl('', [Validators.required]),
+    nuss: new FormControl(),
+    telefono: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    localidad: new FormControl('', [Validators.required]),
+    provincia: new FormControl('', [Validators.required]),
+    domicilio: new FormControl('', [Validators.required])
+
+  });
+  
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
@@ -51,6 +66,7 @@ export class FichaPersonalComponent implements OnInit {
     //coger usuario logueado
     var usuarioAct = this.authService.getCurrentUser();
     usuarioAct.subscribe(user => (this.usuarioLogueado = user));
+    if (form.status == "VALID") {
     //valores pasados por formulario si eres usuario
     if (
       this.usuarioLogueado.admin == false &&
@@ -77,7 +93,6 @@ export class FichaPersonalComponent implements OnInit {
       this.usuarioLogueado.nuss = form.value.nuss;
     }
 
-    if (form.status == "VALID") {
       //comprobar que el domicilio no tiene números al inicio pero sí puede contener números
       if (this.comprobarNumeroAlInicioDomicilio() == false) {
         this.snackError("Domicilio con números al inicio.");

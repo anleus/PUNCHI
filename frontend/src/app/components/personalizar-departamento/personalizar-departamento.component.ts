@@ -15,6 +15,7 @@ import {
   MatDialogRef,
   MatDialog
 } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 
 export interface DepData {
   DepName: string;
@@ -48,6 +49,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
     private departamentosService: DepartamentosService,
     private UserService: UserService,
     private snackBar: MatSnackBar,
+    private router: Router,
     private dialog: MatDialog
   ) {}
 
@@ -101,7 +103,6 @@ export class PersonalizarDepartamentoComponent implements OnInit {
   }
   getDepartamentos() {
     var departamentoObs = this.departamentosService.getDepartamentos();
-    console.log(departamentoObs);
     departamentoObs.subscribe(
       departamentos => (this.departamentos = departamentos)
     );
@@ -133,6 +134,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
         })
         .then(() => {
           this.snackSuccess("Departamento creado correctamente");
+          this.router.navigate(["/departamentos"]);
         })
         .catch(() => {
           this.openErrorSnack("No se pudo actualizar");
@@ -147,6 +149,7 @@ export class PersonalizarDepartamentoComponent implements OnInit {
         })
         .then(() => {
           this.snackSuccess("Departamento actualizado correctamente");
+          this.router.navigate(["/departamentos"]);
         })
         .catch(() => {
           this.openErrorSnack("No se pudo actualizar");
@@ -222,31 +225,36 @@ export class PersonalizarDepartamentoComponent implements OnInit {
 
   openDialog(): void {
     var dialogRef;
-    if (this.isEdit) {
-      this.dialog.open(OverviewConfirmacionEditDep, {
-        width: "500px",
-        data: {
-          DepName: this.departamentoEditing.nombre,
-          DepId: this.departamentoEditing._id,
-          PersObj: this
-        }
-      });
+    if (this.nombre && this.selectedResponsable) {
+      if (this.isEdit) {
+        this.dialog.open(OverviewConfirmacionEditDep, {
+          width: "500px",
+          data: {
+            DepName: this.departamentoEditing.nombre,
+            DepId: this.departamentoEditing._id,
+            PersObj: this
+          }
+        });
+      } else {
+        this.dialog.open(OverviewConfirmacionEditDep, {
+          width: "500px",
+          data: {
+            DepName: this.nombre,
+            // DepId: this.departamentoEditing._id,
+            PersObj: this
+          }
+        });
+      }
     } else {
-      this.dialog.open(OverviewConfirmacionEditDep, {
-        width: "500px",
-        data: {
-          DepName: this.nombre,
-          // DepId: this.departamentoEditing._id,
-          PersObj: this
-        }
-      });
+      this.openErrorSnack(
+        "Declara un nombre y un responsable para el departamento"
+      );
     }
 
-    dialogRef.afterClosed().subscribe(result => {
+    /*    dialogRef.afterClosed().subscribe(result => {
       if (this.confirmation) {
-        console.log("Usuario" + result + "eliminado");
       }
-    });
+    }); */
   }
 }
 @Component({

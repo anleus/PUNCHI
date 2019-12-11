@@ -17,22 +17,11 @@ async function logIn() {
       .getText();
 
     if (user === "root") {
-      console.log("Success!!");
     }
   } catch (err) {
-    console.log("error");
   } finally {
     await driver.quit();
   }
 }
 
-logIn(); /* .then(checkMenu)
-
-function checkMenu(){
-	if(await driver
-	.findElement(By.id("mat-input-0")).getAttribute("display")==="none"){
-		console.log("Success!!");
-	} else {
-		console.log("error");
-	}
-} */
+logIn(); 

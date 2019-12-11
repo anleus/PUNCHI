@@ -63,7 +63,6 @@ export class HistoryTableSelectedComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       (err) => {
-        console.log(err);
       }
     );
   }

@@ -41,7 +41,6 @@ export class InformesComponent implements OnInit {
   }
 
   horasExtraCSV(user, finicio, fendo) {
-    console.log("ye que tal");
     const rows = [
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
@@ -53,7 +52,6 @@ export class InformesComponent implements OnInit {
           var h = Number(response[i][2]);
           h = h / (3.6 * Math.pow(Math.E, 6));
           h -= 8;
-          console.log(h);
           if (h < 0) response[i][2] = "0";
           else response[i][2] = h.toString();
 
@@ -74,14 +72,11 @@ export class InformesComponent implements OnInit {
       });
   }
 
-  horasBtwFechasCSV() {
-    console.log("Informe de horas entre fechas");
-  }
+  horasBtwFechasCSV() {  }
   volver() {
     this.router.navigate(["/usuarios"]);
   }
   getPeriodHoras(jornadas: Jornada[]) {
-    console.log(jornadas);
 
     const rows = [
       ["user_id", "id_jornada", "Comienzo", "Final"] //encabezado de la lista
@@ -110,7 +105,6 @@ export class InformesComponent implements OnInit {
     var inicio = new Date(form.value.fechaInicio);
     var fin = new Date(form.value.fechaFin);
     var fechaF = form.value.fechaFin;
-    console.log(fechaF);
     if (fechaI == null || fechaF == null) {
       this.openSnack("Necesario introducir fecha");   
         return; 
@@ -118,8 +112,6 @@ export class InformesComponent implements OnInit {
       if (this.selected == "Informe horas extra") {
         this.horasExtraCSV(this.userPrueba, inicio, fin);
       } else if (this.selected == "Informe Horas") {
-        console.log(fechaI);
-        console.log(fechaF);
         this.route.queryParams.subscribe(params => {
           this.nombreUsuario = params["nombre"] || 0;
         });
@@ -136,7 +128,6 @@ export class InformesComponent implements OnInit {
               .subscribe(this.getPeriodHoras);
             /*     
           .then(jornadas: Jornada[]) => {
-            console.log(jornadas);
           }); */
           });
       } else {

@@ -221,7 +221,6 @@ export class ConfirmModificUsuario {
     try {
       this.userService.putUser(this.data);
     } catch (err) {}
-    console.log(this.data.nombre);
     this.dialogRef.close();
   }
 }

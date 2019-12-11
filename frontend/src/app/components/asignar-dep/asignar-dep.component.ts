@@ -61,7 +61,6 @@ export class AsignarDepComponent implements OnInit {
   }
   selectionChange(event: any) {
     this.selectUser = event.value;
-    console.log(this.selectUser);
   }
 
   //Click on asignar method

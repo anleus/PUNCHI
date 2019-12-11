@@ -23,7 +23,8 @@ export class NotificationDropDownComponent implements OnInit {
     this.authenticationService.getCurrentUser().subscribe((user :User) => {
       this.loggedUser = user;
       this.notifications = [];
-      this.getIncidencias();  
+      this.getIncidencias();
+      
     });
   }
 
@@ -31,14 +32,17 @@ export class NotificationDropDownComponent implements OnInit {
     this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
       //this.notifications = res;
       res.forEach(element => {
-        if(element.id_user == this.loggedUser._id && !element.leido)
-          this.notifications.push(element)
-      });
+        if(this.loggedUser != null) {
+          if(element.id_user == this.loggedUser._id && !element.leido)
+            this.notifications.push(element);
+        }
+      });    
       this.newAlerts = this.notifications.length != 0;
     })
   }
 
-  leerNotificacion(notificacion){
+  leerNotificacion(notificacion: Incidencia){
+    notificacion.leido = true;
     this.incidenciaService.putIncidencia(notificacion);
     this.notifications = this.notifications.filter((noti) => notificacion._id != noti._id);
 
