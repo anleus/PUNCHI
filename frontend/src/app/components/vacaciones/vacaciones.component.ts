@@ -53,10 +53,6 @@ export class VacacionesComponent implements OnInit {
       .getVacationByUsername(this.authservice.currentUserValue._id.toString())
       .then(res => {
         if (res == null || typeof res == "undefined") {
-<<<<<<< HEAD
-          console.log("User has no vacation days");
-=======
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
           this._vid = this.currentUserId;
           this.vacationDaysLeft = 30;
           this.llenartabla(undefined, undefined, 0);
@@ -94,10 +90,6 @@ export class VacacionesComponent implements OnInit {
 
   returnBDCorrectDate(d: Date) {
     // Devuelve la fecha correcta para su almacenamiento en la BD
-<<<<<<< HEAD
-    console.log(d);
-=======
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
     d = new Date(d);
     console.log(d);
     console.log(d.getTime());
@@ -163,10 +155,6 @@ export class VacacionesComponent implements OnInit {
 
   checkDiaSolicitado(dia) {
     var flag = false;
-<<<<<<< HEAD
-    console.log('dia solicitado is: ' + dia);
-=======
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
     dia = new Date(this.returnBDCorrectDate(dia));
     this.pending.forEach(elem => {
       elem = new Date(elem);
@@ -212,12 +200,7 @@ export class VacacionesComponent implements OnInit {
                 flag = true
                 return;
               } else {
-<<<<<<< HEAD
-                console.log('Day available');
-                this.createEvent(arg.date);
-=======
                 this.createEvent(date);
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
               }
             });
           }
@@ -278,14 +261,6 @@ export class VacacionesComponent implements OnInit {
     return Math.floor(count);
   }
 
-<<<<<<< HEAD
-  handleButton() {
-    console.log("Button clicked");
-    console.log("All events: ");
-  }
-
-=======
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
   getCorrectMonth(date: Date) {
     return date.getMonth() + 1;
   }

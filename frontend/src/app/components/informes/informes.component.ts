@@ -1,9 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-<<<<<<< HEAD
-import { JornadaService } from 'src/app/services/jornada.service';
-import { AuthenticationService } from 'src/app/services/auth.service';
-import { FormControl, FormGroup } from '@angular/forms';
-=======
 import { JornadaService } from "src/app/services/jornada.service";
 import { AuthenticationService } from "src/app/services/auth.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -13,7 +8,6 @@ import { User } from "src/app/models/users";
 import { Jornada } from "src/app/models/jornada.model";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
 
 @Component({
   selector: "app-informes",
@@ -23,27 +17,6 @@ import { Observable } from "rxjs";
 export class InformesComponent implements OnInit {
 
   userPrueba;
-<<<<<<< HEAD
-  usuarioform: FormGroup;
-  informes : String[] = ["Informe Horas", "Informe horas extra"];
-  inicio = new FormControl(new Date()).value;
-  fin = new FormControl(new Date()).value;
-
-  constructor(private jornadaService: JornadaService,
-              private authService: AuthenticationService) {}
-
-  ngOnInit() {
-    this.userPrueba = this.authService.currentUserValue._id;
-    
-    this.usuarioform = new FormGroup({
-      fechaInicio: new FormControl(),
-      fechaFin: new FormControl()
-    });
-  }
-
-  horasExtraCSV() {
-    console.log("Informe de horas extra");
-=======
   informes: String[] = ["Informe Horas", "Informe horas extra"];
   selected: String;
   nombreUsuario: string;
@@ -70,7 +43,6 @@ export class InformesComponent implements OnInit {
   }
 
   horasExtraCSV(user, finicio, fendo) {
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
     const rows = [
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
@@ -78,27 +50,6 @@ export class InformesComponent implements OnInit {
     this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, new Date(this.inicio), new Date(this.fin))
       .subscribe(response => { 
         for (var i = 0; i < response.length; i++) {
-<<<<<<< HEAD
-          var id = response[i][0]
-          var fecha = response[i][1]
-          var h = Number(response[i][2])
-          h =  h / (3.6*Math.pow(Math.E,6))
-          h -= 8
-          if (h < 0) h = 0
-          
-          var jornada = new Array(id, fecha, h.toString())
-
-          rows.push(jornada)
-          //if (h < 0) response[i][2]. = "0"
-          //else response[i][2] = h.toString()
-
-          //rows.push(response[i])
-        }
-        //rows.concat(response)
-    })
-
-    let csvContent = "data:text/csv;charset=utf-8,";
-=======
           var h = Number(response[i][2]);
           h = h / (3.6 * Math.pow(Math.E, 6));
           h -= 8;
@@ -108,7 +59,6 @@ export class InformesComponent implements OnInit {
           rows.push(response[i]);
         }
         let csvContent = "data:text/csv;charset=utf-8,";
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
 
         rows.forEach(function(rowArray) {
           let row = rowArray.join(",");
@@ -159,8 +109,6 @@ export class InformesComponent implements OnInit {
       verticalPosition: "top"
     });
   }
-<<<<<<< HEAD
-=======
 
   generarInforme(form) {
     var fechaI = form.value.fechaInicio;
@@ -202,5 +150,4 @@ export class InformesComponent implements OnInit {
       verticalPosition: "top"
     });
   }
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
 }

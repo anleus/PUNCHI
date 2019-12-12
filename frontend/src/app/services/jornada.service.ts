@@ -42,12 +42,7 @@ export class JornadaService {
     );
   }
 
-<<<<<<< HEAD
-  getUserMonthJornadas(userid): Observable<Jornada[]> {
-    return this.http.get<Jornada[]>(this.url + "month/" + userid);
-=======
   getUserPeriodJornadas(data): Observable<Jornada[]> {
     return this.http.post<Jornada[]>(this.url + "period", data);
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
   }
 }
