@@ -90,6 +90,14 @@ export class InicioComponent implements OnInit {
     }
   }
 
+  handleDateClick(arg) {
+    console.log('¡Hola! ¡Lo que acabas de hacer no hace nada!');
+  }
+
+  handleSelectDate(arg) {
+    console.log('¡Y esto tampoco!');
+  }
+
   private startJornada() {
     var hour = new Date;
     if (!this.startHour)

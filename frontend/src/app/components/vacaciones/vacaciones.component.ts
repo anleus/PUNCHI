@@ -58,6 +58,7 @@ export class VacacionesComponent implements OnInit {
 =======
 >>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
           this._vid = this.currentUserId;
+          this.vacationDaysLeft = 30;
           this.llenartabla(undefined, undefined, 0);
           this.noVacationFlag = true;
           return;
@@ -82,8 +83,8 @@ export class VacacionesComponent implements OnInit {
         });
         this._vid = res._id;
         this.pending = res.pending;
-        this.vacationDaysLeft = res.left;
         this.vacationPast = res.past;
+        this.vacationDaysLeft = res.left;
       });
   }
 
@@ -134,13 +135,22 @@ export class VacacionesComponent implements OnInit {
 
   createEvent(date) {
     this.pending.push(this.returnBDCorrectDate(date));
-    this.vacationservice.updateVacation(
-      this._vid,
-
-      this.pending,
-      (this.left = this.vacationDaysLeft),
-      this.vacationPast
-    );
+    if (this.noVacationFlag) {
+      this.vacationservice.createVacation(
+        this._vid,
+        this.pending,
+        (this.left = this.vacationDaysLeft),
+        this.vacationPast
+      );
+      this.noVacationFlag = false;
+    } else {
+      this.vacationservice.updateVacation(
+        this._vid,
+        this.pending,
+        (this.left = this.vacationDaysLeft),
+        this.vacationPast
+      );
+    }
     this.diasPorConfirmar++;
     this.calendarEvents = this.calendarEvents.concat({
       start: date,
@@ -253,7 +263,7 @@ export class VacacionesComponent implements OnInit {
     this.incidenciaService
       .crearIncidencia(incidencia)
       .subscribe(res =>
-        this.snackSuccess("Dia de vacaciones solicitado correctamente")
+        this.snackSuccess("Día/s de vacaciones solicitado/s correctamente")
       );
   }
 

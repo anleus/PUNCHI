@@ -116,7 +116,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "caledario",
+    path: "calendario",
     component: CalendarioComponent,
     canActivate: [AuthGuard]
   },
