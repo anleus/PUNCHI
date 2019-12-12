@@ -47,7 +47,7 @@ export class InformesComponent implements OnInit {
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
 
-    this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, new Date(this.inicio), new Date(this.fin))
+    this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, finicio, fendo)
       .subscribe(response => { 
         for (var i = 0; i < response.length; i++) {
           var h = Number(response[i][2]);

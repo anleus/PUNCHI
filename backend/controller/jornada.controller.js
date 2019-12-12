@@ -13,14 +13,6 @@ jornadaFunctions.getJornadaByMonthAndUserId = async (req, res, next) => {
 	let initDate = req.params.initDate;
 	let endDate = req.params.endDate;
 
-<<<<<<< HEAD
-	//let today = new Date();
-	//let month = req.params.month || today.getMonth();
-	//let firstDay = new Date(today.getFullYear, month, 1);
-	//let lastDay = new Date(today.getFullYear, month, 1);
-
-=======
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
 	const jornadas = await Jornada.find({
 		user: userid,
 		begin: { $gte: new Date(initDate) },
@@ -77,42 +69,12 @@ jornadaFunctions.deleteJornada = async (req, res, next) => {
 
 jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
   Jornada.find({
-<<<<<<< HEAD
-    begin: { $gte: req.params.begin },
-    end: { $lt: req.params.end },
-=======
     begin: { $gte: req.params.inicio },
     end: { $lt: req.params.fin },
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
     user: req.params.id,
   })
   .then((jornadas) => {
     jorn = []
-<<<<<<< HEAD
-    mapa = new Map()
-    jornadas.forEach(elem => {
-      inicio = new Date(elem.values.begin)
-      dia = inicio.getDay()
-      mes = inicio.getMonth()+1
-      anyo = inicio.getFullYear()
-      fecha = dia +'/'+ mes +'/'+ anyo
-      difH = (new Date(elem.values.end)).getTime() - (new Date(elem.values.begin)).getTime();
-      
-      anterior = mapa.getKey(dia) ? mapa.getKey(dia) : 0;
-      mapa.setKey(dia, (difH + anterior))
-      
-      mapa.entries().forEach(([j,k]) => {
-        jorn.push(new Array(jornadas.values.userid, k, j))
-      });   
-    }); 
-    res.json(jorn);
-  })
-  .catch(() => {
-    res.status(500).json("No tienes ninguna jornada registrada")
-  });  
-}
-
-=======
 	var mapa = {}
 	var user;
     jornadas.forEach(elem => {    
@@ -137,6 +99,5 @@ jornadaFunctions.getJornadasForCSV = async (req, res, next) => {
     console.log(err)
   });  
 }
->>>>>>> 6ceed86c26360577b62007fc92b61630e7ba22ec
 
 module.exports = jornadaFunctions;
