@@ -90,6 +90,14 @@ export class InicioComponent implements OnInit {
     }
   }
 
+  handleDateClick(arg) {
+    console.log('¡Hola! ¡Lo que acabas de hacer no hace nada!');
+  }
+
+  handleSelectDate(arg) {
+    console.log('¡Y esto tampoco!');
+  }
+
   private startJornada() {
     var hour = new Date;
     if (!this.startHour)
@@ -135,7 +143,7 @@ export class InicioComponent implements OnInit {
   }
 
   botonFicharDisabled() : boolean {
-    return false
+    return false;
     /* var d = new Date
     var currentDay = d.getDay() + "-" + d.getMonth() + "-" + d.getFullYear();
     var user = this.authService.currentUserValue;

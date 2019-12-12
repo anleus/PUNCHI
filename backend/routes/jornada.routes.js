@@ -10,6 +10,7 @@ router.post("/jornada", jornada.addJornada);
 router.put("/jornada", jornada.updateJornada);
 router.delete("/jornada/:id", jornada.deleteJornada);
 router.get("/jornada/exports/:id/:inicio/:fin", jornada.getJornadasForCSV);
-router.post("/jornada/period", jornada.getJornadaByPeriodAndUserId);
+router.get("/jornada/month/:id/:month", jornada.getJornadaByMonthAndUserId);
+//router.post("/jornada/period", jornada.getJornadaByPeriodAndUserId);
 
 module.exports = router;

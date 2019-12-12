@@ -8,10 +8,10 @@ jornadaFunctions.getJornadas = async (req, res, next) => {
 	res.json(jornadas);
 };
 
-jornadaFunctions.getJornadaByPeriodAndUserId = async (req, res, next) => {
-	let userid = req.body.id;
-	let initDate = req.body.initDate;
-	let endDate = req.body.endDate;
+jornadaFunctions.getJornadaByMonthAndUserId = async (req, res, next) => {
+	let userid = req.params.id;
+	let initDate = req.params.initDate;
+	let endDate = req.params.endDate;
 
 	const jornadas = await Jornada.find({
 		user: userid,

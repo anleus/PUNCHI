@@ -30,7 +30,6 @@ export class VacacionesComponent implements OnInit {
   vacationPast;
   currentUserId;
   d;
-  _id;
   _vid;
   pending = [];
   left;
@@ -55,6 +54,7 @@ export class VacacionesComponent implements OnInit {
       .then(res => {
         if (res == null || typeof res == "undefined") {
           this._vid = this.currentUserId;
+          this.vacationDaysLeft = 30;
           this.llenartabla(undefined, undefined, 0);
           this.noVacationFlag = true;
           return;
@@ -79,8 +79,8 @@ export class VacacionesComponent implements OnInit {
         });
         this._vid = res._id;
         this.pending = res.pending;
-        this.vacationDaysLeft = res.left;
         this.vacationPast = res.past;
+        this.vacationDaysLeft = res.left;
       });
   }
 
@@ -90,8 +90,9 @@ export class VacacionesComponent implements OnInit {
 
   returnBDCorrectDate(d: Date) {
     // Devuelve la fecha correcta para su almacenamiento en la BD
-    
     d = new Date(d);
+    console.log(d);
+    console.log(d.getTime());
     return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString();
   }
 
@@ -108,7 +109,8 @@ export class VacacionesComponent implements OnInit {
         ) {
           await this.checkDiaSolicitado(arg.date).then(check => {
             if (check) {
-              alert("El día seleccionado ya está pendiente de confirmación o confirmado");
+              this.snackWarning('El día solicitado ya se estaba confirmado o pendiente de confirmación');
+              //alert("El día seleccionado ya está pendiente de confirmación o confirmado");
               return;
             } else {
               this.createEvent(arg.date);
@@ -125,12 +127,22 @@ export class VacacionesComponent implements OnInit {
 
   createEvent(date) {
     this.pending.push(this.returnBDCorrectDate(date));
-    this.vacationservice.updateVacation(
-      this._vid,
-      this.pending,
-      (this.left = this.vacationDaysLeft),
-      this.vacationPast
-    );
+    if (this.noVacationFlag) {
+      this.vacationservice.createVacation(
+        this._vid,
+        this.pending,
+        (this.left = this.vacationDaysLeft),
+        this.vacationPast
+      );
+      this.noVacationFlag = false;
+    } else {
+      this.vacationservice.updateVacation(
+        this._vid,
+        this.pending,
+        (this.left = this.vacationDaysLeft),
+        this.vacationPast
+      );
+    }
     this.diasPorConfirmar++;
     this.calendarEvents = this.calendarEvents.concat({
       start: date,
@@ -182,6 +194,7 @@ export class VacacionesComponent implements OnInit {
 
           for (i = 0; i < this.daysCount(arg.start, arg.end); i++) {
             date = this.addDay2Month(arg.start, i);
+            console.log('handleSelectDate --> arg.start: ' + date + ' // i: ' + i);
             await this.checkDiaSolicitado(date).then(check => {
               if (check) {
                 flag = true
@@ -233,7 +246,7 @@ export class VacacionesComponent implements OnInit {
     this.incidenciaService
       .crearIncidencia(incidencia)
       .subscribe(res =>
-        this.snackSuccess("Dia de vacaciones solicitado correctamente")
+        this.snackSuccess("Día/s de vacaciones solicitado/s correctamente")
       );
   }
 
@@ -246,9 +259,6 @@ export class VacacionesComponent implements OnInit {
   daysCount(ini: Date, fi: Date) {
     let count = (fi.getTime() - ini.getTime()) / (1000 * 3600 * 24);
     return Math.floor(count);
-  }
-
-  handleButton() {
   }
 
   getCorrectMonth(date: Date) {

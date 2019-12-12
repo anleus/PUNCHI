@@ -19,6 +19,11 @@ export class VacationService {
       .then(this.onGetVacationByName.bind(this));
   }
 
+  createVacation(_vid: string, pending : Date[], left : number, past : Date[]) {
+    return this.http.post(this.url + "user/" + _vid, {_vid, pending, left, past})
+      .subscribe(vac => { return vac; });
+  }
+
   updateVacation(_vid: string, pending : Date[], left : number, past : Date[]) {
     return this.http.post(this.url + "user/update/" + _vid, {_vid, pending, left, past})
       .subscribe(vac => { return vac;});

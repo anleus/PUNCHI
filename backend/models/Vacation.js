@@ -16,6 +16,8 @@ let Vacation = Schema({
     past: {
         type: [Date]
     }
+}, {
+    versionKey: false
 });
 
 module.exports = mongoose.model('Vacation', Vacation, 'Vacation');
