@@ -47,7 +47,7 @@ export class InformesComponent implements OnInit {
       ["user_id", "fecha", "horas extra"] //encabezado de la lista
     ];
 
-    this.jornadaService.getJornadaFromUserToCSV(this.userPrueba, finicio, fendo)
+    this.jornadaService.getJornadaFromUserToCSV(user, finicio, fendo)
       .subscribe(response => { 
         for (var i = 0; i < response.length; i++) {
           var h = Number(response[i][2]);
@@ -119,7 +119,15 @@ export class InformesComponent implements OnInit {
       this.snackError("Por favor introduce el periodo");
     } else {
       if (this.selected == "Informe horas extra") {
-        this.horasExtraCSV(this.userPrueba, inicio, fin);
+        this.route.queryParams.subscribe(params => {
+          this.nombreUsuario = params["nombre"] || 0;
+        });
+        this.userService
+          .getUserByUsernameDOS(this.nombreUsuario)
+          .subscribe((user: User) => {
+            this.horasExtraCSV(user._id, inicio, fin);
+          })
+        
       } else if (this.selected == "Informe Horas") {
         this.route.queryParams.subscribe(params => {
           this.nombreUsuario = params["nombre"] || 0;
