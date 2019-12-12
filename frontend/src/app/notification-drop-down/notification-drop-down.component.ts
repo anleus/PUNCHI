@@ -26,11 +26,12 @@ export class NotificationDropDownComponent implements OnInit {
       this.notifications = [];
       this.getIncidencias();  
       this.gestorOrAdmin = (user.gestor ||  user.admin);
-      setInterval(() => this.getIncidencias(),1000);
+      //setInterval(() => this.getIncidencias(),1000);
     });
   }
 
   getIncidencias(){
+    this.notifications = []
     this.incidenciaService.getIncidencias().subscribe((res: Incidencia[])=> {
       //this.notifications = res;
       res.forEach(element => {
