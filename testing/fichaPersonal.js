@@ -68,3 +68,5 @@ async function FichaPersonal() {
         await driver.quit();
     }
 }
+
+FichaPersonal()
