@@ -13,6 +13,10 @@ async function FichaPersonal() {
 
         await driver
             .wait(until.elementIsVisible(By.className("topbar"), 2000));
+            
+        /* await driver
+            .wait(until.elementIsVisible(driver.findElement(By.className("topbar"))), 2000);
+        */
 
         await driver
             .findElement(By.className("mat-button-wrapper"))
