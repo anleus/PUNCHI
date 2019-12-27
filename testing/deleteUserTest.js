@@ -16,15 +16,13 @@ async function deleteUser() {
     await driver.findElement(By.className("mat-button")).click();
 
     try {
-      //await driver
+        System.Threading.Thread.Sleep(3000);
+        //await driver
         //.findElement(By.className("mat-button-toggle-button"))
         //.findElement(By.className("mat-icon-button mat-button-base ng-star-inserted"))
         //.click();
         await driver
-            .wait(until.elementIsVisible(By.className("topbar"), 2000));
-
-        await driver
-            .findElement(By.className("mat-button-wrapper"))
+            .findElement(By.className("mat-icon-button"))
             .click();
     } catch (Exception) {
       console.log(Exception);
