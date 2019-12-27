@@ -16,22 +16,49 @@ async function deleteUser() {
     await driver.findElement(By.className("mat-button")).click();
 
     try {
-        System.Threading.Thread.Sleep(3000);
-        //await driver
-        //.findElement(By.className("mat-button-toggle-button"))
-        //.findElement(By.className("mat-icon-button mat-button-base ng-star-inserted"))
-        //.click();
-        await driver
-            .findElement(By.className("mat-icon-button"))
-            .click();
+      await driver.findElement(By.className("mat-icon-button")).click();
+
+      await driver
+        .findElement(
+          By.xpath(
+            "/html/body/app-root/main-nav/mat-sidenav-container/mat-sidenav/div/div/mat-nav-list/mat-list-item[4]/div/a/div"
+          )
+        )
+        .click();
+
+      await driver.wait(
+        until.elementIsVisible(driver.findElement(By.className("topbar"))),
+        2000
+      );
+
+      await driver
+        .findElement(
+          By.xpath(
+            "/html/body/app-root/main-nav/mat-sidenav-container/mat-sidenav-content/app-usuarios/div/mat-card/div/div[3]/div/table/tbody/tr[1]/td[4]/button[2]"
+          )
+        )
+        .click();
+
+      await driver.wait(
+        until.elementIsVisible(driver.findElement(By.className("mat-dialog-title"))),
+        2000
+      );
+
+      await driver
+        .findElement(
+          By.xpath(
+            "/html/body/div/div[2]/div/mat-dialog-container/confirmacion-borrado/div/button[2]/span"
+          )
+        )
+        .click();
     } catch (Exception) {
       console.log(Exception);
     }
   } catch (err) {
-      console.log("------------- Test failed: " + err);
+    console.log("------------- Test failed: " + err);
   } finally {
     console.log("------------- Test finished");
-    //await driver.quit();
+    await driver.quit();
   }
 }
 
