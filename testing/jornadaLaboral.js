@@ -5,7 +5,7 @@ async function JornadaLaboral() {
 	try {
         await driver.get("http://localhost:4200/inicio");
         try{
-            await driver.findElement(By.className("mat-button-toggle-button")).click();
+			await driver.findElement(By.className("mat-button-toggle-button")).click();
         }
     catch(Exception){
     }    	
@@ -16,7 +16,7 @@ async function JornadaLaboral() {
 	}
 }
 
-logIn().then(checkMenu)
+JornadaLaboral().then(checkMenu)
 
 function checkMenu(){
 	if(await driver
