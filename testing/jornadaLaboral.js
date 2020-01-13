@@ -1,4 +1,9 @@
-const { Builder, By, Key, until } = require("selenium-webdriver");
+const {
+	Builder,
+	By,
+	Key,
+	until
+} = require("selenium-webdriver");
 
 async function JornadaLaboral() {
 	let driver = await new Builder().forBrowser("chrome").build();
@@ -12,15 +17,11 @@ async function JornadaLaboral() {
 		
 	} finally {
 		await driver.quit();
-		
 	}
 }
 
 JornadaLaboral().then(checkMenu)
 
-function checkMenu(){
-	if(await driver
-	.findElement(By.id("mat-input-0")).getAttribute("display")==="none"){
-	} else {
-	}
+function checkMenu() {
+	if (await driver.findElement(By.id("mat-input-0")).getAttribute("display") === "none") {} else {}
 }
